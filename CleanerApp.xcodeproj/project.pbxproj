@@ -3,13 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0AB92B00BD7100E4300D /* VideoCompressor.swift */; };
+		321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */; };
+		324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */; };
+		324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */; };
+		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
+		324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */; };
+		32BF2C8F2AF9468900045343 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF2C8E2AF9468900045343 /* HomeViewController.swift */; };
+		32BF2C922AF947DA00045343 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF2C902AF947DA00045343 /* HomeTableViewCell.swift */; };
+		32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BF2C912AF947DA00045343 /* HomeTableViewCell.xib */; };
+		32BF2C962AF94E3700045343 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF2C952AF94E3700045343 /* HomeModel.swift */; };
+		32BF2C982AF94E4F00045343 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF2C972AF94E4F00045343 /* HomeViewModel.swift */; };
+		32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D336C82AFCBFCA006C504E /* CompressCollectionViewCell.swift */; };
+		32D336CB2AFCBFCA006C504E /* CompressCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32D336C92AFCBFCA006C504E /* CompressCollectionViewCell.xib */; };
+		32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D336CC2AFE0494006C504E /* CompressVideosHeaderView.swift */; };
+		32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */; };
 		32E2E0D72AF80039009CA92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D62AF80039009CA92E /* AppDelegate.swift */; };
 		32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D82AF80039009CA92E /* SceneDelegate.swift */; };
-		32E2E0DB2AF80039009CA92E /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0DA2AF80039009CA92E /* MediaViewController.swift */; };
 		32E2E0DE2AF80039009CA92E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0DC2AF80039009CA92E /* Main.storyboard */; };
 		32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0DF2AF80039009CA92E /* CleanerApp.xcdatamodeld */; };
 		32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0E22AF8003A009CA92E /* Assets.xcassets */; };
@@ -17,10 +31,24 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		321B0AB92B00BD7100E4300D /* VideoCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressor.swift; sourceTree = "<group>"; };
+		321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionViewController.swift; sourceTree = "<group>"; };
+		324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorViewController.swift; sourceTree = "<group>"; };
+		324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressViewModel.swift; sourceTree = "<group>"; };
+		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressVideoModel.swift; sourceTree = "<group>"; };
+		32BF2C8E2AF9468900045343 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		32BF2C902AF947DA00045343 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		32BF2C912AF947DA00045343 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
+		32BF2C952AF94E3700045343 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		32BF2C972AF94E4F00045343 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		32D336C82AFCBFCA006C504E /* CompressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressCollectionViewCell.swift; sourceTree = "<group>"; };
+		32D336C92AFCBFCA006C504E /* CompressCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompressCollectionViewCell.xib; sourceTree = "<group>"; };
+		32D336CC2AFE0494006C504E /* CompressVideosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressVideosHeaderView.swift; sourceTree = "<group>"; };
+		32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		32E2E0D32AF80039009CA92E /* CleanerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E2E0D62AF80039009CA92E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32E2E0D82AF80039009CA92E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		32E2E0DA2AF80039009CA92E /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		32E2E0DD2AF80039009CA92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		32E2E0E02AF80039009CA92E /* CleanerApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CleanerApp.xcdatamodel; sourceTree = "<group>"; };
 		32E2E0E22AF8003A009CA92E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -39,6 +67,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		324A76B82AFB225200EE5AD5 /* Video Compress Screen */ = {
+			isa = PBXGroup;
+			children = (
+				324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */,
+				321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */,
+				321B0AB92B00BD7100E4300D /* VideoCompressor.swift */,
+				32D336C82AFCBFCA006C504E /* CompressCollectionViewCell.swift */,
+				32D336C92AFCBFCA006C504E /* CompressCollectionViewCell.xib */,
+				324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */,
+				324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */,
+				32D336CC2AFE0494006C504E /* CompressVideosHeaderView.swift */,
+			);
+			path = "Video Compress Screen";
+			sourceTree = "<group>";
+		};
+		32BF2C942AF94E1A00045343 /* Home Screen */ = {
+			isa = PBXGroup;
+			children = (
+				32BF2C8E2AF9468900045343 /* HomeViewController.swift */,
+				32BF2C902AF947DA00045343 /* HomeTableViewCell.swift */,
+				32BF2C952AF94E3700045343 /* HomeModel.swift */,
+				32BF2C912AF947DA00045343 /* HomeTableViewCell.xib */,
+				32BF2C972AF94E4F00045343 /* HomeViewModel.swift */,
+			);
+			path = "Home Screen";
+			sourceTree = "<group>";
+		};
 		32E2E0CA2AF80039009CA92E = {
 			isa = PBXGroup;
 			children = (
@@ -60,7 +115,10 @@
 			children = (
 				32E2E0D62AF80039009CA92E /* AppDelegate.swift */,
 				32E2E0D82AF80039009CA92E /* SceneDelegate.swift */,
-				32E2E0DA2AF80039009CA92E /* MediaViewController.swift */,
+				324A76BB2AFB243F00EE5AD5 /* Extension.swift */,
+				32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */,
+				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
+				32BF2C942AF94E1A00045343 /* Home Screen */,
 				32E2E0DC2AF80039009CA92E /* Main.storyboard */,
 				32E2E0E22AF8003A009CA92E /* Assets.xcassets */,
 				32E2E0E42AF8003A009CA92E /* LaunchScreen.storyboard */,
@@ -106,7 +164,7 @@
 				};
 			};
 			buildConfigurationList = 32E2E0CE2AF80039009CA92E /* Build configuration list for PBXProject "CleanerApp" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -130,7 +188,9 @@
 			files = (
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
+				32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */,
 				32E2E0DE2AF80039009CA92E /* Main.storyboard in Resources */,
+				32D336CB2AFCBFCA006C504E /* CompressCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,10 +201,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32E2E0DB2AF80039009CA92E /* MediaViewController.swift in Sources */,
 				32E2E0D72AF80039009CA92E /* AppDelegate.swift in Sources */,
+				321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */,
+				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
+				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
+				324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */,
+				32BF2C922AF947DA00045343 /* HomeTableViewCell.swift in Sources */,
+				32BF2C982AF94E4F00045343 /* HomeViewModel.swift in Sources */,
+				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
+				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
+				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
+				324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */,
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
+				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,
+				32BF2C962AF94E3700045343 /* HomeModel.swift in Sources */,
+				32BF2C8F2AF9468900045343 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +294,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -279,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -304,6 +376,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +405,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

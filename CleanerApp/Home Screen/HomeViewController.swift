@@ -10,6 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
 
     //MARK: - varibles and properties
+    var viewModel: HomeViewModel!
     
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -17,12 +18,23 @@ class HomeViewController: UIViewController {
     //MARK: - LifeCyclea
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        setupTableView()
+        setupViewModel()
     }
     
+    //MARK: - functions
     func setupTableView(){
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: HomeTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HomeTableViewCell.identifier)
+    }
+    
+    func setupViewModel(){
+        viewModel = HomeViewModel()
+    }
+    
+    func setup(){
+    
     }
 
 }
@@ -31,12 +43,32 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        viewModel.homeCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as! HomeTableViewCell
+        cell.configureCell(homeCell: viewModel.homeCells[indexPath.row])
+        return cell
     }
-    
-    
+}
+
+extension HomeViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedCell = viewModel.homeCells[indexPath.row]
+        switch selectedCell.cellType{
+        case .battery:
+            break
+        case .speedTest:
+            break
+        case .widgetCell:
+            break
+        case .videoCompressor:
+            let vc = VideoCompressorViewController.initWith()
+            self.navigationController?.pushViewController(vc, animated: true)
+        case .secretSpace:
+            break
+        }
+    }
 }

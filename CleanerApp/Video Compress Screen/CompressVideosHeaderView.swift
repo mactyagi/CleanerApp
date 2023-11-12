@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import UIKit
+class CompressVideosHeaderView: UICollectionReusableView {
+    @IBOutlet weak var label: UILabel!
+    
+    static let identifier = "CompressVideosHeaderView"
+}

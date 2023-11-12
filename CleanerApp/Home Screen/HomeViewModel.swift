@@ -6,3 +6,6 @@
 //
 
 import Foundation
+struct HomeViewModel{
+    var homeCells: [HomeCell] = [.batteryCell, .speedTestCell, .videoCompressorCell, .secretSpaceCell, .widgetCell]
+}

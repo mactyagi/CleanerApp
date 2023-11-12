@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import Photos
+
+struct CompressVideoModel{
+    var phAsset: PHAsset
+    var avAsset: AVAsset
+    var originalSize: Int64
+}
