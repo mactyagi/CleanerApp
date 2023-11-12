@@ -1,30 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17122"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="s0d-6b-0kx">
+        <!--Video Compressor View Controller-->
+        <scene sceneID="vk8-Gd-g8m">
             <objects>
-                <viewController id="Y6W-OH-hqX" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <viewController storyboardIdentifier="VideoCompressorViewController" id="E5W-W0-MPV" customClass="VideoCompressorViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lHG-qB-HRz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="q5R-RS-GOI">
+                                <rect key="frame" x="10" y="139" width="373" height="679"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dTN-qs-rAL">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="60" height="60"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CompressVideosHeaderView" id="rdf-2d-7L3" customClass="CompressVideosHeaderView" customModule="CleanerApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="60"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gjX-xf-2rt">
+                                            <rect key="frame" x="275" y="13.666666666666664" width="80" height="33"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="k8S-re-Gdb"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="147 MB"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8O-oM-t0N">
+                                            <rect key="frame" x="8" y="10" width="40" height="40"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5vG-Dd-YM5">
+                                                    <rect key="frame" x="5" y="4.3333333333333321" width="30" height="31.333333333333339"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <imageReference key="image" image="video.fill" catalog="system" symbolScale="large"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="5vG-Dd-YM5" secondAttribute="bottom" constant="5" id="4sF-rg-Yo2"/>
+                                                <constraint firstAttribute="trailing" secondItem="5vG-Dd-YM5" secondAttribute="trailing" constant="5" id="aAn-NS-WVo"/>
+                                                <constraint firstAttribute="height" constant="40" id="cw3-bj-SID"/>
+                                                <constraint firstItem="5vG-Dd-YM5" firstAttribute="top" secondItem="R8O-oM-t0N" secondAttribute="top" constant="5" id="ibz-5q-rFi"/>
+                                                <constraint firstItem="5vG-Dd-YM5" firstAttribute="leading" secondItem="R8O-oM-t0N" secondAttribute="leading" constant="5" id="nTe-vb-LjQ"/>
+                                                <constraint firstAttribute="width" constant="40" id="zJH-e6-0wW"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Compress your videos and save about" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59m-cB-JSg">
+                                            <rect key="frame" x="58" y="9.6666666666666643" width="197" height="41"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <size key="shadowOffset" width="10" height="0.0"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" name="primaryHeaderColor"/>
+                                    <constraints>
+                                        <constraint firstItem="gjX-xf-2rt" firstAttribute="leading" secondItem="59m-cB-JSg" secondAttribute="trailing" constant="20" id="1yz-6h-qVo"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="gjX-xf-2rt" secondAttribute="trailing" constant="10" id="FU8-qx-ZwQ"/>
+                                        <constraint firstItem="R8O-oM-t0N" firstAttribute="centerY" secondItem="rdf-2d-7L3" secondAttribute="centerY" id="G8O-GW-p91"/>
+                                        <constraint firstItem="gjX-xf-2rt" firstAttribute="centerY" secondItem="rdf-2d-7L3" secondAttribute="centerY" id="TpT-Yi-r6o"/>
+                                        <constraint firstItem="R8O-oM-t0N" firstAttribute="leading" secondItem="rdf-2d-7L3" secondAttribute="leadingMargin" id="Zn5-rl-KdM"/>
+                                        <constraint firstItem="59m-cB-JSg" firstAttribute="centerY" secondItem="rdf-2d-7L3" secondAttribute="centerY" id="nQZ-Z2-nv9"/>
+                                        <constraint firstItem="59m-cB-JSg" firstAttribute="leading" secondItem="R8O-oM-t0N" secondAttribute="trailing" constant="10" id="xcP-pT-Bd1"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <outlet property="label" destination="59m-cB-JSg" id="OW9-Sc-mM9"/>
+                                    </connections>
+                                </collectionReusableView>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wet-YX-Qbj">
+                                <rect key="frame" x="0.0" y="59" width="393" height="80"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Compressor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJn-39-MDY">
+                                        <rect key="frame" x="9.9999999999999858" y="5" width="241.66666666666663" height="37"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="27"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Videos: 6 • 733 MB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yc-Cm-XsA">
+                                        <rect key="frame" x="10" y="44" width="134.66666666666666" height="21"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="3yc-Cm-XsA" firstAttribute="top" secondItem="sJn-39-MDY" secondAttribute="bottom" constant="2" id="7s5-f0-rv7"/>
+                                    <constraint firstItem="sJn-39-MDY" firstAttribute="leading" secondItem="Wet-YX-Qbj" secondAttribute="leading" constant="10" id="Nlw-fT-Vc2"/>
+                                    <constraint firstItem="sJn-39-MDY" firstAttribute="top" secondItem="Wet-YX-Qbj" secondAttribute="top" constant="5" id="g6N-tB-RAe"/>
+                                    <constraint firstItem="3yc-Cm-XsA" firstAttribute="leading" secondItem="Wet-YX-Qbj" secondAttribute="leading" constant="10" id="vKG-jO-DZQ"/>
+                                    <constraint firstAttribute="height" constant="80" id="zdC-M5-Qc2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="O69-Q2-pnV"/>
+                        <color key="backgroundColor" name="SecondaryVCBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="q5R-RS-GOI" firstAttribute="top" secondItem="Wet-YX-Qbj" secondAttribute="bottom" id="2x8-zA-EDs"/>
+                            <constraint firstItem="Wet-YX-Qbj" firstAttribute="leading" secondItem="O69-Q2-pnV" secondAttribute="leading" id="Ovb-tZ-pba"/>
+                            <constraint firstItem="Wet-YX-Qbj" firstAttribute="top" secondItem="O69-Q2-pnV" secondAttribute="top" id="Rm4-df-wgj"/>
+                            <constraint firstItem="O69-Q2-pnV" firstAttribute="bottom" secondItem="q5R-RS-GOI" secondAttribute="bottom" id="jfA-IR-SMT"/>
+                            <constraint firstItem="O69-Q2-pnV" firstAttribute="trailing" secondItem="Wet-YX-Qbj" secondAttribute="trailing" id="lzG-Qe-hhh"/>
+                            <constraint firstItem="O69-Q2-pnV" firstAttribute="trailing" secondItem="q5R-RS-GOI" secondAttribute="trailing" constant="10" id="ooQ-gd-2if"/>
+                            <constraint firstItem="q5R-RS-GOI" firstAttribute="leading" secondItem="O69-Q2-pnV" secondAttribute="leading" constant="10" id="s6v-Yc-Kzd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="q5R-RS-GOI" id="XR7-Ki-RW6"/>
+                        <outlet property="secondaryLabel" destination="3yc-Cm-XsA" id="aQB-qe-EIh"/>
+                        <outlet property="titleLabel" destination="sJn-39-MDY" id="0T4-xV-pvf"/>
+                        <outlet property="topView" destination="Wet-YX-Qbj" id="QZX-GH-UzH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4jx-pU-x0J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5570" y="-567"/>
+        </scene>
+        <!--Compress Quality Selection View Controller-->
+        <scene sceneID="ppD-4s-Zgn">
+            <objects>
+                <viewController storyboardIdentifier="CompressQualitySelectionViewController" id="lOh-Pw-lM5" customClass="CompressQualitySelectionViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="acV-Nb-5De">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="gSh-I7-w4d"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iPQ-QC-Ex9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-4680" y="-568"/>
         </scene>
     </scenes>
     <resources>
+        <image name="video.fill" catalog="system" width="128" height="81"/>
+        <namedColor name="SecondaryVCBackgroundColor">
+            <color red="0.91764705882352937" green="0.94117647058823528" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="primaryHeaderColor">
+            <color red="0.85500001907348633" green="0.90200001001358032" blue="0.98000001907348633" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

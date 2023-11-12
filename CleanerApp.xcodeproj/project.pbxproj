@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0AB92B00BD7100E4300D /* VideoCompressor.swift */; };
 		321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */; };
+		321B0ABE2B00C2EF00E4300D /* VideoCompress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 321B0ABD2B00C2EF00E4300D /* VideoCompress.storyboard */; };
+		321B0AC02B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0ABF2B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift */; };
 		324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */; };
 		324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */; };
 		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		321B0AB92B00BD7100E4300D /* VideoCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressor.swift; sourceTree = "<group>"; };
 		321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionViewController.swift; sourceTree = "<group>"; };
+		321B0ABD2B00C2EF00E4300D /* VideoCompress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoCompress.storyboard; sourceTree = "<group>"; };
+		321B0ABF2B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlobalStructs,EnumsAndClasses.swift"; sourceTree = "<group>"; };
 		324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorViewController.swift; sourceTree = "<group>"; };
 		324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressViewModel.swift; sourceTree = "<group>"; };
 		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */,
+				321B0ABD2B00C2EF00E4300D /* VideoCompress.storyboard */,
 				321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */,
 				321B0AB92B00BD7100E4300D /* VideoCompressor.swift */,
 				32D336C82AFCBFCA006C504E /* CompressCollectionViewCell.swift */,
@@ -116,6 +121,7 @@
 				32E2E0D62AF80039009CA92E /* AppDelegate.swift */,
 				32E2E0D82AF80039009CA92E /* SceneDelegate.swift */,
 				324A76BB2AFB243F00EE5AD5 /* Extension.swift */,
+				321B0ABF2B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift */,
 				32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */,
 				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
 				32BF2C942AF94E1A00045343 /* Home Screen */,
@@ -186,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321B0ABE2B00C2EF00E4300D /* VideoCompress.storyboard in Resources */,
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
 				32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */,
@@ -215,6 +222,7 @@
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,
+				321B0AC02B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift in Sources */,
 				32BF2C962AF94E3700045343 /* HomeModel.swift in Sources */,
 				32BF2C8F2AF9468900045343 /* HomeViewController.swift in Sources */,
 			);

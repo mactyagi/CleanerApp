@@ -31,14 +31,13 @@ class VideoCompressorViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     
     //MARK: - static variables and function
     static let identifer = "VideoCompressorViewController"
     static func initWith() -> VideoCompressorViewController{
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifer) as! VideoCompressorViewController
+        let vc = UIStoryboard(name: "VideoCompress", bundle: nil).instantiateViewController(withIdentifier: identifer) as! VideoCompressorViewController
         return vc
     }
     
@@ -76,7 +75,10 @@ extension VideoCompressorViewController: UICollectionViewDelegateFlowLayout{
 }
 
 extension VideoCompressorViewController: UICollectionViewDelegate{
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = CompressQualitySelectionViewController.initWith()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 

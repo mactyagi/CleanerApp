@@ -23,7 +23,7 @@
                         <rect key="frame" x="2" y="2" width="180" height="171"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O0X-zl-Say">
-                                <rect key="frame" x="8" y="8" width="164" height="113"/>
+                                <rect key="frame" x="4" y="4" width="172" height="122"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-Po-eVT">
                                 <rect key="frame" x="0.0" y="131" width="180" height="40"/>
@@ -68,11 +68,11 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Twg-Po-eVT" secondAttribute="trailing" id="FkG-PS-r3i"/>
                             <constraint firstAttribute="bottom" secondItem="Twg-Po-eVT" secondAttribute="bottom" id="Ng6-0b-jgt"/>
-                            <constraint firstItem="O0X-zl-Say" firstAttribute="top" secondItem="swr-IC-fF3" secondAttribute="top" constant="8" id="gWn-Zs-48I"/>
-                            <constraint firstItem="O0X-zl-Say" firstAttribute="leading" secondItem="swr-IC-fF3" secondAttribute="leading" constant="8" id="hW8-JU-IUA"/>
-                            <constraint firstAttribute="trailing" secondItem="O0X-zl-Say" secondAttribute="trailing" constant="8" id="qan-sj-VPn"/>
+                            <constraint firstItem="O0X-zl-Say" firstAttribute="top" secondItem="swr-IC-fF3" secondAttribute="top" constant="4" id="gWn-Zs-48I"/>
+                            <constraint firstItem="O0X-zl-Say" firstAttribute="leading" secondItem="swr-IC-fF3" secondAttribute="leading" constant="4" id="hW8-JU-IUA"/>
+                            <constraint firstAttribute="trailing" secondItem="O0X-zl-Say" secondAttribute="trailing" constant="4" id="qan-sj-VPn"/>
                             <constraint firstItem="Twg-Po-eVT" firstAttribute="leading" secondItem="swr-IC-fF3" secondAttribute="leading" id="rhm-xc-fCs"/>
-                            <constraint firstItem="Twg-Po-eVT" firstAttribute="top" secondItem="O0X-zl-Say" secondAttribute="bottom" constant="10" id="xRO-og-JJg"/>
+                            <constraint firstItem="Twg-Po-eVT" firstAttribute="top" secondItem="O0X-zl-Say" secondAttribute="bottom" constant="5" id="xRO-og-JJg"/>
                         </constraints>
                     </view>
                 </subviews>

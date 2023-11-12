@@ -4,10 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,7 +23,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ogO-Mu-Qg7"/>
-                        <color key="backgroundColor" name="backgroundColor"/>
+                        <color key="backgroundColor" name="primaryVCBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="W98-L7-8ki" firstAttribute="top" secondItem="ogO-Mu-Qg7" secondAttribute="top" id="Rvy-Ii-qZv"/>
                             <constraint firstItem="ogO-Mu-Qg7" firstAttribute="bottom" secondItem="W98-L7-8ki" secondAttribute="bottom" id="iCe-BF-rjf"/>
@@ -33,7 +31,7 @@
                             <constraint firstItem="W98-L7-8ki" firstAttribute="leading" secondItem="ogO-Mu-Qg7" secondAttribute="leading" id="yPJ-Ot-zb6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Moh-HN-CPM"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="Moh-HN-CPM"/>
                     <connections>
                         <outlet property="tableView" destination="W98-L7-8ki" id="keA-J2-qS2"/>
                     </connections>
@@ -41,144 +39,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dK6-UF-mvx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="170.22900763358777" y="-559.15492957746483"/>
-        </scene>
-        <!--Video Compressor View Controller-->
-        <scene sceneID="BsH-wd-6ld">
-            <objects>
-                <viewController storyboardIdentifier="VideoCompressorViewController" id="fh1-Zy-Wt6" customClass="VideoCompressorViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Dbg-Uh-NwA">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PKq-IQ-Nuc">
-                                <rect key="frame" x="10" y="139" width="373" height="679"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BUJ-RC-Wuu">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="60" height="60"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CompressVideosHeaderView" id="Dof-9c-X0T" customClass="CompressVideosHeaderView" customModule="CleanerApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IQ-Zq-0TA">
-                                            <rect key="frame" x="275" y="13.666666666666664" width="80" height="33"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="Rts-Cc-pd8"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="147 MB"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="10"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </button>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1X-MS-btF">
-                                            <rect key="frame" x="8" y="10" width="40" height="40"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i9c-rh-t6d">
-                                                    <rect key="frame" x="5" y="4.3333333333333321" width="30" height="31.333333333333339"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <imageReference key="image" image="video.fill" catalog="system" symbolScale="large"/>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" systemColor="systemPurpleColor"/>
-                                            <constraints>
-                                                <constraint firstItem="i9c-rh-t6d" firstAttribute="top" secondItem="X1X-MS-btF" secondAttribute="top" constant="5" id="PXv-sG-3GH"/>
-                                                <constraint firstAttribute="height" constant="40" id="SIT-cs-5J3"/>
-                                                <constraint firstAttribute="width" constant="40" id="SeK-GD-EZx"/>
-                                                <constraint firstItem="i9c-rh-t6d" firstAttribute="leading" secondItem="X1X-MS-btF" secondAttribute="leading" constant="5" id="dY1-D9-49H"/>
-                                                <constraint firstAttribute="trailing" secondItem="i9c-rh-t6d" secondAttribute="trailing" constant="5" id="i0x-D9-85K"/>
-                                                <constraint firstAttribute="bottom" secondItem="i9c-rh-t6d" secondAttribute="bottom" constant="5" id="tWS-VZ-gI1"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Compress your videos and save about" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXg-wv-axT">
-                                            <rect key="frame" x="58" y="9.6666666666666643" width="197" height="41"/>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                            <size key="shadowOffset" width="10" height="0.0"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" name="primaryHeaderColor"/>
-                                    <constraints>
-                                        <constraint firstItem="5IQ-Zq-0TA" firstAttribute="leading" secondItem="BXg-wv-axT" secondAttribute="trailing" constant="20" id="4H1-3K-l1r"/>
-                                        <constraint firstItem="5IQ-Zq-0TA" firstAttribute="centerY" secondItem="Dof-9c-X0T" secondAttribute="centerY" id="QOC-mZ-Vda"/>
-                                        <constraint firstItem="BXg-wv-axT" firstAttribute="leading" secondItem="X1X-MS-btF" secondAttribute="trailing" constant="10" id="WNI-8U-8MC"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="5IQ-Zq-0TA" secondAttribute="trailing" constant="10" id="Wrd-cy-aqL"/>
-                                        <constraint firstItem="X1X-MS-btF" firstAttribute="centerY" secondItem="Dof-9c-X0T" secondAttribute="centerY" id="bDG-Ev-1se"/>
-                                        <constraint firstItem="X1X-MS-btF" firstAttribute="leading" secondItem="Dof-9c-X0T" secondAttribute="leadingMargin" id="ctQ-GK-PxY"/>
-                                        <constraint firstItem="BXg-wv-axT" firstAttribute="centerY" secondItem="Dof-9c-X0T" secondAttribute="centerY" id="ddL-5M-TUt"/>
-                                    </constraints>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="10"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <outlet property="label" destination="BXg-wv-axT" id="FRy-7f-0xu"/>
-                                    </connections>
-                                </collectionReusableView>
-                            </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hq6-q0-wUT">
-                                <rect key="frame" x="0.0" y="59" width="393" height="80"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Compressor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YSE-2F-Hh0">
-                                        <rect key="frame" x="9.9999999999999858" y="5" width="241.66666666666663" height="37"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="27"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Videos: 6 • 733 MB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X97-VE-nrR">
-                                        <rect key="frame" x="10" y="44" width="134.66666666666666" height="21"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="YSE-2F-Hh0" firstAttribute="top" secondItem="hq6-q0-wUT" secondAttribute="top" constant="5" id="0dZ-Ut-aFg"/>
-                                    <constraint firstItem="YSE-2F-Hh0" firstAttribute="leading" secondItem="hq6-q0-wUT" secondAttribute="leading" constant="10" id="23c-Oh-X2p"/>
-                                    <constraint firstItem="X97-VE-nrR" firstAttribute="leading" secondItem="hq6-q0-wUT" secondAttribute="leading" constant="10" id="31d-pM-XBG"/>
-                                    <constraint firstItem="X97-VE-nrR" firstAttribute="top" secondItem="YSE-2F-Hh0" secondAttribute="bottom" constant="2" id="I2d-12-xxX"/>
-                                    <constraint firstAttribute="height" constant="80" id="LGq-F0-Oef"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="XDW-n3-E7D"/>
-                        <color key="backgroundColor" name="SecondaryVCBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="hq6-q0-wUT" firstAttribute="top" secondItem="XDW-n3-E7D" secondAttribute="top" id="3MM-wx-v5K"/>
-                            <constraint firstItem="hq6-q0-wUT" firstAttribute="leading" secondItem="XDW-n3-E7D" secondAttribute="leading" id="MF4-kA-JtP"/>
-                            <constraint firstItem="XDW-n3-E7D" firstAttribute="trailing" secondItem="PKq-IQ-Nuc" secondAttribute="trailing" constant="10" id="Qi0-M3-BDn"/>
-                            <constraint firstItem="PKq-IQ-Nuc" firstAttribute="leading" secondItem="XDW-n3-E7D" secondAttribute="leading" constant="10" id="UMs-cD-muo"/>
-                            <constraint firstItem="XDW-n3-E7D" firstAttribute="trailing" secondItem="hq6-q0-wUT" secondAttribute="trailing" id="abf-07-EIO"/>
-                            <constraint firstItem="XDW-n3-E7D" firstAttribute="bottom" secondItem="PKq-IQ-Nuc" secondAttribute="bottom" id="hYx-yd-eeq"/>
-                            <constraint firstItem="PKq-IQ-Nuc" firstAttribute="top" secondItem="hq6-q0-wUT" secondAttribute="bottom" id="nk8-ul-qs1"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="PKq-IQ-Nuc" id="Udj-xb-NGz"/>
-                        <outlet property="secondaryLabel" destination="X97-VE-nrR" id="gqR-fT-qWu"/>
-                        <outlet property="titleLabel" destination="YSE-2F-Hh0" id="jbV-gf-d7T"/>
-                        <outlet property="topView" destination="hq6-q0-wUT" id="srA-Uq-JXJ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1Bg-71-mhq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="846.56488549618314" y="-559.15492957746483"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8d7-Ox-6b7">
@@ -200,18 +60,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="video.fill" catalog="system" width="128" height="81"/>
-        <namedColor name="SecondaryVCBackgroundColor">
-            <color red="0.91764706370000004" green="0.94117647410000005" blue="0.98039215800000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="primaryVCBackgroundColor">
+            <color red="0.83099997043609619" green="0.89399999380111694" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <namedColor name="backgroundColor">
-            <color red="0.039215686274509803" green="0.51764705882352946" blue="1" alpha="0.15000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="primaryHeaderColor">
-            <color red="0.85490196939999996" green="0.90196079019999997" blue="0.98039215800000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

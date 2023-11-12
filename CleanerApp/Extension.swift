@@ -81,3 +81,11 @@ extension Int64 {
         return String(format: "%4.2f %@", convertedValue, tokens[multiplyFactor])
     }
 }
+
+
+
+extension UIViewController{
+    static var className : String{
+        return String(describing: type(of: self))
+    }
+}
