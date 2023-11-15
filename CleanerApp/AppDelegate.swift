@@ -3,7 +3,7 @@
 //  CleanerApp
 //
 //  Created by manu on 05/11/23.
-//     
+//
 
 import UIKit
 import CoreData
