@@ -11,14 +11,14 @@ import Combine
 class VideoCompressViewModel{
     @Published var compressVideoModel = [CompressVideoModel]()
     var totalSize:Int64 = 0
-    init(){
-        fetchData()
-    }
+    var totalCompressSize: Int64 = 0
 }
 
 extension VideoCompressViewModel{
     func fetchData(){
         totalSize = 0
+        totalCompressSize = 0
+        compressVideoModel = []
         let phAssets = PHAsset.fetchAssets(with: .video, options: PHFetchOptions())
         for index in 0 ..< phAssets.count{
             let phAsset = phAssets[index]
@@ -29,6 +29,7 @@ extension VideoCompressViewModel{
                     let compressor = LightCompressor(quality: .very_high, asset: avAsset)
                     if let size = phAsset.getSize(){
                         self.totalSize += size
+                        self.totalCompressSize += compressor.estimatedOutputSize()
                         self.compressVideoModel.append(CompressVideoModel(phAsset: phAsset, avAsset: avAsset, originalSize: size, compressor: compressor))
                     }
                 }

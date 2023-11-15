@@ -15,7 +15,7 @@ class VideoCompressorViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var totalCompressSize: UIButton!
     //MARK: - Variables
     var viewModel: VideoCompressViewModel!
     private var subscribers:[AnyCancellable] = []
@@ -31,6 +31,7 @@ class VideoCompressorViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.fetchData()
     }
     
     
@@ -90,6 +91,7 @@ extension VideoCompressorViewController{
         } receiveValue: { data in
             self.collectionView.reloadData()
             self.secondaryLabel.text = "Videos \(data.count) • \(self.viewModel.totalSize.convertToFileString())"
+            self.totalCompressSize.setTitle(self.viewModel.totalCompressSize.convertToFileString(), for: .normal)
         }.store(in: &subscribers)
     }
 }

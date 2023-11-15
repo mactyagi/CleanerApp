@@ -93,11 +93,14 @@ class CompressQualitySelectionViewController: UIViewController {
     }
     
     @IBAction func deleteOriginalButtonPressed(_ sender: UIButton) {
+        sender.isEnabled = false
         viewModel.compressAsset.phAsset.delete { isComplete, error in
             if let error{
                 print(error.localizedDescription)
             }else if isComplete{
-                self.navigationController?.popViewController(animated: true)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }
@@ -130,7 +133,7 @@ class CompressQualitySelectionViewController: UIViewController {
         blurView.layer.cornerRadius = 20
         blurView.layer.cornerRadius = 20
         lowAlphaView.layer.cornerRadius = 20
-        blurView.addBlurEffect(style: .dark, alpha: 1)
+//        blurView.addBlurEffect(style: .dark, alpha: 1)
         let selectedTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             segmentControl.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
     }
@@ -171,6 +174,7 @@ class CompressQualitySelectionViewController: UIViewController {
     
     func duringCompressUI(){
         DispatchQueue.main.async {
+            self.navigationItem.setHidesBackButton(true, animated: true)
             self.lowAlphaView.isHidden = false
             self.avPlayerViewController.player?.pause()
             self.deleteOriginalButton.isHidden = false
@@ -179,6 +183,7 @@ class CompressQualitySelectionViewController: UIViewController {
             self.keepOriginalButton.isEnabled = false
             self.detailLabel.isHidden = false
             self.detailLabel.text = "Dont't close the app. Otherwise, the video won't be compressed."
+            self.subtitleLabel.text = "Compressing Video . . ."
             self.CompleteView.isHidden = true
             self.processingView.isHidden = false
             self.CompressButton.isHidden = true
@@ -190,6 +195,7 @@ class CompressQualitySelectionViewController: UIViewController {
     
     func afterCompressUI(){
         DispatchQueue.main.async {
+            self.navigationItem.setHidesBackButton(false, animated: true)
             self.lowAlphaView.isHidden = false
             self.deleteOriginalButton.isHidden = false
             self.deleteOriginalButton.isEnabled = true
