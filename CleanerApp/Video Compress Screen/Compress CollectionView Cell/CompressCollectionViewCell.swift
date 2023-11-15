@@ -40,9 +40,8 @@ class CompressCollectionViewCell: UICollectionViewCell {
         compressAsset.phAsset.getImage(comp: { image in
             self.cellImageView.image = image
         })
-        nowSizeLabel.text = compressAsset.originalSize.convertToFileString()
-        
-        
+        nowSizeLabel.text = "Now: \(compressAsset.originalSize.convertToFileString())"
+        afterSizeLabel.text = compressAsset.compressor.estimatedOutputSize().convertToFileString()
     }
     
 }

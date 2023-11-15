@@ -89,3 +89,18 @@ extension UIViewController{
         return String(describing: type(of: self))
     }
 }
+
+
+extension UIView{
+    func addBlurEffect(style: UIBlurEffect.Style, alpha: CGFloat){
+        let blurEffect = UIBlurEffect(style: style)
+        let bluredEffectView = UIVisualEffectView(effect: blurEffect)
+        bluredEffectView.frame = self.bounds
+        bluredEffectView.alpha = alpha
+        bluredEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(bluredEffectView)
+    }
+}
+
+
+

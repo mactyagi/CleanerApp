@@ -15,6 +15,7 @@
 		324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */; };
 		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
 		324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */; };
+		32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B6C5AD2B01357600A691AE /* CompressQualitySelectionViewModel.swift */; };
 		32BF2C8F2AF9468900045343 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF2C8E2AF9468900045343 /* HomeViewController.swift */; };
 		32BF2C922AF947DA00045343 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BF2C902AF947DA00045343 /* HomeTableViewCell.swift */; };
 		32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32BF2C912AF947DA00045343 /* HomeTableViewCell.xib */; };
@@ -41,6 +42,7 @@
 		324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressViewModel.swift; sourceTree = "<group>"; };
 		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressVideoModel.swift; sourceTree = "<group>"; };
+		32B6C5AD2B01357600A691AE /* CompressQualitySelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionViewModel.swift; sourceTree = "<group>"; };
 		32BF2C8E2AF9468900045343 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		32BF2C902AF947DA00045343 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		32BF2C912AF947DA00045343 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -74,17 +76,42 @@
 		324A76B82AFB225200EE5AD5 /* Video Compress Screen */ = {
 			isa = PBXGroup;
 			children = (
-				324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */,
+				32B6C5AA2B01351800A691AE /* Video Compress  */,
 				321B0ABD2B00C2EF00E4300D /* VideoCompress.storyboard */,
-				321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */,
+				32B6C5AC2B01355900A691AE /* Compress Quality Selection */,
 				321B0AB92B00BD7100E4300D /* VideoCompressor.swift */,
-				32D336C82AFCBFCA006C504E /* CompressCollectionViewCell.swift */,
-				32D336C92AFCBFCA006C504E /* CompressCollectionViewCell.xib */,
-				324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */,
+				32B6C5AB2B01353C00A691AE /* Compress CollectionView Cell */,
 				324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */,
-				32D336CC2AFE0494006C504E /* CompressVideosHeaderView.swift */,
 			);
 			path = "Video Compress Screen";
+			sourceTree = "<group>";
+		};
+		32B6C5AA2B01351800A691AE /* Video Compress  */ = {
+			isa = PBXGroup;
+			children = (
+				324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */,
+				324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */,
+			);
+			path = "Video Compress ";
+			sourceTree = "<group>";
+		};
+		32B6C5AB2B01353C00A691AE /* Compress CollectionView Cell */ = {
+			isa = PBXGroup;
+			children = (
+				32D336C82AFCBFCA006C504E /* CompressCollectionViewCell.swift */,
+				32D336C92AFCBFCA006C504E /* CompressCollectionViewCell.xib */,
+				32D336CC2AFE0494006C504E /* CompressVideosHeaderView.swift */,
+			);
+			path = "Compress CollectionView Cell";
+			sourceTree = "<group>";
+		};
+		32B6C5AC2B01355900A691AE /* Compress Quality Selection */ = {
+			isa = PBXGroup;
+			children = (
+				321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */,
+				32B6C5AD2B01357600A691AE /* CompressQualitySelectionViewModel.swift */,
+			);
+			path = "Compress Quality Selection";
 			sourceTree = "<group>";
 		};
 		32BF2C942AF94E1A00045343 /* Home Screen */ = {
@@ -215,6 +242,7 @@
 				324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */,
 				32BF2C922AF947DA00045343 /* HomeTableViewCell.swift in Sources */,
 				32BF2C982AF94E4F00045343 /* HomeViewModel.swift in Sources */,
+				32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */,
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
@@ -374,9 +402,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F638V29VVL;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -392,6 +421,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -403,9 +433,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F638V29VVL;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -421,6 +452,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

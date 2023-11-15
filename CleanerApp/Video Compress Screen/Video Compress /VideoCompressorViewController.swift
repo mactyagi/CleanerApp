@@ -76,7 +76,7 @@ extension VideoCompressorViewController: UICollectionViewDelegateFlowLayout{
 
 extension VideoCompressorViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = CompressQualitySelectionViewController.initWith()
+        let vc = CompressQualitySelectionViewController.initWith(compressAsset: viewModel.compressVideoModel[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -87,8 +87,9 @@ extension VideoCompressorViewController{
     func setSubscribers(){
         viewModel.$compressVideoModel.receive(on: DispatchQueue.main).sink { error in
             print(error)
-        } receiveValue: { _ in
+        } receiveValue: { data in
             self.collectionView.reloadData()
+            self.secondaryLabel.text = "Videos \(data.count) • \(self.viewModel.totalSize.convertToFileString())"
         }.store(in: &subscribers)
     }
 }
