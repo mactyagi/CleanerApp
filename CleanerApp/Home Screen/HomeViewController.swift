@@ -68,7 +68,8 @@ extension HomeViewController: UITableViewDelegate{
             let vc = VideoCompressorViewController.initWith()
             self.navigationController?.pushViewController(vc, animated: true)
         case .secretSpace:
-            break
+            let vc = SecretSpaceViewController.customInit()
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

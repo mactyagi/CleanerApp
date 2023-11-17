@@ -100,6 +100,29 @@ extension UIView{
         bluredEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(bluredEffectView)
     }
+    
+    func dropShadow() {
+        layer.masksToBounds = true
+        layer.shadowColor = UIColor.label.cgColor
+        layer.shadowOffset = CGSizeMake(0, 3)
+        layer.shadowOpacity = 1
+        layer.shadowRadius = 1
+    }
+}
+
+
+extension UIStoryboard{
+    static var main: UIStoryboard{
+        UIStoryboard(name: "Main", bundle: nil)
+    }
+    
+    static var VideoCompress: UIStoryboard{
+        UIStoryboard(name: "VideoCompress", bundle: nil)
+    }
+    
+    static var secretSpace: UIStoryboard{
+        UIStoryboard(name: "SecretSpace", bundle: nil)
+    }
 }
 
 

@@ -29,6 +29,20 @@ class HomeTableViewCell: UITableViewCell {
         iconImageView.image = homeCell.image
         imageBackgroundView.backgroundColor = homeCell.imageBackgroundColor
     }
+    
+    func configureCell(mainTitle: String, subTitle: String, iconImage: UIImage, imageBackgroundColor: UIColor){
+        subTitleLabel.text = mainTitle
+        mainTitleLabel.text = subTitle
+        iconImageView.image = iconImage
+        imageBackgroundView.backgroundColor = imageBackgroundColor
+    }
+    
+    func configureCell(secretCell: SecretSpaceModel){
+        mainTitleLabel.text = secretCell.title
+        subTitleLabel.text = secretCell.subtitle
+        iconImageView.image = secretCell.image
+        imageBackgroundView.backgroundColor = secretCell.imageBackgroundColor
+    }
 }
 
 extension UITableViewCell {

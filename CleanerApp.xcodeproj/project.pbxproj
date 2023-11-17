@@ -11,6 +11,10 @@
 		321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */; };
 		321B0ABE2B00C2EF00E4300D /* VideoCompress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 321B0ABD2B00C2EF00E4300D /* VideoCompress.storyboard */; };
 		321B0AC02B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0ABF2B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift */; };
+		32231B5D2B04B3DB009AE1E0 /* SecretSpace.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32231B5C2B04B3DB009AE1E0 /* SecretSpace.storyboard */; };
+		32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */; };
+		32231B612B04B946009AE1E0 /* SecretSpaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */; };
+		32231B632B04C5C9009AE1E0 /* SecretAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */; };
 		324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */; };
 		324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */; };
 		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
@@ -38,6 +42,10 @@
 		321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionViewController.swift; sourceTree = "<group>"; };
 		321B0ABD2B00C2EF00E4300D /* VideoCompress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoCompress.storyboard; sourceTree = "<group>"; };
 		321B0ABF2B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlobalStructs,EnumsAndClasses.swift"; sourceTree = "<group>"; };
+		32231B5C2B04B3DB009AE1E0 /* SecretSpace.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SecretSpace.storyboard; sourceTree = "<group>"; };
+		32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSpaceViewController.swift; sourceTree = "<group>"; };
+		32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSpaceModel.swift; sourceTree = "<group>"; };
+		32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretAlbumViewController.swift; sourceTree = "<group>"; };
 		324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorViewController.swift; sourceTree = "<group>"; };
 		324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressViewModel.swift; sourceTree = "<group>"; };
 		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -73,6 +81,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32231B5B2B04B30A009AE1E0 /* Secret Space */ = {
+			isa = PBXGroup;
+			children = (
+				32231B5C2B04B3DB009AE1E0 /* SecretSpace.storyboard */,
+				32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */,
+				32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */,
+				32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */,
+			);
+			path = "Secret Space";
+			sourceTree = "<group>";
+		};
 		324A76B82AFB225200EE5AD5 /* Video Compress Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +170,7 @@
 				321B0ABF2B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift */,
 				32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */,
 				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
+				32231B5B2B04B30A009AE1E0 /* Secret Space */,
 				32BF2C942AF94E1A00045343 /* Home Screen */,
 				32E2E0DC2AF80039009CA92E /* Main.storyboard */,
 				32E2E0E22AF8003A009CA92E /* Assets.xcassets */,
@@ -224,6 +244,7 @@
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
 				32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */,
 				32E2E0DE2AF80039009CA92E /* Main.storyboard in Resources */,
+				32231B5D2B04B3DB009AE1E0 /* SecretSpace.storyboard in Resources */,
 				32D336CB2AFCBFCA006C504E /* CompressCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,6 +260,7 @@
 				321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
+				32231B612B04B946009AE1E0 /* SecretSpaceModel.swift in Sources */,
 				324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */,
 				32BF2C922AF947DA00045343 /* HomeTableViewCell.swift in Sources */,
 				32BF2C982AF94E4F00045343 /* HomeViewModel.swift in Sources */,
@@ -250,9 +272,11 @@
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,
+				32231B632B04C5C9009AE1E0 /* SecretAlbumViewController.swift in Sources */,
 				321B0AC02B00C49400E4300D /* GlobalStructs,EnumsAndClasses.swift in Sources */,
 				32BF2C962AF94E3700045343 /* HomeModel.swift in Sources */,
 				32BF2C8F2AF9468900045343 /* HomeViewController.swift in Sources */,
+				32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +429,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = F638V29VVL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

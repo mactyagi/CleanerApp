@@ -96,7 +96,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <outlet property="label" destination="59m-cB-JSg" id="OW9-Sc-mM9"/>
+                                        <outlet property="sizeButtonlabel" destination="gjX-xf-2rt" id="0jo-DK-lwq"/>
                                     </connections>
                                 </collectionReusableView>
                             </collectionView>
@@ -143,7 +143,6 @@
                         <outlet property="secondaryLabel" destination="3yc-Cm-XsA" id="aQB-qe-EIh"/>
                         <outlet property="titleLabel" destination="sJn-39-MDY" id="0T4-xV-pvf"/>
                         <outlet property="topView" destination="Wet-YX-Qbj" id="QZX-GH-UzH"/>
-                        <outlet property="totalCompressSize" destination="gjX-xf-2rt" id="CLY-L7-YRJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jx-pU-x0J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

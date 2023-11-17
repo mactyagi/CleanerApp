@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 class CompressVideosHeaderView: UICollectionReusableView {
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var sizeButtonlabel: UIButton!
     
     static let identifier = "CompressVideosHeaderView"
 }
