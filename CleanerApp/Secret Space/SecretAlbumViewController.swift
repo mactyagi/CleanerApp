@@ -77,6 +77,16 @@ class SecretAlbumViewController: UIViewController{
         present(vc, animated: true)
     }
     
+    func dealWithVideo(_ result: PHPickerResult){
+        
+    }
+    
+    func dealWithImage(_ result: PHPickerResult){
+        result.itemProvider.loadObject(ofClass: UIImage.self) { object, error in
+            guard let image = object as? UIImage else { return }
+            print(image)
+        }
+    }
 }
 
 
@@ -86,8 +96,15 @@ extension SecretAlbumViewController: UIImagePickerControllerDelegate, UINavigati
 
 extension SecretAlbumViewController: PHPickerViewControllerDelegate{
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        dismiss(animated: true)
+        for result in results {
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier){
+                
+            }else if result.itemProvider.canLoadObject(ofClass: UIImage.self){
+                dealWithImage(result)
+            }
+        }
         
+       dismiss(animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
