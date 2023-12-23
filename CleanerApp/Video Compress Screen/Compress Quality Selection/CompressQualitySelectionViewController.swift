@@ -53,7 +53,7 @@ class CompressQualitySelectionViewController: UIViewController {
     static func initWith(compressAsset: CompressVideoModel) -> CompressQualitySelectionViewController{
         let destinationPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("compressed.mp4")
         try? FileManager.default.removeItem(at: destinationPath)
-        let vc = UIStoryboard(name: Storyboard.VideoCompress.rawValue, bundle: nil).instantiateViewController(withIdentifier: "CompressQualitySelectionViewController") as! CompressQualitySelectionViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CompressQualitySelectionViewController") as! CompressQualitySelectionViewController
         vc.viewModel = CompressQualitySelectionViewModel(compressAsset: compressAsset)
         vc.viewModel.compressAsset.compressor.destinationURL = destinationPath
         return vc

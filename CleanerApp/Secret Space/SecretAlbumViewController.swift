@@ -34,7 +34,7 @@ class SecretAlbumViewController: UIViewController{
     func setup(){
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.whiteAndGray
+        appearance.backgroundColor = UIColor.whiteAndGray2
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactAppearance = appearance
