@@ -21,6 +21,10 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>We need access to your calendar to fetch events.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>We need access to your Reminder to fetch events.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App need to use the photos</string>
 	<key>NSCameraUsageDescription</key>

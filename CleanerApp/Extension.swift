@@ -8,6 +8,7 @@
 import Foundation
 import Photos
 import UIKit
+import EventKit
 //MARK: - PHAsset
 
 extension PHAsset{
@@ -69,6 +70,19 @@ extension PHAsset{
 }
 
 
+extension UInt64 {
+    func convertToFileString() -> String {
+        var convertedValue: Double = Double(self)
+        var multiplyFactor = 0
+        let tokens = ["bytes", "KB", "MB", "GB", "TB", "PB",  "EB",  "ZB", "YB"]
+        while convertedValue > 1000 {
+            convertedValue /= 1000
+            multiplyFactor += 1
+        }
+        return String(format: "%4.2f %@", convertedValue, tokens[multiplyFactor])
+    }
+}
+
 extension Int64 {
     func convertToFileString() -> String {
         var convertedValue: Double = Double(self)
@@ -83,10 +97,30 @@ extension Int64 {
 }
 
 
+extension UInt64{
+    func formatBytes() -> String {
+        let byteCountFormatter = ByteCountFormatter()
+        byteCountFormatter.allowedUnits = [.useAll]
+        byteCountFormatter.countStyle = .file
+
+        return byteCountFormatter.string(fromByteCount: Int64(self))
+    }
+}
+
+
+
 
 extension UIViewController{
     static var className : String{
         return String(describing: type(of: self))
+    }
+    
+    func showLoader() {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+       activityIndicator.startAnimating()
+       view.isUserInteractionEnabled = false // Disable user interaction while the loader is displayed
     }
 }
 
@@ -109,8 +143,35 @@ extension UIView{
         layer.shadowRadius = 1
     }
     
-    func makeCircle(){
+    func makeCircleRadius(){
         layer.cornerRadius = frame.height / 2
+    }
+    
+    func activityStartAnimating(activityColor: UIColor = .gray, backgroundColor: UIColor = .clear, style: UIActivityIndicatorView.Style = .medium) {
+        let backgroundView = UIView()
+        backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        backgroundView.backgroundColor = backgroundColor
+        backgroundView.tag = 475647
+        
+        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
+        activityIndicator.center = self.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.large
+        activityIndicator.color = activityColor
+        activityIndicator.startAnimating()
+        self.isUserInteractionEnabled = false
+        
+        backgroundView.addSubview(activityIndicator)
+
+        self.addSubview(backgroundView)
+    }
+
+    func activityStopAnimating() {
+        if let background = viewWithTag(475647){
+            background.removeFromSuperview()
+        }
+        self.isUserInteractionEnabled = true
     }
 }
 
@@ -126,6 +187,49 @@ extension UIStoryboard{
     
     static var secretSpace: UIStoryboard{
         UIStoryboard(name: "SecretSpace", bundle: nil)
+    }
+}
+
+
+extension Date{
+    func toString(formatType: DateFormats = .decode) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = formatType.rawValue
+        return dateFormatter.string(from: self)
+    }
+    
+    enum DateFormats : String {
+        case ddMMyyyyhhmmss = "ddMMyyyy HH:mm:ss"
+        case ddMMMyyyy = "ddMMMyyyy"
+        case yyyyMMdd = "yyyy-MM-dd"
+        case MMddyy = "MM-dd-yyyy"
+        case decoderFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
+        case decoderFormat1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        case decoderFormatWith6S = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+        case decode = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        case dMMM = "d MMM"
+        case log = "yyyy-MM-dd HH:mm:ss.SSS "
+        case MMMdyyyyhmma = "MMM d, yyyy, h:mm a"
+        case MMMdyyyy = "MMM d, yyyy"
+        case MMMMdyyyy = "MMMM d, yyyy"
+        case ddMMyyyy = "dd/MM/yyyy"
+        case mmmdhmma = "MMM d, h:mm a"
+        case ddmmmyyyyhhmma = "dd-MMM-yyyy hh:mm a"
+        case hmma = "h:mm a"
+        case yyyy = "yyyy"
+        case ddmmmyyyy = "dd-MMM-yyyy"
+    }
+}
+
+extension EKEvent{
+    var year: String {
+        startDate.toString(formatType: .yyyy)
+    }
+}
+
+extension EKReminder{
+    var year: String{
+        (creationDate ?? Date()).toString(formatType: .yyyy)
     }
 }
 

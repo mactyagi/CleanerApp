@@ -216,7 +216,8 @@ class CompressQualitySelectionViewController: UIViewController {
 
 extension CompressQualitySelectionViewController{
     func setSubscribers(){
-        viewModel.$compressAsset.receive(on: DispatchQueue.main).sink { error in
+        viewModel.$compressAsset.receive(on: DispatchQueue.main)
+            .sink { error in
             print(error)
         } receiveValue: { compressAsset in
             self.DetailNowSizeLabel.text = compressAsset.originalSize.convertToFileString()

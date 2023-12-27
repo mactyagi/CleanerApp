@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2682B38A605003DB928 /* CalendarViewController.swift */; };
+		3201A26E2B38A78F003DB928 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */; };
+		3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26F2B38B023003DB928 /* CalendarViewModel.swift */; };
+		3201A2722B38BAE1003DB928 /* CalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3201A2712B38BAE1003DB928 /* CalendarTableViewCell.xib */; };
+		3201A2782B394D1D003DB928 /* CustomEKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2772B394D1D003DB928 /* CustomEKEvent.swift */; };
 		321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0AB92B00BD7100E4300D /* VideoCompressor.swift */; };
 		321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */; };
 		32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */; };
@@ -17,6 +22,10 @@
 		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
 		324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */; };
 		324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324AA8F62B34069D001DAF2E /* CoreDataManager.swift */; };
+		32603A972B3A962100154775 /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32603A952B3A962100154775 /* ReminderTableViewCell.swift */; };
+		32603A982B3A962100154775 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32603A962B3A962100154775 /* ReminderTableViewCell.xib */; };
+		326709522B374ECC003515D4 /* CleanerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326709512B374ECC003515D4 /* CleanerViewModel.swift */; };
+		326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326709532B375D11003515D4 /* DeviceInfoManager.swift */; };
 		32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32682CAD2B36D12C00B9B7BD /* IconView.xib */; };
 		32682CB02B36D17800B9B7BD /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CAF2B36D17800B9B7BD /* IconView.swift */; };
 		32682CB22B36D7CA00B9B7BD /* CleanerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */; };
@@ -39,6 +48,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3201A2682B38A605003DB928 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
+		3201A26F2B38B023003DB928 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		3201A2712B38BAE1003DB928 /* CalendarTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarTableViewCell.xib; sourceTree = "<group>"; };
+		3201A2772B394D1D003DB928 /* CustomEKEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEKEvent.swift; sourceTree = "<group>"; };
 		321B0AB92B00BD7100E4300D /* VideoCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressor.swift; sourceTree = "<group>"; };
 		321B0ABB2B00C1E500E4300D /* CompressQualitySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionViewController.swift; sourceTree = "<group>"; };
 		32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSpaceViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +63,10 @@
 		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressVideoModel.swift; sourceTree = "<group>"; };
 		324AA8F62B34069D001DAF2E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		32603A952B3A962100154775 /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
+		32603A962B3A962100154775 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
+		326709512B374ECC003515D4 /* CleanerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewModel.swift; sourceTree = "<group>"; };
+		326709532B375D11003515D4 /* DeviceInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoManager.swift; sourceTree = "<group>"; };
 		32682CAD2B36D12C00B9B7BD /* IconView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IconView.xib; sourceTree = "<group>"; };
 		32682CAF2B36D17800B9B7BD /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +101,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3201A26A2B38A739003DB928 /* Calender Screen */ = {
+			isa = PBXGroup;
+			children = (
+				3201A2682B38A605003DB928 /* CalendarViewController.swift */,
+				3201A2772B394D1D003DB928 /* CustomEKEvent.swift */,
+				3201A26F2B38B023003DB928 /* CalendarViewModel.swift */,
+				32603A952B3A962100154775 /* ReminderTableViewCell.swift */,
+				32603A962B3A962100154775 /* ReminderTableViewCell.xib */,
+				3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */,
+				3201A2712B38BAE1003DB928 /* CalendarTableViewCell.xib */,
+			);
+			path = "Calender Screen";
+			sourceTree = "<group>";
+		};
 		32231B5B2B04B30A009AE1E0 /* Secret Space */ = {
 			isa = PBXGroup;
 			children = (
@@ -101,7 +133,6 @@
 				321B0AB92B00BD7100E4300D /* VideoCompressor.swift */,
 				32B6C5AB2B01353C00A691AE /* Compress CollectionView Cell */,
 				324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */,
-				32682CB32B36D7D300B9B7BD /* Cleaner Screen */,
 			);
 			path = "Video Compress Screen";
 			sourceTree = "<group>";
@@ -110,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */,
+				326709512B374ECC003515D4 /* CleanerViewModel.swift */,
 			);
 			path = "Cleaner Screen";
 			sourceTree = "<group>";
@@ -178,10 +210,13 @@
 				32E2E0D62AF80039009CA92E /* AppDelegate.swift */,
 				32E2E0D82AF80039009CA92E /* SceneDelegate.swift */,
 				324A76BB2AFB243F00EE5AD5 /* Extension.swift */,
+				326709532B375D11003515D4 /* DeviceInfoManager.swift */,
 				324AA8F62B34069D001DAF2E /* CoreDataManager.swift */,
 				32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */,
+				32682CB32B36D7D300B9B7BD /* Cleaner Screen */,
 				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
 				32231B5B2B04B30A009AE1E0 /* Secret Space */,
+				3201A26A2B38A739003DB928 /* Calender Screen */,
 				32BF2C942AF94E1A00045343 /* Home Screen */,
 				32E2E0DC2AF80039009CA92E /* Main.storyboard */,
 				32E2E0E22AF8003A009CA92E /* Assets.xcassets */,
@@ -253,7 +288,9 @@
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
+				32603A982B3A962100154775 /* ReminderTableViewCell.xib in Resources */,
 				32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */,
+				3201A2722B38BAE1003DB928 /* CalendarTableViewCell.xib in Resources */,
 				32E2E0DE2AF80039009CA92E /* Main.storyboard in Resources */,
 				32D336CB2AFCBFCA006C504E /* CompressCollectionViewCell.xib in Resources */,
 			);
@@ -268,11 +305,14 @@
 			files = (
 				32E2E0D72AF80039009CA92E /* AppDelegate.swift in Sources */,
 				321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */,
+				3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
+				3201A2782B394D1D003DB928 /* CustomEKEvent.swift in Sources */,
 				32231B612B04B946009AE1E0 /* SecretSpaceModel.swift in Sources */,
 				32682CB02B36D17800B9B7BD /* IconView.swift in Sources */,
 				324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */,
+				326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */,
 				32BF2C922AF947DA00045343 /* HomeTableViewCell.swift in Sources */,
 				32BF2C982AF94E4F00045343 /* HomeViewModel.swift in Sources */,
 				32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */,
@@ -282,13 +322,17 @@
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
 				324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */,
+				32603A972B3A962100154775 /* ReminderTableViewCell.swift in Sources */,
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
+				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,
 				32231B632B04C5C9009AE1E0 /* SecretAlbumViewController.swift in Sources */,
 				32BF2C962AF94E3700045343 /* HomeModel.swift in Sources */,
 				32BF2C8F2AF9468900045343 /* HomeViewController.swift in Sources */,
 				32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */,
+				326709522B374ECC003515D4 /* CleanerViewModel.swift in Sources */,
+				3201A26E2B38A78F003DB928 /* CalendarTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
