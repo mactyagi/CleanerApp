@@ -21,6 +21,7 @@ class  CleanerViewModel {
         self.deviceInfoManager = deviceInfoManager
         self.eventStore = eventStore
         self.deviceInfoManager.delegate = self
+        CoreDataPHAssetManager.shared.startProcess()
     }
     
     

@@ -118,6 +118,9 @@ class CleanerViewController: UITableViewController {
     func setupTapOnView(){
         let calendarTapGesture = UITapGestureRecognizer(target: self, action: #selector(calendarViewTapped))
         calenderView.addGestureRecognizer(calendarTapGesture)
+        
+        let galleryItemTapGesture = UITapGestureRecognizer(target: self, action: #selector(photoAndVideoTapped))
+        photosView.addGestureRecognizer(galleryItemTapGesture)
     }
     
     @objc func calendarViewTapped(){
@@ -126,6 +129,10 @@ class CleanerViewController: UITableViewController {
     
     @objc func contactViewTapped(){
         
+    }
+    
+    @objc func photoAndVideoTapped(){
+        navigationController?.pushViewController(DuplicatePhotosViewController.customInit(), animated: true)
     }
     
     

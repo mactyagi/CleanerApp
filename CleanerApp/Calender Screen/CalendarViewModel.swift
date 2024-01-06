@@ -21,7 +21,7 @@ class CalendarViewModel {
     @Published var totalCount = 0
     @Published var unAuthorizedTitle = ""
     @Published var unAuthorizedNote = ""
-    
+    @Published var showLoader = false
     
     init(eventStore: EKEventStore) {
         self.eventStore = eventStore
@@ -152,7 +152,7 @@ class CalendarViewModel {
         allReminder = newEvents
     }
     
-    func checkForCalendarAutorization(comp:@escaping(_ isGranted: Bool) -> ()) {
+    private func checkForCalendarAutorization(comp:@escaping(_ isGranted: Bool) -> ()) {
         if !self.allEvents.isEmpty{
             comp(true)
             return
@@ -176,7 +176,7 @@ class CalendarViewModel {
     
     
     
-    func checkForReminderAutorization(comp:@escaping(_ isAuthorized: Bool) -> ()){
+    private func checkForReminderAutorization(comp:@escaping(_ isAuthorized: Bool) -> ()){
         if self.allReminder.count != 0 {
             comp(true)
             return
@@ -198,7 +198,7 @@ class CalendarViewModel {
         }
     }
     
-    func fetchReminders(){
+    private func fetchReminders(){
         let predicate = self.eventStore.predicateForReminders(in: nil)
         eventStore.fetchReminders(matching: predicate) { reminders in
             if let reminders = reminders {
@@ -209,7 +209,7 @@ class CalendarViewModel {
         }
     }
     
-    func fetchCalendarEvents() {
+    private func fetchCalendarEvents() {
         let startDate = Calendar.current.date(byAdding: .year, value: -4, to: Date())!
         let endDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate!, calendars: nil)
@@ -223,8 +223,41 @@ class CalendarViewModel {
         
     }
     
+    func deleteData(){
+        switch currentSegementType {
+        case .Calendar:
+            deleteEvents()
+        case .Reminder:
+            deleteReminders()
+        }
+    }
     
-    func deleteEvents(comp: () -> Void){
+    
+    private func deleteReminders(){
+        showLoader = true
+        var remainingReminders: [CustomEKReminder] = []
+        for reminderTouple in self.allReminder {
+            let customReminders = reminderTouple.reminders
+            for customReminder in customReminders {
+                if customReminder.isSelected{
+                    do{
+                        try eventStore.remove(customReminder.reminder, commit: true)
+                    }catch{
+                        print(error)
+                    }
+                }else{
+                    remainingReminders.append(customReminder)
+                }
+            }
+        }
+        
+        let eventsGroup = Dictionary(grouping: remainingReminders, by: \.reminder.year)
+        self.allReminder = eventsGroup.keys.compactMap { ($0, eventsGroup[$0]!.sorted(by: { ($0.reminder.creationDate ?? Date()) < ($1.reminder.creationDate ?? Date())}))}.sorted(by: { $0.year > $1.year })
+    }
+    
+    
+    private func deleteEvents(){
+        showLoader = true
         var remainingEvents: [CustomEKEvent] = []
         for allEvent in allEvents {
             let events = allEvent.events
@@ -243,7 +276,6 @@ class CalendarViewModel {
         
         let eventsGroup = Dictionary(grouping: remainingEvents, by: \.event.year)
         allEvents = eventsGroup.keys.compactMap { ($0, eventsGroup[$0]!.sorted(by: { $0.event.startDate > $1.event.startDate }))}.sorted(by: { $0.year > $1.year })
-        
-        comp()
+        showLoader = false
     }
 }

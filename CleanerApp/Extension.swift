@@ -27,6 +27,21 @@ extension PHAsset{
         }
     }
     
+    static func findPHAssetByLocalIdentifier(localIdentifier: String) -> PHAsset? {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.predicate = NSPredicate(format: "localIdentifier = %@", localIdentifier)
+
+        let result = PHAsset.fetchAssets(with: fetchOptions)
+
+        if let asset = result.firstObject {
+            return asset
+        } else {
+            print("PHAsset not found for local identifier: \(localIdentifier)")
+            return nil
+        }
+    }
+    
+    
     func delete(completionHandler:@escaping (_ isComplete: Bool, _ error: Error?) -> ()){
         PHPhotoLibrary.shared().performChanges {
             PHAssetChangeRequest.deleteAssets([self] as NSArray)

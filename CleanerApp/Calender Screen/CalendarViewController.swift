@@ -41,10 +41,7 @@ class CalendarViewController: UIViewController {
     }
     
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
-        self.view.activityStartAnimating()
-        viewModel.deleteEvents {
-            view.activityStopAnimating()
-        }
+        viewModel.deleteData()
     }
     
     @IBAction func goToSettingButtonPressed(){
@@ -96,7 +93,82 @@ class CalendarViewController: UIViewController {
         setSubscribers()
         viewModel.updateValueFor(segment: SegmentType(rawValue: segmentControl.selectedSegmentIndex)!)
     }
+
     
+    func configureRightBarButton(){
+        let rightBarButton = UIBarButtonItem(title: "selectAll", style: .plain, target: self, action: #selector(rightBarButtonPressed))
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    func configureTitle(){
+        let titleLabel = UILabel()
+        titleLabel.text = self.title
+        titleLabel.textColor = UIColor.label // Customize the color as needed
+        titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 17.0) // Adjust the font size as needed
+        titleLabel.sizeToFit()
+        navigationItem.titleView = titleLabel
+    }
+    
+    @objc func rightBarButtonPressed(){
+        viewModel.selectAndDeselectAll()
+    }
+}
+
+
+//MARK: - TableView Data Source and Delegate
+extension CalendarViewController: UITableViewDataSource, UITableViewDelegate{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        segmentControl.selectedSegmentIndex == 0 ? viewModel.allEvents.count : viewModel.allReminder.count
+        
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        segmentControl.selectedSegmentIndex == 0 ? viewModel.allEvents[section].events.count : viewModel.allReminder[section].reminders.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch viewModel.currentSegementType{
+        case .Calendar:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CalendarTableViewCell.identifier, for: indexPath) as? CalendarTableViewCell else{ return UITableViewCell() }
+            let event = viewModel.allEvents[indexPath.section].events[indexPath.row]
+            cell.configureCell(event: event)
+            return cell
+        case .Reminder:
+            guard let reminderCell = tableView.dequeueReusableCell(withIdentifier: ReminderTableViewCell.identifier, for: indexPath) as? ReminderTableViewCell else { return UITableViewCell()}
+            let reminder = viewModel.allReminder[indexPath.section].reminders[indexPath.row]
+            reminderCell.configureCell(reminder: reminder)
+            return reminderCell
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch viewModel.currentSegementType{
+        case .Calendar:
+            viewModel.allEvents[indexPath.section].events[indexPath.row].isSelected.toggle()
+        case .Reminder:
+            viewModel.allReminder[indexPath.section].reminders[indexPath.row].isSelected.toggle()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 30, height: view.frame.height))
+        switch viewModel.currentSegementType{
+        case .Calendar:
+            label.text = viewModel.allEvents[section].year
+        case .Reminder:
+            label.text = viewModel.allReminder[section].year
+        }
+        label.textColor = .label
+        label.font = UIFont(name: "AvenirNext-Bold", size: 17.0)
+        view.addSubview(label)
+        view.backgroundColor = UIColor.lightGrayAndDarkGray2
+        return view
+    }
+}
+
+extension CalendarViewController{
     func setSubscribers(){
         viewModel.$allEvents
             .sink { [weak self] _ in
@@ -172,79 +244,13 @@ class CalendarViewController: UIViewController {
             
         }
         .store(in: &cancelables)
-    }
-
-    
-    func configureRightBarButton(){
-        let rightBarButton = UIBarButtonItem(title: "selectAll", style: .plain, target: self, action: #selector(rightBarButtonPressed))
-        navigationItem.rightBarButtonItem = rightBarButton
-    }
-    
-    func configureTitle(){
-        let titleLabel = UILabel()
-        titleLabel.text = self.title
-        titleLabel.textColor = UIColor.label // Customize the color as needed
-        titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 17.0) // Adjust the font size as needed
-        titleLabel.sizeToFit()
-        navigationItem.titleView = titleLabel
-    }
-    
-    @objc func rightBarButtonPressed(){
-        viewModel.selectAndDeselectAll()
-    }
-}
-
-
-//MARK: - TableView Data Source and Delegate
-extension CalendarViewController: UITableViewDataSource, UITableViewDelegate{
-    func numberOfSections(in tableView: UITableView) -> Int {
-        segmentControl.selectedSegmentIndex == 0 ? viewModel.allEvents.count : viewModel.allReminder.count
         
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        segmentControl.selectedSegmentIndex == 0 ? viewModel.allEvents[section].events.count : viewModel.allReminder[section].reminders.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch viewModel.currentSegementType{
-        case .Calendar:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CalendarTableViewCell.identifier, for: indexPath) as? CalendarTableViewCell else{ return UITableViewCell() }
-            let event = viewModel.allEvents[indexPath.section].events[indexPath.row]
-            cell.configureCell(event: event)
-            return cell
-        case .Reminder:
-            guard let reminderCell = tableView.dequeueReusableCell(withIdentifier: ReminderTableViewCell.identifier, for: indexPath) as? ReminderTableViewCell else { return UITableViewCell()}
-            let reminder = viewModel.allReminder[indexPath.section].reminders[indexPath.row]
-            reminderCell.configureCell(reminder: reminder)
-            return reminderCell
+        viewModel.$showLoader.sink { showLoader in
+            DispatchQueue.main.async {
+                showLoader ? self.view.activityStartAnimating() : self.view.activityStopAnimating()
+            }
         }
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        switch viewModel.currentSegementType{
-        case .Calendar:
-            viewModel.allEvents[indexPath.section].events[indexPath.row].isSelected.toggle()
-        case .Reminder:
-            viewModel.allReminder[indexPath.section].reminders[indexPath.row].isSelected.toggle()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
-        let label = UILabel(frame: CGRect(x: 15, y: 0, width: view.frame.width - 30, height: view.frame.height))
-        switch viewModel.currentSegementType{
-        case .Calendar:
-            label.text = viewModel.allEvents[section].year
-        case .Reminder:
-            label.text = viewModel.allReminder[section].year
-        }
-        label.textColor = .label
-        label.font = UIFont(name: "AvenirNext-Bold", size: 17.0)
-        view.addSubview(label)
-        view.backgroundColor = UIColor.lightGrayAndDarkGray2
-        return view
+        .store(in: &cancelables)
     }
 }
 
