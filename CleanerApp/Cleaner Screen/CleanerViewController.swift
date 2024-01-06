@@ -132,7 +132,7 @@ class CleanerViewController: UITableViewController {
     }
     
     @objc func photoAndVideoTapped(){
-        navigationController?.pushViewController(DuplicatePhotosViewController.customInit(), animated: true)
+        navigationController?.pushViewController(MediaViewController.customInit(), animated: true)
     }
     
     
