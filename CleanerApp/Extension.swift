@@ -109,6 +109,14 @@ extension Int64 {
         }
         return String(format: "%4.2f %@", convertedValue, tokens[multiplyFactor])
     }
+    
+    func formatBytes() -> String {
+        let byteCountFormatter = ByteCountFormatter()
+        byteCountFormatter.allowedUnits = [.useAll]
+        byteCountFormatter.countStyle = .file
+
+        return byteCountFormatter.string(fromByteCount: Int64(self))
+    }
 }
 
 

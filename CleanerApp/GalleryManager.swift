@@ -71,10 +71,12 @@ struct CoreDataPHAssetManager{
     }
     
     mutating func startProcess(){
+        print("** start Process **")
         addNewPHAssetsInCoreData()
         processDuplicateAssetsFor(.photo)
         processDuplicateAssetsFor(.screenshot)
         processSimilarAssetsFor(.photo)
+        print("** End process **")
     }
     
     
@@ -86,16 +88,16 @@ struct CoreDataPHAssetManager{
     
     
     private func processDuplicateAssetsFor(_ mediaType: PHAssetCustomMediaType){
-        var context = CoreDataManager.shared.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         
-        var oldAssetForDuplicate = CoreDataManager.shared.fetchCustomAssets(
+        let oldAssetForDuplicate = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
             groupType: nil,
             shoudHaveSHA: true,
             shouldHaveFeaturePrint: nil)
         
-        var newAssetsForDuplicate = CoreDataManager.shared.fetchCustomAssets(
+        let newAssetsForDuplicate = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
             groupType: nil,
@@ -109,8 +111,8 @@ struct CoreDataPHAssetManager{
     
     
     private func processSimilarAssetsFor(_ mediaType: PHAssetCustomMediaType){
-        var context = CoreDataManager.shared.persistentContainer.viewContext
-        var oldAsset = CoreDataManager.shared.fetchCustomAssets(
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let oldAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
             groupType: nil,
@@ -118,7 +120,7 @@ struct CoreDataPHAssetManager{
             shouldHaveFeaturePrint: true,
             exceptGroupType: .duplicate)
         
-        var newAsset = CoreDataManager.shared.fetchCustomAssets(
+        let newAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
             groupType: nil,
@@ -127,7 +129,7 @@ struct CoreDataPHAssetManager{
             exceptGroupType: .duplicate)
         
         
-        var allAssets = oldAsset + newAsset
+        let allAssets = oldAsset + newAsset
         
         
         for firstIndex in oldAsset.count ..< allAssets.count {
@@ -154,7 +156,7 @@ struct CoreDataPHAssetManager{
                 
                 switch distance{
                     
-                case 0 ... 0.62:
+                case 0 ... 0.5:
                     print("similar")
                     processSimilarAssets(firstAsset: firstAsset, secondAsset: secondAsset)
                     
@@ -181,7 +183,7 @@ struct CoreDataPHAssetManager{
     
     
     
-    func processSimilarAssets(firstAsset: CustomAsset, secondAsset: CustomAsset){
+    func processSimilarAssets(firstAsset: DBAsset, secondAsset: DBAsset){
         firstAsset.groupTypeValue = PHAssetGroupType.similar.rawValue
         secondAsset.groupTypeValue = PHAssetGroupType.similar.rawValue
         
@@ -217,7 +219,7 @@ struct CoreDataPHAssetManager{
             shouldHaveFeaturePrint: nil
         )
 
-        var dictOfSavedCustomPHAsset : [String: CustomAsset] = [:]
+        var dictOfSavedCustomPHAsset : [String: DBAsset] = [:]
 
         for asset in savedCustomPHAssets{
             dictOfSavedCustomPHAsset[asset.assetId!] = asset
@@ -231,14 +233,15 @@ struct CoreDataPHAssetManager{
             }
         }
         let newCustomPHAssets = newPHAssets.map { asset in
-            CustomAsset(assetId: asset.localIdentifier, creationDate: Date(), featurePrints: nil, photoGroupType: .other, mediaType: mediaType, sha: nil, insertIntoManagedObjectContext: CoreDataManager.shared.persistentContainer.viewContext, size: 0)
+            let size = asset.getSize() ?? 0
+            return DBAsset(assetId: asset.localIdentifier, creationDate: Date(), featurePrints: nil, photoGroupType: .other, mediaType: mediaType, sha: nil, insertIntoManagedObjectContext: CoreDataManager.shared.persistentContainer.viewContext, size: size)
         }
         CoreDataManager.shared.saveContext(context: context)
     }
 
     
     
-    private func findAndSaveDuplicateAssets(oldAsset: [CustomAsset], newAsset: [CustomAsset]){
+    private func findAndSaveDuplicateAssets(oldAsset: [DBAsset], newAsset: [DBAsset]){
         
         newAsset.forEach { $0.calculateSHA() }
         
@@ -286,7 +289,7 @@ struct CoreDataPHAssetManager{
     
     
     
-    private func checkForSingleDuplicateElement(oldAsset: inout [CustomAsset]){
+    private func checkForSingleDuplicateElement(oldAsset: inout [DBAsset]){
         var toRemoveSubId: [UUID] = []
         let dict = Dictionary(grouping: oldAsset, by: \.subGroupId)
         
@@ -302,8 +305,8 @@ struct CoreDataPHAssetManager{
 
 
 class PhotoManager {
-    var newCustomPHAssets: [CustomAsset] = []
-    var allCustomPHAssets: [CustomAsset] = []
+    var newCustomPHAssets: [DBAsset] = []
+    var allCustomPHAssets: [DBAsset] = []
     
     
 //    func updatePhotos(){
@@ -368,10 +371,10 @@ class PhotoManager {
 
 
 struct SimilarImageManager{
-    var newPHAssets:[CustomAsset]
-    var processedPHAssets:[CustomAsset]
-    var allCustomPHAssets = [CustomAsset]()
-    init(newPHAssets: [CustomAsset], processedPHAssets: [CustomAsset]) {
+    var newPHAssets:[DBAsset]
+    var processedPHAssets:[DBAsset]
+    var allCustomPHAssets = [DBAsset]()
+    init(newPHAssets: [DBAsset], processedPHAssets: [DBAsset]) {
         self.newPHAssets = newPHAssets
         self.processedPHAssets = processedPHAssets
         allCustomPHAssets =  processedPHAssets + newPHAssets
@@ -466,42 +469,42 @@ struct SimilarImageManager{
     
 }
 
-struct CustomAsset2 {
-
-    init(assetId: String? = nil, creationDate: Date? = nil, featurePrints: [VNFeaturePrintObservation]? = nil, groupTypeValue: String? = nil, mediaTypeValue: String? = nil, size: Int64, subGroupId: UUID? = nil, sha: String? = nil) {
-        self.assetId = assetId
-        self.creationDate = creationDate
-        self.featurePrints = featurePrints
-        self.groupTypeValue = groupTypeValue
-        self.mediaTypeValue = mediaTypeValue
-        self.size = size
-        self.subGroupId = subGroupId
-        self.sha = sha
-        self.isNew = true
-    }
-    
-    init(customAsset: CustomAsset) {
-        self.assetId = customAsset.assetId
-        self.creationDate = customAsset.creationDate
-        self.featurePrints = customAsset.featurePrints
-        self.groupTypeValue = customAsset.groupTypeValue
-        self.mediaTypeValue = customAsset.mediaTypeValue
-        self.size = customAsset.size
-        self.subGroupId = customAsset.subGroupId
-        self.sha = customAsset.sha
-        self.isNew = false
-    }
-    
-    
-   var assetId: String?
-   var creationDate: Date?
-   var featurePrints: [VNFeaturePrintObservation]?
-   var groupTypeValue: String?
-   var mediaTypeValue: String?
-   var size: Int64
-   var subGroupId: UUID?
-   var sha: String?
-    var isNew: Bool
-
-}
+//struct CustomAsset2 {
+//
+//    init(assetId: String? = nil, creationDate: Date? = nil, featurePrints: [VNFeaturePrintObservation]? = nil, groupTypeValue: String? = nil, mediaTypeValue: String? = nil, size: Int64, subGroupId: UUID? = nil, sha: String? = nil) {
+//        self.assetId = assetId
+//        self.creationDate = creationDate
+//        self.featurePrints = featurePrints
+//        self.groupTypeValue = groupTypeValue
+//        self.mediaTypeValue = mediaTypeValue
+//        self.size = size
+//        self.subGroupId = subGroupId
+//        self.sha = sha
+//        self.isNew = true
+//    }
+//    
+//    init(customAsset: DBAsset) {
+//        self.assetId = customAsset.assetId
+//        self.creationDate = customAsset.creationDate
+//        self.featurePrints = customAsset.featurePrints
+//        self.groupTypeValue = customAsset.groupTypeValue
+//        self.mediaTypeValue = customAsset.mediaTypeValue
+//        self.size = customAsset.size
+//        self.subGroupId = customAsset.subGroupId
+//        self.sha = customAsset.sha
+//        self.isNew = false
+//    }
+//    
+//    
+//   var assetId: String?
+//   var creationDate: Date?
+//   var featurePrints: [VNFeaturePrintObservation]?
+//   var groupTypeValue: String?
+//   var mediaTypeValue: String?
+//   var size: Int64
+//   var subGroupId: UUID?
+//   var sha: String?
+//    var isNew: Bool
+//
+//}
 

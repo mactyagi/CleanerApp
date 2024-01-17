@@ -80,6 +80,8 @@ class CleanerViewController: UITableViewController {
         addCornerRadius(20, views: smartCleaningView)
         
         setupIcons()
+        let customFont = UIFont(name: "Avenir Next Demi Bold", size: 18.0)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
     }
     
     func setupIcons(){

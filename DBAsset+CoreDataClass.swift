@@ -13,12 +13,12 @@ import Photos
 import UIKit
 import CryptoKit
 
-@objc(CustomAsset)
-public class CustomAsset: NSManagedObject {
+@objc(DBAsset)
+public class DBAsset: NSManagedObject {
 
     
     convenience init(assetId: String, creationDate: Date, featurePrints: [VNFeaturePrintObservation]?, photoGroupType: PHAssetGroupType, mediaType: PHAssetCustomMediaType, sha: String?, insertIntoManagedObjectContext context: NSManagedObjectContext, size: Int64) {
-        let entity = NSEntityDescription.entity(forEntityName: "CustomAsset", in: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "DBAsset", in: context)!
         self.init(entity: entity, insertInto: context)
         self.assetId = assetId
         self.creationDate = creationDate
@@ -30,7 +30,7 @@ public class CustomAsset: NSManagedObject {
     }
     
     
-    func computeDistance(mediaType: PHAssetCustomMediaType, secondCustomAsset: CustomAsset) -> Float{
+    func computeDistance(mediaType: PHAssetCustomMediaType, secondCustomAsset: DBAsset) -> Float{
         
         guard let firstFeaturePrints = self.featurePrints, let secondFeaturePrints = secondCustomAsset.featurePrints else {return 1000}
         switch mediaType{
@@ -67,7 +67,7 @@ public class CustomAsset: NSManagedObject {
     }
 }
 
-extension CustomAsset{
+extension DBAsset{
     
     func getPHAsset() -> PHAsset? {
         let fetchOptions = PHFetchOptions()

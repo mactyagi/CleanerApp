@@ -18,15 +18,27 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     
     static let identifier = "PhotoCollectionViewCell"
+
     
+    func configureNewCell(asset: CustomDBAsset){
+        myImageView.layer.cornerRadius = 16
+        if let phAsset = asset.dbAsset.getPHAsset(){
+            phAsset.getImage { image in
+                self.myImageView.image = image
+            }
+        }
+        
+        checkUnCheckImageView.image = UIImage(systemName: asset.isSelected ? "checkmark.circle.fill" : "circle" ,withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.white, .darkBlue]))
+    }
     
-    
-    func configureNewCell(asset: CustomAsset){
+    func configureNewCell(asset: DBAsset, isSelected: Bool){
         myImageView.layer.cornerRadius = 16
         if let phAsset = asset.getPHAsset(){
             phAsset.getImage { image in
                 self.myImageView.image = image
             }
         }
+        
+        checkUnCheckImageView.image = UIImage(systemName: isSelected ? "checkmark.circle.fill" : "circle" ,withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.white, .darkBlue]))
     }
 }

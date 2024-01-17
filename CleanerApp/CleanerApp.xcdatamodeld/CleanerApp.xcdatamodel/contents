@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C64" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CustomAsset" representedClassName="CustomAsset" syncable="YES">
+    <entity name="DBAsset" representedClassName="DBAsset" syncable="YES">
         <attribute name="assetId" attributeType="String"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="featurePrints" optional="YES" attributeType="Transformable"/>

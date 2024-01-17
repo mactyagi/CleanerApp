@@ -37,10 +37,23 @@ class CoreDataManager{
     }
     
     
-    
-    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, exceptGroupType: PHAssetGroupType? = nil) -> [CustomAsset]{
+    func fetchDBAssets(context: NSManagedObjectContext, predicate: NSPredicate) -> [DBAsset]{
         context.performAndWait {
-            let fetchRequest = CustomAsset.fetchRequest()
+            let fetchRequest = DBAsset.fetchRequest()
+            fetchRequest.predicate = predicate
+            do{
+                let object = try context.fetch(fetchRequest)
+                return object
+            }catch{
+                print("Could not fetch, \(error.localizedDescription)")
+            }
+            return []
+        }
+    }
+    
+    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, exceptGroupType: PHAssetGroupType? = nil) -> [DBAsset]{
+        context.performAndWait {
+            let fetchRequest = DBAsset.fetchRequest()
             var predicates = [NSPredicate]()
             if let exceptGroupType{
                 predicates.append(NSPredicate(format: "groupTypeValue != %@", exceptGroupType.rawValue))
@@ -61,18 +74,8 @@ class CoreDataManager{
                 predicates.append(NSPredicate(format: shouldHaveFeaturePrint ? "featurePrints != nil" : "featurePrints == nil"))
             }
             
-            
-            
             let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-            fetchRequest.predicate = compoundPredicate
-            
-            do{
-                let object = try context.fetch(fetchRequest)
-                return object
-            }catch{
-                print("Could not fetch, \(error.localizedDescription)")
-            }
-            return []
+            return fetchDBAssets(context: context, predicate: compoundPredicate)
         }
     }
 }

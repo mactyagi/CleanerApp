@@ -6,8 +6,41 @@
 //
 
 import Foundation
-
-
+import Combine
 class BaseViewModel{
-    var customAssets: [CustomAsset] = []
+    
+    var assetRows: [[CustomDBAsset]] = []
+    var selectedIndexPath: Set<IndexPath> = []
+    @Published var reloadCollectionView: Bool = false{
+        
+        didSet{
+            reloadCollectionView = false
+        }
+    }
+    var predicate: NSPredicate
+    init(predicate: NSPredicate) {
+        self.predicate = predicate
+//        fetchDBAssetFromCoreData()
+    }
+    
+    func fetchDBAssetFromCoreData(){
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let dbAssets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: self.predicate)
+        let dict = Dictionary(grouping: dbAssets) { $0.subGroupId }
+        for (key,value) in dict{
+            var assets: [CustomDBAsset] = []
+            for (index,asset) in value.enumerated(){
+                assets.append(CustomDBAsset(dbAsset: asset, isSelected: index != 0))
+            }
+            assetRows.append(assets)
+        }
+        reloadCollectionView = true
+        
+    }
+}
+
+
+struct CustomDBAsset{
+    var dbAsset: DBAsset
+    var isSelected: Bool
 }

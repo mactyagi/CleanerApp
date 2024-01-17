@@ -11,10 +11,10 @@ import CoreData
 import Vision
 
 
-extension CustomAsset {
+extension DBAsset {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<CustomAsset> {
-        return NSFetchRequest<CustomAsset>(entityName: "CustomAsset")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<DBAsset> {
+        return NSFetchRequest<DBAsset>(entityName: "DBAsset")
     }
 
     @NSManaged public var assetId: String?
@@ -28,6 +28,6 @@ extension CustomAsset {
 
 }
 
-extension CustomAsset : Identifiable {
+extension DBAsset : Identifiable {
 
 }
