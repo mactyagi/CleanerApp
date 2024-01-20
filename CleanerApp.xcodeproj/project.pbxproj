@@ -17,6 +17,7 @@
 		32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */; };
 		32231B612B04B946009AE1E0 /* SecretSpaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */; };
 		32231B632B04C5C9009AE1E0 /* SecretAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */; };
+		32290F6C2B599F9A008FBA60 /* MyTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32290F6B2B599F9A008FBA60 /* MyTabbarViewController.swift */; };
 		324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */; };
 		324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */; };
 		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
@@ -73,6 +74,7 @@
 		32231B5E2B04B65A009AE1E0 /* SecretSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSpaceViewController.swift; sourceTree = "<group>"; };
 		32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSpaceModel.swift; sourceTree = "<group>"; };
 		32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretAlbumViewController.swift; sourceTree = "<group>"; };
+		32290F6B2B599F9A008FBA60 /* MyTabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabbarViewController.swift; sourceTree = "<group>"; };
 		324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorViewController.swift; sourceTree = "<group>"; };
 		324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressViewModel.swift; sourceTree = "<group>"; };
 		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				32BD2A7A2B483C770039E85E /* BaseViewController.swift */,
 				32BD2A7E2B483E3B0039E85E /* DuplicatePhotosViewController.swift */,
 				32BD2A7C2B483D010039E85E /* BaseViewModel.swift */,
+				32290F6B2B599F9A008FBA60 /* MyTabbarViewController.swift */,
 			);
 			path = BaseScreen;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */,
 				32BD2A7F2B483E3B0039E85E /* DuplicatePhotosViewController.swift in Sources */,
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
+				32290F6C2B599F9A008FBA60 /* MyTabbarViewController.swift in Sources */,
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,

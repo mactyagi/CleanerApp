@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wX0-Dh-BSt">
-    <device id="retina6_72" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
@@ -294,7 +294,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Items: 148" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBu-P2-92t">
                                                                     <rect key="frame" x="0.0" y="23.333333333333314" width="175" height="20.333333333333329"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" name="primaryTextColor"/>
+                                                                    <color key="textColor" name="darkGray3Color"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -416,7 +416,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover how to optimize your iPhone storage." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ups-au-vpt">
                                                                     <rect key="frame" x="0.0" y="23.333333333333339" width="236" height="40.666666666666657"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" name="primaryTextColor"/>
+                                                                    <color key="textColor" name="darkGray3Color"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -674,7 +674,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwv-fl-CKF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2375" y="-1396"/>
+            <point key="canvasLocation" x="-3059" y="-1326"/>
         </scene>
         <!--Calendar View Controller-->
         <scene sceneID="kSC-OO-qtw">
@@ -872,19 +872,15 @@
             </objects>
             <point key="canvasLocation" x="-1645" y="-1396"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--My Tabbar View Controller-->
         <scene sceneID="ftR-6I-dFP">
             <objects>
-                <tabBarController id="wX0-Dh-BSt" sceneMemberID="viewController">
+                <tabBarController id="wX0-Dh-BSt" customClass="MyTabbarViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TkF-EK-6X4">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
-                    <connections>
-                        <segue destination="oAp-oI-Lmv" kind="relationship" relationship="viewControllers" id="NSz-2i-z2b"/>
-                        <segue destination="UEo-zV-MzL" kind="relationship" relationship="viewControllers" id="DDz-Tr-jZK"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gs8-VT-uvK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -917,7 +913,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aC3-8T-VnY">
-                                <rect key="frame" x="10" y="139" width="410" height="710"/>
+                                <rect key="frame" x="10" y="139" width="410" height="759"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FQm-B2-e2c">
                                     <size key="itemSize" width="128" height="128"/>
@@ -1045,7 +1041,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Woj-Na-QJw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3199" y="-502"/>
+            <point key="canvasLocation" x="-3060" y="-661"/>
         </scene>
         <!--Base View Controller-->
         <scene sceneID="K4h-nW-M4l">
@@ -1070,7 +1066,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Videos: 6 • 733 MB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lG8-dt-4yo">
                                                 <rect key="frame" x="0.0" y="44" width="400" height="20.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
-                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" name="darkGray3Color"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -1109,33 +1105,34 @@
                                 <cells/>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NB8-Cv-4bi">
-                                <rect key="frame" x="15" y="818" width="400" height="80"/>
+                                <rect key="frame" x="15" y="808" width="400" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Po0-SK-Ifl">
-                                        <rect key="frame" x="40" y="30" width="320" height="50"/>
-                                        <color key="backgroundColor" name="darkBlueColor"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="25"/>
+                                        <rect key="frame" x="15" y="30" width="370" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Delete Selected">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
+                                            <action selector="deleteButtonPressed:" destination="6y6-a2-b7Z" eventType="touchUpInside" id="8jh-dm-1ax"/>
                                             <action selector="deleteButtonPressed:" destination="PBn-0h-nEn" eventType="touchUpInside" id="lQQ-ZP-6Fh"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="6Yf-DL-BT8"/>
+                                    <constraint firstAttribute="height" constant="90" id="6Yf-DL-BT8"/>
                                     <constraint firstItem="Po0-SK-Ifl" firstAttribute="top" secondItem="NB8-Cv-4bi" secondAttribute="top" constant="30" id="ONr-oU-0lP"/>
                                     <constraint firstAttribute="bottom" secondItem="Po0-SK-Ifl" secondAttribute="bottom" id="cF7-5h-qSG"/>
-                                    <constraint firstItem="Po0-SK-Ifl" firstAttribute="leading" secondItem="NB8-Cv-4bi" secondAttribute="leading" constant="40" id="eTV-OL-aCO"/>
-                                    <constraint firstAttribute="trailing" secondItem="Po0-SK-Ifl" secondAttribute="trailing" constant="40" id="iNA-9k-4uq"/>
+                                    <constraint firstItem="Po0-SK-Ifl" firstAttribute="leading" secondItem="NB8-Cv-4bi" secondAttribute="leading" constant="15" id="eTV-OL-aCO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Po0-SK-Ifl" secondAttribute="trailing" constant="15" id="iNA-9k-4uq"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4cg-Th-FTn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="veryLightBlueAndDarkGrayColor"/>
                         <constraints>
                             <constraint firstItem="vJE-VG-7zt" firstAttribute="leading" secondItem="4cg-Th-FTn" secondAttribute="leading" constant="15" id="4XW-5B-Kja"/>
                             <constraint firstItem="4cg-Th-FTn" firstAttribute="bottom" secondItem="R1C-Md-QuO" secondAttribute="bottom" id="4jU-uP-5D6"/>
@@ -1151,7 +1148,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="R1C-Md-QuO" id="PTB-6k-tdS"/>
-                        <outlet property="deleteButton" destination="Po0-SK-Ifl" id="yDG-qY-2gN"/>
+                        <outlet property="deleteButton" destination="Po0-SK-Ifl" id="oCL-65-J05"/>
                         <outlet property="deleteButtonSuperView" destination="NB8-Cv-4bi" id="F2i-Dg-JsQ"/>
                         <outlet property="subTitleLabel" destination="lG8-dt-4yo" id="xXl-PS-ZD0"/>
                         <outlet property="titleLabel" destination="Hfz-PG-CPD" id="38V-gR-3CE"/>
@@ -1330,7 +1327,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Videos: 6 • 733 MB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yha-TV-DaW">
                                         <rect key="frame" x="10" y="44" width="134.66666666666666" height="20.666666666666671"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
-                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" name="darkGray3Color"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -1583,7 +1580,7 @@
                                             <constraint firstAttribute="height" constant="50" id="m8t-PC-DEM"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                        <color key="textColor" name="primaryTextColor"/>
+                                        <color key="textColor" name="darkGray3Color"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tML-lL-y6C">
@@ -1668,7 +1665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr5-qW-01q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2462" y="-502"/>
+            <point key="canvasLocation" x="-1672" y="-502"/>
         </scene>
         <!--Secret Space View Controller-->
         <scene sceneID="cUs-xX-AQG">
@@ -1819,25 +1816,6 @@
             </objects>
             <point key="canvasLocation" x="1073" y="150"/>
         </scene>
-        <!--Gallery-->
-        <scene sceneID="Zom-Gf-8so">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UEo-zV-MzL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Gallery" image="paintbrush.fill" catalog="system" id="hcL-Ky-pqe"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="s9z-bw-Hmt">
-                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="lUR-mS-DM9" kind="relationship" relationship="rootViewController" id="09Z-IF-eYJ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="m4m-W9-cmy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3199" y="-1187"/>
-        </scene>
     </scenes>
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
@@ -1855,6 +1833,9 @@
         </namedColor>
         <namedColor name="darkBlueColor">
             <color red="0.2669999897480011" green="0.54100000858306885" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="darkGray3Color">
+            <color red="0.4941176471" green="0.52941176469999995" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="lightBlueDarkGreyColor">
             <color red="0.83099997043609619" green="0.89399999380111694" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1877,6 +1858,9 @@
         <namedColor name="primaryVCBackgroundColor">
             <color red="0.83099997043609619" green="0.89399999380111694" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <namedColor name="veryLightBlueAndDarkGrayColor">
+            <color red="0.93333333330000001" green="0.96078431369999995" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="veryLightBlueAndGrey2Color">
             <color red="0.91764705882352937" green="0.94117647058823528" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
@@ -1894,6 +1878,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

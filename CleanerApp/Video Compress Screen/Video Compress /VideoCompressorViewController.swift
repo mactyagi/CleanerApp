@@ -37,7 +37,7 @@ class VideoCompressorViewController: UIViewController {
     //MARK: - static variables and function
     static let identifer = "VideoCompressorViewController"
     static func initWith() -> VideoCompressorViewController{
-        let vc = UIStoryboard(name: "VideoCompress", bundle: nil).instantiateViewController(withIdentifier: identifer) as! VideoCompressorViewController
+        let vc = UIStoryboard.main.instantiateViewController(withIdentifier: identifer) as! VideoCompressorViewController
         return vc
     }
     

@@ -12,23 +12,28 @@ import CoreData
 
 class BaseViewController: UIViewController {
 
+    //MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var deleteButtonSuperView: UIView!
     @IBOutlet weak var subTitleLabel: UILabel!
+    
+    //MARK: - variables and properties
     var fetchResultViewController: NSFetchedResultsController<DBAsset>!
     var groupType: PHAssetGroupType!
     var predicate: NSPredicate!
+    var selectionBarButtonItem: UIBarButtonItem?
+    private var cancellables: Set<AnyCancellable> = []
+    var viewModel: BaseViewModel!
+    
     var isAllSelected: Bool = true{
         didSet{
             selectionBarButtonItem?.title = isAllSelected ? "Deselect All" : "Select All"
         }
     }
-    var selectionBarButtonItem: UIBarButtonItem?
-    private var cancellables: Set<AnyCancellable> = []
-    var viewModel: BaseViewModel!
+    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewModel()
@@ -43,6 +48,7 @@ class BaseViewController: UIViewController {
     }
     
     
+    //MARK: - Static and Class Functions/Properties
     class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType) -> BaseViewController{
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseViewController") as! BaseViewController
         vc.predicate = predicate
@@ -50,9 +56,41 @@ class BaseViewController: UIViewController {
         return vc
     }
     
+    //MARK: - IBActions
+    @IBAction func deleteButtonPressed(_ sender: UIButton) {
+        
+        
+    }
+    
+    //MARK: - SetupFunction
     func setupViews() {
         titleLabel.text = groupType.rawValue.capitalized
         setupDeleteButtonView()
+    }
+    
+    func updateSubtitleLabel(){
+        guard let dbAssets = fetchResultViewController.fetchedObjects else { return }
+        var size = dbAssets.reduce(0) { $0 + $1.size }
+//    Videos: 6 • 733 MB
+        subTitleLabel.text = "Photos: \(dbAssets.count) • \(size.formatBytes())"
+    }
+    
+    func setupCollectionView(){
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(UINib(nibName: BaseHeaderCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BaseHeaderCollectionReusableView.identifier)
+        collectionView.register(UINib(nibName: PhotoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        collectionView.collectionViewLayout = GridCollectionViewFlowLayout(columns: 2, topLayoutMargin: 0, bottomLayoutMargin: 5, leftLayoutMargin: 15, spacing: 10, direction: .vertical, isLayoutForCell: true)
+    }
+    
+    func setupViewModel(){
+        self.viewModel = BaseViewModel(predicate: predicate)
+        setSubscribers()
+    }
+    
+    func setupNavigationBar(){
+        selectionBarButtonItem = UIBarButtonItem(title: "Deselect All", style: .plain, target: self, action: #selector(selectionButtonPressed))
+        navigationItem.rightBarButtonItem = selectionBarButtonItem
     }
     
     func reloadData() {
@@ -67,37 +105,6 @@ class BaseViewController: UIViewController {
             })
         }
     
-    
-    
-    func updateSubtitleLabel(){
-        guard let dbAssets = fetchResultViewController.fetchedObjects else { return }
-        var size = dbAssets.reduce(0) { $0 + $1.size }
-//    Videos: 6 • 733 MB
-        subTitleLabel.text = "Photos: \(dbAssets.count) • \(size.formatBytes())"
-    }
-    
-    func setupCollectionView(){
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(UINib(nibName: BaseHeaderCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BaseHeaderCollectionReusableView.identifier)
-        collectionView.register(UINib(nibName: PhotoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
-        collectionView.collectionViewLayout = GridCollectionViewFlowLayout(columns: 2, topLayoutMargin: 0, bottomLayoutMargin: 0, leftLayoutMargin: 15, spacing: 10, direction: .vertical, isLayoutForCell: true)
-    }
-    
-    func setupViewModel(){
-        self.viewModel = BaseViewModel(predicate: predicate)
-        setSubscribers()
-    }
-    
-    func setupNavigationBar(){
-        selectionBarButtonItem = UIBarButtonItem(title: "Deselect All", style: .plain, target: self, action: #selector(selectionButtonPressed))
-        navigationItem.rightBarButtonItem = selectionBarButtonItem
-    }
-    
-    @objc func selectionButtonPressed(){
-        isAllSelected.toggle()
-        isAllSelected ? selectAll() : deselectAll()
-    }
     
     func setupDeleteButtonView(){
         deleteButton.makeCircleRadius()
@@ -119,12 +126,23 @@ class BaseViewController: UIViewController {
         
     }
     
+    
+    
+    
+    
+    @objc func selectionButtonPressed(){
+        isAllSelected.toggle()
+        isAllSelected ? selectAll() : deselectAll()
+    }
+    
+
+    
     func LoadSaveData(){
         if fetchResultViewController == nil{
             let request = DBAsset.fetchRequest()
             let subGroupSort = NSSortDescriptor(key: "subGroupId", ascending: true)
             let dateSort = NSSortDescriptor(key: "creationDate", ascending: true)
-            request.sortDescriptors = [dateSort]
+            request.sortDescriptors = [subGroupSort]
             
             if let predicate{
                 request.predicate = predicate
@@ -167,11 +185,10 @@ class BaseViewController: UIViewController {
     }
     
     func setSubscribers(){
-        viewModel.$reloadCollectionView.sink { [weak self] isreload in
-            if isreload{
-//                self?.collectionView.reloadData()
-            }
-        }
+        viewModel.$selectedIndexPath.sink(receiveValue: { [weak self] indexPath in
+            self?.deleteButton.isEnabled = !indexPath.isEmpty
+            self?.deleteButton.backgroundColor = indexPath.isEmpty ? .darkGray3 : .darkBlue
+        })
         .store(in: &cancellables)
     }
 }

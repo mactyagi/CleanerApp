@@ -69,6 +69,11 @@ class CleanerViewController: UITableViewController {
     
     
     
+    //MARK: - static functions
+    static func customInit() -> CleanerViewController{
+        let vc = UIStoryboard.main.instantiateViewController(identifier: "CleanerViewController") as! CleanerViewController
+        return vc
+    }
    
     
     

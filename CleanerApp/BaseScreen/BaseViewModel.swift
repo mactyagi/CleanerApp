@@ -10,13 +10,8 @@ import Combine
 class BaseViewModel{
     
     var assetRows: [[CustomDBAsset]] = []
-    var selectedIndexPath: Set<IndexPath> = []
-    @Published var reloadCollectionView: Bool = false{
-        
-        didSet{
-            reloadCollectionView = false
-        }
-    }
+   @Published var selectedIndexPath: Set<IndexPath> = []
+    
     var predicate: NSPredicate
     init(predicate: NSPredicate) {
         self.predicate = predicate
@@ -34,8 +29,6 @@ class BaseViewModel{
             }
             assetRows.append(assets)
         }
-        reloadCollectionView = true
-        
     }
 }
 
