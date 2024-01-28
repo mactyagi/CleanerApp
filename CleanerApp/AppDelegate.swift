@@ -7,13 +7,20 @@
 
 import UIKit
 import CoreData
+import Photos
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
+    func startProcessingPhotos(){
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+            CoreDataPHAssetManager.shared.startProcess()
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        startProcessingPhotos()
         // Override point for customization after application launch.
         return true
     }

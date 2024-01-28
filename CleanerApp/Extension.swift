@@ -166,9 +166,26 @@ extension UIView{
         layer.shadowRadius = 1
     }
     
-    func makeCircleRadius(){
-        layer.cornerRadius = frame.height / 2
+    func makeCornerRadiusCircle(){
+        layer.cornerRadius = bounds.height / 2
     }
+    
+    func makeCornerRadiusFourthOfHeightOrWidth(){
+        layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 4 : bounds.height / 4
+    }
+    
+    func makeCornerRadiusEightOfHeightOrWidth(){
+        layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 8 : bounds.height / 8
+    }
+    
+    func makeCornerRadiusSixtenthOfHeightOrWidth(){
+        layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 16 : bounds.height / 16
+    }
+    
+    
+    
+    
+    
     
     func activityStartAnimating(activityColor: UIColor = .gray, backgroundColor: UIColor = .clear, style: UIActivityIndicatorView.Style = .medium) {
         let backgroundView = UIView()
@@ -259,35 +276,53 @@ extension EKReminder{
 
 extension UICollectionView{
     func configureCompositionalLayout(){
-        let mainItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)))
-        mainItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        let mainItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/2)))
+        mainItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
         
-        let verticalPairItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/2)))
-        verticalPairItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-        
-        let verticalPairGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)), subitems: [verticalPairItem, verticalPairItem])
-//        verticalPairGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-        
-        let mainWithVerticalPairGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1)), subitems: [mainItem, verticalPairGroup])
-        mainWithVerticalPairGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
         
         // second style
         let horizontalPairItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)))
-        horizontalPairItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        horizontalPairItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 2, bottom: 2, trailing: 2)
         
-        let horizontalPairGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/2)), subitems: [horizontalPairItem, horizontalPairItem])
-        horizontalPairGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
-        
-//        let fullItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(2/3)))
+        let horizontalPairGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1)), subitems: [horizontalPairItem, horizontalPairItem])
+//        horizontalPairGroup.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
 
         
-        let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(3/2)), subitems: [horizontalPairGroup, mainWithVerticalPairGroup])
+        let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(3/2)), subitems: [horizontalPairGroup, mainItem])
+        nestedGroup.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        headerItem.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 6, bottom: 0, trailing: 6)
+        
         
         let section = NSCollectionLayoutSection(group: nestedGroup)
+        section.boundarySupplementaryItems = [headerItem]
         let layout = UICollectionViewCompositionalLayout(section: section)
         self.collectionViewLayout = layout
     }
 }
+
+private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            // Configure your sections, including the section for the header
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
+            let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [headerItem]
+
+            return section
+        }
+
+        return layout
+    }
 
 
 

@@ -31,6 +31,18 @@ class VideoCompressorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchData()
+        setupNavigationAndTabBar(isScreenVisible: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        setupNavigationAndTabBar(isScreenVisible: false)
     }
     
     
@@ -42,6 +54,10 @@ class VideoCompressorViewController: UIViewController {
     }
     
     //MARK: - Functions
+    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
+        navigationController?.navigationBar.isHidden = flag
+        self.tabBarController?.tabBar.isHidden = !flag
+    }
     func setupCollectionView(){
         collectionView.register(UINib(nibName: CompressCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: CompressCollectionViewCell.identifier)
         collectionView.dataSource = self

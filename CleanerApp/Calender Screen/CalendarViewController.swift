@@ -60,7 +60,7 @@ class CalendarViewController: UIViewController {
         
     }
     func setupViews(){
-        deleteButton.makeCircleRadius()
+        deleteButton.makeCornerRadiusCircle()
         
         let gradientLayer = CAGradientLayer()
         

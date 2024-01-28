@@ -13,8 +13,8 @@ class MyTabbarViewController: UITabBarController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBarAppearance()
-        setupViewController()
+//        setupTabBarAppearance()
+//        setupViewController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,16 +30,16 @@ class MyTabbarViewController: UITabBarController {
     
     
     func setupViewController(){
-        let gallaryNavVC = UINavigationController(rootViewController: CleanerViewController.customInit())
+        let tempVC = TempViewController.customInit()
+        
+        let gallaryNavVC = UINavigationController(rootViewController: tempVC)
         
         gallaryNavVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"),selectedImage: UIImage(systemName: "house.fill"))
         
-        
-        
         let videoCompressorVC = VideoCompressorViewController.initWith()
-        videoCompressorVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"),selectedImage: UIImage(systemName: "house.fill"))
+        videoCompressorVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "rectangle.compress.vertical"),selectedImage: UIImage(systemName: "rectangle.compress.vertical"))
         
-        viewControllers = [ videoCompressorVC, gallaryNavVC]
+//        viewControllers = [ videoCompressorVC, gallaryNavVC]
     }
     
 }

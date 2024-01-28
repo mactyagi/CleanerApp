@@ -107,7 +107,7 @@ class BaseViewController: UIViewController {
     
     
     func setupDeleteButtonView(){
-        deleteButton.makeCircleRadius()
+        deleteButton.makeCornerRadiusCircle()
         
         let gradientLayer = CAGradientLayer()
         

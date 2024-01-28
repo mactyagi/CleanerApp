@@ -21,14 +21,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
                 // Create a new UIWindow using the windowScene constructor
-                let window = UIWindow(windowScene: windowScene)
-
-                // Create an instance of your custom tab bar controller
-                let customTabBarController = MyTabbarViewController()
-        
-        window.rootViewController = customTabBarController
-        window.makeKeyAndVisible()
-        self.window = window
+//                let window = UIWindow(windowScene: windowScene)
+//
+//                // Create an instance of your custom tab bar controller
+//                let customTabBarController = MyTabbarViewController()
+//        
+//        window.rootViewController = customTabBarController
+//        window.makeKeyAndVisible()
+//        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

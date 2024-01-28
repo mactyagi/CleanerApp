@@ -29,12 +29,16 @@ class CoreDataManager{
         if context.hasChanges {
             do {
                 try context.save()
+                print(" ** saved in Core Data")
             } catch {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }else{
+            print(" ** Already saved")
         }
     }
+    
     
     
     func fetchDBAssets(context: NSManagedObjectContext, predicate: NSPredicate) -> [DBAsset]{
@@ -51,10 +55,16 @@ class CoreDataManager{
         }
     }
     
-    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, exceptGroupType: PHAssetGroupType? = nil) -> [DBAsset]{
+    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, shouldHaveGroupId: Bool? = nil, exceptGroupType: PHAssetGroupType? = nil, fetchLimit: Int? = nil) -> [DBAsset]{
         context.performAndWait {
             let fetchRequest = DBAsset.fetchRequest()
+            if let fetchLimit{
+                fetchRequest.fetchLimit = fetchLimit
+            }
             var predicates = [NSPredicate]()
+            if let shouldHaveGroupId{
+                predicates.append(NSPredicate(format: shouldHaveGroupId ? "subGroupId != nil" : "subGroupId == nil"))
+            }
             if let exceptGroupType{
                 predicates.append(NSPredicate(format: "groupTypeValue != %@", exceptGroupType.rawValue))
             }
@@ -76,6 +86,19 @@ class CoreDataManager{
             
             let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
             return fetchDBAssets(context: context, predicate: compoundPredicate)
+        }
+    }
+    
+    func deleteAsset(asset: DBAsset){
+        guard let context = asset.managedObjectContext else { return }
+        if let assetToDlete = context.object(with: asset.objectID) as? DBAsset{
+            context.delete(assetToDlete)
+            do {
+                try context.save()
+                print("Object deleted successfully.")
+            } catch {
+                print("Error deleting object: \(error)")
+            }
         }
     }
 }

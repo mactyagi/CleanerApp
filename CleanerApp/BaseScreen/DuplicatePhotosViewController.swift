@@ -17,16 +17,11 @@ class DuplicatePhotosViewController: BaseViewController {
     }
     
     
-    
-    class func customInit() -> DuplicatePhotosViewController{
-        let mediaPredicate = NSPredicate(format: "mediaTypeValue == %@", PHAssetCustomMediaType.photo.rawValue)
-        let groupPredicate = NSPredicate(format: "groupTypeValue == %@", PHAssetGroupType.duplicate.rawValue)
-        let compountPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [mediaPredicate, groupPredicate])
-        
-        let baseVC = customInit(predicate: compountPredicate, groupType: .duplicate)
-       object_setClass(baseVC, DuplicatePhotosViewController.self)
-        return baseVC as! DuplicatePhotosViewController
-    }
+//    override class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType) -> BaseViewController {
+//        let baseVC = customInit(predicate: predicate, groupType: groupType)
+//       object_setClass(baseVC, DuplicatePhotosViewController.self)
+//        return baseVC as! DuplicatePhotosViewController
+//    }
 
 }
 

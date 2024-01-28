@@ -19,17 +19,17 @@ enum MediaCellType{
     var cell: MediaCell{
         switch self {
         case .similarPhoto:
-            return MediaCell(mainTitle: "Similar", imageName: "", cellType: self, asset: [], size: "", stackShouldVertical: true)
+            return MediaCell(mainTitle: "Similars", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .duplicatePhoto:
-            return MediaCell(mainTitle: "Duplicate", imageName: "", cellType: self, asset: [], size: "", stackShouldVertical: true)
+            return MediaCell(mainTitle: "Duplicates", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .otherPhoto:
-            return MediaCell(mainTitle: "Other", imageName: "", cellType: self, asset: [], size: "", stackShouldVertical: true)
+            return MediaCell(mainTitle: "Others", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         case .similarScreenshot:
-            return MediaCell(mainTitle: "Similar", imageName: "", cellType: self, asset: [], size: "", stackShouldVertical: true)
+            return MediaCell(mainTitle: "Similars", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .duplicateScreenshot:
-            return MediaCell(mainTitle: "Duplicate", imageName: "", cellType: self, asset: [], size: "", stackShouldVertical: true)
+            return MediaCell(mainTitle: "Duplicates", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .otherScreenshot:
-            return MediaCell(mainTitle: "Other", imageName: "", cellType: self, asset: [], size: "", stackShouldVertical: true)
+            return MediaCell(mainTitle: "Others", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         }
     }
 }
@@ -41,6 +41,6 @@ struct MediaCell{
     var cellType: MediaCellType
     var count: Int = 0
     var asset: [PHAsset]
-    var size: String
+    var size: Int64
     var stackShouldVertical: Bool
 }

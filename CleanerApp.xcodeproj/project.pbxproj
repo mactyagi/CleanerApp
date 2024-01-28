@@ -30,6 +30,7 @@
 		32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32682CAD2B36D12C00B9B7BD /* IconView.xib */; };
 		32682CB02B36D17800B9B7BD /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CAF2B36D17800B9B7BD /* IconView.swift */; };
 		32682CB22B36D7CA00B9B7BD /* CleanerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */; };
+		3275EC1B2B5C3B9F00B5B4F7 /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275EC1A2B5C3B9F00B5B4F7 /* TempViewController.swift */; };
 		32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */; };
 		32A2D08F2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08D2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift */; };
 		32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08E2B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift */; };
@@ -61,6 +62,10 @@
 		32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0DF2AF80039009CA92E /* CleanerApp.xcdatamodeld */; };
 		32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0E22AF8003A009CA92E /* Assets.xcassets */; };
 		32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0E42AF8003A009CA92E /* LaunchScreen.storyboard */; };
+		32ED57AF2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ED57AD2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift */; };
+		32ED57B02B661D6900AED057 /* VerticalMediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ED57AE2B661D6900AED057 /* VerticalMediaCollectionViewCell.xib */; };
+		32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ED57D32B66835100AED057 /* MediaHeaderView.swift */; };
+		32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ED57D42B66835100AED057 /* MediaHeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +92,7 @@
 		32682CAD2B36D12C00B9B7BD /* IconView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IconView.xib; sourceTree = "<group>"; };
 		32682CAF2B36D17800B9B7BD /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewController.swift; sourceTree = "<group>"; };
+		3275EC1A2B5C3B9F00B5B4F7 /* TempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		32A2D08D2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAsset+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		32A2D08E2B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAsset+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -120,6 +126,10 @@
 		32E2E0E22AF8003A009CA92E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32E2E0E52AF8003A009CA92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32E2E0E72AF8003A009CA92E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32ED57AD2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		32ED57AE2B661D6900AED057 /* VerticalMediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerticalMediaCollectionViewCell.xib; sourceTree = "<group>"; };
+		32ED57D32B66835100AED057 /* MediaHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaHeaderView.swift; sourceTree = "<group>"; };
+		32ED57D42B66835100AED057 /* MediaHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaHeaderView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +252,7 @@
 				32BD2A7A2B483C770039E85E /* BaseViewController.swift */,
 				32BD2A7E2B483E3B0039E85E /* DuplicatePhotosViewController.swift */,
 				32BD2A7C2B483D010039E85E /* BaseViewModel.swift */,
+				3275EC1A2B5C3B9F00B5B4F7 /* TempViewController.swift */,
 				32290F6B2B599F9A008FBA60 /* MyTabbarViewController.swift */,
 			);
 			path = BaseScreen;
@@ -253,6 +264,10 @@
 				32BD2A812B493E1A0039E85E /* MediaViewController.swift */,
 				32B3C1F62B497355000B0727 /* MediaModel.swift */,
 				32B3C1F82B4974F4000B0727 /* MediaViewModel.swift */,
+				32ED57D32B66835100AED057 /* MediaHeaderView.swift */,
+				32ED57D42B66835100AED057 /* MediaHeaderView.xib */,
+				32ED57AD2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift */,
+				32ED57AE2B661D6900AED057 /* VerticalMediaCollectionViewCell.xib */,
 				32BD2A832B493E2F0039E85E /* MediaCollectionViewCell.swift */,
 				32BD2A842B493E2F0039E85E /* MediaCollectionViewCell.xib */,
 			);
@@ -374,10 +389,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				32D3FC162B57A60E0000A082 /* BaseHeaderCollectionReusableView.xib in Resources */,
+				32ED57B02B661D6900AED057 /* VerticalMediaCollectionViewCell.xib in Resources */,
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32BD2A862B493E2F0039E85E /* MediaCollectionViewCell.xib in Resources */,
 				32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
+				32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */,
 				32BD2A772B483A270039E85E /* PhotoCollectionViewCell.xib in Resources */,
 				32603A982B3A962100154775 /* ReminderTableViewCell.xib in Resources */,
 				32BF2C932AF947DA00045343 /* HomeTableViewCell.xib in Resources */,
@@ -410,6 +427,7 @@
 				32BF2C982AF94E4F00045343 /* HomeViewModel.swift in Sources */,
 				32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */,
 				32682CB22B36D7CA00B9B7BD /* CleanerViewController.swift in Sources */,
+				3275EC1B2B5C3B9F00B5B4F7 /* TempViewController.swift in Sources */,
 				32BD2A852B493E2F0039E85E /* MediaCollectionViewCell.swift in Sources */,
 				32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */,
 				32BD2A7F2B483E3B0039E85E /* DuplicatePhotosViewController.swift in Sources */,
@@ -423,7 +441,9 @@
 				32BD2A762B483A270039E85E /* PhotoCollectionViewCell.swift in Sources */,
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
+				32ED57AF2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift in Sources */,
 				32B3C1F72B497355000B0727 /* MediaModel.swift in Sources */,
+				32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */,
 				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
 				32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,

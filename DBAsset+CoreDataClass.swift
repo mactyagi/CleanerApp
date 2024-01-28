@@ -31,7 +31,6 @@ public class DBAsset: NSManagedObject {
     
     
     func computeDistance(mediaType: PHAssetCustomMediaType, secondCustomAsset: DBAsset) -> Float{
-        
         guard let firstFeaturePrints = self.featurePrints, let secondFeaturePrints = secondCustomAsset.featurePrints else {return 1000}
         switch mediaType{
         case .photo, .screenshot:

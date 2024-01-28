@@ -8,9 +8,10 @@
 import UIKit
 import Combine
 import EventKit
-class CleanerViewController: UITableViewController {
+class CleanerViewController: UIViewController {
 
     //MARK: - IBOutlets
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var usedCPULabel: UILabel!
     @IBOutlet weak var availableRAMLabel: UILabel!
     @IBOutlet weak var downloadLabel: UILabel!
@@ -56,15 +57,22 @@ class CleanerViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: true)
         viewModel.startUpdatingDeivceInfo()
         viewModel.updateData()
-//        self.tabBarController?.tabBar.isHidden = false
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel.stopUpdatingDeviceInfo()
-//        self.tabBarController?.tabBar.isHidden = false
+        setupNavigationAndTabBar(isScreenVisible: false)
     }
     
     
@@ -78,8 +86,14 @@ class CleanerViewController: UITableViewController {
     
     
     //MARK: - setup Functions
+    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
+        navigationController?.navigationBar.isHidden = flag
+        self.tabBarController?.tabBar.isHidden = !flag
+    }
+    
     func setupView(){
-        infoImageView.makeCircleRadius()
+        scrollView.bounces = false
+        infoImageView.makeCornerRadiusCircle()
         addCornerRadius(10, views: EventView, contactCountView, mediaMemoryView)
         addCornerRadius(15, views: deviceInfoItemsView, progressMainView, calenderView, contactsView, photosView, howToCleanUpView)
         addCornerRadius(20, views: smartCleaningView)
@@ -142,22 +156,6 @@ class CleanerViewController: UITableViewController {
         navigationController?.pushViewController(MediaViewController.customInit(), animated: true)
     }
     
-    
-    //MARK:-
-    
-}
-
-
-
-// MARK: - Table view data source
-extension CleanerViewController{
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        .leastNormalMagnitude
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        .leastNormalMagnitude
-    }
 }
 
 
