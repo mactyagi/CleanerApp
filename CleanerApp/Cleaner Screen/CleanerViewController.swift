@@ -111,6 +111,7 @@ class CleanerViewController: UIViewController {
         cpuIconView.contentView.backgroundColor = .systemPurple
         
         ramIconView.contentView.backgroundColor = .systemIndigo
+        ramIconView.imageView.image = UIImage.ramIcon
         
         calenderIconView.imageView.image = UIImage(systemName: "calendar")
         calenderIconView.contentView.backgroundColor = .systemPink
