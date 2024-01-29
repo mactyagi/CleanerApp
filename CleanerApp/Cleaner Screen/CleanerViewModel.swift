@@ -8,12 +8,16 @@
 import Foundation
 import Combine
 import EventKit
+import Photos
 
 class  CleanerViewModel {
 
     @Published var availableRAM: UInt64 = 0
     @Published var eventsCount: Int?
     @Published var reminderCount: Int?
+    @Published var PhotosAndVideosCount = 0
+    @Published var PhotosAndVideosSize: Int64 = 0
+    private let queue = DispatchQueue.global(qos: .userInteractive)
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
     private var eventStore: EKEventStore
@@ -21,6 +25,10 @@ class  CleanerViewModel {
         self.deviceInfoManager = deviceInfoManager
         self.eventStore = eventStore
         self.deviceInfoManager.delegate = self
+        
+        queue.async {
+            self.getPhotosAndVideosData()
+        }
     }
     
     
@@ -33,8 +41,25 @@ class  CleanerViewModel {
     }
     
     func updateData(){
-        getCalendarData()
-        getReminderData()
+        
+        queue.async {
+            self.getCalendarData()
+        }
+        queue.async {
+            self.getReminderData()
+        }
+        
+    }
+    
+    
+    func getPhotosAndVideosData(){
+        let fetchOptions = PHFetchOptions()
+        let allPhotos = PHAsset.fetchAssets(with: .none)
+        
+        allPhotos.enumerateObjects { [weak self] asset, test, _ in
+            self?.PhotosAndVideosSize += asset.getSize() ?? 0
+            self?.PhotosAndVideosCount += 1
+        }
     }
     
    private func getCalendarData() {

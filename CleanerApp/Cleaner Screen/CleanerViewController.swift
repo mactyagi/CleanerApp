@@ -128,14 +128,6 @@ class CleanerViewController: UIViewController {
     }
     
     
-    
-    func setupViewModel(){
-        let deviceManager = DeviceInfoManager()
-        let eventStore = EKEventStore()
-        viewModel = CleanerViewModel(deviceInfoManager: deviceManager, eventStore: eventStore)
-        setSubscribers()
-    }
-    
     func setupTapOnView(){
         let calendarTapGesture = UITapGestureRecognizer(target: self, action: #selector(calendarViewTapped))
         calenderView.addGestureRecognizer(calendarTapGesture)
@@ -160,31 +152,37 @@ class CleanerViewController: UIViewController {
 
 
 
+// MARK: - Set subscribers and View Model
 extension CleanerViewController{
+    
+    func setupViewModel(){
+        let deviceManager = DeviceInfoManager()
+        let eventStore = EKEventStore()
+        viewModel = CleanerViewModel(deviceInfoManager: deviceManager, eventStore: eventStore)
+        setSubscribers()
+    }
+    
     func setSubscribers(){
         viewModel.$availableRAM.sink { [weak self] availableRAM in
             guard let self else { return }
-            print("available Ram:- ", availableRAM )
-            self.availableRAMLabel.text = availableRAM.formatBytes()
+            DispatchQueue.main.async {
+                self.availableRAMLabel.text = availableRAM.formatBytes()
+            }
         }.store(in: &cancelables)
         
         
-        viewModel.$eventsCount
-            .sink { [weak self] count in
+        viewModel.$eventsCount.sink { [weak self] count in
                 DispatchQueue.main.async {
                     if let count, let reminderCount = self?.viewModel.reminderCount {
                         self?.EventsLabel.text = "Events: \(count + reminderCount)"
                     }else{
                         self?.EventsLabel.text = "Give Access"
                     }
-                    
                 }
-            }
-            .store(in: &cancelables)
+            } .store(in: &cancelables)
         
         
-        viewModel.$reminderCount
-            .sink { [weak self] count in
+        viewModel.$reminderCount.sink { [weak self] count in
                 DispatchQueue.main.async {
                     if let count, let eventCount = self?.viewModel.eventsCount {
                         self?.EventsLabel.text = "Events: \(count + eventCount)"
@@ -193,7 +191,19 @@ extension CleanerViewController{
                     }
                     
                 }
+            } .store(in: &cancelables)
+        
+        viewModel.$PhotosAndVideosCount.sink { [weak self] count in
+            DispatchQueue.main.async {
+                self?.mediaItemLabel.text = "Items: \(count)"
             }
-            .store(in: &cancelables)
+            
+        }.store(in: &cancelables)
+        
+        viewModel.$PhotosAndVideosSize.sink { [weak self] size in
+            DispatchQueue.main.async {
+                self?.mediaMemoryLabel.text = size.formatBytes()
+            }
+        }.store(in: &cancelables)
     }
 }
