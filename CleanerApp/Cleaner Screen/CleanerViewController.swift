@@ -242,7 +242,12 @@ extension CleanerViewController{
                 self?.storageUsedLabel.text = usedStorage.formatBytes()
                 if let self{
                     let progress = Float(usedStorage) / Float(self.viewModel.totalStorage)
-                    self.progressBar?.setProgress(Float(progress))
+                    if progress > 0{  // some time progress comes NaN
+                        self.progressBar?.setProgress(Float(progress))
+                    }else{
+                        self.progressBar?.setProgress(Float(0))
+                    }
+                    
                 }
                 
             }

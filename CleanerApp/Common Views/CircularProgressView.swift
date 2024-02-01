@@ -11,7 +11,10 @@ class CircularProgressBarView: UIView {
     private let percentageLabel = UILabel()
     var progress: Float = 0{
         didSet{
-            var percentage = Int((progress / 1) * 100)
+            var percentage = 0
+            if progress > 0{
+                percentage = Int((progress / 1) * 100)
+            }
             
             if progress > 1 {
                percentage = 100
@@ -65,6 +68,7 @@ class CircularProgressBarView: UIView {
         animation.isRemovedOnCompletion = false
 
         progressLayer.add(animation, forKey: "progressAnimation")
+        progressLayer.strokeEnd = CGFloat(progress)
         self.progress = progress
     }
 }
