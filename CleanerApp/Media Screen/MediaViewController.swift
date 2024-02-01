@@ -122,7 +122,7 @@ extension MediaViewController:UICollectionViewDelegate{
         switch cell.cellType{
             
         case .similarPhoto:
-            let vc = SimilarPhotosViewController.customInit()
+            let vc = SimilarPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarPhoto), groupType: .similar)
             navigationController?.pushViewController(vc, animated: true)
             break
         case .duplicatePhoto:
@@ -130,13 +130,17 @@ extension MediaViewController:UICollectionViewDelegate{
             navigationController?.pushViewController(vc, animated: true)
             break
         case .otherPhoto:
-            break
+            let vc = OtherPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherPhoto), groupType: .other)
+            navigationController?.pushViewController(vc, animated: true)
         case .similarScreenshot:
-            break
+            let vc = SimilarPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarScreenshot), groupType: .similar)
+            navigationController?.pushViewController(vc, animated: true)
         case .duplicateScreenshot:
-            break
+            let vc = DuplicatePhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicateScreenshot), groupType: .duplicate)
+            navigationController?.pushViewController(vc, animated: true)
         case .otherScreenshot:
-            break
+            let vc = OtherPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherScreenshot), groupType: .other)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

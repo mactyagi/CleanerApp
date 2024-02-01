@@ -9,26 +9,32 @@ import Foundation
 import Combine
 import EventKit
 import Photos
+import UIKit
+import CoreData
 
-class  CleanerViewModel {
+class  CleanerViewModel: NSObject {
 
     @Published var availableRAM: UInt64 = 0
     @Published var eventsCount: Int?
     @Published var reminderCount: Int?
-    @Published var PhotosAndVideosCount = 0
-    @Published var PhotosAndVideosSize: Int64 = 0
+    @Published var photosAndVideosCount = 0
+    @Published var photosAndVideosSize: Int64 = 0
     @Published var totalStorage: Int64 = 0
     @Published var usedStorage: Int64 = 0
     private let queue = DispatchQueue.global(qos: .userInteractive)
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
     private var eventStore: EKEventStore
+    private var fetchResultController: NSFetchedResultsController<DBAsset>?
+    
     init(deviceInfoManager: DeviceInfoManager, eventStore: EKEventStore){
         self.deviceInfoManager = deviceInfoManager
         self.eventStore = eventStore
+        super.init()
         self.deviceInfoManager.delegate = self
+        setupFetchResultController()
         queue.async {
-            self.getPhotosAndVideosData()
+//            self.getPhotosAndVideosData()
         }
     }
     
@@ -79,6 +85,39 @@ class  CleanerViewModel {
         }
     }
 
+    
+    func setupFetchResultController(){
+        if fetchResultController == nil{
+            let request = DBAsset.fetchRequest()
+            let dateSort = NSSortDescriptor(key: "creationDate", ascending: true)
+            request.sortDescriptors = [dateSort]
+            
+            var predicates:[NSPredicate] = []
+            
+            predicates.append(NSPredicate(format: "groupTypeValue == %@", PHAssetGroupType.duplicate.rawValue))
+            predicates.append(NSPredicate(format: "featurePrints != nil"))
+            
+            var compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+            
+            fetchResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+            fetchResultController?.delegate = self
+            
+            do{
+                try fetchResultController?.performFetch()
+                updatePhotoAndVideosCountAndSize()
+                
+            } catch{
+                print(error)
+            }
+        }
+    }
+    
+    func updatePhotoAndVideosCountAndSize(){
+        let assets = fetchResultController?.fetchedObjects ?? []
+        photosAndVideosCount = assets.count
+        self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
+    }
+
 
     
     
@@ -87,8 +126,8 @@ class  CleanerViewModel {
         let allPhotos = PHAsset.fetchAssets(with: .none)
         
         allPhotos.enumerateObjects { [weak self] asset, test, _ in
-            self?.PhotosAndVideosSize += asset.getSize() ?? 0
-            self?.PhotosAndVideosCount += 1
+            self?.photosAndVideosSize += asset.getSize() ?? 0
+            self?.photosAndVideosCount += 1
         }
     }
     
@@ -140,7 +179,10 @@ extension CleanerViewModel: DeviceInfoDelegate{
     func availableRAMDidUpdate(_ availableRAM: UInt64) {
         self.availableRAM = availableRAM
     }
-    
-    
-    
+}
+
+extension CleanerViewModel: NSFetchedResultsControllerDelegate{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        updatePhotoAndVideosCountAndSize()
+    }
 }

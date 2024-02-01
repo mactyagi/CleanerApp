@@ -19,17 +19,17 @@ enum MediaCellType{
     var cell: MediaCell{
         switch self {
         case .similarPhoto:
-            return MediaCell(mainTitle: "Similars", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: "Similars", imageName: "photo.on.rectangle.angled", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .duplicatePhoto:
-            return MediaCell(mainTitle: "Duplicates", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: "Duplicates", imageName: "photo.fill.on.rectangle.fill", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .otherPhoto:
-            return MediaCell(mainTitle: "Others", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+            return MediaCell(mainTitle: "Others", imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         case .similarScreenshot:
-            return MediaCell(mainTitle: "Similars", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: "Similars", imageName: "photo.on.rectangle.angled", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .duplicateScreenshot:
-            return MediaCell(mainTitle: "Duplicates", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: "Duplicates", imageName: "photo.fill.on.rectangle.fill", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .otherScreenshot:
-            return MediaCell(mainTitle: "Others", imageName: "", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+            return MediaCell(mainTitle: "Others", imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         }
     }
 }

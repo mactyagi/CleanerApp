@@ -224,14 +224,14 @@ extension CleanerViewController{
                 }
             } .store(in: &cancelables)
         
-        viewModel.$PhotosAndVideosCount.sink { [weak self] count in
+        viewModel.$photosAndVideosCount.sink { [weak self] count in
             DispatchQueue.main.async {
                 self?.mediaItemLabel.text = "Items: \(count)"
             }
             
         }.store(in: &cancelables)
         
-        viewModel.$PhotosAndVideosSize.sink { [weak self] size in
+        viewModel.$photosAndVideosSize.sink { [weak self] size in
             DispatchQueue.main.async {
                 self?.mediaMemoryLabel.text = size.formatBytes()
             }

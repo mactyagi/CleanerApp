@@ -39,12 +39,16 @@ class MediaCollectionViewCell: UICollectionViewCell {
     
     func configureCell(_ cell: MediaCell) {
         setupImageView(imageView1, imageView2, imageView3, imageView4, imageView5, isHidden: true)
+        imageView1.image = UIImage(systemName: cell.imageName)
+        imageView1.isHidden = false
+        imageView1.contentMode = .scaleAspectFit
         
         for (index, asset) in cell.asset.enumerated() {
             switch index{
             case 0:
                 imageView1.image = asset.getImage()
                 imageView1.isHidden = false
+                imageView1.contentMode = .scaleAspectFill
             case 1:
                 imageView2.image = asset.getImage()
                 imageView2.isHidden = false
@@ -61,6 +65,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
                 break
             }
         }
+        
         
         
         titleLabel.text = cell.mainTitle

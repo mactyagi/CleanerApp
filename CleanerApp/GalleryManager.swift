@@ -141,17 +141,17 @@ class CoreDataPHAssetManager{
         let oldAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
-            groupType: nil,
+            groupType: .similar,
             shoudHaveSHA: nil,
-            shouldHaveFeaturePrint: true,
+            shouldHaveFeaturePrint: nil,
             exceptGroupType: .duplicate)
         
         let newAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
-            groupType: nil,
+            groupType: .other,
             shoudHaveSHA: nil,
-            shouldHaveFeaturePrint: false,
+            shouldHaveFeaturePrint: nil,
             exceptGroupType: .duplicate)
         
         

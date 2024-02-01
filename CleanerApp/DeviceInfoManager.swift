@@ -6,17 +6,26 @@
 //
 
 import Foundation
+import Network
 
 
-protocol DeviceInfoDelegate: AnyObject{
-    func availableRAMDidUpdate(_ availableRAM: UInt64)
+protocol DeviceInfoDelegate: AnyObject{ }
+
+extension DeviceInfoDelegate{
+    func availableRAMDidUpdate(_ availableRAM: UInt64){
+        
+    }
+    func networkSpeedDidUpdate(_ currentSpeed: Int ){
+        
+    }
 }
 
 
 class DeviceInfoManager{
     weak var delegate: DeviceInfoDelegate?
-    
+    private var queue = DispatchQueue.global()
     private var timer: Timer = Timer()
+    var monitor = NWPathMonitor()
     private(set) var availableRAM: UInt64 = 0{
         didSet{
             delegate?.availableRAMDidUpdate(availableRAM)
@@ -54,4 +63,14 @@ class DeviceInfoManager{
             return availableRAM = 0
         }
     }
+    
+    
+    private func getNetworkSpeed(){
+     
+        monitor.pathUpdateHandler = { [weak self] path in
+                
+        }
+        monitor.start(queue: queue)
+    }
+
 }

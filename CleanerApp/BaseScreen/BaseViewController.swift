@@ -170,10 +170,12 @@ class BaseViewController: UIViewController {
                 if index2 > 0{
                     let indexpath = IndexPath(row: index2, section: index)
                     viewModel.selectedIndexPath.insert(indexpath)
+                }else if groupType == .other {
+                    let indexpath = IndexPath(row: index2, section: index)
+                    viewModel.selectedIndexPath.insert(indexpath)
                 }
             }
         }
-//        collectionView.reloadData()
         reloadData()
     }
 
@@ -255,7 +257,7 @@ extension BaseViewController: UICollectionViewDataSource{
 
 extension BaseViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.layer.bounds.width, height: 40)
+        return CGSize(width: collectionView.layer.bounds.width, height: groupType == .other ? 0 : 40)
     }
 }
 

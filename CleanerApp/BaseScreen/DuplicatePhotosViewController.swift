@@ -13,16 +13,8 @@ class DuplicatePhotosViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
-    
-    
-//    override class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType) -> BaseViewController {
-//        let baseVC = customInit(predicate: predicate, groupType: groupType)
-//       object_setClass(baseVC, DuplicatePhotosViewController.self)
-//        return baseVC as! DuplicatePhotosViewController
-//    }
-
 }
 
 
@@ -32,20 +24,24 @@ class SimilarPhotosViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-    
-    
-    
-    class func customInit() -> SimilarPhotosViewController{
-        let mediaPredicate = NSPredicate(format: "mediaTypeValue == %@", PHAssetCustomMediaType.photo.rawValue)
-        let groupPredicate = NSPredicate(format: "groupTypeValue == %@", PHAssetGroupType.similar.rawValue)
-        
-        let compountPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [mediaPredicate, groupPredicate])
-        
-        let baseVC = customInit(predicate: compountPredicate, groupType: .similar)
-       object_setClass(baseVC, SimilarPhotosViewController.self)
-        return baseVC as! SimilarPhotosViewController
-    }
+}
 
+
+class OtherPhotosViewController: BaseViewController{
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func selectAll() {
+        guard let sections = fetchResultViewController.sections else { return }
+        for (index,section) in sections.enumerated() {
+            let rowsCount = section.numberOfObjects
+            for index2 in 0 ..< rowsCount{
+                let indexpath = IndexPath(row: index2, section: index)
+                viewModel.selectedIndexPath.insert(indexpath)
+            }
+        }
+        reloadData()
+    }
 }
