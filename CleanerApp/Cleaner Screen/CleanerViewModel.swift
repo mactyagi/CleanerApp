@@ -17,6 +17,8 @@ class  CleanerViewModel {
     @Published var reminderCount: Int?
     @Published var PhotosAndVideosCount = 0
     @Published var PhotosAndVideosSize: Int64 = 0
+    @Published var totalStorage: Int64 = 0
+    @Published var usedStorage: Int64 = 0
     private let queue = DispatchQueue.global(qos: .userInteractive)
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
@@ -25,7 +27,7 @@ class  CleanerViewModel {
         self.deviceInfoManager = deviceInfoManager
         self.eventStore = eventStore
         self.deviceInfoManager.delegate = self
-        
+        getStorageInfo()
         queue.async {
             self.getPhotosAndVideosData()
         }
@@ -50,10 +52,34 @@ class  CleanerViewModel {
         }
         
     }
+
+    
+    func getStorageInfo() {
+        let fileManager = FileManager.default
+        let documentDirectory = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+
+        do {
+            let values = try documentDirectory.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey, .volumeTotalCapacityKey])
+
+            if let totalSize = values.volumeTotalCapacity, let freeSize = values.volumeAvailableCapacityForImportantUsage {
+                let usedSize = Int64(totalSize) - freeSize
+
+                totalStorage = Int64(totalSize)
+                usedStorage = usedSize
+                
+                print("Total Storage: \(Int64(totalSize).formatBytes())")
+                print("Used Storage: \(usedSize.formatBytes())")
+            }
+        } catch {
+            print("Error getting storage information: \(error.localizedDescription)")
+        }
+    }
+
+
     
     
     func getPhotosAndVideosData(){
-        let fetchOptions = PHFetchOptions()
+//        let fetchOptions = PHFetchOptions()
         let allPhotos = PHAsset.fetchAssets(with: .none)
         
         allPhotos.enumerateObjects { [weak self] asset, test, _ in

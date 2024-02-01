@@ -46,6 +46,7 @@ class CleanerViewController: UIViewController {
         //MARK: - Variables
     private var cancelables: Set<AnyCancellable> = []
     private var viewModel: CleanerViewModel!
+    private var progressBar: CircularProgressBarView?
     
     //MARK: - View Life cycle
     override func viewDidLoad() {
@@ -101,6 +102,30 @@ class CleanerViewController: UIViewController {
         setupIcons()
         let customFont = UIFont(name: "Avenir Next Demi Bold", size: 18.0)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
+        setupProgressBar()
+        
+    }
+    
+    
+    func setupProgressBar(){
+        progressBar = CircularProgressBarView(frame: CGRect(x: 0, y: 0, width: progressMainView.bounds.width, height: progressMainView.bounds.width))
+        print(progressMainView.bounds.width)
+        print(progressMainView.bounds.size.width)
+        guard let progressBar else { return }
+//        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        progressMainView.addSubview(progressBar)
+        
+// Add Auto Layout constraints
+//       NSLayoutConstraint.activate([
+//        progressBar.topAnchor.constraint(equalTo: progressMainView.topAnchor, constant: 10),
+//        progressBar.bottomAnchor.constraint(equalTo: progressMainView.bottomAnchor, constant: -10),
+//        progressBar.trailingAnchor.constraint(equalTo: progressMainView.trailingAnchor, constant: -10),
+//        progressBar.leadingAnchor.constraint(equalTo: progressMainView.leadingAnchor, constant: 10)
+//       ])
+        
+//        progressBar.setup()
+        progressBar.setProgress(0.4)
+        
     }
     
     func setupIcons(){
@@ -135,6 +160,11 @@ class CleanerViewController: UIViewController {
         
         let galleryItemTapGesture = UITapGestureRecognizer(target: self, action: #selector(photoAndVideoTapped))
         photosView.addGestureRecognizer(galleryItemTapGesture)
+        
+        let contactTapGesture = UITapGestureRecognizer(target: self, action: #selector(contactViewTapped))
+        let smartCleaningTapGesture = UITapGestureRecognizer(target: self, action: #selector(contactViewTapped))
+        contactsView.addGestureRecognizer(contactTapGesture)
+        smartCleaningView.addGestureRecognizer(smartCleaningTapGesture)
     }
     
     @objc func calendarViewTapped(){
@@ -142,7 +172,9 @@ class CleanerViewController: UIViewController {
     }
     
     @objc func contactViewTapped(){
-        
+        let vc = ComingSoonViewController.customInit()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true)
     }
     
     @objc func photoAndVideoTapped(){
@@ -204,6 +236,19 @@ extension CleanerViewController{
         viewModel.$PhotosAndVideosSize.sink { [weak self] size in
             DispatchQueue.main.async {
                 self?.mediaMemoryLabel.text = size.formatBytes()
+            }
+        }.store(in: &cancelables)
+        
+        viewModel.$usedStorage.sink { [weak self] usedStorage in
+            DispatchQueue.main.async {
+                self?.storageUsedLabel.text = usedStorage.formatBytes()
+            }
+        }.store(in: &cancelables)
+        
+        
+        viewModel.$totalStorage.sink { [weak self] totalStorage in
+            DispatchQueue.main.async {
+                self?.totalStorageLabel.text = "of \(totalStorage.formatBytesWithRoundOff())"
             }
         }.store(in: &cancelables)
     }

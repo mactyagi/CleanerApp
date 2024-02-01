@@ -666,20 +666,54 @@
             </objects>
             <point key="canvasLocation" x="-1652.0930232558139" y="-445.49356223175971"/>
         </scene>
-        <!--View Controller-->
+        <!--Coming Soon View Controller-->
         <scene sceneID="kiq-qv-bT6">
             <objects>
-                <viewController id="L4L-Yk-f3g" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ComingSoonViewController" id="L4L-Yk-f3g" customClass="ComingSoonViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UiL-rN-zRa">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znf-jz-Tw4">
+                                <rect key="frame" x="40" y="788" width="350" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="rCO-RG-Ed9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="25"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Back to Home">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonPressed" destination="L4L-Yk-f3g" eventType="touchUpInside" id="hNd-wP-ZH5"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComingSoonImage" translatesAutoresizingMaskIntoConstraints="NO" id="ae1-eW-JLl">
+                                <rect key="frame" x="0.0" y="251" width="430" height="430"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ae1-eW-JLl" secondAttribute="height" id="7pp-Se-Vs6"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="tZX-wO-g5W"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.96862745289999996" green="0.81960785390000002" blue="0.27843138579999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="tZX-wO-g5W" firstAttribute="trailing" secondItem="znf-jz-Tw4" secondAttribute="trailing" constant="40" id="KZc-af-8GE"/>
+                            <constraint firstItem="tZX-wO-g5W" firstAttribute="bottom" secondItem="znf-jz-Tw4" secondAttribute="bottom" constant="60" id="RPZ-dR-Een"/>
+                            <constraint firstItem="ae1-eW-JLl" firstAttribute="centerY" secondItem="UiL-rN-zRa" secondAttribute="centerY" id="YM0-qS-aJr"/>
+                            <constraint firstItem="ae1-eW-JLl" firstAttribute="leading" secondItem="tZX-wO-g5W" secondAttribute="leading" id="hEw-Qt-rDs"/>
+                            <constraint firstItem="tZX-wO-g5W" firstAttribute="trailing" secondItem="ae1-eW-JLl" secondAttribute="trailing" id="jr0-Df-3gB"/>
+                            <constraint firstItem="znf-jz-Tw4" firstAttribute="leading" secondItem="tZX-wO-g5W" secondAttribute="leading" constant="40" id="twp-iU-0DK"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="znf-jz-Tw4" id="Edv-v8-Mio"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIp-30-Nma" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1760" y="985"/>
+            <point key="canvasLocation" x="-1387" y="292"/>
         </scene>
         <!--Compress Quality Selection View Controller-->
         <scene sceneID="Kfo-q4-LRl">
@@ -1188,7 +1222,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qat-mZ-UTA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970.2325581395348" y="150"/>
+            <point key="canvasLocation" x="1704" y="120"/>
         </scene>
         <!--Compressor-->
         <scene sceneID="czr-TL-axI">
@@ -1425,7 +1459,7 @@
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qE8-fe-9J4">
                                                         <rect key="frame" x="15" y="15" width="100" height="100"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="qE8-fe-9J4" secondAttribute="height" id="1jc-kH-SmI"/>
                                                         </constraints>
@@ -1565,7 +1599,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NsA-WN-bqa">
                                                                 <rect key="frame" x="10" y="75" width="175" height="35"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events:33" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icj-Wl-S3I">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events:__" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icj-Wl-S3I">
                                                                         <rect key="frame" x="10" y="5.666666666666627" width="125" height="23.333333333333329"/>
                                                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                                                         <nil key="textColor"/>
@@ -1847,10 +1881,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7VN-CK-oku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1542" y="-1261"/>
+            <point key="canvasLocation" x="-2540" y="-1225"/>
         </scene>
     </scenes>
     <resources>
+        <image name="ComingSoonImage" width="6001" height="4001"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="chevron.forward" catalog="system" width="97" height="128"/>

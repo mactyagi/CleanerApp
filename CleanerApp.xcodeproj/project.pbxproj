@@ -18,6 +18,7 @@
 		32231B612B04B946009AE1E0 /* SecretSpaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */; };
 		32231B632B04C5C9009AE1E0 /* SecretAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */; };
 		32290F6C2B599F9A008FBA60 /* MyTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32290F6B2B599F9A008FBA60 /* MyTabbarViewController.swift */; };
+		324943452B680C700035FE64 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324943442B680C700035FE64 /* CircularProgressView.swift */; };
 		324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */; };
 		324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */; };
 		324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A76BB2AFB243F00EE5AD5 /* Extension.swift */; };
@@ -31,6 +32,7 @@
 		32682CB02B36D17800B9B7BD /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CAF2B36D17800B9B7BD /* IconView.swift */; };
 		32682CB22B36D7CA00B9B7BD /* CleanerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */; };
 		3275EC1B2B5C3B9F00B5B4F7 /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275EC1A2B5C3B9F00B5B4F7 /* TempViewController.swift */; };
+		328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */; };
 		32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */; };
 		32A2D08F2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08D2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift */; };
 		32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08E2B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift */; };
@@ -80,6 +82,7 @@
 		32231B602B04B946009AE1E0 /* SecretSpaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretSpaceModel.swift; sourceTree = "<group>"; };
 		32231B622B04C5C9009AE1E0 /* SecretAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretAlbumViewController.swift; sourceTree = "<group>"; };
 		32290F6B2B599F9A008FBA60 /* MyTabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabbarViewController.swift; sourceTree = "<group>"; };
+		324943442B680C700035FE64 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorViewController.swift; sourceTree = "<group>"; };
 		324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressViewModel.swift; sourceTree = "<group>"; };
 		324A76BB2AFB243F00EE5AD5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		32682CAF2B36D17800B9B7BD /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		32682CB12B36D7CA00B9B7BD /* CleanerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanerViewController.swift; sourceTree = "<group>"; };
 		3275EC1A2B5C3B9F00B5B4F7 /* TempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
+		328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonViewController.swift; sourceTree = "<group>"; };
 		32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		32A2D08D2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAsset+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		32A2D08E2B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAsset+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -203,6 +207,7 @@
 			children = (
 				32682CAD2B36D12C00B9B7BD /* IconView.xib */,
 				32682CAF2B36D17800B9B7BD /* IconView.swift */,
+				324943442B680C700035FE64 /* CircularProgressView.swift */,
 			);
 			path = "Common Views";
 			sourceTree = "<group>";
@@ -282,7 +287,6 @@
 				32BF2C952AF94E3700045343 /* HomeModel.swift */,
 				32BF2C912AF947DA00045343 /* HomeTableViewCell.xib */,
 				32BF2C972AF94E4F00045343 /* HomeViewModel.swift */,
-				32B3C1F52B496DFE000B0727 /* Common Views */,
 			);
 			path = "Home Screen";
 			sourceTree = "<group>";
@@ -310,6 +314,7 @@
 				32E2E0D82AF80039009CA92E /* SceneDelegate.swift */,
 				324A76BB2AFB243F00EE5AD5 /* Extension.swift */,
 				326709532B375D11003515D4 /* DeviceInfoManager.swift */,
+				328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */,
 				32A2D08C2B3D339600C27BA0 /* Storage */,
 				32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */,
 				32BD2A792B483B6E0039E85E /* BaseScreen */,
@@ -320,6 +325,7 @@
 				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
 				32231B5B2B04B30A009AE1E0 /* Secret Space */,
 				3201A26A2B38A739003DB928 /* Calender Screen */,
+				32B3C1F52B496DFE000B0727 /* Common Views */,
 				32BF2C942AF94E1A00045343 /* Home Screen */,
 				32E2E0DC2AF80039009CA92E /* Main.storyboard */,
 				32E2E0E22AF8003A009CA92E /* Assets.xcassets */,
@@ -415,6 +421,7 @@
 				321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */,
 				3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
+				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
 				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
 				32BD2A7D2B483D010039E85E /* BaseViewModel.swift in Sources */,
 				32BD2A7B2B483C770039E85E /* BaseViewController.swift in Sources */,
@@ -444,6 +451,7 @@
 				32ED57AF2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift in Sources */,
 				32B3C1F72B497355000B0727 /* MediaModel.swift in Sources */,
 				32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */,
+				324943452B680C700035FE64 /* CircularProgressView.swift in Sources */,
 				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
 				32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,

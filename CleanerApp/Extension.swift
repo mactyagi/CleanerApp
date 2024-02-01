@@ -110,6 +110,28 @@ extension Int64 {
         return String(format: "%4.2f %@", convertedValue, tokens[multiplyFactor])
     }
     
+    func formatBytesWithRoundOff() -> String{
+        let formatedString = self.formatBytes()
+        let tuple = extractNumericAndNonNumericParts(from: formatedString)
+        let numericPart = Int(ceil(Double(tuple.numericPart ?? "") ?? 0))
+        return "\(numericPart)\(tuple.nonNumericPart ?? "")"
+    }
+    
+    func extractNumericAndNonNumericParts(from formattedString: String) -> (numericPart: String?, nonNumericPart: String?) {
+        do {
+            let regex = try NSRegularExpression(pattern: "([0-9]+\\.?[0-9]*)([^0-9]*)", options: .caseInsensitive)
+            let range = NSRange(location: 0, length: formattedString.utf16.count)
+            if let match = regex.firstMatch(in: formattedString, options: [], range: range) {
+                let numericPart = (formattedString as NSString).substring(with: match.range(at: 1))
+                let nonNumericPart = (formattedString as NSString).substring(with: match.range(at: 2))
+                return (numericPart, nonNumericPart)
+            }
+        } catch {
+            print("Error creating regular expression: \(error.localizedDescription)")
+        }
+        return (nil, nil)
+    }
+    
     func formatBytes() -> String {
         let byteCountFormatter = ByteCountFormatter()
         byteCountFormatter.allowedUnits = [.useAll]
