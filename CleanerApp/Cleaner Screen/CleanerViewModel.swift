@@ -27,7 +27,6 @@ class  CleanerViewModel {
         self.deviceInfoManager = deviceInfoManager
         self.eventStore = eventStore
         self.deviceInfoManager.delegate = self
-        getStorageInfo()
         queue.async {
             self.getPhotosAndVideosData()
         }
@@ -51,6 +50,10 @@ class  CleanerViewModel {
             self.getReminderData()
         }
         
+        queue.async {
+            self.getStorageInfo()
+        }
+        
     }
 
     
@@ -66,6 +69,7 @@ class  CleanerViewModel {
 
                 totalStorage = Int64(totalSize)
                 usedStorage = usedSize
+                
                 
                 print("Total Storage: \(Int64(totalSize).formatBytes())")
                 print("Used Storage: \(usedSize.formatBytes())")

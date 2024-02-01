@@ -16,7 +16,7 @@ class CircularProgressBarView: UIView {
             if progress > 1 {
                percentage = 100
             }
-            percentageLabel.text = "\(percentage) %"
+            percentageLabel.text = "\(percentage)%"
             progressLayer.strokeEnd = CGFloat(progress)
         }
     }
@@ -46,7 +46,7 @@ class CircularProgressBarView: UIView {
         percentageLabel.translatesAutoresizingMaskIntoConstraints = false
         percentageLabel.textAlignment = .center
         percentageLabel.textColor = .black
-        percentageLabel.font = UIFont(name: "AvenirNext-Bold", size: 17.0)
+        percentageLabel.font = UIFont(name: "AvenirNext-Bold", size: 20.0)
         addSubview(percentageLabel)
         NSLayoutConstraint.activate([
             percentageLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
@@ -65,7 +65,6 @@ class CircularProgressBarView: UIView {
         animation.isRemovedOnCompletion = false
 
         progressLayer.add(animation, forKey: "progressAnimation")
-        progressLayer.strokeEnd = CGFloat(progress)
         self.progress = progress
     }
 }

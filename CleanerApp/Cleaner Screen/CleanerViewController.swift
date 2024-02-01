@@ -112,19 +112,8 @@ class CleanerViewController: UIViewController {
         print(progressMainView.bounds.width)
         print(progressMainView.bounds.size.width)
         guard let progressBar else { return }
-//        progressBar.translatesAutoresizingMaskIntoConstraints = false
         progressMainView.addSubview(progressBar)
-        
-// Add Auto Layout constraints
-//       NSLayoutConstraint.activate([
-//        progressBar.topAnchor.constraint(equalTo: progressMainView.topAnchor, constant: 10),
-//        progressBar.bottomAnchor.constraint(equalTo: progressMainView.bottomAnchor, constant: -10),
-//        progressBar.trailingAnchor.constraint(equalTo: progressMainView.trailingAnchor, constant: -10),
-//        progressBar.leadingAnchor.constraint(equalTo: progressMainView.leadingAnchor, constant: 10)
-//       ])
-        
-//        progressBar.setup()
-        progressBar.setProgress(0.4)
+        progressBar.progress = 0
         
     }
     
@@ -146,6 +135,15 @@ class CleanerViewController: UIViewController {
         
         photosIconView.contentView.backgroundColor = .systemGreen
         photosIconView.imageView.image = UIImage(systemName: "photo.fill")
+        
+        telegramIconView.imageView.image = UIImage.telegramIcon
+        telegramIconView.contentView.backgroundColor = .darkBlue
+        
+        whatsAppIconView.imageView.image = UIImage.whatsappIcon
+        whatsAppIconView.contentView.backgroundColor = UIColor.systemGreen
+        
+        viberIconView.imageView.image = UIImage.viberIcon
+        viberIconView.contentView.backgroundColor = .systemPurple
         
     }
     
@@ -242,6 +240,11 @@ extension CleanerViewController{
         viewModel.$usedStorage.sink { [weak self] usedStorage in
             DispatchQueue.main.async {
                 self?.storageUsedLabel.text = usedStorage.formatBytes()
+                if let self{
+                    let progress = Float(usedStorage) / Float(self.viewModel.totalStorage)
+                    self.progressBar?.setProgress(Float(progress))
+                }
+                
             }
         }.store(in: &cancelables)
         
