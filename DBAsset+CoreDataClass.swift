@@ -27,6 +27,7 @@ public class DBAsset: NSManagedObject {
         self.size = size
         self.sha = sha
         self.groupTypeValue = photoGroupType.rawValue
+        self.isChecked = false
     }
     
     

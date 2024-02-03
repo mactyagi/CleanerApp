@@ -3,8 +3,9 @@
     <entity name="DBAsset" representedClassName="DBAsset" syncable="YES">
         <attribute name="assetId" attributeType="String"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="featurePrints" optional="YES" attributeType="Transformable"/>
+        <attribute name="featurePrints" optional="YES" attributeType="Transformable" valueTransformerName=""/>
         <attribute name="groupTypeValue" attributeType="String"/>
+        <attribute name="isChecked" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="mediaTypeValue" attributeType="String"/>
         <attribute name="sha" optional="YES" attributeType="String"/>
         <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

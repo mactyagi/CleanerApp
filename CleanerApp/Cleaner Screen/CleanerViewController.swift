@@ -42,6 +42,7 @@ class CleanerViewController: UIViewController {
     @IBOutlet weak var whatsAppIconView: IconView!
     @IBOutlet weak var viberIconView: IconView!
     
+    @IBOutlet weak var activityIndicatorForPhotos: UIActivityIndicatorView!
     
         //MARK: - Variables
     private var cancelables: Set<AnyCancellable> = []
@@ -94,6 +95,8 @@ class CleanerViewController: UIViewController {
     
     func setupView(){
         scrollView.bounces = false
+        activityIndicatorForPhotos.color = .darkGray
+        activityIndicatorForPhotos.hidesWhenStopped = true
         infoImageView.makeCornerRadiusCircle()
         addCornerRadius(10, views: EventView, contactCountView, mediaMemoryView)
         addCornerRadius(15, views: deviceInfoItemsView, progressMainView, calenderView, contactsView, photosView, howToCleanUpView)
@@ -257,6 +260,16 @@ extension CleanerViewController{
         viewModel.$totalStorage.sink { [weak self] totalStorage in
             DispatchQueue.main.async {
                 self?.totalStorageLabel.text = "of \(totalStorage.formatBytesWithRoundOff())"
+            }
+        }.store(in: &cancelables)
+        
+        viewModel.$isProcessCompleted.sink { [weak self] isProcessCompleted in
+            DispatchQueue.main.async {
+                if isProcessCompleted{
+                    self?.activityIndicatorForPhotos.stopAnimating()
+                }else{
+                    self?.activityIndicatorForPhotos.startAnimating()
+                }
             }
         }.store(in: &cancelables)
     }

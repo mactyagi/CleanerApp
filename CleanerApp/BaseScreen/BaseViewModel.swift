@@ -19,7 +19,7 @@ class BaseViewModel{
     }
     
     func fetchDBAssetFromCoreData(){
-        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let context = CoreDataManager.customContext
         let dbAssets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: self.predicate)
         let dict = Dictionary(grouping: dbAssets) { $0.subGroupId }
         for (key,value) in dict{

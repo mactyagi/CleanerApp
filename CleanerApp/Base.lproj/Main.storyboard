@@ -468,11 +468,12 @@
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="R1C-Md-QuO">
                                 <rect key="frame" x="0.0" y="139" width="430" height="759"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nFG-fP-9wz">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nFG-fP-9wz">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="100" maxX="0.0" maxY="200"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="BaseCollectionReusableView" id="pZz-uj-rho" customClass="BaseHeaderCollectionReusableView" customModule="CleanerApp" customModuleProvider="target">
@@ -1653,6 +1654,9 @@
                                                             <constraint firstAttribute="height" constant="40" id="tfF-s4-vP8"/>
                                                         </constraints>
                                                     </view>
+                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="33N-1g-oDj">
+                                                        <rect key="frame" x="10" y="30" width="40" height="40"/>
+                                                    </activityIndicatorView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="PYY-bY-00K">
                                                         <rect key="frame" x="60" y="26.666666666666625" width="135.33333333333334" height="46.666666666666657"/>
                                                         <subviews>
@@ -1703,12 +1707,16 @@
                                                 <constraints>
                                                     <constraint firstItem="s5A-0Z-RqA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PYY-bY-00K" secondAttribute="trailing" constant="15" id="0Xl-Uj-pmd"/>
                                                     <constraint firstItem="PYY-bY-00K" firstAttribute="centerY" secondItem="cZW-MT-2ge" secondAttribute="centerY" id="5Tw-0E-b7V"/>
+                                                    <constraint firstItem="33N-1g-oDj" firstAttribute="bottom" secondItem="cFd-zn-sie" secondAttribute="bottom" id="6TR-o2-gxo"/>
+                                                    <constraint firstItem="33N-1g-oDj" firstAttribute="trailing" secondItem="cFd-zn-sie" secondAttribute="trailing" id="8Fb-Qe-ylJ"/>
                                                     <constraint firstAttribute="height" constant="100" id="AHW-rx-SBu"/>
                                                     <constraint firstItem="PYY-bY-00K" firstAttribute="leading" secondItem="cFd-zn-sie" secondAttribute="trailing" constant="10" id="PUL-AL-LUb"/>
                                                     <constraint firstItem="cFd-zn-sie" firstAttribute="centerY" secondItem="cZW-MT-2ge" secondAttribute="centerY" id="VHE-yg-1vK"/>
+                                                    <constraint firstItem="33N-1g-oDj" firstAttribute="top" secondItem="cFd-zn-sie" secondAttribute="top" id="anx-e7-LcQ"/>
                                                     <constraint firstItem="s5A-0Z-RqA" firstAttribute="centerY" secondItem="cZW-MT-2ge" secondAttribute="centerY" id="cj9-Ci-ICK"/>
                                                     <constraint firstAttribute="trailing" secondItem="s5A-0Z-RqA" secondAttribute="trailing" constant="10" id="kLe-Nq-UzJ"/>
                                                     <constraint firstItem="cFd-zn-sie" firstAttribute="leading" secondItem="cZW-MT-2ge" secondAttribute="leading" constant="10" id="pu5-Dz-GkO"/>
+                                                    <constraint firstItem="33N-1g-oDj" firstAttribute="leading" secondItem="cFd-zn-sie" secondAttribute="leading" id="qKg-FS-Ha8"/>
                                                 </constraints>
                                             </view>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How to Clean Up?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t44-LO-B6m">
@@ -1849,6 +1857,7 @@
                     <connections>
                         <outlet property="EventView" destination="Tux-Mt-u47" id="7pf-4r-JnF"/>
                         <outlet property="EventsLabel" destination="zjM-09-kGm" id="Z0N-l4-qan"/>
+                        <outlet property="activityIndicatorForPhotos" destination="33N-1g-oDj" id="wFw-Ka-GwU"/>
                         <outlet property="availableRAMLabel" destination="Ybf-2f-XTa" id="PdZ-5u-cEt"/>
                         <outlet property="calenderIconView" destination="aFm-eJ-vnR" id="A7c-3C-E8k"/>
                         <outlet property="calenderView" destination="QYZ-C8-B00" id="05q-K6-yWD"/>

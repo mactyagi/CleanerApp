@@ -201,6 +201,7 @@ extension UIView{
     }
     
     func makeCornerRadiusSixtenthOfHeightOrWidth(){
+        layer.masksToBounds = true
         layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 16 : bounds.height / 16
     }
     
@@ -210,6 +211,7 @@ extension UIView{
     
     
     func activityStartAnimating(activityColor: UIColor = .gray, backgroundColor: UIColor = .clear, style: UIActivityIndicatorView.Style = .medium) {
+        if viewWithTag(475647) != nil{ return }
         let backgroundView = UIView()
         backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
         backgroundView.backgroundColor = backgroundColor

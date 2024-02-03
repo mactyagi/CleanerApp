@@ -26,6 +26,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         mainView.makeCornerRadiusSixtenthOfHeightOrWidth()
         descriptionView.makeCornerRadiusFourthOfHeightOrWidth()
+        setupImageView(imageView1, imageView2, imageView3, imageView4, imageView5, isHidden: true)
         
     }
     

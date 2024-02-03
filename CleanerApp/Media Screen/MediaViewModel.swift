@@ -28,8 +28,6 @@ class MediaViewModel: NSObject{
             }
         }
     }
-
-    
     
     private var fetchedResultsControllerForDuplicatePhotos: NSFetchedResultsController<DBAsset>?
     private var fetchedResultsControllerForSimilarPhotos: NSFetchedResultsController<DBAsset>?
@@ -46,13 +44,19 @@ class MediaViewModel: NSObject{
             return (tuple.title, cells)
         })
         
-        setupFetchtResultController(&fetchedResultsControllerForDuplicatePhotos, type: .duplicatePhoto)
-        setupFetchtResultController(&fetchedResultsControllerForSimilarPhotos, type: .similarPhoto)
-        setupFetchtResultController(&fetchedResultsControllerForOtherPhotos, type: .otherPhoto)
-        setupFetchtResultController(&fetchedResultsControllerForDuplicateSS, type: .duplicateScreenshot)
-        setupFetchtResultController(&fetchedResultsControllerForSimilarSS, type: .similarScreenshot)
-        setupFetchtResultController(&fetchedResultsControllerForOtherSS, type: .otherScreenshot)
+        setupFetchResultController(&fetchedResultsControllerForDuplicatePhotos, type: .duplicatePhoto)
+        setupFetchResultController(&fetchedResultsControllerForSimilarPhotos, type: .similarPhoto)
+        setupFetchResultController(&fetchedResultsControllerForOtherPhotos, type: .otherPhoto)
+        setupFetchResultController(&fetchedResultsControllerForDuplicateSS, type: .duplicateScreenshot)
+        setupFetchResultController(&fetchedResultsControllerForSimilarSS, type: .similarScreenshot)
+        setupFetchResultController(&fetchedResultsControllerForOtherSS, type: .otherScreenshot)
+        
+        let data = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.customContext, predicate: NSPredicate(format: "isChecked == %@", NSNumber(value: false)))
+        
+        print(data.count)
     }
+    
+    
     
     
     func getPredicate(mediaType: MediaCellType) -> NSPredicate{
@@ -82,11 +86,13 @@ class MediaViewModel: NSObject{
         
         let mediaPredicate = NSPredicate(format: "mediaTypeValue == %@", assetMediaType.rawValue)
         let groupPredicate = NSPredicate(format: "groupTypeValue == %@", groupType.rawValue)
-        return NSCompoundPredicate(andPredicateWithSubpredicates: [mediaPredicate, groupPredicate])
+        let isCheckedPredicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [mediaPredicate, groupPredicate, isCheckedPredicate])
         
+        return compoundPredicate
     }
     
-    func setupFetchtResultController(_ controller: inout NSFetchedResultsController<DBAsset>?, type: MediaCellType){
+    func setupFetchResultController(_ controller: inout NSFetchedResultsController<DBAsset>?, type: MediaCellType){
         if controller == nil{
             let request = DBAsset.fetchRequest()
             let subGroupSort = NSSortDescriptor(key: "subGroupId", ascending: true)
@@ -94,8 +100,8 @@ class MediaViewModel: NSObject{
             request.sortDescriptors = [subGroupSort, dateSort]
             
             request.predicate = getPredicate(mediaType: type)
-            
-            controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+            controller?.delegate = self
+            controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.mainContext, sectionNameKeyPath: nil, cacheName: nil)
             
             do{
                 try controller?.performFetch()
@@ -162,19 +168,20 @@ class MediaViewModel: NSObject{
 
 extension MediaViewModel: NSFetchedResultsControllerDelegate{
     
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        switch controller{
-        case fetchedResultsControllerForDuplicatePhotos:
-            updateCell(assets: fetchedResultsControllerForDuplicatePhotos?.fetchedObjects ?? [], type: .duplicatePhoto)
-            break
-        case fetchedResultsControllerForSimilarPhotos:
-            updateCell(assets: fetchedResultsControllerForSimilarPhotos?.fetchedObjects ?? [], type: .similarPhoto)
-            break
-        case fetchedResultsControllerForOtherPhotos:
-            updateCell(assets: fetchedResultsControllerForOtherPhotos?.fetchedObjects ?? [], type: .otherPhoto)
-            break
-        default:
-            break
-        }
+//        switch controller{
+//        case fetchedResultsControllerForDuplicatePhotos:
+//            updateCell(assets: fetchedResultsControllerForDuplicatePhotos?.fetchedObjects ?? [], type: .duplicatePhoto)
+//            break
+//        case fetchedResultsControllerForSimilarPhotos:
+//            updateCell(assets: fetchedResultsControllerForSimilarPhotos?.fetchedObjects ?? [], type: .similarPhoto)
+//            break
+//        case fetchedResultsControllerForOtherPhotos:
+//            updateCell(assets: fetchedResultsControllerForOtherPhotos?.fetchedObjects ?? [], type: .otherPhoto)
+//            break
+//        default:
+//            break
+//        }
     }
 }

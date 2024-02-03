@@ -21,23 +21,39 @@ class  CleanerViewModel: NSObject {
     @Published var photosAndVideosSize: Int64 = 0
     @Published var totalStorage: Int64 = 0
     @Published var usedStorage: Int64 = 0
+    @Published var isProcessCompleted = false
     private let queue = DispatchQueue.global(qos: .userInteractive)
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
     private var eventStore: EKEventStore
     private var fetchResultController: NSFetchedResultsController<DBAsset>?
+    private let allPhotosCount:Int = {
+        let option = PHFetchOptions()
+        return PHAsset.fetchAssets(with: .image, options: option).count
+    }()
     
     init(deviceInfoManager: DeviceInfoManager, eventStore: EKEventStore){
         self.deviceInfoManager = deviceInfoManager
         self.eventStore = eventStore
         super.init()
         self.deviceInfoManager.delegate = self
-        setupFetchResultController()
+//        setupFetchResultController()
+        fetchPhotoAndvideosCountAndSize()
+        
         queue.async {
 //            self.getPhotosAndVideosData()
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(notification:)), name: .NSManagedObjectContextDidSave, object: CoreDataManager.customContext)
     }
     
+    @objc func contextDidSave(notification: Notification) {
+        
+        CoreDataManager.secondCustomContext.perform {
+            self.fetchPhotoAndvideosCountAndSize()
+//            try? self.fetchResultController?.performFetch()
+//            self.updatePhotoAndVideosCountAndSize()
+        }
+    }
     
     func startUpdatingDeivceInfo(){
         deviceInfoManager.startRAMUpdateTimer()
@@ -86,49 +102,40 @@ class  CleanerViewModel: NSObject {
     }
 
     
-    func setupFetchResultController(){
-        if fetchResultController == nil{
-            let request = DBAsset.fetchRequest()
-            let dateSort = NSSortDescriptor(key: "creationDate", ascending: true)
-            request.sortDescriptors = [dateSort]
-            
-            var predicates:[NSPredicate] = []
-            
-            predicates.append(NSPredicate(format: "groupTypeValue == %@", PHAssetGroupType.duplicate.rawValue))
-            predicates.append(NSPredicate(format: "featurePrints != nil"))
-            
-            var compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
-            
-            fetchResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-            fetchResultController?.delegate = self
-            
-            do{
-                try fetchResultController?.performFetch()
-                updatePhotoAndVideosCountAndSize()
-                
-            } catch{
-                print(error)
-            }
-        }
+//    func setupFetchResultController(){
+//        if fetchResultController == nil{
+//            let request = DBAsset.fetchRequest()
+//            let dateSort = NSSortDescriptor(key: "creationDate", ascending: true)
+//            request.sortDescriptors = [dateSort]
+//            request.predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
+//            
+//            fetchResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+//            fetchResultController?.delegate = self
+//            
+//            do{
+//                try fetchResultController?.performFetch()
+//                updatePhotoAndVideosCountAndSize()
+//                
+//            } catch{
+//                print(error)
+//            }
+//        }
+//    }
+    
+    func fetchPhotoAndvideosCountAndSize(){
+        let predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
+        let assets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: predicate)
+        photosAndVideosCount = assets.count
+        isProcessCompleted = assets.count == allPhotosCount
+        self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
+    
     }
     
     func updatePhotoAndVideosCountAndSize(){
         let assets = fetchResultController?.fetchedObjects ?? []
         photosAndVideosCount = assets.count
+        isProcessCompleted = assets.count == allPhotosCount
         self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
-    }
-
-
-    
-    
-    func getPhotosAndVideosData(){
-//        let fetchOptions = PHFetchOptions()
-        let allPhotos = PHAsset.fetchAssets(with: .none)
-        
-        allPhotos.enumerateObjects { [weak self] asset, test, _ in
-            self?.photosAndVideosSize += asset.getSize() ?? 0
-            self?.photosAndVideosCount += 1
-        }
     }
     
    private func getCalendarData() {

@@ -78,6 +78,10 @@ class BaseViewController: UIViewController {
     func setupCollectionView(){
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        let inset = UIEdgeInsets(top: 0, left: 0, bottom:80, right: 0)
+        collectionView.contentInset = inset
+        
         collectionView.register(UINib(nibName: BaseHeaderCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BaseHeaderCollectionReusableView.identifier)
         collectionView.register(UINib(nibName: PhotoCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
         collectionView.collectionViewLayout = GridCollectionViewFlowLayout(columns: 2, topLayoutMargin: 0, bottomLayoutMargin: 5, leftLayoutMargin: 15, spacing: 10, direction: .vertical, isLayoutForCell: true)
@@ -112,8 +116,8 @@ class BaseViewController: UIViewController {
         let gradientLayer = CAGradientLayer()
         
         gradientLayer.colors =  [
-            UIColor.systemBackground.withAlphaComponent(0).cgColor,
-            UIColor.systemBackground.withAlphaComponent(1).cgColor
+            UIColor.veryLightBlueAndDarkGray.withAlphaComponent(0).cgColor,
+            UIColor.veryLightBlueAndDarkGray.withAlphaComponent(1).cgColor
         ]
         gradientLayer.locations = [0, 0.6]
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
@@ -148,7 +152,7 @@ class BaseViewController: UIViewController {
                 request.predicate = predicate
             }
             
-            fetchResultViewController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.persistentContainer.viewContext, sectionNameKeyPath: "subGroupId", cacheName: nil)
+            fetchResultViewController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.mainContext, sectionNameKeyPath: "subGroupId", cacheName: nil)
             
             fetchResultViewController.delegate = self
             
@@ -250,6 +254,13 @@ extension BaseViewController: UICollectionViewDataSource{
         headerCell.isAllSelected = isAllSelectedAt(section: indexPath.section)
         
         headerCell.countLabel.text = "\(groupType.rawValue.capitalized):\(fetchResultViewController.sections?[indexPath.section].numberOfObjects ?? 0)"
+        
+        fetchResultViewController.sections?.count == indexPath.section + 1
+        
+        let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+
+        collectionViewLayout?.sectionInset = UIEdgeInsets(top: 100, left: 0, bottom: 100, right: 0) // some UIEdgeInset
+        (collectionViewLayout?.invalidateLayout())
          return headerCell
     }
 }
@@ -289,42 +300,42 @@ extension BaseViewController: UICollectionViewDelegate{
 
 extension BaseViewController: NSFetchedResultsControllerDelegate{
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        collectionView.performBatchUpdates(nil)
+//        collectionView.performBatchUpdates(nil)
     }
     
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        let indexSet = IndexSet(integer: sectionIndex)
-        switch type{
-            
-        case .insert:
-            collectionView?.insertSections(indexSet)
-        case .delete:
-            collectionView?.deleteSections(indexSet)
-        default:
-            break
-        }
+//        let indexSet = IndexSet(integer: sectionIndex)
+//        switch type{
+//            
+//        case .insert:
+//            collectionView?.insertSections(indexSet)
+//        case .delete:
+//            collectionView?.deleteSections(indexSet)
+//        default:
+//            break
+//        }
     }
     
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            collectionView?.insertItems(at: [newIndexPath!])
-        case .delete:
-            collectionView?.deleteItems(at: [indexPath!])
-        case .move:
-            collectionView?.moveItem(at: indexPath!, to: newIndexPath!)
-        case .update:
-            collectionView?.reloadItems(at: [indexPath!])
-        @unknown default:
-            break
-        }
+//        switch type {
+//        case .insert:
+//            collectionView?.insertItems(at: [newIndexPath!])
+//        case .delete:
+//            collectionView?.deleteItems(at: [indexPath!])
+//        case .move:
+//            collectionView?.moveItem(at: indexPath!, to: newIndexPath!)
+//        case .update:
+//            collectionView?.reloadItems(at: [indexPath!])
+//        @unknown default:
+//            break
+//        }
     }
     
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        collectionView?.performBatchUpdates(nil, completion: nil)
+//        collectionView?.performBatchUpdates(nil, completion: nil)
     }
 }
 

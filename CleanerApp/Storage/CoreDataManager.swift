@@ -11,8 +11,11 @@ import CoreData
 class CoreDataManager{
     static let shared = CoreDataManager()
     private init() {}
+    static let customContext = shared.persistentContainer.newBackgroundContext()
+    static let secondCustomContext = shared.persistentContainer.newBackgroundContext()
+    static let mainContext = shared.persistentContainer.viewContext
     
-    lazy var persistentContainer : NSPersistentContainer = {
+    lazy private var persistentContainer : NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CleanerApp")
         container.loadPersistentStores { storeDescription, error in
             if let error =  error as NSError?{
@@ -26,22 +29,33 @@ class CoreDataManager{
     // MARK: - Core Data Saving support
     func saveContext(context: NSManagedObjectContext?) {
         guard let context else { return }
-        if context.hasChanges {
-            do {
-                try context.save()
-                print(" ** saved in Core Data")
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        context.performAndWait {
+            if context.hasChanges {
+                do {
+                    try context.save()
+//                    CoreDataManager.mainContext.performAndWait {
+//                        do{
+//                            try CoreDataManager.mainContext.save()
+//                        }catch{
+//                            let nserror = error as NSError
+//                            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//                        }
+//                    }
+                    
+                } catch {
+                    let nserror = error as NSError
+//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
+            }else{
+    //            print(" ** Already saved")
             }
-        }else{
-            print(" ** Already saved")
         }
+        
     }
     
     
     
-    func fetchDBAssets(context: NSManagedObjectContext, predicate: NSPredicate) -> [DBAsset]{
+    func fetchDBAssets(context: NSManagedObjectContext, predicate: NSPredicate? = nil) -> [DBAsset]{
         context.performAndWait {
             let fetchRequest = DBAsset.fetchRequest()
             fetchRequest.predicate = predicate
@@ -55,7 +69,7 @@ class CoreDataManager{
         }
     }
     
-    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, shouldHaveGroupId: Bool? = nil, exceptGroupType: PHAssetGroupType? = nil, fetchLimit: Int? = nil) -> [DBAsset]{
+    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, shouldHaveGroupId: Bool? = nil, isChecked: Bool? = nil, exceptGroupType: PHAssetGroupType? = nil, fetchLimit: Int? = nil) -> [DBAsset]{
         context.performAndWait {
             let fetchRequest = DBAsset.fetchRequest()
             if let fetchLimit{
@@ -68,6 +82,11 @@ class CoreDataManager{
             if let exceptGroupType{
                 predicates.append(NSPredicate(format: "groupTypeValue != %@", exceptGroupType.rawValue))
             }
+            
+            if let isChecked{
+                predicates.append(NSPredicate(format: "isChecked == %@", NSNumber(value: isChecked)))
+            }
+            
             if let mediaType{
                 predicates.append(NSPredicate(format: "mediaTypeValue == %@", mediaType.rawValue))
             }
@@ -91,13 +110,15 @@ class CoreDataManager{
     
     func deleteAsset(asset: DBAsset){
         guard let context = asset.managedObjectContext else { return }
-        if let assetToDlete = context.object(with: asset.objectID) as? DBAsset{
-            context.delete(assetToDlete)
-            do {
-                try context.save()
-                print("Object deleted successfully.")
-            } catch {
-                print("Error deleting object: \(error)")
+        context.performAndWait {
+            if let assetToDlete = context.object(with: asset.objectID) as? DBAsset{
+                context.delete(assetToDlete)
+                do {
+                    try context.save()
+                    print("Object deleted successfully.")
+                } catch {
+                    print("Error deleting object: \(error)")
+                }
             }
         }
     }
