@@ -350,3 +350,8 @@ private func createLayout() -> UICollectionViewLayout {
 
 
 
+extension Notification.Name{
+        static let updateData = Notification.Name("UpdateDataNotification")
+    
+}
+

@@ -68,71 +68,119 @@ class PHAssetManager{
 class CoreDataPHAssetManager{
     static var shared = CoreDataPHAssetManager()
     
-    let progress: Progress = Progress()
+    private var totalCount: Int = 0
+    private var dispatchGroup = DispatchGroup()
+    private var completedCount = 0{
+        didSet{
+            let fractionCompleted = Float(completedCount) / Float(totalCount)
+           NotificationCenter.default.post(name: Notification.Name.updateData, object: nil, userInfo: nil)
+        }
+    }
+    
+   
     
     func deleteExtraPHassetsFromCoreData(){
-        let startTime = DispatchTime.now()
-        let context = CoreDataManager.customContext
+        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
         let data = CoreDataManager.shared.fetchDBAssets(context: context, predicate: nil)
-        var dict = Dictionary(grouping: data, by: \.assetId)
+        var dictToDelete = Dictionary(grouping: data, by: \.assetId)
         let allPhotos = PHAsset.fetchAssets(with: .none)
+//        totalCount = allPhotos * 4
         let arrayToDelete = [String]()
-        allPhotos.enumerateObjects { asset, test, _ in
-            if dict[asset.localIdentifier] != nil{
-                dict[asset.localIdentifier] = nil
+        
+        withExecutionTime(title: "all photos Count") {
+            allPhotos.enumerateObjects { asset, test, count in
+                if dictToDelete[asset.localIdentifier] != nil{
+                    dictToDelete[asset.localIdentifier] = nil
+                }
+            }
+        }
+        print("** all photo enumuration should completed")
+        
+        var dictWithGroupId = Dictionary(grouping: data, by: \.subGroupId)
+        
+        for (_,value) in dictWithGroupId{
+            if value.count < 2{
+                for asset in value{
+                    asset.subGroupId = nil
+                    asset.groupTypeValue = PHAssetGroupType.other.rawValue
+                }
             }
         }
         
-        for (_, value) in dict{
-            value.forEach { asset in
-                CoreDataManager.shared.deleteAsset(asset: asset)
+        
+        withExecutionTime(title: "dict enum") {
+            for (_, value) in dictToDelete{
+                value.forEach { asset in
+                    CoreDataManager.shared.deleteAsset(asset: asset)
+                }
             }
         }
-        let endTime = DispatchTime.now()
-        let elapsedTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
-        print("** time taken by \(#function) is \(Double(elapsedTime))")
     }
     
     
      func startProcess(){
-         print("** delete prcess Start")
+         
         let queue = DispatchQueue.global(qos: .userInteractive)
          
          queue.async {
-             self.deleteExtraPHassetsFromCoreData()
-             let context = CoreDataManager.customContext
-             let count = CoreDataManager.shared.fetchDBAssets(context: context, predicate: nil).count
-             print(count)
+             self.withExecutionTime(title: "delete Asset") {
+                 self.deleteExtraPHassetsFromCoreData()
+             }
+             
+             
+            
+             self.dispatchGroup.enter()
              queue.async {
                  self.processScreenShots()
+                 self.dispatchGroup.leave()
              }
+             
+             
+            self.dispatchGroup.enter()
              queue.async {
                  self.processPhotos()
+                 self.dispatchGroup.leave()
              }
+             
+             self.dispatchGroup.wait()
+             self.postUpdate()
+             print("** process completed")
          }
+         
+         
     }
     
     
     private func processPhotos(){
-        addNewPHAssetsTypeInCoreData(mediaType: .photo)
+        self.addNewPHAssetsTypeInCoreData(mediaType: .photo)
         
         // process duplicate before similar is ideal otherwise duplicate photos count in similar photos
-        processDuplicateAssetsFor(.photo)
-        processSimilarAssetsFor(.photo)
+        withExecutionTime(title: "process Duplicate Photos") {
+            processDuplicateAssetsFor(.photo)
+        }
+        withExecutionTime(title: "process similar Photos") {
+            processSimilarAssetsFor(.photo)
+        }
+        
     }
     
     private func processScreenShots(){
-        addNewPHAssetsTypeInCoreData(mediaType: .screenshot)
+        self.addNewPHAssetsTypeInCoreData(mediaType: .screenshot)
         
         // process duplicate before similar is ideal otherwise duplicate photos count in similar photos
-        processDuplicateAssetsFor(.screenshot)
-        processSimilarAssetsFor(.screenshot)
+        withExecutionTime(title: "process Duplicate SS") {
+            processDuplicateAssetsFor(.screenshot)
+        }
+        
+        withExecutionTime(title: "process similar SS") {
+            processSimilarAssetsFor(.screenshot)
+        }
     }
 
     
     
     private func processDuplicateAssetsFor(_ mediaType: PHAssetCustomMediaType){
-        let context = CoreDataManager.customContext
+        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
         
         let oldAssetForDuplicate = CoreDataManager.shared.fetchCustomAssets(
             context: context,
@@ -155,7 +203,7 @@ class CoreDataPHAssetManager{
     
     
     private func processSimilarAssetsFor(_ mediaType: PHAssetCustomMediaType){
-        let context = CoreDataManager.customContext
+        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
         let oldAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
@@ -176,11 +224,13 @@ class CoreDataPHAssetManager{
         
         
         let allAssets = oldAsset + newAsset
-        
+        totalCount += newAsset.count
         
         for firstIndex in oldAsset.count ..< allAssets.count {
+           
             let firstAsset = allAssets[firstIndex]
             if firstAsset.subGroupId != nil {
+                completedCount += 1
                 continue
             }
             if firstAsset.featurePrints?.first == nil{
@@ -224,6 +274,8 @@ class CoreDataPHAssetManager{
             }
             firstAsset.isChecked = true
             CoreDataManager.shared.saveContext(context: context)
+            completedCount += 1
+            
         }
     }
     
@@ -262,7 +314,7 @@ class CoreDataPHAssetManager{
     
     //Helper Functions
     private func addNewPHAssetsTypeInCoreData(mediaType: PHAssetCustomMediaType){
-        let context = CoreDataManager.customContext
+        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
         guard let phAssets = PHAssetManager(PHAssetType: mediaType).allAssets else { return }
         let savedCustomPHAssets = CoreDataManager.shared.fetchCustomAssets(
             context: context,
@@ -285,17 +337,30 @@ class CoreDataPHAssetManager{
                 newPHAssets.append(phAsset)
             }
         }
-        let newCustomPHAssets = newPHAssets.map { asset in
+        var count = 0
+        newPHAssets.forEach { asset in
+            count += 1
             let size = asset.getSize() ?? 0
 //            print("** adding new data in \(mediaType.rawValue) of size \(size.formatBytes()) in Core Data")
-            return DBAsset(assetId: asset.localIdentifier, creationDate: Date(), featurePrints: nil, photoGroupType: .other, mediaType: mediaType, sha: nil, insertIntoManagedObjectContext: context, size: size)
+            let _ = DBAsset(assetId: asset.localIdentifier, creationDate: Date(), featurePrints: nil, photoGroupType: .other, mediaType: mediaType, sha: nil, insertIntoManagedObjectContext: context, size: size)
+            print("** \(count)")
+            CoreDataManager.shared.saveContext(context: context)
+            
         }
+       
         
-//        print("** saving in \(#function)")
-        CoreDataManager.shared.saveContext(context: context)
+        let allAssets = CoreDataManager.shared.fetchCustomAssets(context:context, mediaType: mediaType, groupType: nil, shoudHaveSHA: nil, shouldHaveFeaturePrint: nil)
+        
+        let allAssets2 = CoreDataManager.shared.fetchCustomAssets(context:CoreDataManager.mainContext, mediaType: mediaType, groupType: nil, shoudHaveSHA: nil, shouldHaveFeaturePrint: nil)
+        
+        let allAssets3 = CoreDataManager.shared.fetchCustomAssets(context:CoreDataManager.secondCustomContext, mediaType: mediaType, groupType: nil, shoudHaveSHA: nil, shouldHaveFeaturePrint: nil)
+        
+        print("hr")
     }
 
-    
+    private func postUpdate(){
+        NotificationCenter.default.post(name: Notification.Name.updateData, object: nil, userInfo: nil)
+    }
     
     private func findAndSaveDuplicateAssets(oldAsset: [DBAsset], newAsset: [DBAsset]){
         
@@ -325,9 +390,11 @@ class CoreDataPHAssetManager{
                         asset.groupTypeValue = PHAssetGroupType.duplicate.rawValue
                         asset.isChecked = true
 //                        print("** saving in \(#function)")
+                        
                         CoreDataManager.shared.saveContext(context: asset.managedObjectContext)
                     }
                 }
+                NotificationCenter.default.post(name: Notification.Name.updateData, object: nil, userInfo: nil)
             }else{
                 for asset in assets {
                     asset.isChecked = false
@@ -336,13 +403,15 @@ class CoreDataPHAssetManager{
 //                        print("** saving in \(#function)")
                         CoreDataManager.shared.saveContext(context: asset.managedObjectContext)
                     }else{
-                        let newAsset = DBAsset(assetId: asset.assetId!, creationDate: asset.creationDate!, featurePrints: asset.featurePrints, photoGroupType: .other, mediaType: PHAssetCustomMediaType(rawValue: asset.mediaTypeValue!)!, sha: asset.sha, insertIntoManagedObjectContext: asset.managedObjectContext!, size: asset.size)
+                        let _ = DBAsset(assetId: asset.assetId!, creationDate: asset.creationDate!, featurePrints: asset.featurePrints, photoGroupType: .other, mediaType: PHAssetCustomMediaType(rawValue: asset.mediaTypeValue!)!, sha: asset.sha, insertIntoManagedObjectContext: asset.managedObjectContext!, size: asset.size)
                         CoreDataManager.shared.deleteAsset(asset: asset)
                     }
                     
                 }
             }
         }
+        
+
     }
     
     
@@ -356,6 +425,14 @@ class CoreDataPHAssetManager{
                 toRemoveSubId.append(key!)
             }
         }
+    }
+    
+    private func withExecutionTime(title:String, comp: () ->()){
+        let startTime = DispatchTime.now()
+        comp()
+        let endTime = DispatchTime.now()
+        let elapsedTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
+        print("** time taken by \(title) is \(Double(elapsedTime) / 1_000_000_000.0)sec")
     }
 }
 

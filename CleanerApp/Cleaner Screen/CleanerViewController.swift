@@ -41,6 +41,8 @@ class CleanerViewController: UIViewController {
     @IBOutlet weak var photosIconView: IconView!
     @IBOutlet weak var whatsAppIconView: IconView!
     @IBOutlet weak var viberIconView: IconView!
+    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressLabel: UILabel!
     
     @IBOutlet weak var activityIndicatorForPhotos: UIActivityIndicatorView!
     
@@ -263,13 +265,15 @@ extension CleanerViewController{
             }
         }.store(in: &cancelables)
         
-        viewModel.$isProcessCompleted.sink { [weak self] isProcessCompleted in
+        
+        viewModel.$progress.sink { progress in
             DispatchQueue.main.async {
-                if isProcessCompleted{
-                    self?.activityIndicatorForPhotos.stopAnimating()
-                }else{
-                    self?.activityIndicatorForPhotos.startAnimating()
-                }
+                self.progressView.setProgress(progress, animated: true)
+                print("** \(progress * 100)%")
+                
+                self.progressView.isHidden = progress == 1
+                self.progressLabel.isHidden = progress == 1
+                
             }
         }.store(in: &cancelables)
     }

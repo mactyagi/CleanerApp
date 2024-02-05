@@ -15,7 +15,7 @@ class CoreDataManager{
     static let secondCustomContext = shared.persistentContainer.newBackgroundContext()
     static let mainContext = shared.persistentContainer.viewContext
     
-    lazy private var persistentContainer : NSPersistentContainer = {
+    lazy var persistentContainer : NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CleanerApp")
         container.loadPersistentStores { storeDescription, error in
             if let error =  error as NSError?{
@@ -33,6 +33,7 @@ class CoreDataManager{
             if context.hasChanges {
                 do {
                     try context.save()
+                    print("** saved")
 //                    CoreDataManager.mainContext.performAndWait {
 //                        do{
 //                            try CoreDataManager.mainContext.save()

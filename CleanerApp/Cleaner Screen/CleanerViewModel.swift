@@ -21,16 +21,13 @@ class  CleanerViewModel: NSObject {
     @Published var photosAndVideosSize: Int64 = 0
     @Published var totalStorage: Int64 = 0
     @Published var usedStorage: Int64 = 0
-    @Published var isProcessCompleted = false
+    @Published var progress: Float = 0
     private let queue = DispatchQueue.global(qos: .userInteractive)
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
     private var eventStore: EKEventStore
     private var fetchResultController: NSFetchedResultsController<DBAsset>?
-    private let allPhotosCount:Int = {
-        let option = PHFetchOptions()
-        return PHAsset.fetchAssets(with: .image, options: option).count
-    }()
+    let publisher = CurrentValueSubject<Double, Never>(0.0)
     
     init(deviceInfoManager: DeviceInfoManager, eventStore: EKEventStore){
         self.deviceInfoManager = deviceInfoManager
@@ -39,17 +36,28 @@ class  CleanerViewModel: NSObject {
         self.deviceInfoManager.delegate = self
 //        setupFetchResultController()
         fetchPhotoAndvideosCountAndSize()
+       
         
         queue.async {
 //            self.getPhotosAndVideosData()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(notification:)), name: .NSManagedObjectContextDidSave, object: CoreDataManager.customContext)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(progressFractionCompleted(notification:)), name: Notification.Name.updateData, object: nil)
+    }
+    
+    @objc func progressFractionCompleted(notification: Notification) {
+       fetchPhotoAndvideosCountAndSize()
+        
     }
     
     @objc func contextDidSave(notification: Notification) {
         
         CoreDataManager.secondCustomContext.perform {
-            self.fetchPhotoAndvideosCountAndSize()
+            if self.progress < 1{
+                self.fetchPhotoAndvideosCountAndSize()
+            }
+            
 //            try? self.fetchResultController?.performFetch()
 //            self.updatePhotoAndVideosCountAndSize()
         }
@@ -64,12 +72,14 @@ class  CleanerViewModel: NSObject {
     }
     
     func updateData(){
-        
+        self.getCalendarData()
+        self.getReminderData()
+        self.fetchPhotoAndvideosCountAndSize()
         queue.async {
-            self.getCalendarData()
+            
         }
         queue.async {
-            self.getReminderData()
+            
         }
         
         queue.async {
@@ -125,8 +135,30 @@ class  CleanerViewModel: NSObject {
     func fetchPhotoAndvideosCountAndSize(){
         let predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
         let assets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: predicate)
+        let allAssets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: nil)
+        
+        let allAssets2 = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.customContext, predicate: nil)
+        
         photosAndVideosCount = assets.count
-        isProcessCompleted = assets.count == allPhotosCount
+        
+        let option = PHFetchOptions()
+        let allPHAssetCount =  PHAsset.fetchAssets(with: .image, options: option).count
+        
+        if allPHAssetCount == 0 && !assets.isEmpty{
+            progress = 0
+        }else{
+            if assets.count == allPHAssetCount{
+                progress = 1
+            }else{
+                progress = Float(assets.count)/Float(allPHAssetCount)
+            }
+        }
+        
+        
+        
+        
+        
+        
         self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
     
     }
@@ -134,7 +166,6 @@ class  CleanerViewModel: NSObject {
     func updatePhotoAndVideosCountAndSize(){
         let assets = fetchResultController?.fetchedObjects ?? []
         photosAndVideosCount = assets.count
-        isProcessCompleted = assets.count == allPhotosCount
         self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
     }
     
