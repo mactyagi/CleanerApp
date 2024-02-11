@@ -159,14 +159,7 @@ extension UIViewController{
     static var className : String{
         return String(describing: type(of: self))
     }
-    
-    func showLoader() {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.center = view.center
-        view.addSubview(activityIndicator)
-       activityIndicator.startAnimating()
-       view.isUserInteractionEnabled = false // Disable user interaction while the loader is displayed
-    }
+   
 }
 
 
@@ -201,7 +194,7 @@ extension UIView{
     }
     
     func makeCornerRadiusSixtenthOfHeightOrWidth(){
-        layer.masksToBounds = true
+//        layer.masksToBounds = true
         layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 16 : bounds.height / 16
     }
     

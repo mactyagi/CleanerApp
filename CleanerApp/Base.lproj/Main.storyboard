@@ -185,7 +185,7 @@
                                 </view>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivn-in-Gcd">
-                                <rect key="frame" x="0.0" y="818" width="430" height="80"/>
+                                <rect key="frame" x="0.0" y="808" width="430" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6tu-Aa-Wps">
                                         <rect key="frame" x="40" y="30" width="350" height="50"/>
@@ -204,9 +204,9 @@
                                 <constraints>
                                     <constraint firstItem="6tu-Aa-Wps" firstAttribute="leading" secondItem="ivn-in-Gcd" secondAttribute="leading" constant="40" id="6hQ-ko-kTp"/>
                                     <constraint firstAttribute="trailing" secondItem="6tu-Aa-Wps" secondAttribute="trailing" constant="40" id="CKn-dD-Eqh"/>
-                                    <constraint firstAttribute="bottom" secondItem="6tu-Aa-Wps" secondAttribute="bottom" id="Ye0-gZ-UVb"/>
+                                    <constraint firstAttribute="bottom" secondItem="6tu-Aa-Wps" secondAttribute="bottom" constant="10" id="Ye0-gZ-UVb"/>
                                     <constraint firstItem="6tu-Aa-Wps" firstAttribute="top" secondItem="ivn-in-Gcd" secondAttribute="top" constant="30" id="aqx-Ib-Okf"/>
-                                    <constraint firstAttribute="height" constant="80" id="eYd-Dx-pSL"/>
+                                    <constraint firstAttribute="height" constant="90" id="eYd-Dx-pSL"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -236,7 +236,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUk-lO-seT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="152.09302325581396" y="-1396.3519313304721"/>
+            <point key="canvasLocation" x="-142" y="-1237"/>
         </scene>
         <!--My Tabbar View Controller-->
         <scene sceneID="ftR-6I-dFP">
@@ -392,7 +392,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qLv-v9-eRA"/>
-                        <color key="backgroundColor" name="SecondaryVCBackgroundColor"/>
+                        <color key="backgroundColor" name="lightBlueDarkGreyColor"/>
                         <constraints>
                             <constraint firstItem="aC3-8T-VnY" firstAttribute="leading" secondItem="qLv-v9-eRA" secondAttribute="leading" constant="10" id="7g0-3f-MtA"/>
                             <constraint firstItem="qLv-v9-eRA" firstAttribute="bottom" secondItem="aC3-8T-VnY" secondAttribute="bottom" id="8Qz-Or-3Dx"/>
@@ -509,10 +509,10 @@
                                 </collectionReusableView>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NB8-Cv-4bi">
-                                <rect key="frame" x="15" y="808" width="400" height="90"/>
+                                <rect key="frame" x="15" y="818" width="400" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Po0-SK-Ifl">
-                                        <rect key="frame" x="15" y="30" width="370" height="60"/>
+                                        <rect key="frame" x="15" y="30" width="370" height="50"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -527,7 +527,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="6Yf-DL-BT8"/>
+                                    <constraint firstAttribute="height" constant="80" id="6Yf-DL-BT8"/>
                                     <constraint firstItem="Po0-SK-Ifl" firstAttribute="top" secondItem="NB8-Cv-4bi" secondAttribute="top" constant="30" id="ONr-oU-0lP"/>
                                     <constraint firstAttribute="bottom" secondItem="Po0-SK-Ifl" secondAttribute="bottom" id="cF7-5h-qSG"/>
                                     <constraint firstItem="Po0-SK-Ifl" firstAttribute="leading" secondItem="NB8-Cv-4bi" secondAttribute="leading" constant="15" id="eTV-OL-aCO"/>
@@ -560,7 +560,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2cg-ig-z4G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3199.5348837209303" y="291.63090128755368"/>
+            <point key="canvasLocation" x="-978" y="-1237"/>
         </scene>
         <!--Media View Controller-->
         <scene sceneID="QXD-Up-vu2">
@@ -665,7 +665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lTY-Rh-ljJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1652.0930232558139" y="-445.49356223175971"/>
+            <point key="canvasLocation" x="-1736" y="-1237"/>
         </scene>
         <!--Coming Soon View Controller-->
         <scene sceneID="kiq-qv-bT6">
@@ -714,7 +714,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIp-30-Nma" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1387" y="292"/>
+            <point key="canvasLocation" x="657" y="-1237"/>
         </scene>
         <!--Compress Quality Selection View Controller-->
         <scene sceneID="Kfo-q4-LRl">
@@ -1038,7 +1038,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zUB-r9-7wO"/>
-                        <color key="backgroundColor" name="SecondaryVCBackgroundColor"/>
+                        <color key="backgroundColor" name="veryLightBlueAndDarkGrayColor"/>
                         <constraints>
                             <constraint firstItem="jBa-KL-2ir" firstAttribute="leading" secondItem="zUB-r9-7wO" secondAttribute="leading" id="53c-ur-bSb"/>
                             <constraint firstItem="jBa-KL-2ir" firstAttribute="trailing" secondItem="zUB-r9-7wO" secondAttribute="trailing" id="9Pd-z7-GsL"/>
@@ -1074,7 +1074,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr5-qW-01q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-776" y="-445"/>
+            <point key="canvasLocation" x="-1701" y="-445"/>
         </scene>
         <!--Secret Space View Controller-->
         <scene sceneID="cUs-xX-AQG">
@@ -1859,7 +1859,7 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xLZ-fF-vf1"/>
-                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                        <color key="backgroundColor" name="lightBlueDarkGreyColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="fIP-Fq-xfW" secondAttribute="bottom" id="PbY-UX-GPE"/>
                             <constraint firstAttribute="trailing" secondItem="fIP-Fq-xfW" secondAttribute="trailing" id="cBC-GY-sg2"/>
@@ -1890,6 +1890,7 @@
                         <outlet property="mediaMemoryView" destination="s5A-0Z-RqA" id="ABK-WH-9vj"/>
                         <outlet property="photosIconView" destination="cFd-zn-sie" id="CeY-sQ-dRC"/>
                         <outlet property="photosView" destination="cZW-MT-2ge" id="yJY-c5-fbh"/>
+                        <outlet property="progressLabel" destination="kxY-4A-WO3" id="8ev-FB-kPh"/>
                         <outlet property="progressMainView" destination="qE8-fe-9J4" id="nSS-7C-KpD"/>
                         <outlet property="progressView" destination="Dtv-JO-6xA" id="Lmh-ie-H62"/>
                         <outlet property="ramIconView" destination="kV5-dN-dEx" id="t0a-Ez-LHR"/>

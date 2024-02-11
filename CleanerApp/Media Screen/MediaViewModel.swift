@@ -29,12 +29,6 @@ class MediaViewModel: NSObject{
         }
     }
     
-    private var fetchedResultsControllerForDuplicatePhotos: NSFetchedResultsController<DBAsset>?
-    private var fetchedResultsControllerForSimilarPhotos: NSFetchedResultsController<DBAsset>?
-    private var fetchedResultsControllerForOtherPhotos: NSFetchedResultsController<DBAsset>?
-    private var fetchedResultsControllerForDuplicateSS: NSFetchedResultsController<DBAsset>?
-    private var fetchedResultsControllerForSimilarSS: NSFetchedResultsController<DBAsset>?
-    private var fetchedResultsControllerForOtherSS: NSFetchedResultsController<DBAsset>?
     
     
     override init() {
@@ -43,17 +37,6 @@ class MediaViewModel: NSObject{
             let cells = tuple.cells.map { $0.cell }
             return (tuple.title, cells)
         })
-        
-        setupFetchResultController(&fetchedResultsControllerForDuplicatePhotos, type: .duplicatePhoto)
-        setupFetchResultController(&fetchedResultsControllerForSimilarPhotos, type: .similarPhoto)
-        setupFetchResultController(&fetchedResultsControllerForOtherPhotos, type: .otherPhoto)
-        setupFetchResultController(&fetchedResultsControllerForDuplicateSS, type: .duplicateScreenshot)
-        setupFetchResultController(&fetchedResultsControllerForSimilarSS, type: .similarScreenshot)
-        setupFetchResultController(&fetchedResultsControllerForOtherSS, type: .otherScreenshot)
-        
-        let data = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.customContext, predicate: NSPredicate(format: "isChecked == %@", NSNumber(value: false)))
-        
-        print(data.count)
     }
     
     
@@ -91,25 +74,18 @@ class MediaViewModel: NSObject{
         
         return compoundPredicate
     }
+   
     
-    func setupFetchResultController(_ controller: inout NSFetchedResultsController<DBAsset>?, type: MediaCellType){
-        if controller == nil{
-            let request = DBAsset.fetchRequest()
-            let subGroupSort = NSSortDescriptor(key: "subGroupId", ascending: true)
-            let dateSort = NSSortDescriptor(key: "creationDate", ascending: true)
-            request.sortDescriptors = [subGroupSort, dateSort]
+    
+    func fetchAllMediaType(){
+        
+        for type in MediaCellType.allCases{
+            let context = CoreDataManager.secondCustomContext
+            let predicate = getPredicate(mediaType: type)
+            let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: true)
+            let assets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: predicate, sortDescriptor: sortDescriptor)
+            updateCell(assets: assets, type: type)
             
-            request.predicate = getPredicate(mediaType: type)
-            controller?.delegate = self
-            controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.mainContext, sectionNameKeyPath: nil, cacheName: nil)
-            
-            do{
-                try controller?.performFetch()
-                updateCell(assets: controller?.fetchedObjects ?? [], type: type)
-                
-            } catch{
-                print(error)
-            }
         }
     }
     
@@ -120,7 +96,7 @@ class MediaViewModel: NSObject{
         var subId: UUID?
         let size = assets.reduce(Int64(0) ) { $0 + $1.size }
         
-    outerloop: for (index, asset) in assets.enumerated(){
+    outerloop: for asset in assets{
             switch type{
             case .otherPhoto, .otherScreenshot:   // append 5 photos for other
                 if cellAssets.count == 5{
@@ -131,8 +107,8 @@ class MediaViewModel: NSObject{
                     break outerloop
                 }
                 
-            if cellAssets.count > 1 {
-                    if let subId{
+            if cellAssets.count > 0 {
+                if let subId{
                         // select second asset with same subId
                         if let selectedAsset = assets.filter({ $0.subGroupId == subId }).first, let asset = selectedAsset.getPHAsset(){
                             cellAssets.append(asset)
@@ -141,6 +117,8 @@ class MediaViewModel: NSObject{
                     }
                 }
             }
+        
+            subId = asset.subGroupId
             if let asset = asset.getPHAsset(){
                 cellAssets.append(asset)
             }
@@ -162,26 +140,5 @@ class MediaViewModel: NSObject{
         }
         self.totalSize = totalSize
         self.totalFiles = fileCount
-    }
-}
-
-
-extension MediaViewModel: NSFetchedResultsControllerDelegate{
-    
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        switch controller{
-//        case fetchedResultsControllerForDuplicatePhotos:
-//            updateCell(assets: fetchedResultsControllerForDuplicatePhotos?.fetchedObjects ?? [], type: .duplicatePhoto)
-//            break
-//        case fetchedResultsControllerForSimilarPhotos:
-//            updateCell(assets: fetchedResultsControllerForSimilarPhotos?.fetchedObjects ?? [], type: .similarPhoto)
-//            break
-//        case fetchedResultsControllerForOtherPhotos:
-//            updateCell(assets: fetchedResultsControllerForOtherPhotos?.fetchedObjects ?? [], type: .otherPhoto)
-//            break
-//        default:
-//            break
-//        }
     }
 }

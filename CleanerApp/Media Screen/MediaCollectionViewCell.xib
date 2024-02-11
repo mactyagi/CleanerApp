@@ -34,20 +34,20 @@
                                 <rect key="frame" x="10" y="40" width="679" height="227"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.fill.on.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4JP-Oi-vm5">
-                                        <rect key="frame" x="0.0" y="1" width="679" height="226.66666666666666"/>
+                                        <rect key="frame" x="0.0" y="1" width="131.66666666666666" height="226.66666666666666"/>
                                         <color key="tintColor" name="lightGrayColor"/>
                                     </imageView>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nLV-y0-6rq">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="227"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nLV-y0-6rq">
+                                        <rect key="frame" x="136.66666666666666" y="0.0" width="131.99999999999997" height="227"/>
                                     </imageView>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LqH-6F-SJ9">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="227"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LqH-6F-SJ9">
+                                        <rect key="frame" x="273.66666666666669" y="0.0" width="131.66666666666669" height="227"/>
                                     </imageView>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G5f-fb-N6d">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="227"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G5f-fb-N6d">
+                                        <rect key="frame" x="410.33333333333331" y="0.0" width="131.99999999999994" height="227"/>
                                     </imageView>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="THz-ht-nNj">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="227"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="THz-ht-nNj">
+                                        <rect key="frame" x="547.33333333333337" y="0.0" width="131.66666666666663" height="227"/>
                                     </imageView>
                                 </subviews>
                             </stackView>

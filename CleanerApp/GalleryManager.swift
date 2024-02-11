@@ -61,6 +61,15 @@ class PHAssetManager{
             break
         }
     }
+    
+    class func deleteAssetsById(assetIds: [String], comp: @escaping(_ isComplete: Bool, _ error: Error?) -> ()){
+        let assets = PHAsset.fetchAssets(withLocalIdentifiers: assetIds, options: nil)
+        PHPhotoLibrary.shared().performChanges {
+            PHAssetChangeRequest.deleteAssets(assets)
+        } completionHandler: { isComplete, error in
+            comp(isComplete, error)
+        }
+    }
 }
 
 
@@ -70,13 +79,28 @@ class CoreDataPHAssetManager{
     
     private var totalCount: Int = 0
     private var dispatchGroup = DispatchGroup()
-    private var completedCount = 0{
+    private var groupFoundCount = 0 {
         didSet{
-            let fractionCompleted = Float(completedCount) / Float(totalCount)
-           NotificationCenter.default.post(name: Notification.Name.updateData, object: nil, userInfo: nil)
+            if groupFoundCount % 10 == 0{
+                postUpdate()
+            }
         }
     }
-    
+    func removeSingleElementFromCoreData(){
+        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
+        let data = CoreDataManager.shared.fetchDBAssets(context: context, predicate: nil)
+        let dictWithGroupId = Dictionary(grouping: data, by: \.subGroupId)
+        
+        for (_,value) in dictWithGroupId{
+            if value.count < 2{
+                for asset in value{
+                    asset.subGroupId = nil
+                    asset.groupTypeValue = PHAssetGroupType.other.rawValue
+                }
+            }
+        }
+        CoreDataManager.shared.saveContext(context: context)
+    }
    
     
     func deleteExtraPHassetsFromCoreData(){
@@ -96,18 +120,6 @@ class CoreDataPHAssetManager{
         }
         print("** all photo enumuration should completed")
         
-        var dictWithGroupId = Dictionary(grouping: data, by: \.subGroupId)
-        
-        for (_,value) in dictWithGroupId{
-            if value.count < 2{
-                for asset in value{
-                    asset.subGroupId = nil
-                    asset.groupTypeValue = PHAssetGroupType.other.rawValue
-                }
-            }
-        }
-        
-        
         withExecutionTime(title: "dict enum") {
             for (_, value) in dictToDelete{
                 value.forEach { asset in
@@ -119,12 +131,13 @@ class CoreDataPHAssetManager{
     
     
      func startProcess(){
-         
+         postUpdate()
         let queue = DispatchQueue.global(qos: .userInteractive)
          
          queue.async {
              self.withExecutionTime(title: "delete Asset") {
                  self.deleteExtraPHassetsFromCoreData()
+                 self.removeSingleElementFromCoreData()
              }
              
              
@@ -134,8 +147,7 @@ class CoreDataPHAssetManager{
                  self.processScreenShots()
                  self.dispatchGroup.leave()
              }
-             
-             
+                        
             self.dispatchGroup.enter()
              queue.async {
                  self.processPhotos()
@@ -204,6 +216,7 @@ class CoreDataPHAssetManager{
     
     private func processSimilarAssetsFor(_ mediaType: PHAssetCustomMediaType){
         let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         let oldAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
             mediaType: mediaType,
@@ -211,7 +224,8 @@ class CoreDataPHAssetManager{
             shoudHaveSHA: nil,
             shouldHaveFeaturePrint: nil,
             isChecked: true,
-            exceptGroupType: .duplicate)
+            exceptGroupType: .duplicate,
+        sortDescriptor: sortDescriptor)
         
         let newAsset = CoreDataManager.shared.fetchCustomAssets(
             context: context,
@@ -220,7 +234,8 @@ class CoreDataPHAssetManager{
             shoudHaveSHA: nil,
             shouldHaveFeaturePrint: nil,
             isChecked: false,
-            exceptGroupType: .duplicate)
+            exceptGroupType: .duplicate,
+        sortDescriptor: sortDescriptor)
         
         
         let allAssets = oldAsset + newAsset
@@ -230,18 +245,15 @@ class CoreDataPHAssetManager{
            
             let firstAsset = allAssets[firstIndex]
             if firstAsset.subGroupId != nil {
-                completedCount += 1
                 continue
             }
             if firstAsset.featurePrints?.first == nil{
                 firstAsset.addFeaturePrint()
-                CoreDataManager.shared.saveContext(context: context)
             }
             
             for (secondIndex,secondAsset) in allAssets.enumerated(){
                 if secondAsset.featurePrints?.first == nil{
                     secondAsset.addFeaturePrint()
-                    CoreDataManager.shared.saveContext(context: context)
                 }
                 
                 if firstIndex == secondIndex {
@@ -268,14 +280,10 @@ class CoreDataPHAssetManager{
                     
                 default:
                     break
-                    
                 }
-//                print("** saving in \(#function)")
             }
             firstAsset.isChecked = true
             CoreDataManager.shared.saveContext(context: context)
-            completedCount += 1
-            
         }
     }
     
@@ -288,7 +296,7 @@ class CoreDataPHAssetManager{
             secondAsset.groupTypeValue = PHAssetGroupType.similar.rawValue
             firstAsset.isChecked = true
             secondAsset.isChecked = true
-            CoreDataManager.shared.saveContext(context: context)
+            groupFoundCount += 1
         }
         
         if let subgroupId = firstAsset.subGroupId, firstAsset.groupTypeValue != PHAssetGroupType.duplicate.rawValue{
@@ -342,18 +350,10 @@ class CoreDataPHAssetManager{
             count += 1
             let size = asset.getSize() ?? 0
 //            print("** adding new data in \(mediaType.rawValue) of size \(size.formatBytes()) in Core Data")
-            let _ = DBAsset(assetId: asset.localIdentifier, creationDate: Date(), featurePrints: nil, photoGroupType: .other, mediaType: mediaType, sha: nil, insertIntoManagedObjectContext: context, size: size)
+            let _ = DBAsset(assetId: asset.localIdentifier, creationDate: asset.creationDate ?? asset.modificationDate ?? Date(), featurePrints: nil, photoGroupType: .other, mediaType: mediaType, sha: nil, insertIntoManagedObjectContext: context, size: size)
             print("** \(count)")
             CoreDataManager.shared.saveContext(context: context)
-            
         }
-       
-        
-        let allAssets = CoreDataManager.shared.fetchCustomAssets(context:context, mediaType: mediaType, groupType: nil, shoudHaveSHA: nil, shouldHaveFeaturePrint: nil)
-        
-        let allAssets2 = CoreDataManager.shared.fetchCustomAssets(context:CoreDataManager.mainContext, mediaType: mediaType, groupType: nil, shoudHaveSHA: nil, shouldHaveFeaturePrint: nil)
-        
-        let allAssets3 = CoreDataManager.shared.fetchCustomAssets(context:CoreDataManager.secondCustomContext, mediaType: mediaType, groupType: nil, shoudHaveSHA: nil, shouldHaveFeaturePrint: nil)
         
         print("hr")
     }
@@ -366,12 +366,13 @@ class CoreDataPHAssetManager{
         
         newAsset.forEach { $0.calculateSHA() }
         
-        var allCustomAssets = oldAsset + newAsset
+        let allCustomAssets = oldAsset + newAsset
         let dict = Dictionary(grouping: allCustomAssets, by: \.sha)
         
-        for (key, assets) in dict{
+        for (_, assets) in dict{
             if assets.count > 1 {
-//                print(" ** Duplicate found")
+                print(" ** Duplicate found")
+                groupFoundCount += 1
                 let firstElement = assets.first!
                 if firstElement.mediaTypeValue == PHAssetGroupType.duplicate.rawValue{
                     for asset in assets{
@@ -394,24 +395,21 @@ class CoreDataPHAssetManager{
                         CoreDataManager.shared.saveContext(context: asset.managedObjectContext)
                     }
                 }
-                NotificationCenter.default.post(name: Notification.Name.updateData, object: nil, userInfo: nil)
-            }else{
-                for asset in assets {
-                    asset.isChecked = false
-                    if asset.subGroupId == nil{
-                        asset.groupTypeValue = PHAssetGroupType.other.rawValue
-//                        print("** saving in \(#function)")
-                        CoreDataManager.shared.saveContext(context: asset.managedObjectContext)
-                    }else{
-                        let _ = DBAsset(assetId: asset.assetId!, creationDate: asset.creationDate!, featurePrints: asset.featurePrints, photoGroupType: .other, mediaType: PHAssetCustomMediaType(rawValue: asset.mediaTypeValue!)!, sha: asset.sha, insertIntoManagedObjectContext: asset.managedObjectContext!, size: asset.size)
-                        CoreDataManager.shared.deleteAsset(asset: asset)
-                    }
-                    
-                }
             }
+//            else{
+//                for asset in assets {
+//                    asset.isChecked = false
+//                    if asset.subGroupId == nil{
+//                        asset.groupTypeValue = PHAssetGroupType.other.rawValue
+////                        print("** saving in \(#function)")
+//                        CoreDataManager.shared.saveContext(context: asset.managedObjectContext)
+//                    }else{
+//                        let _ = DBAsset(assetId: asset.assetId!, creationDate: asset.creationDate!, featurePrints: asset.featurePrints, photoGroupType: .other, mediaType: PHAssetCustomMediaType(rawValue: asset.mediaTypeValue!)!, sha: asset.sha, insertIntoManagedObjectContext: asset.managedObjectContext!, size: asset.size)
+//                        CoreDataManager.shared.deleteAsset(asset: asset)
+//                    }
+//                }
+//            }
         }
-        
-
     }
     
     

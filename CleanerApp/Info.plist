@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSRemindersUsageDescription</key>
+	<string>We need access to your Reminder to fetch events.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need access to your calendar to fetch events.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>We need access to your calendar to fetch events.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>We need access to your Reminder to fetch events.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -21,15 +29,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>We need access to your calendar to fetch events.</string>
-	<key>NSRemindersFullAccessUsageDescription</key>
-	<string>We need access to your Reminder to fetch events.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App need to use the photos</string>
-	<key>NSCameraUsageDescription</key>
-	<string>App need to use the camera</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>App need to use microphone</string>
 </dict>
 </plist>

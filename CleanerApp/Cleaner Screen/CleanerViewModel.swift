@@ -26,7 +26,6 @@ class  CleanerViewModel: NSObject {
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
     private var eventStore: EKEventStore
-    private var fetchResultController: NSFetchedResultsController<DBAsset>?
     let publisher = CurrentValueSubject<Double, Never>(0.0)
     
     init(deviceInfoManager: DeviceInfoManager, eventStore: EKEventStore){
@@ -34,34 +33,10 @@ class  CleanerViewModel: NSObject {
         self.eventStore = eventStore
         super.init()
         self.deviceInfoManager.delegate = self
-//        setupFetchResultController()
-        fetchPhotoAndvideosCountAndSize()
-       
-        
-        queue.async {
-//            self.getPhotosAndVideosData()
-        }
-        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(notification:)), name: .NSManagedObjectContextDidSave, object: CoreDataManager.customContext)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(progressFractionCompleted(notification:)), name: Notification.Name.updateData, object: nil)
     }
     
-    @objc func progressFractionCompleted(notification: Notification) {
-       fetchPhotoAndvideosCountAndSize()
-        
-    }
     
-    @objc func contextDidSave(notification: Notification) {
-        
-        CoreDataManager.secondCustomContext.perform {
-            if self.progress < 1{
-                self.fetchPhotoAndvideosCountAndSize()
-            }
-            
-//            try? self.fetchResultController?.performFetch()
-//            self.updatePhotoAndVideosCountAndSize()
-        }
-    }
+
     
     func startUpdatingDeivceInfo(){
         deviceInfoManager.startRAMUpdateTimer()
@@ -71,17 +46,12 @@ class  CleanerViewModel: NSObject {
         deviceInfoManager.stopRamUpdateTimer()
     }
     
-    func updateData(){
+    func updateData(eventStore: EKEventStore){
+        self.eventStore = eventStore
         self.getCalendarData()
         self.getReminderData()
         self.fetchPhotoAndvideosCountAndSize()
-        queue.async {
-            
-        }
-        queue.async {
-            
-        }
-        
+        startUpdatingDeivceInfo()
         queue.async {
             self.getStorageInfo()
         }
@@ -112,33 +82,10 @@ class  CleanerViewModel: NSObject {
     }
 
     
-//    func setupFetchResultController(){
-//        if fetchResultController == nil{
-//            let request = DBAsset.fetchRequest()
-//            let dateSort = NSSortDescriptor(key: "creationDate", ascending: true)
-//            request.sortDescriptors = [dateSort]
-//            request.predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
-//            
-//            fetchResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.mainContext, sectionNameKeyPath: nil, cacheName: nil)
-//            fetchResultController?.delegate = self
-//            
-//            do{
-//                try fetchResultController?.performFetch()
-//                updatePhotoAndVideosCountAndSize()
-//                
-//            } catch{
-//                print(error)
-//            }
-//        }
-//    }
-    
     func fetchPhotoAndvideosCountAndSize(){
         let predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
         let assets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: predicate)
-        let allAssets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: nil)
-        
-        let allAssets2 = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.customContext, predicate: nil)
-        
+
         photosAndVideosCount = assets.count
         
         let option = PHFetchOptions()
@@ -153,21 +100,9 @@ class  CleanerViewModel: NSObject {
                 progress = Float(assets.count)/Float(allPHAssetCount)
             }
         }
-        
-        
-        
-        
-        
-        
-        self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
-    
-    }
-    
-    func updatePhotoAndVideosCountAndSize(){
-        let assets = fetchResultController?.fetchedObjects ?? []
-        photosAndVideosCount = assets.count
         self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
     }
+
     
    private func getCalendarData() {
        if #available(iOS 17.0, *) {
@@ -219,8 +154,3 @@ extension CleanerViewModel: DeviceInfoDelegate{
     }
 }
 
-extension CleanerViewModel: NSFetchedResultsControllerDelegate{
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        updatePhotoAndVideosCountAndSize()
-    }
-}

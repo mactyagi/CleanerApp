@@ -24,6 +24,11 @@ class MediaCollectionViewCell: UICollectionViewCell {
     static let identifier = "MediaCollectionViewCell"
     override func awakeFromNib() {
         super.awakeFromNib()
+        imageView1.makeCornerRadiusSixtenthOfHeightOrWidth()
+        imageView2.makeCornerRadiusSixtenthOfHeightOrWidth()
+        imageView3.makeCornerRadiusSixtenthOfHeightOrWidth()
+        imageView4.makeCornerRadiusSixtenthOfHeightOrWidth()
+        imageView5.makeCornerRadiusSixtenthOfHeightOrWidth()
         mainView.makeCornerRadiusSixtenthOfHeightOrWidth()
         descriptionView.makeCornerRadiusFourthOfHeightOrWidth()
         setupImageView(imageView1, imageView2, imageView3, imageView4, imageView5, isHidden: true)
@@ -34,7 +39,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
     func setupImageView(_ imageViews: UIImageView..., isHidden: Bool){
         imageViews.forEach { view in
             view.isHidden = isHidden
-            view.makeCornerRadiusSixtenthOfHeightOrWidth()
         }
     }
     

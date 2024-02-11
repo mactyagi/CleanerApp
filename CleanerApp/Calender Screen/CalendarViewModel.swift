@@ -15,7 +15,7 @@ class CalendarViewModel {
     var currentSegementType = SegmentType.Calendar
     @Published var isSelectedAll: Bool = true
     @Published var totalSelectedCount = 0
-    @Published var isAuthorized = false
+    @Published var isAuthorized = true
     @Published var titleLabelForAuthorizationAlert = ""
     @Published var subtitleForAlert = ""
     @Published var totalCount = 0
@@ -43,6 +43,7 @@ class CalendarViewModel {
     }
     
     func updateValueFor(segment: SegmentType){
+        showLoader = true
         switch segment{
         case .Calendar:
             checkForCalendarAutorization { [weak self] isGranted in
@@ -52,8 +53,7 @@ class CalendarViewModel {
                     self?.setNoteAndtitleLabelForUnAuthorizedState(segment: segment)
                 }
                 self?.isAuthorized = isGranted
-                
-                
+                self?.showLoader = false
             }
         case .Reminder:
             checkForReminderAutorization { [weak self] isAuthorized in
@@ -63,6 +63,7 @@ class CalendarViewModel {
                     self?.setNoteAndtitleLabelForUnAuthorizedState(segment: segment)
                 }
                 self?.isAuthorized = isAuthorized
+                self?.showLoader = false
             }
         }
         
@@ -224,17 +225,18 @@ class CalendarViewModel {
     }
     
     func deleteData(){
+        showLoader = true
         switch currentSegementType {
         case .Calendar:
             deleteEvents()
         case .Reminder:
             deleteReminders()
         }
+        showLoader = false
     }
     
     
     private func deleteReminders(){
-        showLoader = true
         var remainingReminders: [CustomEKReminder] = []
         for reminderTouple in self.allReminder {
             let customReminders = reminderTouple.reminders
@@ -257,7 +259,6 @@ class CalendarViewModel {
     
     
     private func deleteEvents(){
-        showLoader = true
         var remainingEvents: [CustomEKEvent] = []
         for allEvent in allEvents {
             let events = allEvent.events
@@ -276,6 +277,5 @@ class CalendarViewModel {
         
         let eventsGroup = Dictionary(grouping: remainingEvents, by: \.event.year)
         allEvents = eventsGroup.keys.compactMap { ($0, eventsGroup[$0]!.sorted(by: { $0.event.startDate > $1.event.startDate }))}.sorted(by: { $0.year > $1.year })
-        showLoader = false
     }
 }

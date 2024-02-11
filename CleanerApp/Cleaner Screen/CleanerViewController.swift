@@ -62,10 +62,9 @@ class CleanerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationAndTabBar(isScreenVisible: true)
-        viewModel.startUpdatingDeivceInfo()
-        viewModel.updateData()
-        
-        
+        viewModel.updateData(eventStore: EKEventStore())
+        NotificationCenter.default.addObserver(self, selector: #selector(progressFractionCompleted(notification:)), name: Notification.Name.updateData, object: nil)
+  
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -93,6 +92,11 @@ class CleanerViewController: UIViewController {
     func setupNavigationAndTabBar(isScreenVisible flag: Bool){
         navigationController?.navigationBar.isHidden = flag
         self.tabBarController?.tabBar.isHidden = !flag
+    }
+    
+    
+    @objc func progressFractionCompleted(notification: Notification) {
+        viewModel.fetchPhotoAndvideosCountAndSize()
     }
     
     func setupView(){
@@ -193,8 +197,7 @@ extension CleanerViewController{
     
     func setupViewModel(){
         let deviceManager = DeviceInfoManager()
-        let eventStore = EKEventStore()
-        viewModel = CleanerViewModel(deviceInfoManager: deviceManager, eventStore: eventStore)
+        viewModel = CleanerViewModel(deviceInfoManager: deviceManager, eventStore: EKEventStore())
         setSubscribers()
     }
     

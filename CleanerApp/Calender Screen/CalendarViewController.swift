@@ -41,7 +41,7 @@ class CalendarViewController: UIViewController {
     }
     
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
-        viewModel.deleteData()
+        DeleteAlert()
     }
     
     @IBAction func goToSettingButtonPressed(){
@@ -111,6 +111,23 @@ class CalendarViewController: UIViewController {
     
     @objc func rightBarButtonPressed(){
         viewModel.selectAndDeselectAll()
+    }
+    
+    func DeleteAlert(){
+        let typeName = viewModel.currentSegementType.rawValue == 0 ? "Calendar" : "Reminder"
+        let singularOrPurlarEvent = viewModel.totalSelectedCount > 1 ? "Events" : "Event"
+        
+        let alertVC = UIAlertController(title: "Allow to Delete \(viewModel.totalSelectedCount) \(singularOrPurlarEvent)?", message: "\(singularOrPurlarEvent) will be removed from the \(typeName)", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            self.viewModel.deleteData()
+        }
+        
+        alertVC.addAction(cancelAction)
+        alertVC.addAction(deleteAction)
+        
+        self.present(alertVC, animated: true)
     }
 }
 
@@ -256,7 +273,5 @@ extension CalendarViewController{
 
 enum SegmentType: Int,CaseIterable{
     case Calendar = 0
-    case Reminder
-    
-    
+    case Reminder    
 }

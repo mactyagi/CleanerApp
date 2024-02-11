@@ -56,10 +56,14 @@ class CoreDataManager{
     
     
     
-    func fetchDBAssets(context: NSManagedObjectContext, predicate: NSPredicate? = nil) -> [DBAsset]{
+    func fetchDBAssets(context: NSManagedObjectContext, predicate: NSPredicate? = nil, sortDescriptor: NSSortDescriptor? = nil) -> [DBAsset]{
         context.performAndWait {
             let fetchRequest = DBAsset.fetchRequest()
             fetchRequest.predicate = predicate
+            if let sortDescriptor{
+                fetchRequest.sortDescriptors = [sortDescriptor]
+            }
+            
             do{
                 let object = try context.fetch(fetchRequest)
                 return object
@@ -70,9 +74,16 @@ class CoreDataManager{
         }
     }
     
-    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, shouldHaveGroupId: Bool? = nil, isChecked: Bool? = nil, exceptGroupType: PHAssetGroupType? = nil, fetchLimit: Int? = nil) -> [DBAsset]{
+    func fetchCustomAssets(context: NSManagedObjectContext, mediaType: PHAssetCustomMediaType?, groupType: PHAssetGroupType?, shoudHaveSHA: Bool?, shouldHaveFeaturePrint: Bool?, shouldHaveGroupId: Bool? = nil, isChecked: Bool? = nil, exceptGroupType: PHAssetGroupType? = nil, fetchLimit: Int? = nil, sortDescriptor: NSSortDescriptor? = nil ) -> [DBAsset]{
         context.performAndWait {
             let fetchRequest = DBAsset.fetchRequest()
+            
+            if let sortDescriptor {
+                fetchRequest.sortDescriptors = [sortDescriptor]
+            }
+            
+            
+            
             if let fetchLimit{
                 fetchRequest.fetchLimit = fetchLimit
             }

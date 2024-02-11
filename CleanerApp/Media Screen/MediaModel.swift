@@ -8,7 +8,7 @@
 import Foundation
 import Photos.PHAsset
 
-enum MediaCellType{
+enum MediaCellType: CaseIterable{
     case similarPhoto
     case duplicatePhoto
     case otherPhoto

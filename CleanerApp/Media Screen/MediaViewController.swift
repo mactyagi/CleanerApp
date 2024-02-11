@@ -31,6 +31,8 @@ class MediaViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(progressFractionCompleted(notification:)), name: Notification.Name.updateData, object: nil)
+        viewModel.fetchAllMediaType()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,6 +55,12 @@ class MediaViewController: UIViewController {
     
     //MARK: -  functions
     
+    
+    @objc func progressFractionCompleted(notification: Notification) {
+        viewModel.fetchAllMediaType()
+    }
+    
+    
     func setupNavigationItem(){
         
     }
@@ -68,19 +76,25 @@ class MediaViewController: UIViewController {
     
     func setPublishers(){
         viewModel.$dataSource.sink { [weak self] _ in
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+            
         }.store(in: &cancellables)
         
         viewModel.$totalFiles.sink { [weak self] files in
             guard let self else { return }
-            self.fileAndSizeLabel.text = "\(files) • \(self.viewModel.totalSize.formatBytes())"
-            
+            DispatchQueue.main.async {
+                self.fileAndSizeLabel.text = "\(files) • \(self.viewModel.totalSize.formatBytes())"
+            }
         }.store(in: &cancellables)
         
         
         viewModel.$totalSize.sink { [weak self] size in
             guard let self else { return }
-            self.fileAndSizeLabel.text = "\(viewModel.totalFiles) • \(size.formatBytes())"
+            DispatchQueue.main.async {
+                self.fileAndSizeLabel.text = "\(self.viewModel.totalFiles) • \(size.formatBytes())"
+            }
         }.store(in: &cancellables)
     }
     

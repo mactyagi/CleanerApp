@@ -105,8 +105,17 @@ extension VideoCompressorViewController{
         viewModel.$compressVideoModel.receive(on: DispatchQueue.main).sink { error in
             print(error)
         } receiveValue: { data in
-            self.collectionView.reloadData()
-            self.secondaryLabel.text = "Videos \(data.count) • \(self.viewModel.totalSize.convertToFileString())"
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.secondaryLabel.text = "Videos \(data.count) • \(self.viewModel.totalSize.convertToFileString())"
+            }
+        }.store(in: &subscribers)
+        
+        viewModel.$isLoading.sink { isLoading in
+            DispatchQueue.main.async {
+                self.collectionView.isHidden = isLoading
+                isLoading ? self.view.activityStartAnimating() : self.view.activityStopAnimating()
+            }
         }.store(in: &subscribers)
     }
 }
