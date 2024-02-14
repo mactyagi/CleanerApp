@@ -8,13 +8,13 @@
 import Foundation
 import Photos.PHAsset
 
-enum MediaCellType: CaseIterable{
-    case similarPhoto
-    case duplicatePhoto
-    case otherPhoto
-    case similarScreenshot
-    case duplicateScreenshot
-    case otherScreenshot
+enum MediaCellType: String, CaseIterable{
+    case similarPhoto = "Similar Photos"
+    case duplicatePhoto = "Duplicate Photos"
+    case otherPhoto = "Other Photos"
+    case similarScreenshot = "Similar Screenshots"
+    case duplicateScreenshot = "Duplicate Screenshots"
+    case otherScreenshot = "Other Screenshots"
     
     var cell: MediaCell{
         switch self {

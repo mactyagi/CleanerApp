@@ -75,9 +75,20 @@ class PHAssetManager{
 
 
 class CoreDataPHAssetManager{
+    
+    enum FetchingStatus: String{
+        case started
+        case completed
+        case notStarted
+    }
     static var shared = CoreDataPHAssetManager()
     
     private var totalCount: Int = 0
+    var status = FetchingStatus.notStarted{
+        didSet{
+            logEvent(Event.GalleryManager.fetchStatus.rawValue, parameter: ["status": status.rawValue])
+        }
+    }
     private var dispatchGroup = DispatchGroup()
     private var groupFoundCount = 0 {
         didSet{
@@ -131,6 +142,7 @@ class CoreDataPHAssetManager{
     
     
      func startProcess(){
+         status = .started
          postUpdate()
         let queue = DispatchQueue.global(qos: .userInteractive)
          
@@ -157,6 +169,7 @@ class CoreDataPHAssetManager{
              self.dispatchGroup.wait()
              self.postUpdate()
              print("** process completed")
+             self.status = .completed
          }
          
          

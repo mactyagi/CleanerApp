@@ -27,11 +27,22 @@ class CalendarViewController: UIViewController {
     //MARK: - lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        logEvent(Event.CalendarScreen.loaded.rawValue, parameter: nil)
         setupViewModel()
         configureRightBarButton()
         setupViews()
         configureTitle()
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        logEvent(Event.CalendarScreen.appear.rawValue, parameter: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        logEvent(Event.CalendarScreen.disappear.rawValue, parameter: nil)
     }
     
     
@@ -45,6 +56,7 @@ class CalendarViewController: UIViewController {
     }
     
     @IBAction func goToSettingButtonPressed(){
+        logEvent(Event.CalendarScreen.goToSettingButtonPressed.rawValue, parameter: nil)
         let url = URL(string:UIApplication.openSettingsURLString)
             if UIApplication.shared.canOpenURL(url!){
                 UIApplication.shared.open(url!, options: [:], completionHandler: nil)

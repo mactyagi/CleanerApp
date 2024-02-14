@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeTableViewCell: UITableViewCell {
+class FutureHomeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var mainTitleLabel: UILabel!
@@ -23,7 +23,7 @@ class HomeTableViewCell: UITableViewCell {
 
         }
     
-    func configureCell(homeCell: HomeCell){
+    func configureCell(homeCell: FutureHomeCell){
         subTitleLabel.text = homeCell.subtitle
         mainTitleLabel.text = homeCell.title
         iconImageView.image = homeCell.image

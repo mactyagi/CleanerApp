@@ -1,5 +1,5 @@
 //
-//  CleanerViewController.swift
+//  HomeViewController.swift
 //  CleanerApp
 //
 //  Created by Manu on 23/12/23.
@@ -8,7 +8,8 @@
 import UIKit
 import Combine
 import EventKit
-class CleanerViewController: UIViewController {
+import Firebase
+class HomeViewController: UIViewController {
 
     //MARK: - IBOutlets
     @IBOutlet weak var scrollView: UIScrollView!
@@ -48,28 +49,17 @@ class CleanerViewController: UIViewController {
     
         //MARK: - Variables
     private var cancelables: Set<AnyCancellable> = []
-    private var viewModel: CleanerViewModel!
+    private var viewModel: HomeViewModel!
     private var progressBar: CircularProgressBarView?
     
     //MARK: - View Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        logEvent(Event.HomeScreen.loaded.rawValue, parameter: nil)
         setupView()
         setupViewModel()
         setupTapOnView()
-        
-        
-        let button = UIButton(type: .roundedRect)
-              button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-              button.setTitle("Test Crash", for: [])
-              button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-              view.addSubview(button)
     }
-    
-    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-         let numbers = [0]
-         let _ = numbers[1]
-     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,6 +71,7 @@ class CleanerViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        logEvent(Event.HomeScreen.appear.rawValue, parameter: nil)
         setupNavigationAndTabBar(isScreenVisible: true)
     }
     
@@ -90,11 +81,16 @@ class CleanerViewController: UIViewController {
         setupNavigationAndTabBar(isScreenVisible: false)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        logEvent(Event.HomeScreen.disAppear.rawValue, parameter: nil)
+    }
+    
     
     
     //MARK: - static functions
-    static func customInit() -> CleanerViewController{
-        let vc = UIStoryboard.main.instantiateViewController(identifier: "CleanerViewController") as! CleanerViewController
+    static func customInit() -> HomeViewController{
+        let vc = UIStoryboard.main.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
         return vc
     }
    
@@ -181,23 +177,55 @@ class CleanerViewController: UIViewController {
         photosView.addGestureRecognizer(galleryItemTapGesture)
         
         let contactTapGesture = UITapGestureRecognizer(target: self, action: #selector(contactViewTapped))
-        let smartCleaningTapGesture = UITapGestureRecognizer(target: self, action: #selector(contactViewTapped))
+        let smartCleaningTapGesture = UITapGestureRecognizer(target: self, action: #selector(smartCleaningViewTapped))
         contactsView.addGestureRecognizer(contactTapGesture)
         smartCleaningView.addGestureRecognizer(smartCleaningTapGesture)
     }
     
     @objc func calendarViewTapped(){
+        logEvent(Event.HomeScreen.tapCalendar.rawValue, parameter: nil)
         navigationController?.pushViewController(CalendarViewController.customInit(), animated: true)
     }
     
     @objc func contactViewTapped(){
+        logEvent(Event.HomeScreen.tapContacts.rawValue, parameter: nil)
+        let vc = ComingSoonViewController.customInit()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true)
+    }
+    
+    @objc func smartCleaningViewTapped(){
+        logEvent(Event.HomeScreen.tapSmartCleaning.rawValue, parameter: nil)
         let vc = ComingSoonViewController.customInit()
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true)
     }
     
     @objc func photoAndVideoTapped(){
-        navigationController?.pushViewController(MediaViewController.customInit(), animated: true)
+        logEvent(Event.HomeScreen.tapPhotos.rawValue, parameter: nil)
+        if viewModel.photosAndVideosSize != nil{
+            navigationController?.pushViewController(MediaViewController.customInit(), animated: true)
+        }else{
+            goToSettingAlertVCForPhotos()
+        }
+        
+    }
+    
+    func goToSettingAlertVCForPhotos(){
+        let alertVc = UIAlertController(title: "Access Needed", message: "Allow the app access to Photos. No files will be deleted without your permission.", preferredStyle: .alert)
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
+        let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { action in
+            let url = URL(string:UIApplication.openSettingsURLString)
+                if UIApplication.shared.canOpenURL(url!){
+                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                }
+        }
+        
+        alertVc.addAction(cancelButton)
+        alertVc.addAction(goToSettingAction)
+        
+        self.present(alertVc, animated: true)
     }
     
 }
@@ -205,11 +233,11 @@ class CleanerViewController: UIViewController {
 
 
 // MARK: - Set subscribers and View Model
-extension CleanerViewController{
+extension HomeViewController{
     
     func setupViewModel(){
         let deviceManager = DeviceInfoManager()
-        viewModel = CleanerViewModel(deviceInfoManager: deviceManager, eventStore: EKEventStore())
+        viewModel = HomeViewModel(deviceInfoManager: deviceManager, eventStore: EKEventStore())
         setSubscribers()
     }
     
@@ -253,7 +281,12 @@ extension CleanerViewController{
         
         viewModel.$photosAndVideosSize.sink { [weak self] size in
             DispatchQueue.main.async {
-                self?.mediaMemoryLabel.text = size.formatBytes()
+                if let size{
+                    self?.mediaMemoryLabel.text = size.formatBytes()
+                }else{
+                    self?.mediaMemoryLabel.text = "Give Access"
+                }
+                
             }
         }.store(in: &cancelables)
         

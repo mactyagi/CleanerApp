@@ -23,6 +23,7 @@ class MediaViewController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        logEvent(Event.MediaScreen.loaded.rawValue, parameter: nil)
         setupViews()
         setupViewModel()
         setupCollectionView()
@@ -35,11 +36,21 @@ class MediaViewController: UIViewController {
         viewModel.fetchAllMediaType()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        logEvent(Event.MediaScreen.appear.rawValue, parameter: nil)
+    }
+    
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        logEvent(Event.MediaScreen.disappear.rawValue, parameter: nil)
+    }
     
     
     static func customInit() -> MediaViewController{
@@ -86,6 +97,9 @@ class MediaViewController: UIViewController {
             guard let self else { return }
             DispatchQueue.main.async {
                 self.fileAndSizeLabel.text = "\(files) • \(self.viewModel.totalSize.formatBytes())"
+                if CoreDataPHAssetManager.shared.status == .completed{
+                    logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count": self.fileAndSizeLabel.text ?? ""])
+                }
             }
         }.store(in: &cancellables)
         
@@ -136,24 +150,24 @@ extension MediaViewController:UICollectionViewDelegate{
         switch cell.cellType{
             
         case .similarPhoto:
-            let vc = SimilarPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarPhoto), groupType: .similar)
+            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarPhoto), groupType: .similar, type: .similarPhoto)
             navigationController?.pushViewController(vc, animated: true)
             break
         case .duplicatePhoto:
-            let vc = DuplicatePhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicatePhoto), groupType: .duplicate)
+            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicatePhoto), groupType: .duplicate, type: .duplicatePhoto)
             navigationController?.pushViewController(vc, animated: true)
             break
         case .otherPhoto:
-            let vc = OtherPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherPhoto), groupType: .other)
+            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherPhoto), groupType: .other, type: .otherPhoto)
             navigationController?.pushViewController(vc, animated: true)
         case .similarScreenshot:
-            let vc = SimilarPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarScreenshot), groupType: .similar)
+            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarScreenshot), groupType: .similar, type: .similarScreenshot)
             navigationController?.pushViewController(vc, animated: true)
         case .duplicateScreenshot:
-            let vc = DuplicatePhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicateScreenshot), groupType: .duplicate)
+            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicateScreenshot), groupType: .duplicate, type: .duplicateScreenshot)
             navigationController?.pushViewController(vc, animated: true)
         case .otherScreenshot:
-            let vc = OtherPhotosViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherScreenshot), groupType: .other)
+            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherScreenshot), groupType: .other, type: .otherScreenshot)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

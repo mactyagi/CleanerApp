@@ -82,6 +82,7 @@ public struct LightCompressor {
         return size
     }
     
+    @discardableResult
     public func compressVideo(
                               progressQueue: DispatchQueue = .main,
                               progressHandler: ((Progress) -> ())?,

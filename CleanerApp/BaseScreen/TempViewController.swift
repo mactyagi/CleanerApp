@@ -11,7 +11,7 @@ class TempViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let vc = CleanerViewController.customInit()
+//        let vc = HomeViewController.customInit()
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: false)
     }

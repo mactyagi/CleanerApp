@@ -22,6 +22,7 @@ class VideoCompressorViewController: UIViewController {
     //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        logEvent(Event.CompressorScreen.loaded.rawValue, parameter: nil)
         viewModel = VideoCompressViewModel()
         setSubscribers()
         setupCollectionView()
@@ -36,6 +37,7 @@ class VideoCompressorViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        logEvent(Event.CompressorScreen.appear.rawValue, parameter: nil)
         setupNavigationAndTabBar(isScreenVisible: true)
     }
     
@@ -43,6 +45,11 @@ class VideoCompressorViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         setupNavigationAndTabBar(isScreenVisible: false)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        logEvent(Event.CompressorScreen.disappear.rawValue, parameter: nil)
     }
     
     
@@ -106,6 +113,7 @@ extension VideoCompressorViewController{
             print(error)
         } receiveValue: { data in
             DispatchQueue.main.async {
+                logEvent(Event.CompressorScreen.videoCount.rawValue, parameter: ["count":data.count])
                 self.collectionView.reloadData()
                 self.secondaryLabel.text = "Videos \(data.count) • \(self.viewModel.totalSize.convertToFileString())"
             }
@@ -113,6 +121,7 @@ extension VideoCompressorViewController{
         
         viewModel.$isLoading.sink { isLoading in
             DispatchQueue.main.async {
+                logEvent(Event.CompressorScreen.loadingStatus.rawValue, parameter: ["isLoading": isLoading])
                 self.collectionView.isHidden = isLoading
                 isLoading ? self.view.activityStartAnimating() : self.view.activityStopAnimating()
             }

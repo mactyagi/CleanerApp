@@ -1,5 +1,5 @@
 //
-//  CleanerViewModel.swift
+//  HomeViewModel.swift
 //  CleanerApp
 //
 //  Created by Manu on 23/12/23.
@@ -12,13 +12,13 @@ import Photos
 import UIKit
 import CoreData
 
-class  CleanerViewModel: NSObject {
+class  HomeViewModel: NSObject {
 
     @Published var availableRAM: UInt64 = 0
     @Published var eventsCount: Int?
     @Published var reminderCount: Int?
-    @Published var photosAndVideosCount = 0
-    @Published var photosAndVideosSize: Int64 = 0
+    @Published var photosAndVideosCount:Int = 0
+    @Published var photosAndVideosSize: Int64?
     @Published var totalStorage: Int64 = 0
     @Published var usedStorage: Int64 = 0
     @Published var progress: Float = 0
@@ -83,9 +83,9 @@ class  CleanerViewModel: NSObject {
 
     
     func fetchPhotoAndvideosCountAndSize(){
+        
         let predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
         let assets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: predicate)
-
         photosAndVideosCount = assets.count
         
         let option = PHFetchOptions()
@@ -101,6 +101,16 @@ class  CleanerViewModel: NSObject {
             }
         }
         self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }
+        
+        
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        switch status {
+        case .notDetermined, .denied:
+            photosAndVideosSize = nil
+            return
+        default:
+            break
+        }
     }
 
     
@@ -148,7 +158,7 @@ class  CleanerViewModel: NSObject {
 
 
 //MARK: - Device Info Delegate
-extension CleanerViewModel: DeviceInfoDelegate{
+extension HomeViewModel: DeviceInfoDelegate{
     func availableRAMDidUpdate(_ availableRAM: UInt64) {
         self.availableRAM = availableRAM
     }

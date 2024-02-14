@@ -42,10 +42,22 @@ class CompressQualitySelectionViewController: UIViewController {
     //MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        logEvent(Event.CompressQualityScreen.loaded.rawValue, parameter: nil)
         setup()
         setSubscribers()
         beforeCompressUI()
         setupVideoPlayer(asset: viewModel.compressAsset.avAsset)
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        logEvent(Event.CompressQualityScreen.appear.rawValue, parameter: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        logEvent(Event.CompressQualityScreen.disappear.rawValue, parameter: nil)
     }
     
     
@@ -61,18 +73,27 @@ class CompressQualitySelectionViewController: UIViewController {
     
     //MARK: - @IBAction
     @IBAction func compressButtonPressed(_ sender: UIButton) {
+        logEvent(Event.CompressQualityScreen.compressButtonPressed.rawValue, parameter: nil)
+        
+        
         viewModel.compressAsset.compressor.compressVideo { progress in
+            logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": "compressing"])
             self.progressView.setProgress(Float(progress.fractionCompleted), animated: true)
         } completion: { CompressionResult in
+        
             switch CompressionResult{
             case .onStart:
                 print("Started")
+                logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": "started"])
                 self.duringCompressUI()
             case .onSuccess(let url):
+                logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": "Compressed"])
                 self.viewModel.saveVideoToPhotosLibrary(videoURL: url) { size, saveError in
                     if let saveError{
+                        logEvent(Event.CompressQualityScreen.savePhotoToGalleryStatus.rawValue, parameter: ["status":saveError])
                         print(saveError)
                     }else{
+                        logEvent(Event.CompressQualityScreen.savePhotoToGalleryStatus.rawValue, parameter: ["status":"saved"])
                         DispatchQueue.main.async{
                             self.nowSizeLabel.text = size.convertToFileString()
                             self.subtitleLabel.text = "Space saved: \((self.viewModel.compressAsset.originalSize - size).convertToFileString())"
@@ -82,17 +103,21 @@ class CompressQualitySelectionViewController: UIViewController {
                 }
             case .onFailure( let error):
                 print(error)
+                logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": error])
             case .onCancelled:
+                logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": "Cancelled"])
                 print("cancelled")
             }
         }
     }
     
     @IBAction func keepOriginalButtonPressed(_ sender: UIButton) {
+        logEvent(Event.CompressQualityScreen.keepOriginalButtonPressed.rawValue, parameter: nil)
         navigationController?.popViewController(animated: true)
     }
     
     @IBAction func deleteOriginalButtonPressed(_ sender: UIButton) {
+        logEvent(Event.CompressQualityScreen.deleteOriginalButtonPressed.rawValue, parameter: nil)
         sender.isEnabled = false
         viewModel.compressAsset.phAsset.delete { isComplete, error in
             if let error{

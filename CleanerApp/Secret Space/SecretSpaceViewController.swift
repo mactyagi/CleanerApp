@@ -32,7 +32,7 @@ class SecretSpaceViewController: UIViewController {
     func setupTableView(){
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: HomeTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HomeTableViewCell.identifier)
+        tableView.register(UINib(nibName: FutureHomeTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: FutureHomeTableViewCell.identifier)
     }
 }
 
@@ -53,7 +53,7 @@ extension SecretSpaceViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as! HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: FutureHomeTableViewCell.identifier, for: indexPath) as! FutureHomeTableViewCell
         let secretCell = tableDataSource[indexPath.section][indexPath.row]
         cell.configureCell(secretCell: secretCell.cell)
         return cell

@@ -78,14 +78,32 @@ class MediaViewModel: NSObject{
     
     
     func fetchAllMediaType(){
-        
         for type in MediaCellType.allCases{
             let context = CoreDataManager.secondCustomContext
             let predicate = getPredicate(mediaType: type)
             let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: true)
             let assets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: predicate, sortDescriptor: sortDescriptor)
             updateCell(assets: assets, type: type)
-            
+            if CoreDataPHAssetManager.shared.status == .completed{
+                setupLogEvents(count: assets.count, type: type)
+            }
+        }
+    }
+    
+    func setupLogEvents(count: Int, type: MediaCellType){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.MediaScreen.similarPhotosCount.rawValue, parameter: ["count": count])
+        case .duplicatePhoto:
+            logEvent(Event.MediaScreen.duplicatePhotosCount.rawValue, parameter: ["count": count])
+        case .otherPhoto:
+            logEvent(Event.MediaScreen.otherPhotosCount.rawValue, parameter: ["count": count])
+        case .similarScreenshot:
+            logEvent(Event.MediaScreen.similarScreenshotCount.rawValue, parameter: ["count": count])
+        case .duplicateScreenshot:
+            logEvent(Event.MediaScreen.duplicateScreenshotCount.rawValue, parameter: ["count": count])
+        case .otherScreenshot:
+            logEvent(Event.MediaScreen.otherScreenshotCount.rawValue, parameter: ["count": count])
         }
     }
     

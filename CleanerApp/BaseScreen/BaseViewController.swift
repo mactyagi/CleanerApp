@@ -21,6 +21,7 @@ class BaseViewController: UIViewController {
     
     //MARK: - variables and properties
     var groupType: PHAssetGroupType!
+    var type: MediaCellType!
     var predicate: NSPredicate!
     var selectionBarButtonItem: UIBarButtonItem?
     private var cancellables: Set<AnyCancellable> = []
@@ -33,7 +34,6 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         setupViewModel()
         setupCollectionView()
-//        LoadSaveData()
         setupViews()
     }
     
@@ -42,25 +42,110 @@ class BaseViewController: UIViewController {
         setupNavigationBar()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        setupEventsForViewDisappear()
+    }
+    
     
     //MARK: - Static and Class Functions/Properties
-    class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType) -> BaseViewController{
+    class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType, type: MediaCellType) -> BaseViewController{
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseViewController") as! BaseViewController
         vc.predicate = predicate
         vc.groupType = groupType
+        vc.type = type
         return vc
     }
     
     //MARK: - IBActions
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
         viewModel.deleteAllSelected()
+        
     }
     
     //MARK: - SetupFunction
+    func setupEventsForDeleteButtonPressed(){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.SimilarPhotosScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .duplicatePhoto:
+            logEvent(Event.SimilarPhotosScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .otherPhoto:
+            logEvent(Event.OtherPhotosScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .similarScreenshot:
+            logEvent(Event.SimilarScreenshotScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .duplicateScreenshot:
+            logEvent(Event.DuplicateScreenshotScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .otherScreenshot:
+            logEvent(Event.OtherScreenshotScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .none:
+            break
+        }
+    }
+    
+    
+    func setupEventsForViewDidLoad(){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.SimilarPhotosScreen.loaded.rawValue, parameter: nil)
+        case .duplicatePhoto:
+            logEvent(Event.DuplicatePhotosScreen.loaded.rawValue, parameter: nil)
+        case .otherPhoto:
+            logEvent(Event.OtherPhotosScreen.loaded.rawValue, parameter: nil)
+        case .similarScreenshot:
+            logEvent(Event.SimilarScreenshotScreen.loaded.rawValue, parameter: nil)
+        case .duplicateScreenshot:
+            logEvent(Event.DuplicateScreenshotScreen.loaded.rawValue, parameter: nil)
+        case .otherScreenshot:
+            logEvent(Event.OtherScreenshotScreen.loaded.rawValue, parameter: nil)
+        case .none:
+            break
+        }
+    }
+    
+    func setupEventsForViewAppear(){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.SimilarPhotosScreen.appear.rawValue, parameter: nil)
+        case .duplicatePhoto:
+            logEvent(Event.DuplicatePhotosScreen.appear.rawValue, parameter: nil)
+        case .otherPhoto:
+            logEvent(Event.OtherPhotosScreen.appear.rawValue, parameter: nil)
+        case .similarScreenshot:
+            logEvent(Event.SimilarScreenshotScreen.appear.rawValue, parameter: nil)
+        case .duplicateScreenshot:
+            logEvent(Event.DuplicateScreenshotScreen.appear.rawValue, parameter: nil)
+        case .otherScreenshot:
+            logEvent(Event.OtherScreenshotScreen.appear.rawValue, parameter: nil)
+        case .none:
+            break
+        }
+    }
+    
+    func setupEventsForViewDisappear(){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.SimilarPhotosScreen.disappear.rawValue, parameter: nil)
+        case .duplicatePhoto:
+            logEvent(Event.DuplicatePhotosScreen.disappear.rawValue, parameter: nil)
+        case .otherPhoto:
+            logEvent(Event.OtherPhotosScreen.disappear.rawValue, parameter: nil)
+        case .similarScreenshot:
+            logEvent(Event.SimilarScreenshotScreen.disappear.rawValue, parameter: nil)
+        case .duplicateScreenshot:
+            logEvent(Event.DuplicateScreenshotScreen.disappear.rawValue, parameter: nil)
+        case .otherScreenshot:
+            logEvent(Event.OtherScreenshotScreen.disappear.rawValue, parameter: nil)
+        case .none:
+            break
+        }
+    }
+    
     func setupViews() {
-        titleLabel.text = groupType.rawValue.capitalized
+        titleLabel.text = type.rawValue
         setupDeleteButtonView()
     }
+    
     
     
     func setupCollectionView(){
@@ -76,7 +161,7 @@ class BaseViewController: UIViewController {
     }
     
     func setupViewModel(){
-        self.viewModel = BaseViewModel(predicate: predicate, groupType: groupType)
+        self.viewModel = BaseViewModel(predicate: predicate, groupType: groupType, type: type)
         setSubscribers()
     }
     

@@ -32,12 +32,14 @@ class CalendarViewModel {
     typealias reminderType = (year:String, reminders: [CustomEKReminder])
     @Published var allEvents: [eventType] = []{
         didSet{
+            logEvent(Event.CalendarScreen.eventsCount.rawValue, parameter: ["count":allEvents.count])
             checkForEventsSelection()
         }
     }
     
     @Published var allReminder: [reminderType] = []{
         didSet{
+            logEvent(Event.CalendarScreen.reminderCount.rawValue, parameter: ["count":allReminder.count])
             checkForReminderSelection()
         }
     }
@@ -46,7 +48,9 @@ class CalendarViewModel {
         showLoader = true
         switch segment{
         case .Calendar:
+            logEvent(Event.CalendarScreen.currentSegment.rawValue, parameter: ["type": "Calendar"])
             checkForCalendarAutorization { [weak self] isGranted in
+                logEvent(Event.CalendarScreen.calendarAuthorization.rawValue, parameter: ["isAuthorized": isGranted])
                 if isGranted{
                     self?.checkForEventsSelection()
                 }else{
@@ -56,7 +60,9 @@ class CalendarViewModel {
                 self?.showLoader = false
             }
         case .Reminder:
+            logEvent(Event.CalendarScreen.currentSegment.rawValue, parameter: ["type": "Reminder"])
             checkForReminderAutorization { [weak self] isAuthorized in
+                logEvent(Event.CalendarScreen.reminderAuthorization.rawValue, parameter: ["isAuthorized": isAuthorized])
                 if isAuthorized{
                     self?.checkForReminderSelection()
                 }else{
@@ -238,6 +244,7 @@ class CalendarViewModel {
     
     private func deleteReminders(){
         var remainingReminders: [CustomEKReminder] = []
+        var selectedReminders = 0
         for reminderTouple in self.allReminder {
             let customReminders = reminderTouple.reminders
             for customReminder in customReminders {
@@ -252,6 +259,7 @@ class CalendarViewModel {
                 }
             }
         }
+        logEvent(Event.CalendarScreen.reminderDeleteButtonPressed.rawValue, parameter: ["count":selectedReminders])
         
         let eventsGroup = Dictionary(grouping: remainingReminders, by: \.reminder.year)
         self.allReminder = eventsGroup.keys.compactMap { ($0, eventsGroup[$0]!.sorted(by: { ($0.reminder.creationDate ?? Date()) < ($1.reminder.creationDate ?? Date())}))}.sorted(by: { $0.year > $1.year })
@@ -260,10 +268,12 @@ class CalendarViewModel {
     
     private func deleteEvents(){
         var remainingEvents: [CustomEKEvent] = []
+        var selectedCount = 0
         for allEvent in allEvents {
             let events = allEvent.events
             for event in events {
                 if event.isSelected{
+                    selectedCount += 1
                     do {
                         try eventStore.remove(event.event, span: .thisEvent)
                     }catch{
@@ -273,6 +283,7 @@ class CalendarViewModel {
                     remainingEvents.append(event)
                 }
             }
+            logEvent(Event.CalendarScreen.eventsDeleteButtonPressed.rawValue, parameter: ["count":selectedCount])
         }
         
         let eventsGroup = Dictionary(grouping: remainingEvents, by: \.event.year)

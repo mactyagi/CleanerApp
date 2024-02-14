@@ -7,10 +7,10 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class FutureHomeViewController: UIViewController {
 
     //MARK: - varibles and properties
-    var viewModel: HomeViewModel!
+    var viewModel: FutureHomeViewModel!
     
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -26,11 +26,11 @@ class HomeViewController: UIViewController {
     func setupTableView(){
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: HomeTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HomeTableViewCell.identifier)
+        tableView.register(UINib(nibName: FutureHomeTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: FutureHomeTableViewCell.identifier)
     }
     
     func setupViewModel(){
-        viewModel = HomeViewModel()
+        viewModel = FutureHomeViewModel()
     }
     
     func setup(){
@@ -41,19 +41,19 @@ class HomeViewController: UIViewController {
 
 
 
-extension HomeViewController: UITableViewDataSource{
+extension FutureHomeViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.homeCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as! HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: FutureHomeTableViewCell.identifier, for: indexPath) as! FutureHomeTableViewCell
         cell.configureCell(homeCell: viewModel.homeCells[indexPath.row])
         return cell
     }
 }
 
-extension HomeViewController: UITableViewDelegate{
+extension FutureHomeViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedCell = viewModel.homeCells[indexPath.row]

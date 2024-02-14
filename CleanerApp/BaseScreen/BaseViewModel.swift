@@ -15,10 +15,12 @@ class BaseViewModel{
     @Published var sizeLabel: String = ""
     @Published var isAllSelected = true
     var groupType: PHAssetGroupType
+    var type: MediaCellType
     var predicate: NSPredicate
-    init(predicate: NSPredicate, groupType: PHAssetGroupType) {
+    init(predicate: NSPredicate, groupType: PHAssetGroupType, type: MediaCellType) {
         self.predicate = predicate
         self.groupType = groupType
+        self.type = type
         fetchDBAssetFromCoreData()
     }
     
@@ -26,6 +28,7 @@ class BaseViewModel{
     func fetchDBAssetFromCoreData(){
         let context = CoreDataManager.customContext
         let dbAssets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: self.predicate)
+        setupCountEvents(dbAssets.count)
         var newData: [[DBAsset]] = []
         var size = dbAssets.reduce(0) { $0 + $1.size }
         sizeLabel = "Photos: \(dbAssets.count) • \(size.formatBytes())"
@@ -35,7 +38,27 @@ class BaseViewModel{
         }
         assetRows = newData.sorted { $0.first?.creationDate ?? Date() < $1.first?.creationDate ?? Date() }
         selectAll()
+        
+        
     }
+    
+    func setupCountEvents(_ count: Int){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.SimilarPhotosScreen.count.rawValue, parameter: ["count": count])
+        case .duplicatePhoto:
+            logEvent(Event.DuplicatePhotosScreen.count.rawValue, parameter: ["count": count])
+        case .otherPhoto:
+            logEvent(Event.OtherPhotosScreen.count.rawValue, parameter: ["count": count])
+        case .similarScreenshot:
+            logEvent(Event.SimilarScreenshotScreen.count.rawValue, parameter: ["count": count])
+        case .duplicateScreenshot:
+            logEvent(Event.DuplicateScreenshotScreen.count.rawValue, parameter: ["count": count])
+        case .otherScreenshot:
+            logEvent(Event.OtherScreenshotScreen.count.rawValue, parameter: ["count": count])
+        }
+    }
+    
     
     func deselectAll(){
         selectedIndexPath.removeAll()
