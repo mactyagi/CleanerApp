@@ -41,8 +41,9 @@ class CircularProgressBarView: UIView {
         progressLayer.path = circularPath.cgPath
         progressLayer.strokeColor = UIColor.darkBlue.cgColor
         progressLayer.fillColor = (UIColor(named: "lightGray") ?? UIColor.lightGray2).cgColor
-        progressLayer.lineWidth = 5
+        progressLayer.lineWidth = 6
         progressLayer.lineCap = .round
+        progressLayer.strokeEnd = 0
 
         layer.addSublayer(progressLayer)
         
@@ -66,9 +67,9 @@ class CircularProgressBarView: UIView {
         animation.duration = 0.5
         animation.fillMode = .forwards
         animation.isRemovedOnCompletion = false
-
-        progressLayer.add(animation, forKey: "progressAnimation")
         progressLayer.strokeEnd = CGFloat(progress)
+        progressLayer.add(animation, forKey: "progressAnimation")
+        
         self.progress = progress
     }
 }

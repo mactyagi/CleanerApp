@@ -19,7 +19,7 @@ class CoreDataManager{
         let container = NSPersistentContainer(name: "CleanerApp")
         container.loadPersistentStores { storeDescription, error in
             if let error =  error as NSError?{
-                fatalError("unresolved error \(error), \(error.userInfo)")
+                logError(error: error)
             }
         }
         return container
@@ -34,18 +34,11 @@ class CoreDataManager{
                 do {
                     try context.save()
                     print("** saved")
-//                    CoreDataManager.mainContext.performAndWait {
-//                        do{
-//                            try CoreDataManager.mainContext.save()
-//                        }catch{
-//                            let nserror = error as NSError
-//                            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//                        }
-//                    }
+//
                     
                 } catch {
                     let nserror = error as NSError
-//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                    logError(error: nserror)
                 }
             }else{
     //            print(" ** Already saved")
@@ -69,6 +62,7 @@ class CoreDataManager{
                 return object
             }catch{
                 print("Could not fetch, \(error.localizedDescription)")
+                logError(error: error as NSError)
             }
             return []
         }
@@ -130,6 +124,7 @@ class CoreDataManager{
                     print("Object deleted successfully.")
                 } catch {
                     print("Error deleting object: \(error)")
+                    logError(error: error as NSError)
                 }
             }
         }

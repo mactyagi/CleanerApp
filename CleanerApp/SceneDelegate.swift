@@ -20,6 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let window = UIWindow(windowScene: windowScene)
+               self.window = window
+               
+        let initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LaunchViewController")
+        window.rootViewController = initialViewController
+        window.makeKeyAndVisible()
+        
+        
                 // Create a new UIWindow using the windowScene constructor
 //                let window = UIWindow(windowScene: windowScene)
 //

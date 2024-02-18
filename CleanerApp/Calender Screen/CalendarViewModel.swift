@@ -32,7 +32,7 @@ class CalendarViewModel {
     typealias reminderType = (year:String, reminders: [CustomEKReminder])
     @Published var allEvents: [eventType] = []{
         didSet{
-            logEvent(Event.CalendarScreen.eventsCount.rawValue, parameter: ["count":allEvents.count])
+            logEvent(Event.CalendarScreen.eventCount.rawValue, parameter: ["count":allEvents.count])
             checkForEventsSelection()
         }
     }
@@ -259,7 +259,7 @@ class CalendarViewModel {
                 }
             }
         }
-        logEvent(Event.CalendarScreen.reminderDeleteButtonPressed.rawValue, parameter: ["count":selectedReminders])
+        logEvent(Event.CalendarScreen.reminderDeleted.rawValue, parameter: ["count":selectedReminders])
         
         let eventsGroup = Dictionary(grouping: remainingReminders, by: \.reminder.year)
         self.allReminder = eventsGroup.keys.compactMap { ($0, eventsGroup[$0]!.sorted(by: { ($0.reminder.creationDate ?? Date()) < ($1.reminder.creationDate ?? Date())}))}.sorted(by: { $0.year > $1.year })
@@ -283,7 +283,7 @@ class CalendarViewModel {
                     remainingEvents.append(event)
                 }
             }
-            logEvent(Event.CalendarScreen.eventsDeleteButtonPressed.rawValue, parameter: ["count":selectedCount])
+            logEvent(Event.CalendarScreen.eventDeleted.rawValue, parameter: ["count":selectedCount])
         }
         
         let eventsGroup = Dictionary(grouping: remainingEvents, by: \.event.year)

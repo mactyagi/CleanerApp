@@ -88,6 +88,9 @@ class MediaViewModel: NSObject{
                 setupLogEvents(count: assets.count, type: type)
             }
         }
+        if CoreDataPHAssetManager.shared.status == .completed{
+            logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count+size": "\(totalFiles) + \(totalSize.convertToFileString())"])
+        }
     }
     
     func setupLogEvents(count: Int, type: MediaCellType){

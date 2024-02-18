@@ -52,6 +52,7 @@ class CalendarViewController: UIViewController {
     }
     
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
+        logEvent(Event.CalendarScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.totalSelectedCount])
         DeleteAlert()
     }
     
@@ -131,7 +132,9 @@ class CalendarViewController: UIViewController {
         
         let alertVC = UIAlertController(title: "Allow to Delete \(viewModel.totalSelectedCount) \(singularOrPurlarEvent)?", message: "\(singularOrPurlarEvent) will be removed from the \(typeName)", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            self.setupCancelEvent()
+        }
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
             self.viewModel.deleteData()
         }
@@ -140,6 +143,15 @@ class CalendarViewController: UIViewController {
         alertVC.addAction(deleteAction)
         
         self.present(alertVC, animated: true)
+    }
+    
+    func setupCancelEvent(){
+        switch viewModel.currentSegementType{
+        case .Calendar:
+            logEvent(Event.CalendarScreen.eventDeleteCancel.rawValue, parameter: nil)
+        case .Reminder:
+            logEvent(Event.CalendarScreen.reminderDeleteCancel.rawValue, parameter: nil)
+        }
     }
 }
 

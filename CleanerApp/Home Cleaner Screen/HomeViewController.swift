@@ -45,7 +45,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var progressLabel: UILabel!
     
-    @IBOutlet weak var activityIndicatorForPhotos: UIActivityIndicatorView!
     
         //MARK: - Variables
     private var cancelables: Set<AnyCancellable> = []
@@ -109,8 +108,6 @@ class HomeViewController: UIViewController {
     
     func setupView(){
         scrollView.bounces = false
-        activityIndicatorForPhotos.color = .darkGray
-        activityIndicatorForPhotos.hidesWhenStopped = true
         infoImageView.makeCornerRadiusCircle()
         addCornerRadius(10, views: EventView, contactCountView, mediaMemoryView)
         addCornerRadius(15, views: deviceInfoItemsView, progressMainView, calenderView, contactsView, photosView, howToCleanUpView)
@@ -121,7 +118,14 @@ class HomeViewController: UIViewController {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
         setupProgressBar()
         
+        startFetchingAnimation()
     }
+    
+    func startFetchingAnimation() {
+            UIView.animate(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse, .curveEaseInOut], animations: {
+                self.progressLabel.alpha = 0.3
+            }, completion: nil)
+        }
     
     
     func setupProgressBar(){
@@ -129,8 +133,9 @@ class HomeViewController: UIViewController {
         print(progressMainView.bounds.width)
         print(progressMainView.bounds.size.width)
         guard let progressBar else { return }
+        progressBar.setProgress(0)
         progressMainView.addSubview(progressBar)
-        progressBar.progress = 0
+        
         
     }
     
@@ -292,15 +297,15 @@ extension HomeViewController{
         
         viewModel.$usedStorage.sink { [weak self] usedStorage in
             DispatchQueue.main.async {
-                self?.storageUsedLabel.text = usedStorage.formatBytes()
-                if let self{
-                    let progress = Float(usedStorage) / Float(self.viewModel.totalStorage)
-                    if progress > 0{  // some time progress comes NaN
-                        self.progressBar?.setProgress(Float(progress))
-                    }else{
-                        self.progressBar?.setProgress(Float(0))
-                    }
-                    
+                guard let self else { return }
+                self.storageUsedLabel.text = usedStorage.formatBytes()
+                logEvent(Event.HomeScreen.storageInfo.rawValue, parameter: ["info": "usedStorage:\(usedStorage.formatBytes()), totalStorage: \(self.viewModel.totalStorage.formatBytes())"])
+                
+                let progress = Float(usedStorage) / Float(self.viewModel.totalStorage)
+                if progress > 0{  // some time progress comes NaN
+                    self.progressBar?.setProgress(Float(progress))
+                }else{
+                    self.progressBar?.progress = 0
                 }
                 
             }

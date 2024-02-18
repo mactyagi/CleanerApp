@@ -32,6 +32,7 @@ class BaseViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupEventsForViewDidLoad()
         setupViewModel()
         setupCollectionView()
         setupViews()
@@ -39,6 +40,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setupEventsForViewAppear()
         setupNavigationBar()
     }
     
@@ -60,6 +62,7 @@ class BaseViewController: UIViewController {
     //MARK: - IBActions
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
         viewModel.deleteAllSelected()
+        setupEventsForDeleteButtonPressed()
         
     }
     

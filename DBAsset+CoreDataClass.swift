@@ -42,6 +42,7 @@ public class DBAsset: NSManagedObject {
                 try firstPrint.computeDistance(&distance, to: secondPrint)
                 return distance
             }catch{
+                logErrorString(errorString: "error to find distance in photos and SS. \(distance)")
                 print("error to find distnce. \(distance)")
                 return 100
             }
@@ -56,6 +57,7 @@ public class DBAsset: NSManagedObject {
                     try firstPrint.computeDistance(&distance, to: secondPrint)
                     totalDistance += distance
                 }catch{
+                    logErrorString(errorString: "error to find distance in video \(distance)")
                     print("error to find distnce. \(distance)")
                 }
             }
@@ -71,7 +73,9 @@ extension DBAsset{
     
     func getPHAsset() -> PHAsset? {
         let fetchOptions = PHFetchOptions()
-        guard let localIdentifier = self.assetId else { return nil }
+        guard let localIdentifier = self.assetId else { 
+            logErrorString(errorString: "Identifier not found")
+            return nil }
         fetchOptions.predicate = NSPredicate(format: "localIdentifier = %@", localIdentifier)
 
         let result = PHAsset.fetchAssets(with: fetchOptions)
@@ -80,6 +84,7 @@ extension DBAsset{
             return asset
         } else {
             print("PHAsset not found for local identifier: \(localIdentifier)")
+            logErrorString(errorString: "PHAsset not found for local identifier: \(localIdentifier)")
             return nil
         }
     }
@@ -111,6 +116,7 @@ extension DBAsset{
         let image = phAsset?.getImage()
         guard let imageData = image?.jpegData(compressionQuality: 1) else {
                 print("Error converting image to data.")
+            logErrorString(errorString: "Error converting image to data.")
                 return
             }
 

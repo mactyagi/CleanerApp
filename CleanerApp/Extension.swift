@@ -12,17 +12,17 @@ import EventKit
 //MARK: - PHAsset
 
 extension PHAsset{
-    func getAVAsset(comp: @escaping (_ avAsset: AVAsset?, _ error: Error?) -> ()){
+    func getAVAsset(comp: @escaping (_ avAsset: AVAsset?) -> ()){
         let manager = PHImageManager.default()
         let option = PHVideoRequestOptions()
 //        option.isNetworkAccessAllowed = true
         option.deliveryMode = PHVideoRequestOptionsDeliveryMode.highQualityFormat
         manager.requestAVAsset(forVideo: self, options: option) { avAsset, videoAudio, _ in
             if let avAsset{
-                comp(avAsset, nil)
+                comp(avAsset)
             }else{
-                let error = NSError(domain: "AVAsset not found", code: 0)
-                comp(nil,error)
+                logErrorString(errorString: "AVAsset not found")
+                comp(nil)
             }
         }
     }
@@ -37,6 +37,7 @@ extension PHAsset{
             return asset
         } else {
             print("PHAsset not found for local identifier: \(localIdentifier)")
+            logErrorString(errorString: "PHAsset not found for local identifier: \(localIdentifier)")
             return nil
         }
     }
@@ -46,6 +47,10 @@ extension PHAsset{
         PHPhotoLibrary.shared().performChanges {
             PHAssetChangeRequest.deleteAssets([self] as NSArray)
         } completionHandler: { isComplete, error in
+            if let error{
+                logError(error: error as NSError)
+            }
+            
             completionHandler(isComplete, error)
         }
     }
@@ -54,7 +59,10 @@ extension PHAsset{
         let resources = PHAssetResource.assetResources(for: self)
         guard let resource = resources.first,
               let unsignedInt64 = resource.value(forKey: "fileSize") as? CLong
-        else { return nil }
+        else {
+            logErrorString(errorString: "Not able to get file Size")
+            return nil
+        }
         return Int64(bitPattern: UInt64(unsignedInt64))
     }
     
@@ -69,6 +77,9 @@ extension PHAsset{
         manager.requestImage(for: self, targetSize: size, contentMode: .aspectFill, options: requestOptions) { image, _ in
         img = image
         }
+        if img == nil{
+            logErrorString(errorString: "Can not get image from PHAsset")
+        }
         return img
     }
     
@@ -79,6 +90,9 @@ extension PHAsset{
         requestOptions.isSynchronous = false
         requestOptions.deliveryMode = .highQualityFormat
         manager.requestImage(for: self, targetSize: size, contentMode: .aspectFill, options: requestOptions) { image, _ in
+            if image == nil{
+                logErrorString(errorString: "Can not get image from PHAsset by excaping")
+            }
         comp(image)
         }
     }
@@ -128,6 +142,7 @@ extension Int64 {
             }
         } catch {
             print("Error creating regular expression: \(error.localizedDescription)")
+            logError(error: error as NSError)
         }
         return (nil, nil)
     }

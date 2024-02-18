@@ -27,10 +27,8 @@ extension VideoCompressViewModel{
             for index in 0 ..< phAssets.count{
                 dispatchGroup.enter()
                 let phAsset = phAssets[index]
-                phAsset.getAVAsset { avAsset, error in
-                    if let error{
-                        print(error.localizedDescription)
-                    }else if let avAsset{
+                phAsset.getAVAsset { avAsset in
+                    if let avAsset{
                         let compressor = LightCompressor(quality: .very_high, asset: avAsset)
                         if let size = phAsset.getSize(){
                             self.totalSize += size

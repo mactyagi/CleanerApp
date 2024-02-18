@@ -121,13 +121,27 @@ class BaseViewModel{
                 }
                 CoreDataPHAssetManager.shared.removeSingleElementFromCoreData()
                 self.fetchDBAssetFromCoreData()
+                self.setupCountEvents(deletableAssets.count)
             }
         }
     }
+  
+    func setupDeleteEvents(count: Int){
+        switch type {
+        case .similarPhoto:
+            logEvent(Event.SimilarPhotosScreen.deletedPhotos.rawValue, parameter: ["count":count])
+        case .duplicatePhoto:
+            logEvent(Event.DuplicatePhotosScreen.deletedPhotos.rawValue, parameter: ["count":count])
+        case .otherPhoto:
+            logEvent(Event.OtherPhotosScreen.deletedPhotos.rawValue, parameter: ["count":count])
+        case .similarScreenshot:
+            logEvent(Event.SimilarScreenshotScreen.deletedScreenshot.rawValue, parameter: ["count":count])
+        case .duplicateScreenshot:
+            logEvent(Event.DuplicateScreenshotScreen.deletedScreenshot.rawValue, parameter: ["count":count])
+        case .otherScreenshot:
+            logEvent(Event.OtherScreenshotScreen.deletedScreenshot.rawValue, parameter: ["count":count])
+        }
+    }
+    
 }
 
-
-struct CustomDBAsset{
-    var dbAsset: DBAsset
-    var isSelected: Bool
-}

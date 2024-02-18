@@ -97,9 +97,7 @@ class MediaViewController: UIViewController {
             guard let self else { return }
             DispatchQueue.main.async {
                 self.fileAndSizeLabel.text = "\(files) • \(self.viewModel.totalSize.formatBytes())"
-                if CoreDataPHAssetManager.shared.status == .completed{
-                    logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count": self.fileAndSizeLabel.text ?? ""])
-                }
+                
             }
         }.store(in: &cancellables)
         
