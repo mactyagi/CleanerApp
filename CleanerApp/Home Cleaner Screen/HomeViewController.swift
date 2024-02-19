@@ -129,11 +129,6 @@ class HomeViewController: UIViewController {
             }
         }
     
-    func stopFetchingAnimation() {
-        UIView.animate(withDuration: 0.5) {
-             // Reset the alpha to 1
-        }
-    }
 
     
     
@@ -204,15 +199,13 @@ class HomeViewController: UIViewController {
     @objc func contactViewTapped(){
         logEvent(Event.HomeScreen.tapContacts.rawValue, parameter: nil)
         let vc = ComingSoonViewController.customInit()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func smartCleaningViewTapped(){
         logEvent(Event.HomeScreen.tapSmartCleaning.rawValue, parameter: nil)
         let vc = ComingSoonViewController.customInit()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func photoAndVideoTapped(){

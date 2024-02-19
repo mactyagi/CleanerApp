@@ -263,7 +263,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUk-lO-seT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-142" y="-1237"/>
+            <point key="canvasLocation" x="-3353" y="120"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="HZ6-PI-6iS">
+            <objects>
+                <viewController id="uIX-NQ-tBZ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4mr-yD-aaH">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6yU-6N-tfR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nOW-Ru-EJC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2538" y="138"/>
         </scene>
         <!--Launch View Controller-->
         <scene sceneID="mfF-7s-DcM">
@@ -295,7 +310,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OnZ-Nr-o6Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5732" y="-1036"/>
+            <point key="canvasLocation" x="-4330" y="-2460"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ftR-6I-dFP">
@@ -315,7 +330,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gs8-VT-uvK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4670" y="-1036"/>
+            <point key="canvasLocation" x="-4559" y="-1595"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8d7-Ox-6b7">
@@ -472,7 +487,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Woj-Na-QJw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2478" y="-445"/>
+            <point key="canvasLocation" x="-5094" y="-171"/>
         </scene>
         <!--Base View Controller-->
         <scene sceneID="K4h-nW-M4l">
@@ -619,7 +634,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2cg-ig-z4G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-978" y="-1237"/>
+            <point key="canvasLocation" x="-2608" y="-559"/>
         </scene>
         <!--Media View Controller-->
         <scene sceneID="QXD-Up-vu2">
@@ -724,7 +739,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lTY-Rh-ljJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1736" y="-1237"/>
+            <point key="canvasLocation" x="-3353" y="-559"/>
         </scene>
         <!--Coming Soon View Controller-->
         <scene sceneID="kiq-qv-bT6">
@@ -1133,7 +1148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wr5-qW-01q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1701" y="-445"/>
+            <point key="canvasLocation" x="-5951" y="-179"/>
         </scene>
         <!--Secret Space View Controller-->
         <scene sceneID="cUs-xX-AQG">
@@ -1301,7 +1316,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kmM-3D-a2a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3417" y="-445"/>
+            <point key="canvasLocation" x="-5094" y="-948"/>
         </scene>
         <!--Home-->
         <scene sceneID="4QV-f7-r8T">
@@ -1320,7 +1335,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rmb-o6-5ir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3417.2093023255816" y="-1237.3390557939915"/>
+            <point key="canvasLocation" x="-4148" y="-948"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="n2h-3N-Yrg">
@@ -1958,7 +1973,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7VN-CK-oku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2540.9302325581393" y="-1225.1072961373391"/>
+            <point key="canvasLocation" x="-4060" y="-174"/>
         </scene>
     </scenes>
     <resources>
@@ -2020,28 +2035,28 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
-            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
-            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
