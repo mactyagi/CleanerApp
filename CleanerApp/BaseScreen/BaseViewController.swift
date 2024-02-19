@@ -224,6 +224,13 @@ class BaseViewController: UIViewController {
                 self.selectionBarButtonItem?.title = isAllSelected ? "Deselect All" : "Select All"
             }
         }.store(in: &cancellables)
+        
+        viewModel.$showLoader.sink { [weak self] showLoader in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                showLoader ? self.showFullScreenLoader() : self.hideFullScreenLoader()
+            }
+        }.store(in: &cancellables)
     }
 }
 

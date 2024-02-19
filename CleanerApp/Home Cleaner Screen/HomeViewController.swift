@@ -72,12 +72,14 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         logEvent(Event.HomeScreen.appear.rawValue, parameter: nil)
         setupNavigationAndTabBar(isScreenVisible: true)
+        startFetchingAnimation()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel.stopUpdatingDeviceInfo()
         setupNavigationAndTabBar(isScreenVisible: false)
+//        stopFetchingAnimation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -117,15 +119,22 @@ class HomeViewController: UIViewController {
         let customFont = UIFont(name: "Avenir Next Demi Bold", size: 18.0)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
         setupProgressBar()
-        
-        startFetchingAnimation()
     }
     
     func startFetchingAnimation() {
             UIView.animate(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse, .curveEaseInOut], animations: {
                 self.progressLabel.alpha = 0.3
-            }, completion: nil)
+            }) { a in
+                self.progressLabel.alpha = 1
+            }
         }
+    
+    func stopFetchingAnimation() {
+        UIView.animate(withDuration: 0.5) {
+             // Reset the alpha to 1
+        }
+    }
+
     
     
     func setupProgressBar(){

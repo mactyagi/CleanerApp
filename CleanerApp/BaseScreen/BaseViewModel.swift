@@ -14,6 +14,7 @@ class BaseViewModel{
    @Published var selectedIndexPath: Set<IndexPath> = []
     @Published var sizeLabel: String = ""
     @Published var isAllSelected = true
+    @Published var showLoader = false
     var groupType: PHAssetGroupType
     var type: MediaCellType
     var predicate: NSPredicate
@@ -30,13 +31,14 @@ class BaseViewModel{
         let dbAssets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: self.predicate)
         setupCountEvents(dbAssets.count)
         var newData: [[DBAsset]] = []
-        var size = dbAssets.reduce(0) { $0 + $1.size }
+        let size = dbAssets.reduce(0) { $0 + $1.size }
         sizeLabel = "Photos: \(dbAssets.count) • \(size.formatBytes())"
         let dict = Dictionary(grouping: dbAssets) { $0.subGroupId }
-        for (key,value) in dict{
-            newData.append(value)
+        for (_,value) in dict{
+            let sortedValue = value.sorted { $0.creationDate ?? Date() > $1.creationDate ?? Date() }
+            newData.append(sortedValue)
         }
-        assetRows = newData.sorted { $0.first?.creationDate ?? Date() < $1.first?.creationDate ?? Date() }
+        assetRows = newData.sorted { $0.first?.creationDate ?? Date() > $1.first?.creationDate ?? Date() }
         selectAll()
         
         
@@ -105,6 +107,7 @@ class BaseViewModel{
     
     
     func deleteAllSelected(){
+        showLoader = true
         var deleteAblePhAssetIds: [String] = []
         var deletableAssets: [DBAsset] = []
         for indexPath in selectedIndexPath {
@@ -119,10 +122,11 @@ class BaseViewModel{
                 deletableAssets.forEach { asset in
                     CoreDataManager.shared.deleteAsset(asset: asset)
                 }
-                CoreDataPHAssetManager.shared.removeSingleElementFromCoreData()
+                CoreDataPHAssetManager.shared.removeSingleElementFromCoreData(context: CoreDataManager.customContext)
                 self.fetchDBAssetFromCoreData()
                 self.setupCountEvents(deletableAssets.count)
             }
+            self.showLoader = false
         }
     }
   

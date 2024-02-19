@@ -85,7 +85,7 @@ class  HomeViewModel: NSObject {
     func fetchPhotoAndvideosCountAndSize(){
         
         let predicate = NSPredicate(format: "isChecked == %@", NSNumber(value: true))
-        let assets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.secondCustomContext, predicate: predicate)
+        let assets = CoreDataManager.shared.fetchDBAssets(context: CoreDataManager.customContext, predicate: predicate)
         photosAndVideosCount = assets.count
         
         let option = PHFetchOptions()
@@ -98,6 +98,7 @@ class  HomeViewModel: NSObject {
                 progress = 1
             }else{
                 progress = Float(assets.count)/Float(allPHAssetCount)
+                CoreDataPHAssetManager.shared.startProcessingPhotos()
             }
         }
         self.photosAndVideosSize = assets.reduce(0) { $0 + $1.size }

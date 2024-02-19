@@ -31,7 +31,7 @@ class PHAssetManager{
     private var PHAssetType:PHAssetCustomMediaType
     
    var allAssets: PHFetchResult<PHAsset>!
-    
+//    private var context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
     init(PHAssetType: PHAssetCustomMediaType) {
         self.PHAssetType = PHAssetType
         getAssets()
@@ -97,8 +97,7 @@ class CoreDataPHAssetManager{
             }
         }
     }
-    func removeSingleElementFromCoreData(){
-        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
+    func removeSingleElementFromCoreData(context: NSManagedObjectContext = CoreDataManager.shared.persistentContainer.newBackgroundContext()){
         let data = CoreDataManager.shared.fetchDBAssets(context: context, predicate: nil)
         let dictWithGroupId = Dictionary(grouping: data, by: \.subGroupId)
         
@@ -107,6 +106,7 @@ class CoreDataPHAssetManager{
                 for asset in value{
                     asset.subGroupId = nil
                     asset.groupTypeValue = PHAssetGroupType.other.rawValue
+                    print("** single element")
                 }
             }
         }
@@ -141,7 +141,14 @@ class CoreDataPHAssetManager{
     }
     
     
-     func startProcess(){
+    func startProcessingPhotos(){
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+            self.startProcess()
+        }
+    }
+    
+     private func startProcess(){
+         guard status != .started else { return }
          status = .started
          postUpdate()
         let queue = DispatchQueue.global(qos: .userInteractive)
@@ -279,11 +286,11 @@ class CoreDataPHAssetManager{
                 
                 switch distance{
                     
-                case 0 ... 0.40:
+                case 0 ... 0.45:
 //                    print("** similar \(mediaType.rawValue) found")
                     processSimilarAssets(firstAsset: firstAsset, secondAsset: secondAsset, context: context)
                     
-                case 0.40 ... 9:
+                case 0.45 ... 9:
                     if #available(iOS 17.0, *) {
                         break
                     }else{

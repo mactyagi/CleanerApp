@@ -42,6 +42,33 @@
             </objects>
             <point key="canvasLocation" x="1970.2325581395348" y="-559.44206008583694"/>
         </scene>
+        <!--Loader View Controller-->
+        <scene sceneID="40N-Sd-eqg">
+            <objects>
+                <viewController storyboardIdentifier="LoaderViewController" id="xCk-lZ-T5p" customClass="LoaderViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" alpha="0.5" contentMode="scaleToFill" id="lhD-cB-98e">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Dm5-X9-tQb">
+                                <rect key="frame" x="196.66666666666666" y="447.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="amv-Wj-hFp"/>
+                        <color key="backgroundColor" name="lightBlueDarkGreyColor"/>
+                        <constraints>
+                            <constraint firstItem="Dm5-X9-tQb" firstAttribute="centerY" secondItem="lhD-cB-98e" secondAttribute="centerY" id="51z-NQ-cuv"/>
+                            <constraint firstItem="Dm5-X9-tQb" firstAttribute="centerX" secondItem="lhD-cB-98e" secondAttribute="centerX" id="Uaf-Jq-rzU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="Dm5-X9-tQb" id="Ixk-RB-RBZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XYC-nD-vRv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2882.7906976744184" y="-552.36051502145926"/>
+        </scene>
         <!--Calendar View Controller-->
         <scene sceneID="kSC-OO-qtw">
             <objects>

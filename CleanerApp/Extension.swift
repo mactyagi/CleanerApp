@@ -363,3 +363,17 @@ extension Notification.Name{
     
 }
 
+
+extension UIViewController{
+    func showFullScreenLoader(){
+        let vc = UIStoryboard.main.instantiateViewController(identifier: LoaderViewController.identifier) as! LoaderViewController
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+    }
+    
+    func hideFullScreenLoader(){
+        if let viewControllerToDismiss = self.presentedViewController as? LoaderViewController {
+            viewControllerToDismiss.dismiss(animated: true, completion: nil)
+        }
+    }
+}

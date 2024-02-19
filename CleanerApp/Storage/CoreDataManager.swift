@@ -12,8 +12,8 @@ class CoreDataManager{
     static let shared = CoreDataManager()
     private init() {}
     static let customContext = shared.persistentContainer.newBackgroundContext()
-    static let secondCustomContext = shared.persistentContainer.newBackgroundContext()
-    static let mainContext = shared.persistentContainer.viewContext
+//    static let secondCustomContext = shared.persistentContainer.newBackgroundContext()
+//    static let mainContext = shared.persistentContainer.viewContext
     
     lazy var persistentContainer : NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CleanerApp")
@@ -121,9 +121,9 @@ class CoreDataManager{
                 context.delete(assetToDlete)
                 do {
                     try context.save()
-                    print("Object deleted successfully.")
+                    print("** Object deleted successfully.")
                 } catch {
-                    print("Error deleting object: \(error)")
+                    print("** Error deleting object: \(error)")
                     logError(error: error as NSError)
                 }
             }
