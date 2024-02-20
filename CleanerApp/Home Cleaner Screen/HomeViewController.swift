@@ -199,7 +199,8 @@ class HomeViewController: UIViewController {
     @objc func contactViewTapped(){
         logEvent(Event.HomeScreen.tapContacts.rawValue, parameter: nil)
         let vc = ComingSoonViewController.customInit()
-        navigationController?.pushViewController(vc, animated: true)
+        let contactVC = OrganizeContactsViewController.customInit()
+        navigationController?.pushViewController(contactVC, animated: true)
     }
     
     @objc func smartCleaningViewTapped(){

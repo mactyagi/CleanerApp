@@ -59,6 +59,7 @@
 		327C25F12B79509100EA0E36 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25F02B79509100EA0E36 /* FirebaseRemoteConfigSwift */; };
 		327C25F32B79509100EA0E36 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25F22B79509100EA0E36 /* FirebaseStorage */; };
 		327C25F52B79509100EA0E36 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25F42B79509100EA0E36 /* FirebaseStorageCombine-Community */; };
+		328A5D562B841A2C005B041A /* OrganizeContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */; };
 		328BFECB2B823F100007C1AE /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328BFECA2B823F100007C1AE /* LaunchViewController.swift */; };
 		328BFECD2B83324C0007C1AE /* LoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328BFECC2B83324C0007C1AE /* LoaderViewController.swift */; };
 		328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */; };
@@ -124,6 +125,7 @@
 		32682CB12B36D7CA00B9B7BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		327474C22B7AB8420034A587 /* EventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsHandler.swift; sourceTree = "<group>"; };
 		327C25BD2B794F8C00EA0E36 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizeContactsViewController.swift; sourceTree = "<group>"; };
 		328BFECA2B823F100007C1AE /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		328BFECC2B83324C0007C1AE /* LoaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderViewController.swift; sourceTree = "<group>"; };
 		328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		32682CB32B36D7D300B9B7BD /* Home Cleaner Screen */ = {
 			isa = PBXGroup;
 			children = (
+				326709532B375D11003515D4 /* DeviceInfoManager.swift */,
 				32682CB12B36D7CA00B9B7BD /* HomeViewController.swift */,
 				326709512B374ECC003515D4 /* HomeViewModel.swift */,
 			);
@@ -367,13 +370,13 @@
 				32E2E0D62AF80039009CA92E /* AppDelegate.swift */,
 				32E2E0D82AF80039009CA92E /* SceneDelegate.swift */,
 				324A76BB2AFB243F00EE5AD5 /* Extension.swift */,
-				326709532B375D11003515D4 /* DeviceInfoManager.swift */,
-				328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */,
 				327474C22B7AB8420034A587 /* EventsHandler.swift */,
-				32A2D08C2B3D339600C27BA0 /* Storage */,
 				32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */,
-				32BD2A792B483B6E0039E85E /* BaseScreen */,
 				32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */,
+				328D89792B6B8708005E95A3 /* ComingSoonViewController.swift */,
+				328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */,
+				32A2D08C2B3D339600C27BA0 /* Storage */,
+				32BD2A792B483B6E0039E85E /* BaseScreen */,
 				32BD2A732B483A040039E85E /* CommonCells */,
 				32BD2A802B493E020039E85E /* Media Screen */,
 				32682CB32B36D7D300B9B7BD /* Home Cleaner Screen */,
@@ -552,6 +555,7 @@
 				32682CB22B36D7CA00B9B7BD /* HomeViewController.swift in Sources */,
 				32BD2A852B493E2F0039E85E /* MediaCollectionViewCell.swift in Sources */,
 				32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */,
+				328A5D562B841A2C005B041A /* OrganizeContactsViewController.swift in Sources */,
 				327474C32B7AB8420034A587 /* EventsHandler.swift in Sources */,
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
