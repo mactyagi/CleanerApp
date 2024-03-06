@@ -37,6 +37,8 @@
 		32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32682CAD2B36D12C00B9B7BD /* IconView.xib */; };
 		32682CB02B36D17800B9B7BD /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CAF2B36D17800B9B7BD /* IconView.swift */; };
 		32682CB22B36D7CA00B9B7BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32682CB12B36D7CA00B9B7BD /* HomeViewController.swift */; };
+		326BF4BA2B9833A9003D8427 /* IncompleteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326BF4B92B9833A9003D8427 /* IncompleteContactViewController.swift */; };
+		326BF4BC2B9835B0003D8427 /* IncompleteContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326BF4BB2B9835B0003D8427 /* IncompleteContactViewModel.swift */; };
 		327474C32B7AB8420034A587 /* EventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327474C22B7AB8420034A587 /* EventsHandler.swift */; };
 		327C25BE2B794F8C00EA0E36 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 327C25BD2B794F8C00EA0E36 /* GoogleService-Info.plist */; };
 		327C25C12B79509100EA0E36 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25C02B79509100EA0E36 /* FirebaseAnalytics */; };
@@ -137,6 +139,8 @@
 		32682CAD2B36D12C00B9B7BD /* IconView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IconView.xib; sourceTree = "<group>"; };
 		32682CAF2B36D17800B9B7BD /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		32682CB12B36D7CA00B9B7BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		326BF4B92B9833A9003D8427 /* IncompleteContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactViewController.swift; sourceTree = "<group>"; };
+		326BF4BB2B9835B0003D8427 /* IncompleteContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactViewModel.swift; sourceTree = "<group>"; };
 		327474C22B7AB8420034A587 /* EventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsHandler.swift; sourceTree = "<group>"; };
 		327C25BD2B794F8C00EA0E36 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizeContactsViewController.swift; sourceTree = "<group>"; };
@@ -246,11 +250,9 @@
 		323A25E32B84B725006AD2FB /* OrganizeContactScreen */ = {
 			isa = PBXGroup;
 			children = (
+				326BF4B82B983363003D8427 /* Incomplete Contact Screen */,
 				328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */,
-				323A25E82B84E94E006AD2FB /* DuplicateContactsViewController.swift */,
-				323A25EE2B850173006AD2FB /* DuplicateContactsViewModel.swift */,
-				323A25EA2B84E9E5006AD2FB /* DuplicateContactTableViewCell.swift */,
-				323A25EB2B84E9E5006AD2FB /* DuplicateContactTableViewCell.xib */,
+				326BF4B72B983321003D8427 /* Duplicate Screen */,
 				323A25E42B84E69E006AD2FB /* ContactView.xib */,
 				323A25E62B84E8E4006AD2FB /* ContactView.swift */,
 				323A25E12B84A62E006AD2FB /* OrganizeContactViewModel.swift */,
@@ -278,6 +280,26 @@
 				326709512B374ECC003515D4 /* HomeViewModel.swift */,
 			);
 			path = "Home Cleaner Screen";
+			sourceTree = "<group>";
+		};
+		326BF4B72B983321003D8427 /* Duplicate Screen */ = {
+			isa = PBXGroup;
+			children = (
+				323A25E82B84E94E006AD2FB /* DuplicateContactsViewController.swift */,
+				323A25EE2B850173006AD2FB /* DuplicateContactsViewModel.swift */,
+				323A25EA2B84E9E5006AD2FB /* DuplicateContactTableViewCell.swift */,
+				323A25EB2B84E9E5006AD2FB /* DuplicateContactTableViewCell.xib */,
+			);
+			path = "Duplicate Screen";
+			sourceTree = "<group>";
+		};
+		326BF4B82B983363003D8427 /* Incomplete Contact Screen */ = {
+			isa = PBXGroup;
+			children = (
+				326BF4B92B9833A9003D8427 /* IncompleteContactViewController.swift */,
+				326BF4BB2B9835B0003D8427 /* IncompleteContactViewModel.swift */,
+			);
+			path = "Incomplete Contact Screen";
 			sourceTree = "<group>";
 		};
 		32A2D08C2B3D339600C27BA0 /* Storage */ = {
@@ -589,10 +611,12 @@
 				32BD2A852B493E2F0039E85E /* MediaCollectionViewCell.swift in Sources */,
 				32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */,
 				328A5D562B841A2C005B041A /* OrganizeContactsViewController.swift in Sources */,
+				326BF4BC2B9835B0003D8427 /* IncompleteContactViewModel.swift in Sources */,
 				327474C32B7AB8420034A587 /* EventsHandler.swift in Sources */,
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
+				326BF4BA2B9833A9003D8427 /* IncompleteContactViewController.swift in Sources */,
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
 				324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */,
 				32603A972B3A962100154775 /* ReminderTableViewCell.swift in Sources */,

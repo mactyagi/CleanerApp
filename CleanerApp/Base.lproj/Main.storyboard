@@ -657,20 +657,65 @@
             </objects>
             <point key="canvasLocation" x="-1737.2093023255813" y="124.89270386266095"/>
         </scene>
-        <!--View Controller-->
+        <!--Incomplete Contact View Controller-->
         <scene sceneID="W5x-CC-ndd">
             <objects>
-                <viewController id="dMW-Wi-dh8" sceneMemberID="viewController">
+                <viewController id="dMW-Wi-dh8" customClass="IncompleteContactViewController" customModule="CleanerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1dd-g7-ROK">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SSX-41-YM6">
+                                <rect key="frame" x="0.0" y="59" width="430" height="839"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6QK-Jk-Bvh">
+                                <rect key="frame" x="0.0" y="798" width="430" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nnb-w9-TTi">
+                                        <rect key="frame" x="40" y="30" width="350" height="50"/>
+                                        <color key="backgroundColor" name="darkBlueColor"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="25"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Delete Selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteButtonPressed:" destination="dMW-Wi-dh8" eventType="touchUpInside" id="MhS-b9-G5H"/>
+                                            <action selector="deleteButtonPressed:" destination="PBn-0h-nEn" eventType="touchUpInside" id="OHg-B0-GWr"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Nnb-w9-TTi" secondAttribute="bottom" constant="10" id="1z5-Yi-9wn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nnb-w9-TTi" secondAttribute="trailing" constant="40" id="GOY-AW-5yJ"/>
+                                    <constraint firstAttribute="height" constant="90" id="JQg-rk-NHf"/>
+                                    <constraint firstItem="Nnb-w9-TTi" firstAttribute="leading" secondItem="6QK-Jk-Bvh" secondAttribute="leading" constant="40" id="yjB-5W-G4I"/>
+                                    <constraint firstItem="Nnb-w9-TTi" firstAttribute="top" secondItem="6QK-Jk-Bvh" secondAttribute="top" constant="30" id="zIj-U3-R91"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="CLG-PD-j7J"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="SSX-41-YM6" firstAttribute="top" secondItem="CLG-PD-j7J" secondAttribute="top" id="5s7-CU-0Ox"/>
+                            <constraint firstItem="CLG-PD-j7J" firstAttribute="bottom" secondItem="SSX-41-YM6" secondAttribute="bottom" id="DCB-5I-J76"/>
+                            <constraint firstItem="SSX-41-YM6" firstAttribute="leading" secondItem="CLG-PD-j7J" secondAttribute="leading" id="IkH-hf-uc4"/>
+                            <constraint firstItem="6QK-Jk-Bvh" firstAttribute="trailing" secondItem="CLG-PD-j7J" secondAttribute="trailing" id="Nkn-7C-MI3"/>
+                            <constraint firstItem="CLG-PD-j7J" firstAttribute="bottom" secondItem="6QK-Jk-Bvh" secondAttribute="bottom" constant="10" id="VqM-k4-40o"/>
+                            <constraint firstItem="CLG-PD-j7J" firstAttribute="trailing" secondItem="SSX-41-YM6" secondAttribute="trailing" id="ZbQ-I0-7pE"/>
+                            <constraint firstItem="6QK-Jk-Bvh" firstAttribute="leading" secondItem="CLG-PD-j7J" secondAttribute="leading" id="guO-4C-UPy"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="deleteButton" destination="Nnb-w9-TTi" id="rKK-fl-czd"/>
+                        <outlet property="tableView" destination="SSX-41-YM6" id="Wxs-Vu-zKL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCq-nx-sjb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-991" y="120"/>
+            <point key="canvasLocation" x="-1044" y="125"/>
         </scene>
         <!--Launch View Controller-->
         <scene sceneID="mfF-7s-DcM">
