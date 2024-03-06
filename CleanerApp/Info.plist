@@ -8,6 +8,8 @@
 	<string>We need access to your Reminder to fetch events.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>We need access to your calendar to fetch events.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>We need access to your Contacts to fetch Contacts.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>We need access to your calendar to fetch events.</string>
 	<key>NSRemindersFullAccessUsageDescription</key>

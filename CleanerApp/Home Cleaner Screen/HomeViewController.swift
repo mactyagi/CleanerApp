@@ -9,6 +9,7 @@ import UIKit
 import Combine
 import EventKit
 import Firebase
+import Contacts
 class HomeViewController: UIViewController {
 
     //MARK: - IBOutlets
@@ -63,7 +64,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationAndTabBar(isScreenVisible: true)
-        viewModel.updateData(eventStore: EKEventStore())
+        viewModel.updateData()
         NotificationCenter.default.addObserver(self, selector: #selector(progressFractionCompleted(notification:)), name: Notification.Name.updateData, object: nil)
   
     }
@@ -197,10 +198,19 @@ class HomeViewController: UIViewController {
     }
     
     @objc func contactViewTapped(){
+        let store = CNContactStore()
         logEvent(Event.HomeScreen.tapContacts.rawValue, parameter: nil)
-        let vc = ComingSoonViewController.customInit()
-        let contactVC = OrganizeContactsViewController.customInit()
-        navigationController?.pushViewController(contactVC, animated: true)
+        store.requestAccess(for: .contacts) { granted, error in
+            DispatchQueue.main.async {
+                if granted {
+                    let vc = ComingSoonViewController.customInit()
+                    let contactVC = OrganizeContactsViewController.customInit()
+                    self.navigationController?.pushViewController(contactVC, animated: true)
+                } else {
+                    self.goToSettingAlertVC(message: "In order to find duplicate and empty contacts, the app needs an access to contacts.")
+                }
+            }
+        }
     }
     
     @objc func smartCleaningViewTapped(){
@@ -214,13 +224,13 @@ class HomeViewController: UIViewController {
         if viewModel.photosAndVideosSize != nil{
             navigationController?.pushViewController(MediaViewController.customInit(), animated: true)
         }else{
-            goToSettingAlertVCForPhotos()
+            goToSettingAlertVC(message: "Allow the app access to Photos. No files will be deleted without your permission.")
         }
         
     }
     
-    func goToSettingAlertVCForPhotos(){
-        let alertVc = UIAlertController(title: "Access Needed", message: "Allow the app access to Photos. No files will be deleted without your permission.", preferredStyle: .alert)
+    func goToSettingAlertVC(message: String){
+        let alertVc = UIAlertController(title: "Access Needed", message: message, preferredStyle: .alert)
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
         let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { action in
@@ -245,7 +255,7 @@ extension HomeViewController{
     
     func setupViewModel(){
         let deviceManager = DeviceInfoManager()
-        viewModel = HomeViewModel(deviceInfoManager: deviceManager, eventStore: EKEventStore())
+        viewModel = HomeViewModel(deviceInfoManager: deviceManager)
         setSubscribers()
     }
     
@@ -279,6 +289,17 @@ extension HomeViewController{
                     
                 }
             } .store(in: &cancelables)
+        
+        viewModel.$contactsCount.sink { [weak self] count in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                if let count{
+                    self.contactsLabel.text = "Contacts: \(count)"
+                }else{
+                    self.contactsLabel.text = "Give Access"
+                }
+            }
+        }.store(in: &cancelables)
         
         viewModel.$photosAndVideosCount.sink { [weak self] count in
             DispatchQueue.main.async {

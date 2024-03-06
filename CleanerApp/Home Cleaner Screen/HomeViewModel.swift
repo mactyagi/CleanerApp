@@ -11,12 +11,14 @@ import EventKit
 import Photos
 import UIKit
 import CoreData
+import Contacts
 
 class  HomeViewModel: NSObject {
 
     @Published var availableRAM: UInt64 = 0
     @Published var eventsCount: Int?
     @Published var reminderCount: Int?
+    @Published var contactsCount: Int?
     @Published var photosAndVideosCount:Int = 0
     @Published var photosAndVideosSize: Int64?
     @Published var totalStorage: Int64 = 0
@@ -25,12 +27,10 @@ class  HomeViewModel: NSObject {
     private let queue = DispatchQueue.global(qos: .userInteractive)
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
-    private var eventStore: EKEventStore
     let publisher = CurrentValueSubject<Double, Never>(0.0)
     
-    init(deviceInfoManager: DeviceInfoManager, eventStore: EKEventStore){
+    init(deviceInfoManager: DeviceInfoManager){
         self.deviceInfoManager = deviceInfoManager
-        self.eventStore = eventStore
         super.init()
         self.deviceInfoManager.delegate = self
     }
@@ -46,8 +46,10 @@ class  HomeViewModel: NSObject {
         deviceInfoManager.stopRamUpdateTimer()
     }
     
-    func updateData(eventStore: EKEventStore){
-        self.eventStore = eventStore
+    func updateData(){
+        queue.async {
+            self.getContactsData()
+        }
         self.getCalendarData()
         self.getReminderData()
         self.fetchPhotoAndvideosCountAndSize()
@@ -113,6 +115,27 @@ class  HomeViewModel: NSObject {
             break
         }
     }
+    
+    private func getContactsData(){
+        
+        if CNContactStore.authorizationStatus(for: .contacts) == .authorized{
+            fetchContacts()
+        }
+    }
+    private func fetchContacts() {
+        let store = CNContactStore()
+        let request = CNContactFetchRequest(keysToFetch: [])
+        contactsCount = 0
+        do {
+            try store.enumerateContacts(with: request) { _, _ in
+                contactsCount! += 1
+                
+            }
+            print("Total Contacts Count: \(contactsCount)")
+        } catch {
+            print("Error fetching contacts count: \(error.localizedDescription)")
+        }
+    }
 
     
    private func getCalendarData() {
@@ -140,7 +163,9 @@ class  HomeViewModel: NSObject {
     
     
     private func fetchReminders(){
-        let predicate = self.eventStore.predicateForReminders(in: nil)
+        let eventStore = EKEventStore()
+        let predicate = eventStore.predicateForReminders(in: nil)
+        
         eventStore.fetchReminders(matching: predicate) { reminders in
             self.reminderCount = reminders?.count
         }
@@ -148,6 +173,7 @@ class  HomeViewModel: NSObject {
     
     
     func fetchCalendarEvents() {
+        let eventStore = EKEventStore()
         let startDate = Calendar.current.date(byAdding: .year, value: -4, to: Date())!
         let endDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate!, calendars: nil)
