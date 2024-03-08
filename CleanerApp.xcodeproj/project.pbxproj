@@ -250,12 +250,12 @@
 		323A25E32B84B725006AD2FB /* OrganizeContactScreen */ = {
 			isa = PBXGroup;
 			children = (
-				326BF4B82B983363003D8427 /* Incomplete Contact Screen */,
+				323A25E12B84A62E006AD2FB /* OrganizeContactViewModel.swift */,
 				328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */,
+				326BF4B82B983363003D8427 /* Incomplete Contact Screen */,
 				326BF4B72B983321003D8427 /* Duplicate Screen */,
 				323A25E42B84E69E006AD2FB /* ContactView.xib */,
 				323A25E62B84E8E4006AD2FB /* ContactView.swift */,
-				323A25E12B84A62E006AD2FB /* OrganizeContactViewModel.swift */,
 			);
 			path = OrganizeContactScreen;
 			sourceTree = "<group>";

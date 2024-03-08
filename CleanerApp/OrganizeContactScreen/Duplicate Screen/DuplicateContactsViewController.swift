@@ -23,6 +23,7 @@ class DuplicateContactsViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupViewModel()
+        configureTitle()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,6 +43,10 @@ class DuplicateContactsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "DuplicateContactTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+    }
+    
+    func configureTitle(){
+        title = "Duplicate Contacts"
     }
     
     func setupViewModel(){

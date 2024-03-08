@@ -120,6 +120,7 @@ class CalendarViewController: UIViewController {
         titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 17.0) // Adjust the font size as needed
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     @objc func rightBarButtonPressed(){
