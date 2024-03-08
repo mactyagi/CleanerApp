@@ -78,6 +78,9 @@ class MediaViewController: UIViewController {
     
     func setupViews(){
         fileAndSizeLabel.superview?.makeCornerRadiusSixtenthOfHeightOrWidth()
+        let swipeGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+            swipeGestureRecognizer.edges = .left // Specify the edge for swipe (e.g., left edge)
+            view.addGestureRecognizer(swipeGestureRecognizer)
     }
     
     func setupViewModel(){
@@ -118,6 +121,12 @@ class MediaViewController: UIViewController {
         collectionView.register(UINib(nibName: BaseHeaderCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BaseHeaderCollectionReusableView.identifier)
         
         collectionView.register(UINib(nibName: MediaHeaderView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MediaHeaderView.identifier)
+    }
+    
+    @objc func handleSwipeGesture(_ gesture: UIScreenEdgePanGestureRecognizer) {
+        if gesture.state == .began {
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
 

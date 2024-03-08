@@ -18,6 +18,11 @@ class BaseViewController: UIViewController {
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var deleteButtonSuperView: UIView!
     @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet weak var selectedLabel: UILabel!
+    
+    @IBOutlet weak var deleteSubtitleLabel: UILabel!
+    @IBOutlet weak var deleteTitleLabel: UILabel!
+    @IBOutlet weak var deleteView: UIView!
     
     //MARK: - variables and properties
     var groupType: PHAssetGroupType!
@@ -150,6 +155,7 @@ class BaseViewController: UIViewController {
         feedbackGenerator?.prepare()
         titleLabel.text = type.rawValue
         setupDeleteButtonView()
+        deleteView.makeCornerRadiusFourthOfHeightOrWidth()
     }
     
     
@@ -208,9 +214,15 @@ class BaseViewController: UIViewController {
     func setSubscribers(){
         viewModel.$selectedIndexPath.sink(receiveValue: { [weak self] indexPath in
             DispatchQueue.main.async {
-                self?.deleteButton.isEnabled = !indexPath.isEmpty
-                self?.deleteButton.backgroundColor = indexPath.isEmpty ? .darkGray3 : .darkBlue
-                self?.collectionView.reloadData()
+                guard let self else { return }
+                self.deleteButton.isEnabled = !indexPath.isEmpty
+                self.deleteView.backgroundColor = indexPath.isEmpty ? .darkGray3 : .darkBlue
+                
+                let size = indexPath.reduce(Int64(0)) { $0 + self.viewModel.assetRows[$1.section][$1.row].size}
+                self.deleteSubtitleLabel.text = "Clear: \(size.formatBytes())"
+                self.deleteTitleLabel.text = "Delete \(indexPath.count) Selected"
+                
+                self.collectionView.reloadData()
             }
         })
         .store(in: &cancellables)
@@ -254,6 +266,18 @@ extension BaseViewController: UICollectionViewDataSource{
         let isSelected = viewModel.selectedIndexPath.contains(indexPath)
         cell.configureNewCell(asset: object, isSelected: isSelected)
         return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint) -> UIContextMenuConfiguration? {
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: { () -> UIViewController? in
+            let previewViewController = ImagePreviewViewController()
+            previewViewController.image = self.viewModel.assetRows[indexPath.section][indexPath.row].getPHAsset()?.getImage()
+            return previewViewController
+        }, actionProvider: nil)
+        return configuration
     }
     
     
@@ -327,5 +351,6 @@ extension BaseViewController: BaseHeaderCollectionReusableViewDelegate{
 //        collectionView.reloadSections(IndexSet(integer: section))
     }
     
-    
 }
+
+
