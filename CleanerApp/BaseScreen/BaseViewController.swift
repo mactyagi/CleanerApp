@@ -26,6 +26,7 @@ class BaseViewController: UIViewController {
     var selectionBarButtonItem: UIBarButtonItem?
     private var cancellables: Set<AnyCancellable> = []
     var viewModel: BaseViewModel!
+    var feedbackGenerator: UIImpactFeedbackGenerator?
     
 
     
@@ -145,6 +146,8 @@ class BaseViewController: UIViewController {
     }
     
     func setupViews() {
+        feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
+        feedbackGenerator?.prepare()
         titleLabel.text = type.rawValue
         setupDeleteButtonView()
     }
@@ -281,6 +284,7 @@ extension BaseViewController: UICollectionViewDelegateFlowLayout{
 
 extension BaseViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        feedbackGenerator?.impactOccurred()
         collectionView.deselectItem(at: indexPath, animated: false)
         if viewModel.selectedIndexPath.contains(indexPath){
             viewModel.selectedIndexPath.remove(indexPath)
