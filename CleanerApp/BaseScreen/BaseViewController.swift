@@ -48,6 +48,7 @@ class BaseViewController: UIViewController {
         super.viewDidAppear(animated)
         setupEventsForViewAppear()
         setupNavigationBar()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -180,6 +181,7 @@ class BaseViewController: UIViewController {
     func setupNavigationBar(){
         selectionBarButtonItem = UIBarButtonItem(title: "Deselect All", style: .plain, target: self, action: #selector(selectionButtonPressed))
         navigationItem.rightBarButtonItem = selectionBarButtonItem
+        selectionBarButtonItem?.isEnabled = !viewModel.assetRows.isEmpty
     }
 
     
@@ -221,6 +223,7 @@ class BaseViewController: UIViewController {
                 let size = indexPath.reduce(Int64(0)) { $0 + self.viewModel.assetRows[$1.section][$1.row].size}
                 self.deleteSubtitleLabel.text = "Clear: \(size.formatBytes())"
                 self.deleteTitleLabel.text = "Delete \(indexPath.count) Selected"
+                self.selectionBarButtonItem?.isEnabled = !self.viewModel.assetRows.isEmpty
                 
                 self.collectionView.reloadData()
             }
