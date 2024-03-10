@@ -56,6 +56,7 @@ class CalendarViewController: UIViewController {
         DeleteAlert()
     }
     
+  
     @IBAction func goToSettingButtonPressed(){
         logEvent(Event.CalendarScreen.goToSettingButtonPressed.rawValue, parameter: nil)
         let url = URL(string:UIApplication.openSettingsURLString)
@@ -258,7 +259,7 @@ extension CalendarViewController{
         viewModel.$isAuthorized.sink { [weak self] isAuthorized in
             DispatchQueue.main.async {
                 self?.settingView.isHidden = isAuthorized
-                self?.headerView.frame.size.height = isAuthorized ? 100 : 130
+                self?.headerView.frame.size.height = isAuthorized ? 100 : 320
                 self?.deleteButton.isHidden = !isAuthorized
                 self?.navigationItem.rightBarButtonItem?.isEnabled = isAuthorized
                 self?.tableView.reloadData()
