@@ -157,6 +157,7 @@ class BaseViewController: UIViewController {
         titleLabel.text = type.rawValue
         setupDeleteButtonView()
         deleteView.makeCornerRadiusFourthOfHeightOrWidth()
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     
