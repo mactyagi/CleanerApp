@@ -18,7 +18,7 @@ class VideoCompressorViewController: UIViewController {
     //MARK: - Variables
     var viewModel: VideoCompressViewModel!
     private var subscribers:[AnyCancellable] = []
-    
+    private var shouldReloadData = false
     //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +26,16 @@ class VideoCompressorViewController: UIViewController {
         viewModel = VideoCompressViewModel()
         setSubscribers()
         setupCollectionView()
+        viewModel.fetchData()
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchData()
+        if shouldReloadData{
+            viewModel.fetchData()
+            shouldReloadData.toggle()
+        }
         setupNavigationAndTabBar(isScreenVisible: true)
     }
     
@@ -101,6 +105,9 @@ extension VideoCompressorViewController: UICollectionViewDelegateFlowLayout{
 extension VideoCompressorViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = CompressQualitySelectionViewController.initWith(compressAsset: viewModel.compressVideoModel[indexPath.row])
+        vc.dataChangedHandler = {
+            self.shouldReloadData = true
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
 }

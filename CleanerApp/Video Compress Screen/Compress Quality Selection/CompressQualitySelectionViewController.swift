@@ -39,6 +39,7 @@ class CompressQualitySelectionViewController: UIViewController {
     var viewModel: CompressQualitySelectionViewModel!
     private var avPlayerViewController: AVPlayerViewController!
     private var cancelableSubscribers:[AnyCancellable] = []
+    var dataChangedHandler: (() -> ())?
     //MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +74,7 @@ class CompressQualitySelectionViewController: UIViewController {
     
     //MARK: - @IBAction
     @IBAction func compressButtonPressed(_ sender: UIButton) {
+        
         logEvent(Event.CompressQualityScreen.compressButtonPressed.rawValue, parameter: nil)
         
         
@@ -87,6 +89,7 @@ class CompressQualitySelectionViewController: UIViewController {
                 logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": "started"])
                 self.duringCompressUI()
             case .onSuccess(let url):
+                self.dataChangedHandler?()
                 logEvent(Event.CompressQualityScreen.compressStatus.rawValue, parameter: ["status": "Compressed"])
                 self.viewModel.saveVideoToPhotosLibrary(videoURL: url) { size, saveError in
                     if let saveError{
