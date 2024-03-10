@@ -20,6 +20,7 @@ class CompressQualitySelectionViewController: UIViewController {
     @IBOutlet weak var BeforeSizeAndNowSizeSuperView: UIView!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var CompressButton: UIButton!
+    @IBOutlet weak var stopCompressingButton: UIButton!
     @IBOutlet weak var deleteOriginalButton: UIButton!
     @IBOutlet weak var keepOriginalButton: UIButton!
     @IBOutlet weak var nowSizeLabel: UILabel!
@@ -43,10 +44,10 @@ class CompressQualitySelectionViewController: UIViewController {
     //MARK: - Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        beforeCompressUI()
         logEvent(Event.CompressQualityScreen.loaded.rawValue, parameter: nil)
         setup()
         setSubscribers()
-        beforeCompressUI()
         setupVideoPlayer(asset: viewModel.compressAsset.avAsset)
     }
     
@@ -114,6 +115,24 @@ class CompressQualitySelectionViewController: UIViewController {
         }
     }
     
+    @IBAction func stopCompressingButtonPressed(_ sender: UIButton) {
+        
+        let alertVC = UIAlertController(title: "Leave Without Saving?", message: "If you leave the app during compression, thr video won't be saved.", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let leaveAction  = UIAlertAction(title: "Leave", style: .destructive) { _ in
+            self.viewModel.compressAsset.compressor.compressionOperation.cancel = true
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        alertVC.addAction(cancelAction)
+        alertVC.addAction(leaveAction)
+        
+        self.present(alertVC, animated: true)
+        
+    }
+    
+    
     @IBAction func keepOriginalButtonPressed(_ sender: UIButton) {
         logEvent(Event.CompressQualityScreen.keepOriginalButtonPressed.rawValue, parameter: nil)
         navigationController?.popViewController(animated: true)
@@ -164,6 +183,8 @@ class CompressQualitySelectionViewController: UIViewController {
 //        blurView.addBlurEffect(style: .dark, alpha: 1)
         let selectedTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             segmentControl.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
+        
+        stopCompressingButton.tintColor = .red
     }
     
     
@@ -190,6 +211,7 @@ class CompressQualitySelectionViewController: UIViewController {
             self.lowAlphaView.isHidden = true
             self.deleteOriginalButton.isHidden = true
             self.keepOriginalButton.isHidden = true
+            self.stopCompressingButton.isHidden = true
             self.detailLabel.isHidden = true
             self.CompleteView.isHidden = true
             self.processingView.isHidden = true
@@ -207,6 +229,7 @@ class CompressQualitySelectionViewController: UIViewController {
             self.avPlayerViewController.player?.pause()
             self.deleteOriginalButton.isHidden = false
             self.deleteOriginalButton.isEnabled = false
+            self.stopCompressingButton.isHidden = false
             self.keepOriginalButton.isHidden = false
             self.keepOriginalButton.isEnabled = false
             self.detailLabel.isHidden = false
@@ -228,6 +251,7 @@ class CompressQualitySelectionViewController: UIViewController {
             self.deleteOriginalButton.isHidden = false
             self.deleteOriginalButton.isEnabled = true
             self.keepOriginalButton.isHidden = false
+            self.stopCompressingButton.isHidden = true
             self.keepOriginalButton.isEnabled = true
             self.detailLabel.isHidden = false
             self.detailLabel.text = "What do you want to do with the original video?"

@@ -41,11 +41,12 @@ public struct CompressionError: LocalizedError {
 }
 
 @available(iOS 14.0, *)
-public struct LightCompressor {
+public class LightCompressor {
     var quality: VideoQuality
     var destinationURL: URL?
     var asset: AVAsset
     var fileType: AVFileType = .mov
+    var compressionOperation = Compression()
     public init(quality: VideoQuality, asset: AVAsset) {
         self.quality = quality
         self.asset = asset
@@ -87,7 +88,7 @@ public struct LightCompressor {
                               progressQueue: DispatchQueue = .main,
                               progressHandler: ((Progress) -> ())?,
                               completion: @escaping (CompressionResult) -> ()) -> Compression {
-        let compressionOperation = Compression()
+                                  self.compressionOperation = Compression()
         
         guard let destinationURL else {
             completion(CompressionResult.onFailure( .init(title: "Destination URL is must")))
@@ -176,7 +177,7 @@ public struct LightCompressor {
               while videoWriterInput.isReadyForMoreMediaData {
                   
                   // Observe any cancellation
-                  if compressionOperation.cancel {
+                  if self.compressionOperation.cancel {
                       videoReader?.cancelReading()
                       videoWriter?.cancelWriting()
                       completion(.onCancelled)
