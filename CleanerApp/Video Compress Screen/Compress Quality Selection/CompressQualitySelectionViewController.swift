@@ -48,17 +48,21 @@ class CompressQualitySelectionViewController: UIViewController {
         logEvent(Event.CompressQualityScreen.loaded.rawValue, parameter: nil)
         setup()
         setSubscribers()
-        setupVideoPlayer(asset: viewModel.compressAsset.avAsset)
+        
     }
+    
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         logEvent(Event.CompressQualityScreen.appear.rawValue, parameter: nil)
+        setupVideoPlayer(asset: viewModel.compressAsset.avAsset)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        avPlayerViewController.player?.pause()
+        avPlayerViewController = nil
         logEvent(Event.CompressQualityScreen.disappear.rawValue, parameter: nil)
     }
     
@@ -191,18 +195,20 @@ class CompressQualitySelectionViewController: UIViewController {
     
     private func setupVideoPlayer(asset: AVAsset) {
         // configure player
-        avPlayerViewController = AVPlayerViewController()
-        let player = AVPlayer(playerItem: AVPlayerItem(asset: asset))
-        player.externalPlaybackVideoGravity = .resizeAspectFill
-        avPlayerViewController.player = player
-        addChild(avPlayerViewController)
-        avPlayerViewController.view.backgroundColor = UIColor.primaryCell
-        avPlayerViewController.view.layer.cornerRadius = playerView.layer.cornerRadius
-        avPlayerViewController.contentOverlayView?.layer.cornerRadius = 20
-        playerView.addSubview(avPlayerViewController.view)
-        avPlayerViewController.view.frame = CGRect(x: 0, y: 0, width: playerView.frame.width, height: playerView.frame.height)
-        avPlayerViewController.didMove(toParent: self)
-        avPlayerViewController.player?.play()
+        if avPlayerViewController == nil{
+            avPlayerViewController = AVPlayerViewController()
+            let player = AVPlayer(playerItem: AVPlayerItem(asset: asset))
+            player.externalPlaybackVideoGravity = .resizeAspectFill
+            avPlayerViewController.player = player
+            addChild(avPlayerViewController)
+            avPlayerViewController.view.backgroundColor = UIColor.primaryCell
+            avPlayerViewController.view.layer.cornerRadius = playerView.layer.cornerRadius
+            avPlayerViewController.contentOverlayView?.layer.cornerRadius = 20
+            playerView.addSubview(avPlayerViewController.view)
+            avPlayerViewController.view.frame = CGRect(x: 0, y: 0, width: playerView.frame.width, height: playerView.frame.height)
+            avPlayerViewController.didMove(toParent: self)
+            avPlayerViewController.player?.play()
+        }
     }
     
     
