@@ -756,8 +756,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <tabBarAppearance key="standardAppearance"/>
-                        <tabBarAppearance key="scrollEdgeAppearance"/>
                     </tabBar>
                     <connections>
                         <segue destination="eRW-Z3-Idj" kind="relationship" relationship="viewControllers" id="Eja-1C-h6U"/>
@@ -920,7 +918,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Woj-Na-QJw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5029" y="-174"/>
+            <point key="canvasLocation" x="-5148" y="-110"/>
         </scene>
         <!--Base View Controller-->
         <scene sceneID="K4h-nW-M4l">
@@ -1807,7 +1805,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kmM-3D-a2a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5094" y="-948"/>
+            <point key="canvasLocation" x="-5148" y="-877"/>
         </scene>
         <!--Home-->
         <scene sceneID="4QV-f7-r8T">
@@ -1826,7 +1824,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rmb-o6-5ir" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4148" y="-948"/>
+            <point key="canvasLocation" x="-4178" y="-877"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="n2h-3N-Yrg">

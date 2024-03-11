@@ -31,6 +31,7 @@ class MediaViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: false)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         NotificationCenter.default.addObserver(self, selector: #selector(progressFractionCompleted(notification:)), name: Notification.Name.updateData, object: nil)
         viewModel.fetchAllMediaType()

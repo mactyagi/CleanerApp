@@ -16,6 +16,11 @@ class ComingSoonViewController: UIViewController {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: false)
+    }
+    
     @IBAction func backButtonPressed(){
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true)

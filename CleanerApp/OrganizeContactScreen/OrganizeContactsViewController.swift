@@ -27,6 +27,12 @@ class OrganizeContactsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         setupViewModel()
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: false)
+    }
 
     
     //MARK: - Static Function

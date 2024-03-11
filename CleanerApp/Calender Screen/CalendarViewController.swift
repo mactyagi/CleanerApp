@@ -40,6 +40,11 @@ class CalendarViewController: UIViewController {
         logEvent(Event.CalendarScreen.appear.rawValue, parameter: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: false)
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         logEvent(Event.CalendarScreen.disappear.rawValue, parameter: nil)

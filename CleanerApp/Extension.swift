@@ -376,4 +376,9 @@ extension UIViewController{
             viewControllerToDismiss.dismiss(animated: true, completion: nil)
         }
     }
+    
+    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
+        navigationController?.navigationBar.isHidden = flag
+        tabBarController?.tabBar.isHidden = !flag
+    }
 }

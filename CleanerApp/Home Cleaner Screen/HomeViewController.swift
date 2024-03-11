@@ -72,14 +72,14 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         logEvent(Event.HomeScreen.appear.rawValue, parameter: nil)
-        setupNavigationAndTabBar(isScreenVisible: true)
+//        setupNavigationAndTabBar(isScreenVisible: true)
         startFetchingAnimation()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel.stopUpdatingDeviceInfo()
-        setupNavigationAndTabBar(isScreenVisible: false)
+//        setupNavigationAndTabBar(isScreenVisible: false)
 //        stopFetchingAnimation()
     }
     
@@ -99,10 +99,6 @@ class HomeViewController: UIViewController {
     
     
     //MARK: - setup Functions
-    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
-        navigationController?.navigationBar.isHidden = flag
-        self.tabBarController?.tabBar.isHidden = !flag
-    }
     
     
     @objc func progressFractionCompleted(notification: Notification) {

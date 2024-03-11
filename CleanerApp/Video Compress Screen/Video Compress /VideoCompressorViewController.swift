@@ -19,6 +19,7 @@ class VideoCompressorViewController: UIViewController {
     var viewModel: VideoCompressViewModel!
     private var subscribers:[AnyCancellable] = []
     private var shouldReloadData = false
+    
     //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +33,17 @@ class VideoCompressorViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationAndTabBar(isScreenVisible: true)
         if shouldReloadData{
             viewModel.fetchData()
             shouldReloadData.toggle()
         }
-        setupNavigationAndTabBar(isScreenVisible: true)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         logEvent(Event.CompressorScreen.appear.rawValue, parameter: nil)
-        setupNavigationAndTabBar(isScreenVisible: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,10 +66,7 @@ class VideoCompressorViewController: UIViewController {
     }
     
     //MARK: - Functions
-    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
-        navigationController?.navigationBar.isHidden = flag
-        self.tabBarController?.tabBar.isHidden = !flag
-    }
+    
     func setupCollectionView(){
         collectionView.register(UINib(nibName: CompressCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: CompressCollectionViewCell.identifier)
         collectionView.dataSource = self
