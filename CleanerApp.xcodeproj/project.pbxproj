@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		04284B082BF4890B0078B939 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04284B072BF4890B0078B939 /* SettingViewController.swift */; };
+		07350E832BF4A8A6005DD945 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */; };
+		07350E842BF4A8A6005DD945 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */; };
+		079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */; };
 		3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2682B38A605003DB928 /* CalendarViewController.swift */; };
 		3201A26E2B38A78F003DB928 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */; };
 		3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26F2B38B023003DB928 /* CalendarViewModel.swift */; };
@@ -112,6 +115,9 @@
 
 /* Begin PBXFileReference section */
 		04284B072BF4890B0078B939 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
+		079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		3201A2682B38A605003DB928 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		3201A26F2B38B023003DB928 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
@@ -231,8 +237,19 @@
 			isa = PBXGroup;
 			children = (
 				04284B072BF4890B0078B939 /* SettingViewController.swift */,
+				07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */,
+				07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */,
+				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
 			);
 			path = "Setting Screen";
+			sourceTree = "<group>";
+		};
+		079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */,
+			);
+			path = PrivacyPolicyViewController;
 			sourceTree = "<group>";
 		};
 		3201A26A2B38A739003DB928 /* Calender Screen */ = {
@@ -557,6 +574,7 @@
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32BD2A862B493E2F0039E85E /* MediaCollectionViewCell.xib in Resources */,
 				323A25ED2B84E9E5006AD2FB /* DuplicateContactTableViewCell.xib in Resources */,
+				07350E842BF4A8A6005DD945 /* SettingTableViewCell.xib in Resources */,
 				32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */,
 				323A25E52B84E69E006AD2FB /* ContactView.xib in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
@@ -630,6 +648,7 @@
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
+				079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */,
 				326BF4BA2B9833A9003D8427 /* IncompleteContactViewController.swift in Sources */,
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
 				324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */,
@@ -641,6 +660,7 @@
 				32B3C1F72B497355000B0727 /* MediaModel.swift in Sources */,
 				32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */,
 				324943452B680C700035FE64 /* CircularProgressView.swift in Sources */,
+				07350E832BF4A8A6005DD945 /* SettingTableViewCell.swift in Sources */,
 				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
 				32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */,
 				323A25E92B84E94E006AD2FB /* DuplicateContactsViewController.swift in Sources */,
