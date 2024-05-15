@@ -4,16 +4,10 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>NSRemindersUsageDescription</key>
-	<string>We need access to your Reminder to fetch events.</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>We need access to your calendar to fetch events.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>We need access to your Contacts to fetch Contacts.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>We need access to your calendar to fetch events.</string>
+	<string>Access is needed to search for old calendar events and remove them.</string>
 	<key>NSRemindersFullAccessUsageDescription</key>
-	<string>We need access to your Reminder to fetch events.</string>
+	<string>Access is needed to search for old reminder events and remove them.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
