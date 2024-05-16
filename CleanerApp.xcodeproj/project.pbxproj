@@ -841,7 +841,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to fetch events.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App need to use the camera";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Space cleaner needs access to your contacts to find and merge duplicate contacts.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Space cleaner needs access to your contacts to find and merge duplicate contacts. Your contacts will not be stored or used on any of our servers and will not be shared with third parties.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App need to use microphone";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access is needed to search for similar and duplicate photos. Your photos will NOT be stored or used on any of our servers and will not be shared with third parties.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Access is needed to search for old reminder events and remove them.";
@@ -883,7 +883,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to fetch events.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App need to use the camera";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Space cleaner needs access to your contacts to find and merge duplicate contacts.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Space cleaner needs access to your contacts to find and merge duplicate contacts. Your contacts will not be stored or used on any of our servers and will not be shared with third parties.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App need to use microphone";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access is needed to search for similar and duplicate photos. Your photos will NOT be stored or used on any of our servers and will not be shared with third parties.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Access is needed to search for old reminder events and remove them.";
