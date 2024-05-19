@@ -24,6 +24,7 @@ class CalendarViewController: UIViewController {
     var viewModel: CalendarViewModel!
     private var cancelables: Set<AnyCancellable> = []
     private var rightBarButtonItem: UIBarButtonItem!
+    private var deleteButtonGradientLayer = CAGradientLayer()
     //MARK: - lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,14 @@ class CalendarViewController: UIViewController {
         logEvent(Event.CalendarScreen.disappear.rawValue, parameter: nil)
     }
     
-    
+    //MARK: - override functions
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+                                   UIColor.systemBackground.withAlphaComponent(1).cgColor]
+        }
+    }
+
     //MARK: - static function and properties
     static func customInit() -> Self{
         UIStoryboard.main.instantiateViewController(identifier: "CalendarViewController") as! Self
@@ -80,22 +88,20 @@ class CalendarViewController: UIViewController {
     }
     func setupViews(){
         deleteButton.makeCornerRadiusCircle()
-        
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.colors =  [
-            UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
-            UIColor.systemBackground.withAlphaComponent(1).cgColor
-        ]
-        gradientLayer.locations = [0, 0.5]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
 
-        gradientLayer.frame = deleteButtonSuperView.bounds
+        
+        deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+                                            UIColor.systemBackground.withAlphaComponent(1).cgColor]
+                 
+        deleteButtonGradientLayer.locations = [0, 0.5]
+        deleteButtonGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        deleteButtonGradientLayer.endPoint = CGPoint(x: 0, y: 1)
+
+        deleteButtonGradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: deleteButtonSuperView.bounds.height)
 
         // Add the gradient layer to the view's layer
-        deleteButtonSuperView.layer.insertSublayer(gradientLayer, at: 0)
-        
+        deleteButtonSuperView.layer.insertSublayer(deleteButtonGradientLayer, at: 0)
+
     }
     func setupTableView(){
         tableView.dataSource = self

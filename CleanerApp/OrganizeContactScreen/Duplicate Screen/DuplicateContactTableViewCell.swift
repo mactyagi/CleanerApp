@@ -66,6 +66,7 @@ class DuplicateContactTableViewCell: UITableViewCell{
     }
     
     func setupStackView(duplicateContacts: [CustomCNContact]){
+        duplicateCount.text = "Duplicate Count: \(duplicateContacts.count)"
         stackView.arrangedSubviews.forEach { stackView.removeArrangedSubview($0)}
         isAllselected = true
         shouldEnableMergeButton = duplicateContacts.filter({ $0.isSelected}).count > 1

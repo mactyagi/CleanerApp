@@ -32,7 +32,8 @@ class BaseViewController: UIViewController {
     private var cancellables: Set<AnyCancellable> = []
     var viewModel: BaseViewModel!
     var feedbackGenerator: UIImpactFeedbackGenerator?
-    
+    let deleteButtonGradientLayer = CAGradientLayer()
+
 
     
     //MARK: - Life Cycle
@@ -56,7 +57,14 @@ class BaseViewController: UIViewController {
         setupEventsForViewDisappear()
     }
     
-    
+    //MARK: - Override functions
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+                                   UIColor.systemBackground.withAlphaComponent(1).cgColor]
+        }
+    }
+
     //MARK: - Static and Class Functions/Properties
     class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType, type: MediaCellType) -> BaseViewController{
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseViewController") as! BaseViewController
@@ -189,21 +197,17 @@ class BaseViewController: UIViewController {
     
     func setupDeleteButtonView(){
         deleteButton.makeCornerRadiusCircle()
-        
-        let gradientLayer = CAGradientLayer()
-        
-        gradientLayer.colors =  [
-            UIColor.veryLightBlueAndDarkGray.withAlphaComponent(0).cgColor,
-            UIColor.veryLightBlueAndDarkGray.withAlphaComponent(1).cgColor
-        ]
-        gradientLayer.locations = [0, 0.6]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
 
-        gradientLayer.frame = deleteButtonSuperView.bounds
+        deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+                                            UIColor.systemBackground.withAlphaComponent(1).cgColor]
+        deleteButtonGradientLayer.locations = [0, 0.5]
+        deleteButtonGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        deleteButtonGradientLayer.endPoint = CGPoint(x: 0, y: 1)
+
+        deleteButtonGradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: deleteButtonSuperView.bounds.height)
 
         // Add the gradient layer to the view's layer
-        deleteButtonSuperView.layer.insertSublayer(gradientLayer, at: 0)
+        deleteButtonSuperView.layer.insertSublayer(deleteButtonGradientLayer, at: 0)
         
     }
  
