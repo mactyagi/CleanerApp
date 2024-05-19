@@ -8,7 +8,6 @@
 import Foundation
 import Firebase
 
-
 enum Event: String{
     case appLaunched = "app_launched"
     case appEnterBackground = "app_enter_background"
@@ -16,119 +15,130 @@ enum Event: String{
     case appTerminated = "app_terminated"
     
     enum HomeScreen: String{
-        case loaded = "home_screen_loaded"
-        case appear = "home_screen_appear"
-        case disAppear = "home_screen_disappear"
-        case tapPhotos = "home_screen_tap_photos"
-        case tapSmartCleaning = "home_screen_tap_smart_cleaning"
-        case tapCalendar = "home_screen_tap_calendar"
-        case tapContacts = "home_screen_tap_contacts"
-        case storageInfo = "home_screen_storage_info"
+//        hs -> Home Screen
+        case loaded = "hs_loaded"
+        case appear = "hs_appear"
+        case disAppear = "hs_disappear"
+        case tapPhotos = "hs_tap_photos"
+        case tapSmartCleaning = "hs_tap_smart_cleaning"
+        case tapCalendar = "hs_tap_calendar"
+        case tapContacts = "hs_tap_contacts"
+        case storageInfo = "hs_storage_info"
     }
     
     enum CompressorScreen: String{
-        case loaded = "compressor_screen_loaded"
-        case appear = "compressor_screen_appear"
-        case disappear = "compressor_screen_disappear"
-        case videoCount = "compressor_screen_video_count"
-        case loadingStatus = "compressor_screen_loading_status"
+        // cps -> Compress Screen
+        case loaded = "cps_loaded"
+        case appear = "cps_appear"
+        case disappear = "cps_disappear"
+        case videoCount = "cps_video_count"
+        case loadingStatus = "cps_loading_status"
     }
     
     
     enum CompressQualityScreen: String{
-        case loaded = "compressor_quality_screen_loaded"
-        case appear = "compressor_quality_screen_appear"
-        case disappear = "compressor_quality_screen_disappear"
-        case compressButtonPressed = "compressor_quality_screen_compress__pressed"
-        case keepOriginalButtonPressed = "compressor_quality_screen_keep_original_pressed"
-        case deleteOriginalButtonPressed = "compressor_quality_screen_delete_original_pressed"
-        case compressStatus = "compressor_quality_screen_compress_Status"
-        case savePhotoToGalleryStatus = "compressor_quality_screen_save_photo_status"
+        //cpqs -> Compression Quality Screen
+        case loaded = "cpqs_loaded"
+        case appear = "cpqs_appear"
+        case disappear = "cpqs_disappear"
+        case compressButtonPressed = "cpqs_compress_pressed"
+        case keepOriginalButtonPressed = "cpqs_keep_original_pressed"
+        case deleteOriginalButtonPressed = "cpqs_delete_original_pressed"
+        case compressStatus = "ccpqs_compress_Status"
+        case savePhotoToGalleryStatus = "cpqs_save_photo_status"
     }
     
     enum MediaScreen: String{
-        case loaded = "media_screen_loaded"
-        case appear = "media_screen_appear"
-        case disappear = "media_screen_disappear"
-        case fileToDelete = "media_screen_file_to_delete"
-        case duplicatePhotosCount = "media_screen_duplicate_photos_count"
-        case similarPhotosCount = "media_screen_similar_photos_count"
-        case otherPhotosCount = "media_screen_other_photos_count"
-        case duplicateScreenshotCount = "media_screen_duplicate_screenshot_count"
-        case similarScreenshotCount = "media_screen_similar_screenshot_count"
-        case otherScreenshotCount = "media_screen_other_screenshot_count"
+//        ms -> media screen
+        case loaded = "ms_loaded"
+        case appear = "ms_appear"
+        case disappear = "ms_disappear"
+        case fileToDelete = "ms_file_to_delete"
+        case duplicatePhotosCount = "ms_duplicate_photos_count"
+        case similarPhotosCount = "ms_similar_photos_count"
+        case otherPhotosCount = "ms_other_photos_count"
+        case duplicateScreenshotCount = "ms_duplicate_screenshot_count"
+        case similarScreenshotCount = "ms_similar_screenshot_count"
+        case otherScreenshotCount = "ms_other_screenshot_count"
     }
     
     enum CalendarScreen: String{
-        case loaded = "calendar_screen_loaded"
-        case appear = "calendar_screen_appear"
-        case disappear = "calendar_screen_disappear"
-        case deleteButtonPressed = "calendar_screen_delete_botton_pressed"
-        case currentSegment = "calendar_screen_current_segment"
-        case eventCount = "calendar_screen_event_count"
-        case reminderCount = "calendar_screen_reminder_count"
-        case calendarAuthorization = "calendar_screen_calendar_authorization_status"
-        case reminderAuthorization = "calendar_screen_reminder_authorization_status"
-        case goToSettingButtonPressed = "calendar_screen_go_to_setting_button_pressed"
-        case eventDeleted = "calendar_screen_event_deleted"
-        case reminderDeleted = "calendar_screen_reminder_deleted"
-        case reminderDeleteCancel = "calender_screen_reminder_delete_cancel"
-        case eventDeleteCancel = "calender_screen_event_delete_cancel"
+        //cs -> calendar Screen
+        case loaded = "cs_loaded"
+        case appear = "cs_appear"
+        case disappear = "cs_disappear"
+        case deleteButtonPressed = "cs_delete_botton_pressed"
+        case currentSegment = "cs_current_segment"
+        case eventCount = "cs_event_count"
+        case reminderCount = "cs_reminder_count"
+        case calendarAuthorization = "cs_calendar_auth_status"
+        case reminderAuthorization = "cs_reminder_auth_status"
+        case goToSettingButtonPressed = "cs_go_to_setting_pressed"
+        case eventDeleted = "cs_event_deleted"
+        case reminderDeleted = "cs_reminder_deleted"
+        case reminderDeleteCancel = "cs_reminder_delete_cancel"
+        case eventDeleteCancel = "cs_event_delete_cancel"
     }
     
     enum DuplicatePhotosScreen: String{
-        case loaded = "duplicate_photos_screen_loaded"
-        case appear = "duplicate_photos_screen_appear"
-        case disappear = "duplicate_photos_screen_disappear"
-        case count = "duplicate_photos_screen_count"
-        case deleteButtonPressed = "duplicate_photos_screen_delete_pressed"
-        case deletedPhotos = "duplicate_photos_screen_photos_deleted"
-        
+//        dps -> Duplicate Photos Screen
+        case loaded = "dps_loaded"
+        case appear = "dps_appear"
+        case disappear = "dps_disappear"
+        case count = "dps_count"
+        case deleteButtonPressed = "dps_delete_pressed"
+        case deletedPhotos = "dps_photos_deleted"
+
     }
     
     enum SimilarPhotosScreen: String{
-        case loaded = "similar_photos_screen_loaded"
-        case appear = "similar_photos_screen_appear"
-        case disappear = "similar_photos_screen_disappear"
-        case count = "similar_photos_screen_count"
-        case deleteButtonPressed = "similar_photos_screen_delete_pressed"
-        case deletedPhotos = "similar_photos_screen_photos_deleted"
+//        sps -> Similar Photos Screen
+        case loaded = "sps_loaded"
+        case appear = "sps_appear"
+        case disappear = "sps_disappear"
+        case count = "sps_count"
+        case deleteButtonPressed = "sps_delete_pressed"
+        case deletedPhotos = "sps_photos_deleted"
     }
     
     enum DuplicateScreenshotScreen: String{
-         case loaded = "duplicate_screenshot_screen_loaded"
-        case appear = "duplicate_screenshot_screen_appear"
-        case disappear = "duplicate_screenshot_screen_disappear"
-        case count = "duplicate_screenshot_screen_count"
-        case deleteButtonPressed = "duplicate_screenshot_screen_delete_pressed"
-        case deletedScreenshot = "duplicate_screenshot_screen_photos_deleted"
+//        dss -> Duplicate Screenshot Screen
+         case loaded = "dss_loaded"
+        case appear = "dss_appear"
+        case disappear = "dss_disappear"
+        case count = "dss_count"
+        case deleteButtonPressed = "dss_delete_pressed"
+        case deletedScreenshot = "dss_photos_deleted"
     }
     
     enum SimilarScreenshotScreen: String{
-        case loaded = "similar_screenshot_screen_loaded"
-        case appear = "similar_screenshot_screen_appear"
-        case disappear = "similar_screenshot_screen_disappear"
-        case count = "similar_screenshot_screen_count"
-        case deleteButtonPressed = "similar_screenshot_screen_delete_pressed"
-        case deletedScreenshot = "similar_screenshot_screen_photos_deleted"
+//        sss -> Similar Screenshot Screen
+        case loaded = "sss_loaded"
+        case appear = "sss_appear"
+        case disappear = "sss_disappear"
+        case count = "sss_count"
+        case deleteButtonPressed = "sss_delete_pressed"
+        case deletedScreenshot = "sss_photos_deleted"
     }
     
     enum OtherPhotosScreen: String{
-        case loaded = "other_photos_screen_loaded"
-        case appear = "other_photos_screen_appear"
-        case disappear = "other_photos_screen_disappear"
-        case count = "other_photos_screen_count"
-        case deleteButtonPressed = "other_photos_screen_delete_pressed"
-        case deletedPhotos = "other_photos_screen_photos_deleted"
+//        ops -> Other Photos Screen
+        case loaded = "ops_loaded"
+        case appear = "ops_appear"
+        case disappear = "ops_disappear"
+        case count = "ops_count"
+        case deleteButtonPressed = "ops_delete_pressed"
+        case deletedPhotos = "ops_photos_deleted"
     }
     
     enum OtherScreenshotScreen: String{
-        case loaded = "other_screenshot_screen_loaded"
-        case appear = "other_screenshot_screen_appear"
-        case disappear = "other_screenshot_screen_disappear"
-        case count = "other_screenshot_screen_count"
-        case deleteButtonPressed = "other_screenshot_screen_delete_pressed"
-        case deletedScreenshot = "other_screenshot_screen_photos_deleted"
+//        oss -> Other Screenshot Screen
+        case loaded = "oss_loaded"
+        case appear = "oss_appear"
+        case disappear = "oss_disappear"
+        case count = "oss_count"
+        case deleteButtonPressed = "oss_delete_pressed"
+        case deletedScreenshot = "oss_photos_deleted"
     }
     
     enum GalleryManager: String{
