@@ -23,7 +23,10 @@ class CalendarTableViewCell: UITableViewCell {
     func configureCell(event: CustomEKEvent){
         titleLabel.text = event.event.title
         dateLabel.text = event.event.startDate.toString(formatType: .ddmmmyyyy)
-        leftSubtitleLabel.text = "Calendar: \(event.event.calendar.title )"
+        if  event.event.calendar != nil {
+            leftSubtitleLabel.text = "Calendar: \(event.event.calendar.title )"
+        }
+
         if event.isSelected{
             let configuration = UIImage.SymbolConfiguration(paletteColors: [.white, .tintColor])
             checkmarkImageView.tintColor = .tintColor

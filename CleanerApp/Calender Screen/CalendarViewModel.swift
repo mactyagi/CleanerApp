@@ -222,12 +222,12 @@ class CalendarViewModel {
         let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate!, calendars: nil)
         let events = eventStore.events(matching: predicate)
         let customEvents = events.compactMap { CustomEKEvent(event: $0, isSelected: true)}
-        let event = customEvents[0]
-        print(event.event.calendar)
-        print(event.event.description)
+//        let event = customEvents[0]
+//        print(event.event.calendar)
+//        print(event.event.description)
         let eventsGroup = Dictionary(grouping: customEvents, by: \.event.year)
         allEvents = eventsGroup.keys.compactMap { ($0, eventsGroup[$0]!.sorted(by: { $0.event.startDate < $1.event.startDate }))}.sorted(by: { $0.year > $1.year })
-        
+
     }
     
     func deleteData(){

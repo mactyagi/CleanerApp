@@ -38,7 +38,6 @@ class VideoCompressorViewController: UIViewController {
             viewModel.fetchData()
             shouldReloadData.toggle()
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,8 +47,8 @@ class VideoCompressorViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        setupNavigationAndTabBar(isScreenVisible: false)
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {
