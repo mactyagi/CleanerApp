@@ -12,7 +12,8 @@ class OrganizeContactViewModel{
     @Published var contactsCount = 0
     @Published var duplicateCount = 0
     @Published var incompleteContactsCount = 0
-    
+    @Published var incompleteContacts: [CNContact] = []
+
     init(){
         
         DispatchQueue.global().async {
@@ -24,6 +25,7 @@ class OrganizeContactViewModel{
     }
     
     func findIncompleteContacts() {
+        incompleteContacts = []
         let store = CNContactStore()
         let keysToFetch = [CNContactGivenNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keysToFetch as [CNKeyDescriptor])
@@ -33,7 +35,8 @@ class OrganizeContactViewModel{
             try store.enumerateContacts(with: fetchRequest) { contact, _ in
                 
                 // Check if given name is missing
-                if contact.givenName.isEmpty || contact.phoneNumbers.isEmpty ||  contact.emailAddresses.isEmpty{
+                if contact.givenName.isEmpty || contact.phoneNumbers.isEmpty{
+                    incompleteContacts.append(contact)
                     incompleteContactsCount += 1
                 }
             }

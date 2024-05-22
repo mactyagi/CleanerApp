@@ -11,6 +11,8 @@
 		07350E832BF4A8A6005DD945 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */; };
 		07350E842BF4A8A6005DD945 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */; };
 		079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */; };
+		07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */; };
+		07E1EABC2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */; };
 		3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2682B38A605003DB928 /* CalendarViewController.swift */; };
 		3201A26E2B38A78F003DB928 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */; };
 		3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26F2B38B023003DB928 /* CalendarViewModel.swift */; };
@@ -118,6 +120,8 @@
 		07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactTableViewCell.swift; sourceTree = "<group>"; };
+		07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncompleteContactTableViewCell.xib; sourceTree = "<group>"; };
 		3201A2682B38A605003DB928 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		3201A26D2B38A78F003DB928 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		3201A26F2B38B023003DB928 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
@@ -326,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				326BF4B92B9833A9003D8427 /* IncompleteContactViewController.swift */,
+				07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */,
+				07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */,
 				326BF4BB2B9835B0003D8427 /* IncompleteContactViewModel.swift */,
 			);
 			path = "Incomplete Contact Screen";
@@ -575,6 +581,7 @@
 				32BD2A862B493E2F0039E85E /* MediaCollectionViewCell.xib in Resources */,
 				323A25ED2B84E9E5006AD2FB /* DuplicateContactTableViewCell.xib in Resources */,
 				07350E842BF4A8A6005DD945 /* SettingTableViewCell.xib in Resources */,
+				07E1EABC2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib in Resources */,
 				32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */,
 				323A25E52B84E69E006AD2FB /* ContactView.xib in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
@@ -628,6 +635,7 @@
 				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
 				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
 				32BD2A7D2B483D010039E85E /* BaseViewModel.swift in Sources */,
+				07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */,
 				32BD2A7B2B483C770039E85E /* BaseViewController.swift in Sources */,
 				3201A2782B394D1D003DB928 /* CustomEKEvent.swift in Sources */,
 				32231B612B04B946009AE1E0 /* SecretSpaceModel.swift in Sources */,
@@ -834,7 +842,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = F638V29VVL;
+				DEVELOPMENT_TEAM = BVX54XCJ2D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
@@ -855,7 +863,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.4;
-				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -876,7 +884,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F638V29VVL;
+				DEVELOPMENT_TEAM = BVX54XCJ2D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
@@ -897,7 +905,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.4;
-				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

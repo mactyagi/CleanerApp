@@ -24,13 +24,14 @@ class OrganizeContactsViewController: UIViewController {
     //MARK: - lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+    
         setupViewModel()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupNavigationAndTabBar(isScreenVisible: false)
     }
 
@@ -49,6 +50,9 @@ class OrganizeContactsViewController: UIViewController {
     }
     
     @IBAction func inCompletContactButtonPressed(_ sender: UIButton) {
+        let viewModel = IncompleteContactViewModel(incompleteContacts: viewModel.incompleteContacts)
+        let vc = IncompleteContactViewController.customInit(viewModel: viewModel)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func backUpButtonPressed(_ sender: UIButton) {
@@ -88,6 +92,13 @@ extension OrganizeContactsViewController{
             DispatchQueue.main.async {
                 guard let self else { return }
                 self.incompleteContactsCountLabel.text = "\(count)"
+            }
+        }.store(in: &cancelables)
+
+        viewModel.$incompleteContacts.sink { [weak self] incompletContacts in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                self.incompleteContactsCountLabel.text = "\(incompletContacts.count)"
             }
         }.store(in: &cancelables)
     }
