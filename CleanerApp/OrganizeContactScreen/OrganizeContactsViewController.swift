@@ -24,13 +24,14 @@ class OrganizeContactsViewController: UIViewController {
     //MARK: - lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+    
         setupViewModel()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupNavigationAndTabBar(isScreenVisible: false)
     }
 

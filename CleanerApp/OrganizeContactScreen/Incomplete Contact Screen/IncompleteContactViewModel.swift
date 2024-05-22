@@ -7,6 +7,7 @@
 
 import Foundation
 import Contacts
+import Combine
 
 class IncompleteContactViewModel{
     var incompleteContacts: [CNContact]
@@ -14,7 +15,39 @@ class IncompleteContactViewModel{
     init(incompleteContacts: [CNContact]) {
         self.incompleteContacts = incompleteContacts
     }
+    
+    
+    @Published var selectedContactSet: Set<CNContact> = []
+   @Published var isAllSelected = false
+    
+    
+    func selectedContactAt(index: Int){
+        let contact = incompleteContacts[index]
+        if selectedContactSet.contains(contact) {
+            selectedContactSet.remove(contact)
+        } else {
+            selectedContactSet.insert(contact)
+        }
+        
+        if incompleteContacts.count == selectedContactSet.count{
+            isAllSelected = true
+        } else{
+            isAllSelected = false
+        }
+    }
+    
+    func selectAll() {
+        for contact in incompleteContacts{
+            selectedContactSet.insert(contact)
+        }
+        isAllSelected = true
+    }
 
+    func deselectAll() {
+        selectedContactSet.removeAll()
+        isAllSelected = false
+    }
+    
 //    func findIncompleteContacts() {
 //        let store = CNContactStore()
 //        let keysToFetch = [CNContactGivenNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey]
