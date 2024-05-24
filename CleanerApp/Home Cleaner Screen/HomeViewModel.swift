@@ -28,9 +28,10 @@ class  HomeViewModel: NSObject {
     private var cancellables: Set<AnyCancellable> = []
     private var deviceInfoManager: DeviceInfoManager
     let publisher = CurrentValueSubject<Double, Never>(0.0)
-    
-    init(deviceInfoManager: DeviceInfoManager){
+    var contactStore: CNContactStore
+    init(deviceInfoManager: DeviceInfoManager, contactStore: CNContactStore){
         self.deviceInfoManager = deviceInfoManager
+        self.contactStore = contactStore
         super.init()
         self.deviceInfoManager.delegate = self
     }
@@ -123,11 +124,10 @@ class  HomeViewModel: NSObject {
         }
     }
     private func fetchContacts() {
-        let store = CNContactStore()
         let request = CNContactFetchRequest(keysToFetch: [])
         contactsCount = 0
         do {
-            try store.enumerateContacts(with: request) { _, _ in
+            try contactStore.enumerateContacts(with: request) { _, _ in
                 contactsCount! += 1
                 
             }

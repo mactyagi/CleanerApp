@@ -6,47 +6,39 @@
 //
 
 import UIKit
+import Contacts
 
 protocol IncompleteContactTableViewCellDelegate{
     func incompleteContactTableViewCell( cell: IncompleteContactTableViewCell, checkButtonPressedAt index: Int)
+    func incompleteContactTableViewCell(cell: IncompleteContactTableViewCell, didSelectContact contact: CNContact?)
 }
 
 class IncompleteContactTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var incompleteContactName: UILabel!
-    
-    @IBOutlet weak var checkMarkImageView: UIImageView!
-    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var contactView: ContactView!
     var index: Int!
     var delegate: IncompleteContactTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        contactView.delegate = self
         // Initialization code
-        mainView.layer.cornerRadius = 10
+//        mainView.layer.cornerRadius = 10
     }
     
     var isItemSelected: Bool = false{
         didSet{
-            if isItemSelected{
-                checkMarkImageView.image = UIImage(systemName: "checkmark.circle.fill",withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.white, .darkBlue]))
-            }else{
-                checkMarkImageView.image = UIImage(systemName: "circle" ,withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.darkGray3, .darkBlue]))
-            }
-            
+            contactView.isSelected = isItemSelected
         }
     }
-    
-    @IBAction func checkButtonPressed(_ sender: UIButton) {
-        isItemSelected.toggle()
-        let generator = UIImpactFeedbackGenerator(style: .rigid)
-        generator.impactOccurred()
+}
+
+extension IncompleteContactTableViewCell: ContactViewDelegate{
+    func contactView(_ view: ContactView, didPressedCheckButtonAt index: Int) {
         delegate?.incompleteContactTableViewCell(cell: self, checkButtonPressedAt: index)
-
-    
     }
-    
 
- 
-    
+    func contactView(_ view: ContactView, didPressedContact contact: CNContact?) {
+        delegate?.incompleteContactTableViewCell(cell: self, didSelectContact: contact)
+    }
 }

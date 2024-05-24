@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,58 +18,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="561" height="143"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UH4-He-e1Q">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UH4-He-e1Q" customClass="ContactView" customModule="CleanerApp" customModuleProvider="target">
                         <rect key="frame" x="10" y="4" width="541" height="135"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0CE-Yf-X4E">
-                                <rect key="frame" x="19.999999999999996" y="20" width="42.666666666666657" height="95"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eom-rG-hfw">
-                                <rect key="frame" x="466" y="0.0" width="75" height="135"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ckE-fh-Qz2">
-                                        <rect key="frame" x="22.666666666666686" y="55" width="30" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="QL4-Ty-cnf"/>
-                                            <constraint firstAttribute="height" constant="30" id="k8x-aO-bdx"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbt-bV-OeK">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="135"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="75" id="kQb-lk-jWi"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="checkButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CM5-Xe-3TU"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="bbt-bV-OeK" secondAttribute="trailing" id="59E-DT-rpK"/>
-                                    <constraint firstItem="ckE-fh-Qz2" firstAttribute="centerX" secondItem="eom-rG-hfw" secondAttribute="centerX" id="8aE-nu-qj1"/>
-                                    <constraint firstItem="bbt-bV-OeK" firstAttribute="top" secondItem="eom-rG-hfw" secondAttribute="top" id="RLE-Jt-YsB"/>
-                                    <constraint firstAttribute="bottom" secondItem="bbt-bV-OeK" secondAttribute="bottom" id="hIa-GI-KL3"/>
-                                    <constraint firstItem="bbt-bV-OeK" firstAttribute="leading" secondItem="eom-rG-hfw" secondAttribute="leading" id="mSJ-hg-orC"/>
-                                    <constraint firstItem="ckE-fh-Qz2" firstAttribute="centerY" secondItem="eom-rG-hfw" secondAttribute="centerY" id="x7X-gv-rBP"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" name="offWhiteAndGrayColor"/>
-                        <constraints>
-                            <constraint firstItem="0CE-Yf-X4E" firstAttribute="top" secondItem="UH4-He-e1Q" secondAttribute="top" constant="20" id="55U-Tp-dF7"/>
-                            <constraint firstItem="0CE-Yf-X4E" firstAttribute="centerY" secondItem="UH4-He-e1Q" secondAttribute="centerY" id="BBd-C4-oFH"/>
-                            <constraint firstItem="eom-rG-hfw" firstAttribute="top" secondItem="UH4-He-e1Q" secondAttribute="top" id="SgS-cD-rft"/>
-                            <constraint firstAttribute="trailing" secondItem="eom-rG-hfw" secondAttribute="trailing" id="UMq-E1-u7a"/>
-                            <constraint firstItem="0CE-Yf-X4E" firstAttribute="leading" secondItem="UH4-He-e1Q" secondAttribute="leading" constant="20" id="d1f-vB-h6Z"/>
-                            <constraint firstAttribute="bottom" secondItem="eom-rG-hfw" secondAttribute="bottom" id="mOT-DG-bBD"/>
-                            <constraint firstAttribute="bottom" secondItem="0CE-Yf-X4E" secondAttribute="bottom" constant="20" id="wAX-IT-hIs"/>
-                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -83,15 +34,12 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="checkMarkImageView" destination="ckE-fh-Qz2" id="EEf-nv-Q0m"/>
-                <outlet property="incompleteContactName" destination="0CE-Yf-X4E" id="Hkj-E3-1eZ"/>
-                <outlet property="mainView" destination="UH4-He-e1Q" id="8Xm-yx-FSx"/>
+                <outlet property="contactView" destination="UH4-He-e1Q" id="9SZ-7A-Z4W"/>
             </connections>
             <point key="canvasLocation" x="278.62595419847327" y="48.239436619718312"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkmark" catalog="system" width="128" height="114"/>
         <namedColor name="offWhiteAndGrayColor">
             <color red="0.97254901960784312" green="0.98431372549019602" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

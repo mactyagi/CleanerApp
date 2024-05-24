@@ -11,9 +11,11 @@ import Combine
 
 class IncompleteContactViewModel{
     var incompleteContacts: [CNContact]
+    var contactStore: CNContactStore
 
-    init(incompleteContacts: [CNContact]) {
+    init(incompleteContacts: [CNContact], contactStore: CNContactStore) {
         self.incompleteContacts = incompleteContacts
+        self.contactStore = contactStore
     }
     
     

@@ -7,18 +7,22 @@
 
 import UIKit
 import Combine
+import ContactsUI
+import Contacts
 
-class IncompleteContactViewController: UIViewController {
+class IncompleteContactViewController: UIViewController, CNContactViewControllerDelegate {
 
     //MARK: - IBOutlets
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+//#warning("manu")
+//#error("error")
+
     //MARK: - Variables
     var viewModel: IncompleteContactViewModel!
     private var rightBarButtonItem: UIBarButtonItem!
     private var cancelables: Set<AnyCancellable> = []
-
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +30,6 @@ class IncompleteContactViewController: UIViewController {
         setupTableView()
         setupUIView()
         configureRightBarButton()
-        
-        tableView.register(UINib(nibName: "IncompleteContactTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-    
     }
     
     //MARK: - customInit
@@ -49,6 +50,7 @@ class IncompleteContactViewController: UIViewController {
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(UINib(nibName: "IncompleteContactTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
     }
     
     func setupUIView(){
@@ -117,7 +119,7 @@ extension IncompleteContactViewController: UITableViewDataSource, UITableViewDel
         } else {
             cell.isItemSelected = false
         }
-        cell.incompleteContactName.text = contact.givenName
+        cell.contactView.configureContactView(contact: contact)
         cell.index = indexPath.row
         cell.delegate = self
         return cell
@@ -127,12 +129,51 @@ extension IncompleteContactViewController: UITableViewDataSource, UITableViewDel
         return 70
     }
 
-       
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let contact = viewModel.incompleteContacts[indexPath.row]
+        if !contact.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
+            do {
+                let contact = try viewModel.contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+                let contactVC = CNContactViewController(for: contact)
+                contactVC.delegate = self
+                contactVC.hidesBottomBarWhenPushed = true
+                contactVC.allowsEditing = false
+                contactVC.allowsActions = false
+                self.navigationController?.pushViewController(contactVC, animated: true)
+            }
+            catch {
+                logError(error: error as NSError)
+            }
+        }
+    }
 
 }
 
 
 extension IncompleteContactViewController: IncompleteContactTableViewCellDelegate{
+    func incompleteContactTableViewCell(cell: IncompleteContactTableViewCell, didSelectContact contact: CNContact?) {
+        guard let contact else { return }
+
+        if !contact.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
+            do {
+                let contact = try viewModel.contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+                let contactVC = CNContactViewController(for: contact)
+                contactVC.delegate = self
+                contactVC.hidesBottomBarWhenPushed = true
+                contactVC.allowsEditing = false
+                contactVC.allowsActions = false
+                self.navigationController?.pushViewController(contactVC, animated: true)
+            }
+            catch {
+                logError(error: error as NSError)
+            }
+        }
+    }
+    
+
+
+    
     
     func incompleteContactTableViewCell(cell: IncompleteContactTableViewCell, checkButtonPressedAt index: Int) {
         viewModel.selectedContactAt(index: index)

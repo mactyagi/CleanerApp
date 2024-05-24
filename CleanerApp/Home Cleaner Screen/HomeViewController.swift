@@ -200,7 +200,8 @@ class HomeViewController: UIViewController {
             DispatchQueue.main.async {
                 if granted {
                     let vc = ComingSoonViewController.customInit()
-                    let contactVC = OrganizeContactsViewController.customInit()
+                    let organizeViewModel = OrganizeContactViewModel(contactStore: self.viewModel.contactStore)
+                    let contactVC = OrganizeContactsViewController.customInit(viewModel: organizeViewModel)
                     self.navigationController?.pushViewController(contactVC, animated: true)
                 } else {
                     self.goToSettingAlertVC(message: "In order to find duplicate and empty contacts, the app needs an access to contacts.")
@@ -251,7 +252,7 @@ extension HomeViewController{
     
     func setupViewModel(){
         let deviceManager = DeviceInfoManager()
-        viewModel = HomeViewModel(deviceInfoManager: deviceManager)
+        viewModel = HomeViewModel(deviceInfoManager: deviceManager, contactStore: CNContactStore())
         setSubscribers()
     }
     

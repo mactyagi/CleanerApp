@@ -12,17 +12,17 @@ typealias duplicateAndMergedContactTuple = (mergedContact: CNMutableContact?, du
 class DuplicateContactsViewModel{
     
     var dataSource: [duplicateAndMergedContactTuple] = []
+    var contactStore: CNContactStore
     @Published var reloadAtIndex:IndexPath?
-    
-    init(){
+
+    init(contactStore: CNContactStore){
+        self.contactStore = contactStore
         DispatchQueue.global().async {
             self.findDuplicateContactsBasedOnAll()
         }
     }
     
     func findDuplicateContactsBasedOnAll() {
-        
-        let store = CNContactStore()
         
         let request = CNContactFetchRequest(keysToFetch: [
             CNContactGivenNameKey as CNKeyDescriptor,
@@ -47,7 +47,7 @@ class DuplicateContactsViewModel{
         
 
         do {
-            try store.enumerateContacts(with: request) { contact, _ in
+            try contactStore.enumerateContacts(with: request) { contact, _ in
                 // Handle name
                 let fullName = "\(contact.givenName.lowercased())\(contact.middleName.lowercased())\(contact.familyName.lowercased())"
                 if !fullName.isEmpty{

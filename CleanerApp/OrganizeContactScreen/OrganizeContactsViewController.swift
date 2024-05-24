@@ -19,8 +19,7 @@ class OrganizeContactsViewController: UIViewController {
     //MARK: - Variables
     var viewModel: OrganizeContactViewModel!
     private var cancelables: Set<AnyCancellable> = []
-    
-    
+
     //MARK: - lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,19 +37,22 @@ class OrganizeContactsViewController: UIViewController {
     
     //MARK: - Static Function
     static let identifier = "OrganizeContactsViewController"
-    static func customInit() -> OrganizeContactsViewController{
+    static func customInit(viewModel: OrganizeContactViewModel) -> OrganizeContactsViewController{
         let vc = UIStoryboard.main.instantiateViewController(identifier: Self.identifier) as! Self
+        vc.viewModel = viewModel
         return vc
     }
 
     //MARK: - IBActions
     @IBAction func duplicateButtonPressed(_ sender: UIButton) {
-        let vc = DuplicateContactsViewController.customInit()
+        let duplicateViewModel = DuplicateContactsViewModel(contactStore: viewModel.contactStore)
+        let vc = DuplicateContactsViewController.customInit(viewModel: duplicateViewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
     
+
     @IBAction func inCompletContactButtonPressed(_ sender: UIButton) {
-        let viewModel = IncompleteContactViewModel(incompleteContacts: viewModel.incompleteContacts)
+        let viewModel = IncompleteContactViewModel(incompleteContacts: viewModel.incompleteContacts, contactStore: viewModel.contactStore)
         let vc = IncompleteContactViewController.customInit(viewModel: viewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -65,7 +67,6 @@ class OrganizeContactsViewController: UIViewController {
     
     //MARK: - setup Functions
     func setupViewModel(){
-        viewModel = OrganizeContactViewModel()
         setSubscribers()
     }
 }

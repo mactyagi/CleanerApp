@@ -7,6 +7,8 @@
 
 import UIKit
 import Combine
+import Contacts
+import ContactsUI
 class DuplicateContactsViewController: UIViewController {
 
 
@@ -33,8 +35,10 @@ class DuplicateContactsViewController: UIViewController {
     
     
     //MARK: - customInit
-    static func customInit() -> Self{
-        UIStoryboard.main.instantiateViewController(identifier: "DuplicateContactsViewController") as! Self
+    static func customInit(viewModel: DuplicateContactsViewModel) -> Self{
+        let vc = UIStoryboard.main.instantiateViewController(identifier: "DuplicateContactsViewController") as! Self
+        vc.viewModel = viewModel
+        return vc
     }
     
     
@@ -50,7 +54,6 @@ class DuplicateContactsViewController: UIViewController {
     }
     
     func setupViewModel(){
-        viewModel = DuplicateContactsViewModel()
         setSubscriber()
     }
     
@@ -103,6 +106,32 @@ extension DuplicateContactsViewController{
 }
 
 extension DuplicateContactsViewController: DuplicateContactTableViewCellDelegate{
+    func duplicateContactTableViewCell(_ cell: DuplicateContactTableViewCell, didContactSelected contact: CNContact?) {
+        guard let contact else { return }
+        if !contact.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
+
+            if let contact = try? viewModel.contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()]) {
+                let contactVC = CNContactViewController(forUnknownContact: contact)
+    //                contactVC.delegate = self
+                contactVC.hidesBottomBarWhenPushed = true
+                contactVC.allowsEditing = false
+                contactVC.allowsActions = false
+                self.navigationController?.pushViewController(contactVC, animated: true)
+            }else {
+                let newContact = CNMutableContact()
+                newContact.givenName = contact.givenName
+                newContact.familyName = contact.familyName
+                let contactVC = CNContactViewController(forUnknownContact: contact)
+    //                contactVC.delegate = self
+                contactVC.hidesBottomBarWhenPushed = true
+                contactVC.allowsEditing = false
+                contactVC.allowsActions = false
+                self.navigationController?.pushViewController(contactVC, animated: true)
+            }
+        }
+    }
+    
+
     func duplicateContactTableViewCell(_ cell: UITableViewCell, mergeContactAt indexPath: IndexPath) {
         showAlertToMerge(at: indexPath)
     }

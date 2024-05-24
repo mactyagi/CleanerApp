@@ -8,14 +8,16 @@
 import Foundation
 import Contacts
 import Combine
+import ContactsUI
 class OrganizeContactViewModel{
     @Published var contactsCount = 0
     @Published var duplicateCount = 0
     @Published var incompleteContactsCount = 0
     @Published var incompleteContacts: [CNContact] = []
+    var contactStore: CNContactStore
 
-    init(){
-        
+    init(contactStore: CNContactStore){
+        self.contactStore = contactStore
         DispatchQueue.global().async {
             self.findDuplicateContactsBasedOnAll()
             self.fetchContacts()
@@ -26,13 +28,12 @@ class OrganizeContactViewModel{
     
     func findIncompleteContacts() {
         incompleteContacts = []
-        let store = CNContactStore()
-        let keysToFetch = [CNContactGivenNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey]
+        let keysToFetch = [CNContactGivenNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey, CNContactMiddleNameKey, CNContactFamilyNameKey]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keysToFetch as [CNKeyDescriptor])
 
         incompleteContactsCount = 0
         do {
-            try store.enumerateContacts(with: fetchRequest) { contact, _ in
+            try contactStore.enumerateContacts(with: fetchRequest) { contact, _ in
                 
                 // Check if given name is missing
                 if contact.givenName.isEmpty || contact.phoneNumbers.isEmpty{

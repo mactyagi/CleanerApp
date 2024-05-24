@@ -12,6 +12,7 @@ protocol DuplicateContactTableViewCellDelegate{
     func duplicateContactTableViewCell(_ cell: UITableViewCell, didChangeAt indexPath: IndexPath, viewIndex: Int, isSelected: Bool)
     func duplicateContactTableViewCell(_ cell: UITableViewCell, selectionAt indexPath: IndexPath, isAllSelected: Bool)
     func duplicateContactTableViewCell(_ cell: UITableViewCell, mergeContactAt indexPath: IndexPath)
+    func duplicateContactTableViewCell(_ cell: DuplicateContactTableViewCell, didContactSelected contact: CNContact?)
 }
 class DuplicateContactTableViewCell: UITableViewCell{
    
@@ -78,15 +79,7 @@ class DuplicateContactTableViewCell: UITableViewCell{
             if duplicateContact.isSelected == false{
                 isAllselected = false
             }
-            let name = "\(duplicateContact.contact.givenName) \(duplicateContact.contact.familyName)"
-            let phoneNumber = "\(duplicateContact.contact.phoneNumbers.compactMap { $0.value.stringValue }.joined(separator: " • "))"
-            if name == " "{
-                view.NameLabel.text = ""
-            }else{
-                view.NameLabel.text = name
-            }
-            
-            view.phoneNumberLabel.text = phoneNumber
+            view.configureContactView(contact: duplicateContact.contact)
             
             stackView.addArrangedSubview(view)
             
@@ -101,8 +94,8 @@ class DuplicateContactTableViewCell: UITableViewCell{
             return
         }
         mergedContactView.isHidden = false
-        mergedContactView.NameLabel.text = "\(mergedContact.givenName) \(mergedContact.familyName )"
-        mergedContactView.phoneNumberLabel.text = mergedContact.phoneNumbers.compactMap { $0.value.stringValue }.joined(separator: " • ")
+        mergedContactView.delegate = self
+        mergedContactView.configureContactView(contact: mergedContact)
     }
 }
 
@@ -111,6 +104,8 @@ extension DuplicateContactTableViewCell: ContactViewDelegate{
     func contactView(_ view: ContactView, didPressedCheckButtonAt index: Int) {
         delegate?.duplicateContactTableViewCell(self, didChangeAt: indexPath, viewIndex: index, isSelected: view.isSelected)
     }
-    
-    
+   
+    func contactView(_ view: ContactView, didPressedContact contact: CNContact?) {
+        delegate?.duplicateContactTableViewCell(self, didContactSelected: contact)
+    }
 }
