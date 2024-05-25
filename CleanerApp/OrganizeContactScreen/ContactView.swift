@@ -9,7 +9,7 @@ import UIKit
 import Contacts
 
 protocol ContactViewDelegate{
-    func contactView(_ view: ContactView, didPressedCheckButtonAt index: Int)
+    func contactView(_ view: ContactView, isSelected: Bool) 
     func contactView(_ view: ContactView, didPressedContact contact: CNContact?)
 }
 
@@ -19,7 +19,7 @@ extension ContactViewDelegate {
 
     }
 
-    func contactView(_ view: ContactView, didPressedCheckButtonAt index: Int) {
+    func contactView(_ view: ContactView, isSelected: Bool) {
 
     }
 }
@@ -27,21 +27,12 @@ extension ContactViewDelegate {
 class ContactView: UIView {
 
     var delegate: ContactViewDelegate?
-    var index: Int = 0
     var contact: CNContact?
 
     @IBOutlet weak var checkMarkImageView: UIImageView!
-    @IBOutlet weak var phoneNumberLabel: UILabel!{
-        didSet{
-            phoneNumberLabel.isHidden = (phoneNumberLabel.text?.isEmpty ?? true)
-        }
-    }
+    @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var NameLabel: UILabel!{
-        didSet{
-            NameLabel.isHidden = (NameLabel.text?.isEmpty ?? true)
-        }
-    }
+    @IBOutlet weak var NameLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -64,13 +55,12 @@ class ContactView: UIView {
         self.contact = contact
         let name = "\(contact.givenName) \(contact.familyName)"
         let phoneNumber = "\(contact.phoneNumbers.compactMap { $0.value.stringValue }.joined(separator: " • "))"
-        if name == " "{
-            NameLabel.text = ""
-        }else{
-           NameLabel.text = name
-        }
+        NameLabel.text = name
+        NameLabel.isHidden = name == " "
+
         phoneNumberLabel.text = phoneNumber
-        
+        phoneNumberLabel.isHidden = phoneNumber.isEmpty
+
     }
 
     override init(frame: CGRect) {
@@ -87,7 +77,7 @@ class ContactView: UIView {
         let generator = UIImpactFeedbackGenerator(style: .rigid)
         generator.impactOccurred()
         isSelected.toggle()
-        delegate?.contactView(self, didPressedCheckButtonAt: index)
+        delegate?.contactView(self, isSelected: isSelected)
     }
     
     @IBAction func contactSelectButtonPressed(_ sender: UIButton) {

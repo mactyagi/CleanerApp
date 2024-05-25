@@ -74,13 +74,13 @@ class DuplicateContactTableViewCell: UITableViewCell{
         for (index,duplicateContact) in duplicateContacts.enumerated() {
             let view = ContactView()
             view.delegate = self
-            view.index = index
+            view.tag = index
             view.isSelected = duplicateContact.isSelected
             if duplicateContact.isSelected == false{
                 isAllselected = false
             }
             view.configureContactView(contact: duplicateContact.contact)
-            
+
             stackView.addArrangedSubview(view)
             
             view.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -101,10 +101,12 @@ class DuplicateContactTableViewCell: UITableViewCell{
 
 
 extension DuplicateContactTableViewCell: ContactViewDelegate{
-    func contactView(_ view: ContactView, didPressedCheckButtonAt index: Int) {
-        delegate?.duplicateContactTableViewCell(self, didChangeAt: indexPath, viewIndex: index, isSelected: view.isSelected)
+
+    func contactView(_ view: ContactView, isSelected: Bool) {
+        delegate?.duplicateContactTableViewCell(self, didChangeAt: indexPath, viewIndex: view.tag, isSelected: view.isSelected)
     }
-   
+    
+
     func contactView(_ view: ContactView, didPressedContact contact: CNContact?) {
         delegate?.duplicateContactTableViewCell(self, didContactSelected: contact)
     }

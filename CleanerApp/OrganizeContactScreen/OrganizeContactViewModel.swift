@@ -29,7 +29,7 @@ class OrganizeContactViewModel{
     func findIncompleteContacts() {
         incompleteContacts = []
         let keysToFetch = [CNContactGivenNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey, CNContactMiddleNameKey, CNContactFamilyNameKey]
-        let fetchRequest = CNContactFetchRequest(keysToFetch: keysToFetch as [CNKeyDescriptor])
+        let fetchRequest = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()] /*keysToFetch as [CNKeyDescriptor]*/)
 
         incompleteContactsCount = 0
         do {
@@ -50,14 +50,16 @@ class OrganizeContactViewModel{
         
         let store = CNContactStore()
         
-        let request = CNContactFetchRequest(keysToFetch: [
-            CNContactGivenNameKey as CNKeyDescriptor,
-            CNContactFamilyNameKey as CNKeyDescriptor,
-            CNContactEmailAddressesKey as CNKeyDescriptor,
-            CNContactPhoneNumbersKey as CNKeyDescriptor,
-            CNContactMiddleNameKey as CNKeyDescriptor
-        ])
-        
+//        let request = CNContactFetchRequest(keysToFetch: [
+//            CNContactGivenNameKey as CNKeyDescriptor,
+//            CNContactFamilyNameKey as CNKeyDescriptor,
+//            CNContactEmailAddressesKey as CNKeyDescriptor,
+//            CNContactPhoneNumbersKey as CNKeyDescriptor,
+//            CNContactMiddleNameKey as CNKeyDescriptor
+//        ])
+
+        let request = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+
         
         var contactDict = [String: [CNContact]]()
         

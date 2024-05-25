@@ -114,38 +114,15 @@ extension IncompleteContactViewController: UITableViewDataSource, UITableViewDel
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! IncompleteContactTableViewCell
         
         let contact = viewModel.incompleteContacts[indexPath.row]
-        if viewModel.selectedContactSet.contains(contact){
-            cell.isItemSelected = true
-        } else {
-            cell.isItemSelected = false
-        }
-        cell.contactView.configureContactView(contact: contact)
+        cell.isItemSelected = viewModel.selectedContactSet.contains(contact)
         cell.index = indexPath.row
+        cell.contactView.configureContactView(contact: contact)
         cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let contact = viewModel.incompleteContacts[indexPath.row]
-        if !contact.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
-            do {
-                let contact = try viewModel.contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
-                let contactVC = CNContactViewController(for: contact)
-                contactVC.delegate = self
-                contactVC.hidesBottomBarWhenPushed = true
-                contactVC.allowsEditing = false
-                contactVC.allowsActions = false
-                self.navigationController?.pushViewController(contactVC, animated: true)
-            }
-            catch {
-                logError(error: error as NSError)
-            }
-        }
     }
 
 }
@@ -170,11 +147,7 @@ extension IncompleteContactViewController: IncompleteContactTableViewCellDelegat
             }
         }
     }
-    
 
-
-    
-    
     func incompleteContactTableViewCell(cell: IncompleteContactTableViewCell, checkButtonPressedAt index: Int) {
         viewModel.selectedContactAt(index: index)
     }

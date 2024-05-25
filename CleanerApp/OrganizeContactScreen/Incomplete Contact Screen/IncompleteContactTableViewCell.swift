@@ -16,14 +16,12 @@ protocol IncompleteContactTableViewCellDelegate{
 class IncompleteContactTableViewCell: UITableViewCell {
 
     @IBOutlet weak var contactView: ContactView!
-    var index: Int!
     var delegate: IncompleteContactTableViewCellDelegate?
-    
+    var index: Int!
     override func awakeFromNib() {
         super.awakeFromNib()
         contactView.delegate = self
-        // Initialization code
-//        mainView.layer.cornerRadius = 10
+        contactView.phoneNumberLabel.textColor = .label
     }
     
     var isItemSelected: Bool = false{
@@ -34,7 +32,7 @@ class IncompleteContactTableViewCell: UITableViewCell {
 }
 
 extension IncompleteContactTableViewCell: ContactViewDelegate{
-    func contactView(_ view: ContactView, didPressedCheckButtonAt index: Int) {
+    func contactView(_ view: ContactView, isSelected: Bool) {
         delegate?.incompleteContactTableViewCell(cell: self, checkButtonPressedAt: index)
     }
 
