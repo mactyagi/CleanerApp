@@ -10,7 +10,7 @@ import Contacts
 import Combine
 import ContactsUI
 class OrganizeContactViewModel{
-    @Published var contactsCount = 0
+    @Published var allContacts: [CNContact] = []
     @Published var duplicateCount = 0
     @Published var incompleteContactsCount = 0
     @Published var incompleteContacts: [CNContact] = []
@@ -116,12 +116,11 @@ class OrganizeContactViewModel{
     
     private func fetchContacts() {
         let store = CNContactStore()
-        let request = CNContactFetchRequest(keysToFetch: [])
-        contactsCount = 0
+        let request = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+        allContacts = []
         do {
-            try store.enumerateContacts(with: request) { _, _ in
-                contactsCount += 1
-                
+            try store.enumerateContacts(with: request) { contact, _ in
+                allContacts.append(contact)
             }
         } catch {
             logError(error: error as NSError)

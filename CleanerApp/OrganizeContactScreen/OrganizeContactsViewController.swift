@@ -30,7 +30,7 @@ class OrganizeContactsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
         setupNavigationAndTabBar(isScreenVisible: false)
     }
 
@@ -58,9 +58,13 @@ class OrganizeContactsViewController: UIViewController {
     }
     
     @IBAction func backUpButtonPressed(_ sender: UIButton) {
+
     }
     
     @IBAction func AllContactsButtonPressed(_ sender: UIButton) {
+        let allContactViewModel = AllContactsVIewModel(allContacts: viewModel.allContacts, contactStore: viewModel.contactStore)
+        let vc = AllContactsViewController.customInit(viewModel: allContactViewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -75,10 +79,10 @@ class OrganizeContactsViewController: UIViewController {
 
 extension OrganizeContactsViewController{
     func setSubscribers(){
-        viewModel.$contactsCount.sink { [weak self] count in
+        viewModel.$allContacts.sink { [weak self] contacts in
             DispatchQueue.main.async {
                 guard let self else { return }
-                self.allContactsCountLabel.text = "\(count)"
+                self.allContactsCountLabel.text = "\(contacts.count)"
             }
         }.store(in: &cancelables)
         

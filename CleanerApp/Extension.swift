@@ -170,12 +170,7 @@ extension UInt64{
 
 
 
-extension UIViewController{
-    static var className : String{
-        return String(describing: type(of: self))
-    }
-   
-}
+
 
 
 extension UIView{
@@ -380,5 +375,49 @@ extension UIViewController{
     func setupNavigationAndTabBar(isScreenVisible flag: Bool){
         navigationController?.navigationBar.isHidden = flag
         tabBarController?.tabBar.isHidden = !flag
+    }
+}
+
+
+extension UIFont{
+//
+//    enum weightType: String {
+//        case ultraLightItalic = "Ultra Light Italic"
+//        case ultraLight = "Ultra Light"
+//        case regular = "Regular"
+//        case mediumItalic = "MediumItalic"
+//        case medium = "Medium"
+//        case italic = "Italic"
+//        case heavyItalic = "Heavy Italic"
+//        case heavy = "Heavy"
+//        case demiBoldItalic = "Demi Bold Italic"
+//        case demiBold = "Demi Bold"
+//        case boldItalic = "Bold Italic"
+//        case bold = "Bold"
+//
+//    }
+
+
+    static func avenirNext(ofSize size: CGFloat, weight: UIFont.Weight) -> UIFont? {
+            // Create a UIFontDescriptor with the given font name
+            let baseDescriptor = UIFontDescriptor(name: "Avenir Next", size: size)
+
+            // Create a new font descriptor with the added weight trait
+            let fontDescriptor = baseDescriptor.addingAttributes([
+                .traits: [UIFontDescriptor.TraitKey.weight: weight]
+            ])
+
+            // Return the custom font with the specified size and weight
+            return UIFont(descriptor: fontDescriptor, size: size)
+        }
+}
+
+
+
+
+extension NSObject
+{
+    static var className: String{
+        return String(describing : self)
     }
 }

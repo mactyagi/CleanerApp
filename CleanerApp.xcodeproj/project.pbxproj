@@ -113,6 +113,9 @@
 		32ED57B02B661D6900AED057 /* VerticalMediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ED57AE2B661D6900AED057 /* VerticalMediaCollectionViewCell.xib */; };
 		32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32ED57D32B66835100AED057 /* MediaHeaderView.swift */; };
 		32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ED57D42B66835100AED057 /* MediaHeaderView.xib */; };
+		49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DDE2C019C8500373865 /* AllContactsViewController.swift */; };
+		49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */; };
+		49809DE32C01ADFB00373865 /* AllContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +200,9 @@
 		32ED57AE2B661D6900AED057 /* VerticalMediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerticalMediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		32ED57D32B66835100AED057 /* MediaHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaHeaderView.swift; sourceTree = "<group>"; };
 		32ED57D42B66835100AED057 /* MediaHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaHeaderView.xib; sourceTree = "<group>"; };
+		49809DDE2C019C8500373865 /* AllContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsViewController.swift; sourceTree = "<group>"; };
+		49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsVIewModel.swift; sourceTree = "<group>"; };
+		49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +294,9 @@
 				326BF4B82B983363003D8427 /* Incomplete Contact Screen */,
 				326BF4B72B983321003D8427 /* Duplicate Screen */,
 				323A25E42B84E69E006AD2FB /* ContactView.xib */,
+				49809DDE2C019C8500373865 /* AllContactsViewController.swift */,
+				49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */,
+				49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */,
 				323A25E62B84E8E4006AD2FB /* ContactView.swift */,
 			);
 			path = OrganizeContactScreen;
@@ -634,6 +643,7 @@
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
 				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
+				49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */,
 				32BD2A7D2B483D010039E85E /* BaseViewModel.swift in Sources */,
 				07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */,
 				32BD2A7B2B483C770039E85E /* BaseViewController.swift in Sources */,
@@ -647,6 +657,7 @@
 				32BF2C922AF947DA00045343 /* FutureHomeTableViewCell.swift in Sources */,
 				32BF2C982AF94E4F00045343 /* FutureHomeViewModel.swift in Sources */,
 				32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */,
+				49809DE32C01ADFB00373865 /* AllContactsTableViewCell.swift in Sources */,
 				32682CB22B36D7CA00B9B7BD /* HomeViewController.swift in Sources */,
 				32BD2A852B493E2F0039E85E /* MediaCollectionViewCell.swift in Sources */,
 				32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */,
@@ -689,6 +700,7 @@
 				326BF4BE2B9B14F6003D8427 /* ImagePreviewViewController.swift in Sources */,
 				323A25E22B84A62E006AD2FB /* OrganizeContactViewModel.swift in Sources */,
 				04284B082BF4890B0078B939 /* SettingViewController.swift in Sources */,
+				49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
