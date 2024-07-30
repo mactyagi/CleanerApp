@@ -121,7 +121,7 @@ class CalendarViewController: UIViewController {
 
     
     func configureRightBarButton(){
-        let rightBarButton = UIBarButtonItem(title: "selectAll", style: .plain, target: self, action: #selector(rightBarButtonPressed))
+        let rightBarButton = UIBarButtonItem(title: ConstantString.selectAll.rawValue, style: .plain, target: self, action: #selector(rightBarButtonPressed))
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
@@ -129,7 +129,7 @@ class CalendarViewController: UIViewController {
         let titleLabel = UILabel()
         titleLabel.text = self.title
         titleLabel.textColor = UIColor.label // Customize the color as needed
-        titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 17.0) // Adjust the font size as needed
+        titleLabel.font = UIFont.avenirNext(ofSize: 17, weight: .bold) // Adjust the font size as needed
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
         navigationItem.largeTitleDisplayMode = .never
@@ -140,15 +140,15 @@ class CalendarViewController: UIViewController {
     }
     
     func DeleteAlert(){
-        let typeName = viewModel.currentSegementType.rawValue == 0 ? "Calendar" : "Reminder"
-        let singularOrPurlarEvent = viewModel.totalSelectedCount > 1 ? "Events" : "Event"
-        
+        let typeName = viewModel.currentSegementType.rawValue == 0 ? ConstantString.calendar.rawValue : ConstantString.reminder.rawValue
+        let singularOrPurlarEvent = viewModel.totalSelectedCount > 1 ? ConstantString.events.rawValue : ConstantString.event.rawValue
+
         let alertVC = UIAlertController(title: "Allow to Delete \(viewModel.totalSelectedCount) \(singularOrPurlarEvent)?", message: "\(singularOrPurlarEvent) will be removed from the \(typeName)", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+        let cancelAction = UIAlertAction(title: ConstantString.cancel.rawValue, style: .cancel) { action in
             self.setupCancelEvent()
         }
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+        let deleteAction = UIAlertAction(title:ConstantString.delete.rawValue, style: .destructive) { _ in
             self.viewModel.deleteData()
         }
         
@@ -215,7 +215,7 @@ extension CalendarViewController: UITableViewDataSource, UITableViewDelegate{
             label.text = viewModel.allReminder[section].year
         }
         label.textColor = .label
-        label.font = UIFont(name: "AvenirNext-Bold", size: 17.0)
+        label.font = UIFont.avenirNext(ofSize: 17, weight: .bold)
         view.addSubview(label)
         view.backgroundColor = UIColor.lightGrayAndDarkGray2
         return view
@@ -243,7 +243,7 @@ extension CalendarViewController{
         viewModel.$isSelectedAll
             .sink { [weak self] isSelectedAll in
             DispatchQueue.main.async {
-                self?.navigationItem.rightBarButtonItem?.title = isSelectedAll ? "Deselect All" : "Select All"
+                self?.navigationItem.rightBarButtonItem?.title = isSelectedAll ? ConstantString.deSelectAll.rawValue : ConstantString.selectAll.rawValue
             }
         }
             .store(in: &cancelables)
@@ -251,7 +251,8 @@ extension CalendarViewController{
         viewModel.$totalSelectedCount
             .sink { [weak self] count in
                 DispatchQueue.main.async {
-                    self?.title = "\(count) Event\(count > 1 ? "s" : "") Selected"
+                    let eventStr = count > 1 ? ConstantString.events.rawValue : ConstantString.event.rawValue
+                    self?.title = "\(count) \(eventStr) \(ConstantString.selected.rawValue)"
                     self?.configureTitle()
                     self?.deleteButton.backgroundColor = count > 0 ? .darkBlue : .darkGray2
                     self?.deleteButton.isEnabled = count > 0

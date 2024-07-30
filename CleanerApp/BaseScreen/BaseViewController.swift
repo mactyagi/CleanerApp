@@ -160,8 +160,6 @@ class BaseViewController: UIViewController {
     }
     
     func setupViews() {
-        feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
-        feedbackGenerator?.prepare()
         titleLabel.text = type.rawValue
         setupDeleteButtonView()
         deleteView.makeCornerRadiusFourthOfHeightOrWidth()
@@ -188,7 +186,7 @@ class BaseViewController: UIViewController {
     }
     
     func setupNavigationBar(){
-        selectionBarButtonItem = UIBarButtonItem(title: "Deselect All", style: .plain, target: self, action: #selector(selectionButtonPressed))
+        selectionBarButtonItem = UIBarButtonItem(title:ConstantString.deSelectAll.rawValue, style: .plain, target: self, action: #selector(selectionButtonPressed))
         navigationItem.rightBarButtonItem = selectionBarButtonItem
         selectionBarButtonItem?.isEnabled = !viewModel.assetRows.isEmpty
     }
@@ -227,7 +225,7 @@ class BaseViewController: UIViewController {
                 
                 let size = indexPath.reduce(Int64(0)) { $0 + self.viewModel.assetRows[$1.section][$1.row].size}
                 self.deleteSubtitleLabel.text = "Clear: \(size.formatBytes())"
-                self.deleteTitleLabel.text = "Delete \(indexPath.count) Selected"
+                self.deleteTitleLabel.text = "\(ConstantString.delete.rawValue) \(indexPath.count) \(ConstantString.selected.rawValue)"
                 self.selectionBarButtonItem?.isEnabled = !self.viewModel.assetRows.isEmpty
                 
                 self.collectionView.reloadData()
@@ -244,7 +242,7 @@ class BaseViewController: UIViewController {
         viewModel.$isAllSelected.sink { [weak self] isAllSelected in
             guard let self else { return }
             DispatchQueue.main.async {
-                self.selectionBarButtonItem?.title = isAllSelected ? "Deselect All" : "Select All"
+                self.selectionBarButtonItem?.title = isAllSelected ? ConstantString.deSelectAll.rawValue : ConstantString.selectAll.rawValue
             }
         }.store(in: &cancellables)
         
@@ -316,7 +314,7 @@ extension BaseViewController: UICollectionViewDelegateFlowLayout{
 
 extension BaseViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        feedbackGenerator?.impactOccurred()
+        vibrate()
         collectionView.deselectItem(at: indexPath, animated: false)
         if viewModel.selectedIndexPath.contains(indexPath){
             viewModel.selectedIndexPath.remove(indexPath)

@@ -26,10 +26,12 @@ class OrganizeContactsViewController: UIViewController {
     
         setupViewModel()
     }
-    
+
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.getData()
         navigationController?.navigationBar.prefersLargeTitles = false
         setupNavigationAndTabBar(isScreenVisible: false)
     }
@@ -52,7 +54,7 @@ class OrganizeContactsViewController: UIViewController {
     
 
     @IBAction func inCompletContactButtonPressed(_ sender: UIButton) {
-        let viewModel = IncompleteContactViewModel(incompleteContacts: viewModel.incompleteContacts, contactStore: viewModel.contactStore)
+        let viewModel = IncompleteContactViewModel(contactStore: viewModel.contactStore)
         let vc = IncompleteContactViewController.customInit(viewModel: viewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -62,8 +64,10 @@ class OrganizeContactsViewController: UIViewController {
     }
     
     @IBAction func AllContactsButtonPressed(_ sender: UIButton) {
-        let allContactViewModel = AllContactsVIewModel(allContacts: viewModel.allContacts, contactStore: viewModel.contactStore)
+        let allContactViewModel = AllContactsVIewModel(contactStore: viewModel.contactStore)
         let vc = AllContactsViewController.customInit(viewModel: allContactViewModel)
+        
+//        let vc = TestViewController.customInit()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -74,8 +74,7 @@ class ContactView: UIView {
         }
     
     @IBAction func checkButtonPressed(_ sender: UIButton) {
-        let generator = UIImpactFeedbackGenerator(style: .rigid)
-        generator.impactOccurred()
+        vibrate()
         isSelected.toggle()
         delegate?.contactView(self, isSelected: isSelected)
     }

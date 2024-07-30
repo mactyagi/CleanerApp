@@ -8,21 +8,23 @@
 import Foundation
 import Contacts
 import Combine
+import ContactsUI
 
 class AllContactsVIewModel{
     
-    private var allContacts: [CNContact]
+    @Published var allContacts: [CNContact] = []
     var contactStore: CNContactStore
     var contactsDictionary = [String: [CNContact]]()
     @Published var sectionTitles = [String]()
-    var selectedContacts: Set<CNContact> = []
+    @Published var selectedContacts: Set<CNContact> = []
     var isSearchActive = false
     @Published var isSelectionMode = false
+    @Published var isAllSelected = false
+    @Published var showLoader =  false
 
-    init(allContacts: [CNContact], contactStore: CNContactStore) {
-        self.allContacts = allContacts
+    init( contactStore: CNContactStore) {
         self.contactStore = contactStore
-        setupContacts(contacts: allContacts)
+        fetchContacts()
     }
 
     private func setupContacts(contacts: [CNContact]) {
@@ -51,6 +53,81 @@ class AllContactsVIewModel{
     func setContacts() {
         setupContacts(contacts: allContacts)
     }
+
+
+    
+    func selectedContact(_ contact: CNContact){
+        if selectedContacts.contains(contact) {
+            selectedContacts.remove(contact)
+        } else {
+            selectedContacts.insert(contact)
+        }
+
+        if allContacts.count == selectedContacts.count{
+            isAllSelected = true
+        } else{
+            isAllSelected = false
+        }
+    }
+
+    func selectAll() {
+        for contact in allContacts{
+            selectedContacts.insert(contact)
+        }
+        isAllSelected = true
+    }
+
+    func deselectAll() {
+        selectedContacts.removeAll()
+        isAllSelected = false
+    }
+
+
+   private func deleteContact(_ contact: CNContact) {
+//        let contactStore = CNContactStore()
+        let request = CNSaveRequest()
+        let mutableContact = contact.mutableCopy() as! CNMutableContact
+        request.delete(mutableContact)
+        do {
+            try contactStore.execute(request)
+            print("Contact deleted successfully")
+        } catch {
+            print("Error deleting contact: \(error)")
+        }
+    }
+
+
+    func deleteSelectedContacts() {
+        showLoader = true
+        for contact in selectedContacts {
+            deleteContact(contact)
+        }
+        fetchContacts()
+        showLoader = false
+        isSelectionMode = false
+    }
+
+    private func fetchContacts() {
+        DispatchQueue.global().async { [weak self] in
+            guard let self else { return }
+            let request = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+            self.allContacts = []
+            do {
+                try contactStore.enumerateContacts(with: request) { contact, _ in
+                    self.allContacts.append(contact)
+                }
+            } catch {
+                logError(error: error as NSError)
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                setupContacts(contacts: allContacts)
+            }
+        }
+
+    }
+
 
     func filterSectionBasedOnSearch(searchString: String) {
         let filteredContacts = allContacts.filter { contact in

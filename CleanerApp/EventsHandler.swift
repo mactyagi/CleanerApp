@@ -140,7 +140,51 @@ enum Event: String{
         case deleteButtonPressed = "oss_delete_pressed"
         case deletedScreenshot = "oss_photos_deleted"
     }
-    
+
+    enum OrganizeContactScreen: String {
+        case appear = "ocs_appear"
+        case disappear = "ocs_disappear"
+        case incompleteCount = "ocs_incomplete_count"
+        case allContactCount = "ocs_all_contact_count"
+        case duplicateContactCount = "ocs_duplicate_contact_count"
+    }
+
+    enum AllContactScreen: String {
+        case appear = "acs_appear" // done
+        case disAppear = "acs_disappear" // done
+        case allContactCount = "acs_count" // done
+        case select = "acs_select"  // done
+        case selectAll = "acs_select_all" // done
+        case deselectAll = "acs_deselect_all" //done
+        case selectedCount = "acs_selected_count" // done
+        case search = "acs_search" // done
+        case deletePressed = "acs_delete_pressed"  //done
+        case deleteConfirmed = "acs_delete_confirmed" // done
+        case deleteCancel = "acs_delete_cancel" // done
+    }
+
+    enum IncompleteContactScreen: String {
+        case appear = "ics_appear" // done
+        case disappear = "ics_disappear" // done
+        case count = "ics_count" // done
+        case selectAll = "ics_select_all" // done
+        case deselectAll = "ics_deselect_all" // done
+        case selectedCount = "ics_selected_count" // done
+        case deleteButtonPressed = "ics_delete_pressed" // done
+        case deleteConfirmed = "ics_delete_confirmed" // done
+        case deleteCancel = "ics_delete_cancel" // done
+    }
+
+    enum DuplicateContactScreen: String {
+        case appear = "dcs_appear" // done
+        case disappear = "dcs_disappear" // done
+        case mergePressed = "dcs_merged_pressed" // done
+        case mergeConfirmed = "dcs_merge_confirmed" // done
+        case mergeCancel = "dcs_merge_cancel" // done
+        case totalMergeItems = "dcs_total_items" // done
+
+    }
+
     enum GalleryManager: String{
         case fetchStatus = "fetching_status"
     }

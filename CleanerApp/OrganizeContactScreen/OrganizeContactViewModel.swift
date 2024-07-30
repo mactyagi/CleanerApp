@@ -18,17 +18,20 @@ class OrganizeContactViewModel{
 
     init(contactStore: CNContactStore){
         self.contactStore = contactStore
+    }
+
+    
+    func getData() {
         DispatchQueue.global().async {
             self.findDuplicateContactsBasedOnAll()
             self.fetchContacts()
             self.findIncompleteContacts()
         }
-        
     }
-    
+
     func findIncompleteContacts() {
         incompleteContacts = []
-        let keysToFetch = [CNContactGivenNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey, CNContactMiddleNameKey, CNContactFamilyNameKey]
+
         let fetchRequest = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()] /*keysToFetch as [CNKeyDescriptor]*/)
 
         incompleteContactsCount = 0

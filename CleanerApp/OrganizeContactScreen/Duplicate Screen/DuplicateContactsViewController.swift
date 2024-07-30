@@ -30,9 +30,15 @@ class DuplicateContactsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        logEvent(Event.DuplicateContactScreen.appear.rawValue, parameter: nil)
         tableView.reloadData()
     }
-    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        logEvent(Event.DuplicateContactScreen.disappear.rawValue, parameter: nil)
+    }
+
     
     //MARK: - customInit
     static func customInit(viewModel: DuplicateContactsViewModel) -> Self{
@@ -60,11 +66,14 @@ class DuplicateContactsViewController: UIViewController {
     func showAlertToMerge(at indexPath: IndexPath){
         let alertVC = UIAlertController(title: "Alert!", message: "Are you sure want to merge?", preferredStyle: .alert)
         let mergeAction = UIAlertAction(title: "Merge", style: .default) { _ in
+            logEvent(Event.DuplicateContactScreen.mergeConfirmed.rawValue, parameter: ["merge_count": self.viewModel.dataSource[indexPath.row].duplicatesContacts.count])
             self.viewModel.mergeAndSaveAt(indexPath: indexPath)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            logEvent(Event.DuplicateContactScreen.mergeCancel.rawValue, parameter: nil)
+        }
+
         alertVC.addAction(mergeAction)
         alertVC.addAction(cancelAction)
         
@@ -101,6 +110,10 @@ extension DuplicateContactsViewController{
                     self.tableView.reloadData()
                 }
             }
+        }.store(in: &cancellable)
+
+        viewModel.$dataSource.sink { items in
+            logEvent(Event.DuplicateContactScreen.totalMergeItems.rawValue, parameter: ["count": items.count])
         }.store(in: &cancellable)
     }
 }

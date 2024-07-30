@@ -34,7 +34,7 @@ class DuplicateContactTableViewCell: UITableViewCell{
     
     var isAllselected = false{
         didSet{
-            selectButton.setTitle( isAllselected ? "Deselect All" : "Select All", for: .normal)
+            selectButton.setTitle( isAllselected ? ConstantString.deSelectAll.rawValue : ConstantString.selectAll.rawValue, for: .normal)
         }
     }
     var indexPath: IndexPath!

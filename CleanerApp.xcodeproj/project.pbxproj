@@ -116,6 +116,9 @@
 		49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DDE2C019C8500373865 /* AllContactsViewController.swift */; };
 		49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */; };
 		49809DE32C01ADFB00373865 /* AllContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */; };
+		49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */; };
+		49DB037E2C5661A600F0052E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 49DB037D2C5661A600F0052E /* AlertToast */; };
+		49DB03862C567C3900F0052E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Common.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -203,6 +206,8 @@
 		49809DDE2C019C8500373865 /* AllContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsViewController.swift; sourceTree = "<group>"; };
 		49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsVIewModel.swift; sourceTree = "<group>"; };
 		49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsTableViewCell.swift; sourceTree = "<group>"; };
+		49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllContactsTableViewCell.xib; sourceTree = "<group>"; };
+		49DB03852C567C3900F0052E /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				327C25D32B79509100EA0E36 /* FirebaseDatabase in Frameworks */,
+				49DB037E2C5661A600F0052E /* AlertToast in Frameworks */,
 				327C25E12B79509100EA0E36 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				327C25D92B79509100EA0E36 /* FirebaseFirestore in Frameworks */,
 				327C25C52B79509100EA0E36 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -296,6 +302,7 @@
 				323A25E42B84E69E006AD2FB /* ContactView.xib */,
 				49809DDE2C019C8500373865 /* AllContactsViewController.swift */,
 				49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */,
+				49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */,
 				49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */,
 				323A25E62B84E8E4006AD2FB /* ContactView.swift */,
 			);
@@ -356,14 +363,15 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		32B3C1F52B496DFE000B0727 /* Common Views */ = {
+		32B3C1F52B496DFE000B0727 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				32682CAD2B36D12C00B9B7BD /* IconView.xib */,
 				32682CAF2B36D17800B9B7BD /* IconView.swift */,
+				49DB03852C567C3900F0052E /* Common.swift */,
 				324943442B680C700035FE64 /* CircularProgressView.swift */,
 			);
-			path = "Common Views";
+			path = Common;
 			sourceTree = "<group>";
 		};
 		32B6C5AA2B01351800A691AE /* Video Compress  */ = {
@@ -479,7 +487,7 @@
 				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
 				32231B5B2B04B30A009AE1E0 /* Secret Space */,
 				3201A26A2B38A739003DB928 /* Calender Screen */,
-				32B3C1F52B496DFE000B0727 /* Common Views */,
+				32B3C1F52B496DFE000B0727 /* Common */,
 				32BF2C942AF94E1A00045343 /* Future Home Screen */,
 				04284B092BF489190078B939 /* Setting Screen */,
 				32E2E0DC2AF80039009CA92E /* Main.storyboard */,
@@ -538,6 +546,7 @@
 				327C25F02B79509100EA0E36 /* FirebaseRemoteConfigSwift */,
 				327C25F22B79509100EA0E36 /* FirebaseStorage */,
 				327C25F42B79509100EA0E36 /* FirebaseStorageCombine-Community */,
+				49DB037D2C5661A600F0052E /* AlertToast */,
 			);
 			productName = CleanerApp;
 			productReference = 32E2E0D32AF80039009CA92E /* CleanerApp.app */;
@@ -569,6 +578,7 @@
 			mainGroup = 32E2E0CA2AF80039009CA92E;
 			packageReferences = (
 				327C25BF2B79509100EA0E36 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				49DB037C2C5661A600F0052E /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = 32E2E0D42AF80039009CA92E /* Products */;
 			projectDirPath = "";
@@ -594,6 +604,7 @@
 				32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */,
 				323A25E52B84E69E006AD2FB /* ContactView.xib in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
+				49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */,
 				32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */,
 				32BD2A772B483A270039E85E /* PhotoCollectionViewCell.xib in Resources */,
 				32603A982B3A962100154775 /* ReminderTableViewCell.xib in Resources */,
@@ -665,6 +676,7 @@
 				326BF4BC2B9835B0003D8427 /* IncompleteContactViewModel.swift in Sources */,
 				327474C32B7AB8420034A587 /* EventsHandler.swift in Sources */,
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
+				49DB03862C567C3900F0052E /* Common.swift in Sources */,
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
 				079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */,
@@ -962,6 +974,14 @@
 				minimumVersion = 10.21.0;
 			};
 		};
+		49DB037C2C5661A600F0052E /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1099,6 +1119,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 327C25BF2B79509100EA0E36 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		49DB037D2C5661A600F0052E /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49DB037C2C5661A600F0052E /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 /* End XCSwiftPackageProductDependency section */
 

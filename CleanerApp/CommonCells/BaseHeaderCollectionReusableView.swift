@@ -18,7 +18,7 @@ class BaseHeaderCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var countLabel: UILabel!
     var isAllSelected = true{
         didSet{
-            selectionButton.setTitle(isAllSelected ? "Deselect All" : "Select All", for: .normal)
+            selectionButton.setTitle(isAllSelected ? ConstantString.deSelectAll.rawValue : ConstantString.selectAll.rawValue, for: .normal)
         }
     }
     var delegate: BaseHeaderCollectionReusableViewDelegate?

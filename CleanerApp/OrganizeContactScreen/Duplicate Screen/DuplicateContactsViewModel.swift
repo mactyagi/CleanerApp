@@ -11,7 +11,7 @@ typealias duplicateAndMergedContactTuple = (mergedContact: CNMutableContact?, du
 
 class DuplicateContactsViewModel{
     
-    var dataSource: [duplicateAndMergedContactTuple] = []
+    @Published var dataSource: [duplicateAndMergedContactTuple] = []
     var contactStore: CNContactStore
     @Published var reloadAtIndex:IndexPath?
 
