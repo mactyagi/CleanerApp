@@ -47,7 +47,7 @@ class IncompleteContactViewController: UIViewController, CNContactViewController
     //MARK: - overrride functions
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+            self.deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0).cgColor,
                                    UIColor.systemBackground.withAlphaComponent(1).cgColor]
         }
     }
@@ -79,12 +79,12 @@ class IncompleteContactViewController: UIViewController, CNContactViewController
         title = "Incomplete Contacts"
         navigationController?.navigationBar.prefersLargeTitles = true
         deleteButton.makeCornerRadiusCircle()
-        deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0.2).cgColor,
+        deleteButtonGradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0).cgColor,
                                             UIColor.systemBackground.withAlphaComponent(1).cgColor]
 
-        deleteButtonGradientLayer.locations = [0, 0.5]
+        deleteButtonGradientLayer.locations = [0, 1]
         deleteButtonGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
-        deleteButtonGradientLayer.endPoint = CGPoint(x: 0, y: 1)
+        deleteButtonGradientLayer.endPoint = CGPoint(x: 0, y: 0.5)
 
         deleteButtonGradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: deleteButton.superview!.bounds.height)
 
