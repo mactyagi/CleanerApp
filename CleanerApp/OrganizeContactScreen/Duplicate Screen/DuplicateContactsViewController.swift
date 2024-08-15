@@ -121,27 +121,35 @@ extension DuplicateContactsViewController{
 extension DuplicateContactsViewController: DuplicateContactTableViewCellDelegate{
     func duplicateContactTableViewCell(_ cell: DuplicateContactTableViewCell, didContactSelected contact: CNContact?) {
         guard let contact else { return }
-        if !contact.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
+        let contactVC = CNContactViewController(for: contact)
+//                contactVC.delegate = self
+        contactVC.hidesBottomBarWhenPushed = true
+        contactVC.allowsEditing = false
+        contactVC.allowsActions = false
+        self.navigationController?.pushViewController(contactVC, animated: true)
 
-            if let contact = try? viewModel.contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()]) {
-                let contactVC = CNContactViewController(forUnknownContact: contact)
-    //                contactVC.delegate = self
-                contactVC.hidesBottomBarWhenPushed = true
-                contactVC.allowsEditing = false
-                contactVC.allowsActions = false
-                self.navigationController?.pushViewController(contactVC, animated: true)
-            }else {
-                let newContact = CNMutableContact()
-                newContact.givenName = contact.givenName
-                newContact.familyName = contact.familyName
-                let contactVC = CNContactViewController(forUnknownContact: contact)
-    //                contactVC.delegate = self
-                contactVC.hidesBottomBarWhenPushed = true
-                contactVC.allowsEditing = false
-                contactVC.allowsActions = false
-                self.navigationController?.pushViewController(contactVC, animated: true)
-            }
-        }
+
+//        if !contact.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
+//
+//            if let contact = try? viewModel.contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()]) {
+//                let contactVC = CNContactViewController(forUnknownContact: contact)
+//    //                contactVC.delegate = self
+//                contactVC.hidesBottomBarWhenPushed = true
+//                contactVC.allowsEditing = false
+//                contactVC.allowsActions = false
+//                self.navigationController?.pushViewController(contactVC, animated: true)
+//            }else {
+//                let newContact = CNMutableContact()
+//                newContact.givenName = contact.givenName
+//                newContact.familyName = contact.familyName
+//                let contactVC = CNContactViewController(forUnknownContact: contact)
+//    //                contactVC.delegate = self
+//                contactVC.hidesBottomBarWhenPushed = true
+//                contactVC.allowsEditing = false
+//                contactVC.allowsActions = false
+//                self.navigationController?.pushViewController(contactVC, animated: true)
+//            }
+//        }
     }
     
 

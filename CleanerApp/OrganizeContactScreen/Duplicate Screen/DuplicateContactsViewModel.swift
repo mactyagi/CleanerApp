@@ -7,6 +7,7 @@
 
 import Foundation
 import Contacts
+import ContactsUI
 typealias duplicateAndMergedContactTuple = (mergedContact: CNMutableContact?, duplicatesContacts: [CustomCNContact])
 
 class DuplicateContactsViewModel{
@@ -38,10 +39,12 @@ class DuplicateContactsViewModel{
             CNContactNicknameKey as CNKeyDescriptor,
             CNContactRelationsKey as CNKeyDescriptor,
 //            CNContactNoteKey as CNKeyDescriptor,
-            CNContactOrganizationNameKey as CNKeyDescriptor
+            CNContactOrganizationNameKey as CNKeyDescriptor,
+            CNContactViewController.descriptorForRequiredKeys()
         ])
-        
-        
+
+//        let request = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+
         
         var duplicateDictionary = [String: [CNContact]]()
         
