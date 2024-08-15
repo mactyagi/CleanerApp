@@ -280,17 +280,24 @@ extension CompressQualitySelectionViewController{
         viewModel.$compressAsset.receive(on: DispatchQueue.main)
             .sink { error in
             print(error)
-        } receiveValue: { compressAsset in
+        } receiveValue: {[weak self] compressAsset in
+            guard let self = self else { return }
+            updateUI(with: compressAsset)
+        }.store(in: &cancelableSubscribers)
+    }
+
+
+    private func updateUI(with compressAsset: CompressVideoModel) {
             self.DetailNowSizeLabel.text = compressAsset.originalSize.convertToFileString()
             self.beforeSizeLabel.text = compressAsset.originalSize.convertToFileString()
             let compressSize = compressAsset.reduceSize
             self.detailCompressSizeLabel.text = compressSize.convertToFileString()
+
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
             let attribute2 = [NSAttributedString.Key.foregroundColor: UIColor.label]
             let attributedText = NSMutableAttributedString(string: "You will save about ", attributes: attributes)
             let secondAttributedText = NSAttributedString(string: (compressAsset.originalSize - compressSize).convertToFileString(), attributes: attribute2)
             attributedText.append(secondAttributedText)
             self.subtitleLabel.attributedText = attributedText
-        }.store(in: &cancelableSubscribers)
-    }
+        }
 }

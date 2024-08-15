@@ -20,15 +20,21 @@ class CompressQualitySelectionViewModel{
 
 extension CompressQualitySelectionViewModel{
     func optimalQualitySelected(){
-        compressAsset.compressor.quality = .very_high
+        let updatedAsset = compressAsset
+        updatedAsset.compressor.quality = .very_high
+        compressAsset = updatedAsset
     }
     
     func MediumQualitySelected(){
+        let updatedAsset = compressAsset
         compressAsset.compressor.quality = .high
+        compressAsset = updatedAsset
     }
     
     func MaxQualitySelected(){
+        let updatedAsset = compressAsset
         compressAsset.compressor.quality = .medium
+        compressAsset = updatedAsset
     }
     
     func saveVideoToPhotosLibrary(videoURL: URL, completion: @escaping (Int64, Error?) -> Void) {
