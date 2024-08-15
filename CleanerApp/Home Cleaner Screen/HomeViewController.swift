@@ -113,8 +113,9 @@ class HomeViewController: UIViewController {
         addCornerRadius(20, views: smartCleaningView)
         
         setupIcons()
-        let customFont = UIFont(name: "Avenir Next Demi Bold", size: 18.0)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
+
+        let customFont =  UIFont.avenirNext(ofSize: 18, weight: .semibold)
+//        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: customFont!], for: .normal)
         setupProgressBar()
     }
     

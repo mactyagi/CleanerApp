@@ -187,7 +187,7 @@ extension AllContactsViewController {
             }
         }.store(in: &cancellables)
 
-        viewModel.$isSelectionMode.sink { [weak self] isSelectedMode in
+        viewModel.$isSelectionMode.receive(on: DispatchQueue.main).sink { [weak self] isSelectedMode in
             guard let self else { return }
             if isSelectedMode {
                 if #available(iOS 16.0, *) {
@@ -216,7 +216,7 @@ extension AllContactsViewController {
             }
         }.store(in: &cancellables)
 
-        viewModel.$selectedContacts.sink {[weak self] selectedContacts in
+        viewModel.$selectedContacts.receive(on: DispatchQueue.main).sink {[weak self] selectedContacts in
             guard let self else { return }
             logEvent(Event.AllContactScreen.selectedCount.rawValue, parameter: nil)
             if selectedContacts.isEmpty {
@@ -229,12 +229,14 @@ extension AllContactsViewController {
 
         }.store(in: &cancellables)
 
-        viewModel.$isAllSelected.sink {[weak self] isAllSelected in
+        viewModel.$isAllSelected.receive(on: DispatchQueue.main).sink {[weak self] isAllSelected in
             guard let self else { return }
-            if isAllSelected{
-                self.rightBarButtonItem?.title = ConstantString.deSelectAll.rawValue
-            } else {
-                self.rightBarButtonItem?.title = ConstantString.selectAll.rawValue
+            if viewModel.isSelectionMode{
+                if isAllSelected{
+                    self.rightBarButtonItem?.title = ConstantString.deSelectAll.rawValue
+                } else {
+                    self.rightBarButtonItem?.title = ConstantString.selectAll.rawValue
+                }
             }
 
             
