@@ -197,12 +197,12 @@ func logEvent(_ event:String, parameter: [String: Any]?){
 }
 
 func logError(error: NSError){
-    logEvent("error_found", parameter: ["error": error, "localized": error.localizedDescription, "userInfo": error.userInfo])
+    logEvent("cleaner_error_found", parameter: ["error": error, "localized": error.localizedDescription, "userInfo": error.userInfo])
     print(error)
 }
 
 func logErrorString(errorString: String){
-    logEvent("error_string_found", parameter: ["error": errorString])
+    logEvent("cleaner_error_string_found", parameter: ["error": errorString])
     print(errorString)
 }
 

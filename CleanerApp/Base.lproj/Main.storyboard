@@ -2594,11 +2594,11 @@
             </objects>
             <point key="canvasLocation" x="-4179" y="26"/>
         </scene>
-        <!--Setting-->
+        <!--Settings-->
         <scene sceneID="q3Y-mw-N5B">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="urh-YC-hmb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Setting" image="gear.circle" catalog="system" selectedImage="gear.circle.fill" id="YKd-aw-n2M"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="gear.circle" catalog="system" selectedImage="gear.circle.fill" id="YKd-aw-n2M"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3EG-cX-lji">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

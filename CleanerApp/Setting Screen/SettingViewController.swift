@@ -34,11 +34,6 @@ class SettingViewController: UIViewController {
         setupNavigationView()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        title = ""
-    }
-    
     
     func setupTableView() {
         tableView.dataSource = self

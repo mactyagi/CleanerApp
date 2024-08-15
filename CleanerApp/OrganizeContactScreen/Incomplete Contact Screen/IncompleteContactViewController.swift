@@ -27,6 +27,7 @@ class IncompleteContactViewController: UIViewController, CNContactViewController
     //MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        logErrorString(errorString: "This is eerror")
         setupSubscriber()
         setupTableView()
         setupUIView()
@@ -101,7 +102,7 @@ class IncompleteContactViewController: UIViewController, CNContactViewController
 
         }
         let deleteAction = UIAlertAction(title: ConstantString.delete.rawValue, style: .destructive) { _ in
-            logEvent(Event.IncompleteContactScreen.deleteConfirmed.rawValue, parameter: ["deleted_count": viewModel.selectedContactSet.count])
+            logEvent(Event.IncompleteContactScreen.deleteConfirmed.rawValue, parameter: ["deleted_count": self.viewModel.selectedContactSet.count])
             self.viewModel.deleteSelectedContacts()
         }
 

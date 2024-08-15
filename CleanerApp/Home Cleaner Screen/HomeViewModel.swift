@@ -50,11 +50,11 @@ class  HomeViewModel: NSObject {
     func updateData(){
         queue.async {
             self.getContactsData()
+            self.getCalendarData()
+            self.getReminderData()
+            self.fetchPhotoAndvideosCountAndSize()
+            self.startUpdatingDeivceInfo()
         }
-        self.getCalendarData()
-        self.getReminderData()
-        self.fetchPhotoAndvideosCountAndSize()
-        startUpdatingDeivceInfo()
         queue.async {
             self.getStorageInfo()
         }
