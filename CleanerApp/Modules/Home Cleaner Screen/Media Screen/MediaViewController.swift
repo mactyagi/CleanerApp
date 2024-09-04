@@ -176,6 +176,14 @@ extension MediaViewController:UICollectionViewDelegate{
         case .otherScreenshot:
             let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherScreenshot), groupType: .other, type: .otherScreenshot)
             navigationController?.pushViewController(vc, animated: true)
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .smallVideos:
+            break
+        case .otherVideos:
+            break
         }
     }
 }

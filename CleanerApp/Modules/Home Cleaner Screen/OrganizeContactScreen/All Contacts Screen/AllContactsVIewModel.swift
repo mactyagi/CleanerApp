@@ -110,6 +110,7 @@ class AllContactsVIewModel{
 
     private func fetchContacts() {
         self.allContacts = []
+        showLoader = true
         DispatchQueue.global().async { [weak self] in
             guard let self else { return }
             let request = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
@@ -124,6 +125,7 @@ class AllContactsVIewModel{
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 setupContacts(contacts: allContacts)
+                showLoader = false
             }
         }
 

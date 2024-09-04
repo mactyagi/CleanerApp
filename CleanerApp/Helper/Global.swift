@@ -30,4 +30,7 @@ enum ConstantString: String {
     case reminder = "Reminder"
     case events = "Events"
     case event = "Event"
+    case similars = "Similars"
+    case duplicates = "Duplicates"
+    case others = "Others"
 }

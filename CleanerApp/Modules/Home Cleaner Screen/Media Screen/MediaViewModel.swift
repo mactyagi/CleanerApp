@@ -14,7 +14,9 @@ class MediaViewModel: NSObject{
     
     var sectionsType: [(title:String, cells: [MediaCellType])] = [
         ("Photos", [.duplicatePhoto, .similarPhoto, .otherPhoto]),
-        ("Screenshots", [.duplicateScreenshot, .similarScreenshot, .otherScreenshot])
+        ("Screenshots", [.duplicateScreenshot, .similarScreenshot, .otherScreenshot]),
+        ("Videos", [.duplicateVideos, .similarVideos, .otherVideos])
+
     ]
     
     @Published var dataSource: [(title: String, cells:[MediaCell])] = []
@@ -42,7 +44,7 @@ class MediaViewModel: NSObject{
     
     
     
-    func getPredicate(mediaType: MediaCellType) -> NSPredicate{
+    func getPredicate(mediaType: MediaCellType) -> NSPredicate?{
         var assetMediaType: PHAssetCustomMediaType = .photo
         var groupType: PHAssetGroupType = .duplicate
         
@@ -64,6 +66,17 @@ class MediaViewModel: NSObject{
             groupType = .duplicate
         case .otherScreenshot:
             assetMediaType = .screenshot
+            groupType = .other
+        case .similarVideos:
+            assetMediaType = .video
+            groupType = .similar
+        case .duplicateVideos:
+            assetMediaType = .video
+            groupType = .duplicate
+        case .smallVideos:
+           return nil
+        case .otherVideos:
+            assetMediaType = .video
             groupType = .other
         }
         
@@ -107,6 +120,14 @@ class MediaViewModel: NSObject{
             logEvent(Event.MediaScreen.duplicateScreenshotCount.rawValue, parameter: ["count": count])
         case .otherScreenshot:
             logEvent(Event.MediaScreen.otherScreenshotCount.rawValue, parameter: ["count": count])
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .smallVideos:
+            break
+        case .otherVideos:
+            break
         }
     }
     

@@ -15,21 +15,33 @@ enum MediaCellType: String, CaseIterable{
     case similarScreenshot = "Similar Screenshots"
     case duplicateScreenshot = "Duplicate Screenshots"
     case otherScreenshot = "Other Screenshots"
-    
+    case similarVideos = "Similar Videos"
+    case duplicateVideos = "Duplicate Videos"
+    case smallVideos = "Small Videos"
+    case otherVideos = "Other Videos"
+
     var cell: MediaCell{
         switch self {
         case .similarPhoto:
-            return MediaCell(mainTitle: "Similars", imageName: "photo.on.rectangle.angled", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: ConstantString.similars.rawValue, imageName: "photo.on.rectangle.angled", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .duplicatePhoto:
-            return MediaCell(mainTitle: "Duplicates", imageName: "photo.fill.on.rectangle.fill", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: ConstantString.duplicates.rawValue, imageName: "photo.fill.on.rectangle.fill", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .otherPhoto:
-            return MediaCell(mainTitle: "Others", imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+            return MediaCell(mainTitle: ConstantString.others.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         case .similarScreenshot:
-            return MediaCell(mainTitle: "Similars", imageName: "photo.on.rectangle.angled", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: ConstantString.similars.rawValue, imageName: "photo.on.rectangle.angled", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .duplicateScreenshot:
-            return MediaCell(mainTitle: "Duplicates", imageName: "photo.fill.on.rectangle.fill", cellType: self, asset: [], size: 0, stackShouldVertical: true)
+            return MediaCell(mainTitle: ConstantString.duplicates.rawValue, imageName: "photo.fill.on.rectangle.fill", cellType: self, asset: [], size: 0, stackShouldVertical: true)
         case .otherScreenshot:
-            return MediaCell(mainTitle: "Others", imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+            return MediaCell(mainTitle: ConstantString.others.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+        case .similarVideos:
+            return MediaCell(mainTitle: ConstantString.similars.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+        case .duplicateVideos:
+            return MediaCell(mainTitle: ConstantString.duplicates.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+        case .smallVideos:
+            return MediaCell(mainTitle: ConstantString.similars.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+        case .otherVideos:
+            return MediaCell(mainTitle: ConstantString.others.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         }
     }
 }

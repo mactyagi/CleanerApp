@@ -11,7 +11,7 @@ import Photos
 class BaseViewModel{
     
     var assetRows: [[DBAsset]] = []
-   @Published var selectedIndexPath: Set<IndexPath> = []
+    @Published var selectedIndexPath: Set<IndexPath> = []
     @Published var sizeLabel: String = ""
     @Published var isAllSelected = true
     @Published var showLoader = false
@@ -58,6 +58,14 @@ class BaseViewModel{
             logEvent(Event.DuplicateScreenshotScreen.count.rawValue, parameter: ["count": count])
         case .otherScreenshot:
             logEvent(Event.OtherScreenshotScreen.count.rawValue, parameter: ["count": count])
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .otherVideos:
+            break
+        case .smallVideos:
+            break
         }
     }
     
@@ -144,6 +152,14 @@ class BaseViewModel{
             logEvent(Event.DuplicateScreenshotScreen.deletedScreenshot.rawValue, parameter: ["count":count])
         case .otherScreenshot:
             logEvent(Event.OtherScreenshotScreen.deletedScreenshot.rawValue, parameter: ["count":count])
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .otherVideos:
+            break
+        case .smallVideos:
+            break
         }
     }
     

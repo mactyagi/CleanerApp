@@ -66,7 +66,7 @@ class BaseViewController: UIViewController {
     }
 
     //MARK: - Static and Class Functions/Properties
-    class func customInit(predicate: NSPredicate, groupType: PHAssetGroupType, type: MediaCellType) -> Self{
+    class func customInit(predicate: NSPredicate?, groupType: PHAssetGroupType, type: MediaCellType) -> Self{
         let vc = UIStoryboard.media.instantiateViewController(withIdentifier: Self.className) as! Self
         vc.predicate = predicate
         vc.groupType = groupType
@@ -96,6 +96,14 @@ class BaseViewController: UIViewController {
             logEvent(Event.DuplicateScreenshotScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
         case .otherScreenshot:
             logEvent(Event.OtherScreenshotScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .otherVideos:
+            break
+        case .smallVideos:
+            break
         case .none:
             break
         }
@@ -116,6 +124,14 @@ class BaseViewController: UIViewController {
             logEvent(Event.DuplicateScreenshotScreen.loaded.rawValue, parameter: nil)
         case .otherScreenshot:
             logEvent(Event.OtherScreenshotScreen.loaded.rawValue, parameter: nil)
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .otherVideos:
+            break
+        case .smallVideos:
+            break
         case .none:
             break
         }
@@ -135,6 +151,14 @@ class BaseViewController: UIViewController {
             logEvent(Event.DuplicateScreenshotScreen.appear.rawValue, parameter: nil)
         case .otherScreenshot:
             logEvent(Event.OtherScreenshotScreen.appear.rawValue, parameter: nil)
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .otherVideos:
+            break
+        case .smallVideos:
+            break
         case .none:
             break
         }
@@ -154,6 +178,14 @@ class BaseViewController: UIViewController {
             logEvent(Event.DuplicateScreenshotScreen.disappear.rawValue, parameter: nil)
         case .otherScreenshot:
             logEvent(Event.OtherScreenshotScreen.disappear.rawValue, parameter: nil)
+        case .similarVideos:
+            break
+        case .duplicateVideos:
+            break
+        case .otherVideos:
+            break
+        case .smallVideos:
+            break
         case .none:
             break
         }
