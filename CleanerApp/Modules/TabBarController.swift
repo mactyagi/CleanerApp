@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class TabBarController : UITabBarController{
 
@@ -32,10 +33,19 @@ class TabBarController : UITabBarController{
         compressNavVC.tabBarItem = UITabBarItem(title: "Compressor", image: UIImage(systemName: "digitalcrown.horizontal.press"), selectedImage: UIImage(systemName: "digitalcrown.horizontal.press.fill"))
 
         // Setting VC
-        let settingNavVC = UINavigationController(rootViewController: SettingViewController.customInit())
-        settingNavVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear.circle"), selectedImage: UIImage(systemName: "gear.circle.fill"))
+        let settingVC = SettingViewSwiftUIVC()
+        settingVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear.circle"), selectedImage: UIImage(systemName: "gear.circle.fill"))
 
-        viewControllers = [homeNavVC, compressNavVC, settingNavVC]
+        viewControllers = [homeNavVC, compressNavVC, settingVC]
+    }
+}
 
+class SettingViewSwiftUIVC: UIHostingController<SettingView> {
+    init() {
+        super.init(rootView: SettingView())
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

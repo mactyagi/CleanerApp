@@ -127,6 +127,8 @@
 		49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */; };
 		49DB037E2C5661A600F0052E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 49DB037D2C5661A600F0052E /* AlertToast */; };
 		49DB03862C567C3900F0052E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Global.swift */; };
+		DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */; };
+		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,6 +226,8 @@
 		49A0B11C2C70FE030079867A /* Media.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Media.storyboard; sourceTree = "<group>"; };
 		49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllContactsTableViewCell.xib; sourceTree = "<group>"; };
 		49DB03852C567C3900F0052E /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,10 +273,12 @@
 			isa = PBXGroup;
 			children = (
 				04284B072BF4890B0078B939 /* SettingViewController.swift */,
+				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
 				07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */,
 				07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */,
 				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
 				49A0B10C2C70B8FA0079867A /* Setting.storyboard */,
+				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
 			);
 			path = "Setting Screen";
 			sourceTree = "<group>";
@@ -784,6 +790,7 @@
 				4970EB762C709AC600B09C9A /* TabBarController.swift in Sources */,
 				49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */,
 				32BD2A7D2B483D010039E85E /* BaseViewModel.swift in Sources */,
+				DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */,
 				07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */,
 				32BD2A7B2B483C770039E85E /* BaseViewController.swift in Sources */,
 				3201A2782B394D1D003DB928 /* CustomEKEventModel.swift in Sources */,
@@ -812,6 +819,7 @@
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
 				324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */,
 				32603A972B3A962100154775 /* ReminderTableViewCell.swift in Sources */,
+				DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */,
 				32BD2A762B483A270039E85E /* PhotoCollectionViewCell.swift in Sources */,
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,

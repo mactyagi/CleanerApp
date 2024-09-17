@@ -10,7 +10,7 @@ import UIKit
 
 class SettingViewController: UIViewController {
 
-    var dataSource = ["Privacy Policy"]
+    var dataSource: [SettingType] = SettingType.allCases
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -65,6 +65,9 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SettingTableViewCell
+        let model = dataSource[indexPath.row].model
+        cell.titleLabel.text = model.title
+        cell.subtitleLabel.text = model.subTitle
         return cell
     }
     
