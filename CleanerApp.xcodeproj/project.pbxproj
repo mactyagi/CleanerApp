@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04284B082BF4890B0078B939 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04284B072BF4890B0078B939 /* SettingViewController.swift */; };
-		07350E832BF4A8A6005DD945 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */; };
-		07350E842BF4A8A6005DD945 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */; };
 		079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */; };
 		07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */; };
 		07E1EABC2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */; };
@@ -118,7 +115,6 @@
 		49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DDE2C019C8500373865 /* AllContactsViewController.swift */; };
 		49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */; };
 		49809DE32C01ADFB00373865 /* AllContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */; };
-		49A0B10D2C70B8FA0079867A /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A0B10C2C70B8FA0079867A /* Setting.storyboard */; };
 		49A0B10F2C70B9CA0079867A /* VideoCompress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A0B10E2C70B9CA0079867A /* VideoCompress.storyboard */; };
 		49A0B1112C70BAC10079867A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A0B1102C70BAC10079867A /* Home.storyboard */; };
 		49A0B1132C70BC630079867A /* Contact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A0B1122C70BC630079867A /* Contact.storyboard */; };
@@ -129,12 +125,11 @@
 		49DB03862C567C3900F0052E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Global.swift */; };
 		DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */; };
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
+		DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */; };
+		DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04284B072BF4890B0078B939 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
-		07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactTableViewCell.swift; sourceTree = "<group>"; };
 		07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncompleteContactTableViewCell.xib; sourceTree = "<group>"; };
@@ -218,7 +213,6 @@
 		49809DDE2C019C8500373865 /* AllContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsViewController.swift; sourceTree = "<group>"; };
 		49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsVIewModel.swift; sourceTree = "<group>"; };
 		49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsTableViewCell.swift; sourceTree = "<group>"; };
-		49A0B10C2C70B8FA0079867A /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		49A0B10E2C70B9CA0079867A /* VideoCompress.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoCompress.storyboard; sourceTree = "<group>"; };
 		49A0B1102C70BAC10079867A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		49A0B1122C70BC630079867A /* Contact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Contact.storyboard; sourceTree = "<group>"; };
@@ -228,6 +222,8 @@
 		49DB03852C567C3900F0052E /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,13 +268,11 @@
 		04284B092BF489190078B939 /* Setting Screen */ = {
 			isa = PBXGroup;
 			children = (
-				04284B072BF4890B0078B939 /* SettingViewController.swift */,
 				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
-				07350E812BF4A8A6005DD945 /* SettingTableViewCell.swift */,
-				07350E822BF4A8A6005DD945 /* SettingTableViewCell.xib */,
-				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
-				49A0B10C2C70B8FA0079867A /* Setting.storyboard */,
+				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
+				DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */,
+				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
 			);
 			path = "Setting Screen";
 			sourceTree = "<group>";
@@ -722,12 +716,10 @@
 			files = (
 				32D3FC162B57A60E0000A082 /* BaseHeaderCollectionReusableView.xib in Resources */,
 				32ED57B02B661D6900AED057 /* VerticalMediaCollectionViewCell.xib in Resources */,
-				49A0B10D2C70B8FA0079867A /* Setting.storyboard in Resources */,
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32BD2A862B493E2F0039E85E /* MediaCollectionViewCell.xib in Resources */,
 				323A25ED2B84E9E5006AD2FB /* DuplicateContactTableViewCell.xib in Resources */,
 				49A0B10F2C70B9CA0079867A /* VideoCompress.storyboard in Resources */,
-				07350E842BF4A8A6005DD945 /* SettingTableViewCell.xib in Resources */,
 				49A0B11B2C70FD2C0079867A /* Calendar.storyboard in Resources */,
 				07E1EABC2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib in Resources */,
 				32682CAE2B36D12C00B9B7BD /* IconView.xib in Resources */,
@@ -781,8 +773,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */,
 				32E2E0D72AF80039009CA92E /* AppDelegate.swift in Sources */,
 				321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */,
+				DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */,
 				3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
@@ -827,7 +821,6 @@
 				32B3C1F72B497355000B0727 /* MediaModel.swift in Sources */,
 				32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */,
 				324943452B680C700035FE64 /* CircularProgressView.swift in Sources */,
-				07350E832BF4A8A6005DD945 /* SettingTableViewCell.swift in Sources */,
 				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
 				32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */,
 				323A25E92B84E94E006AD2FB /* DuplicateContactsViewController.swift in Sources */,
@@ -847,7 +840,6 @@
 				32B3C1F92B4974F4000B0727 /* MediaViewModel.swift in Sources */,
 				326BF4BE2B9B14F6003D8427 /* ImagePreviewViewController.swift in Sources */,
 				323A25E22B84A62E006AD2FB /* OrganizeContactViewModel.swift in Sources */,
-				04284B082BF4890B0078B939 /* SettingViewController.swift in Sources */,
 				49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1017,7 +1009,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1059,7 +1051,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -34,3 +34,8 @@ enum ConstantString: String {
     case duplicates = "Duplicates"
     case others = "Others"
 }
+
+enum UserDefaultKeys: String {
+    
+    case appearance = "appearanceMode"
+}

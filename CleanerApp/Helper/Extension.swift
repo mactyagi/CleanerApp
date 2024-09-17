@@ -436,6 +436,12 @@ extension UIFont{
         }
 }
 
+extension UserDefaults{
+    var appearanceMode: String{
+        "appearanceMode"
+    }
+}
+
 
 
 

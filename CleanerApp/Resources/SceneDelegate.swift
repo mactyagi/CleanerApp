@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    private var appearanceMode: AppearanceMode = .system
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = initialViewController
         window.makeKeyAndVisible()
         
-        
+        updateAppearance()
                 // Create a new UIWindow using the windowScene constructor
 //                let window = UIWindow(windowScene: windowScene)
 //
@@ -38,6 +38,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        window.makeKeyAndVisible()
 //        self.window = window
     }
+    
+    private func updateAppearance() {
+        let appearanceModeRawValue = UserDefaults.standard.string(forKey: UserDefaultKeys.appearance.rawValue) ?? ""
+        let appearanceMode = AppearanceMode(rawValue: appearanceModeRawValue) ?? .dark
+            switch appearanceMode {
+            case .system:
+                window?.overrideUserInterfaceStyle = .unspecified
+            case .light:
+                window?.overrideUserInterfaceStyle = .light
+            case .dark:
+                window?.overrideUserInterfaceStyle = .dark
+            }
+        }
+
+        func changeAppearance(to mode: AppearanceMode) {
+            UserDefaults.standard.set(mode.rawValue, forKey: UserDefaultKeys.appearance.rawValue)
+            updateAppearance()
+        }
+    
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         logEvent(Event.appTerminated.rawValue, parameter: nil)
