@@ -30,8 +30,11 @@ struct SettingView: View {
                     Text(section.header)
                 }
             }
+            .scrollContentBackground(.hidden)
             .navigationTitle("Settings")
+            .background(Color.lightBlueDarkGrey)
         }
+        
     }
 }
 

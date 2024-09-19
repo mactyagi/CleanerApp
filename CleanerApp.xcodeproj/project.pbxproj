@@ -127,6 +127,10 @@
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
 		DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */; };
 		DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */; };
+		DA7827092C9A758B004BCB66 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7827082C9A758B004BCB66 /* FireStoreManager.swift */; };
+		DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */; };
+		DA78270D2C9A8072004BCB66 /* AddFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */; };
+		DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,6 +228,10 @@
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestView.swift; sourceTree = "<group>"; };
+		DA7827082C9A758B004BCB66 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
+		DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestModel.swift; sourceTree = "<group>"; };
+		DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureView.swift; sourceTree = "<group>"; };
+		DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +280,10 @@
 				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
 				DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */,
+				DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */,
+				DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */,
+				DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */,
+				DA7827082C9A758B004BCB66 /* FireStoreManager.swift */,
 				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
 			);
 			path = "Setting Screen";
@@ -775,8 +787,10 @@
 			files = (
 				DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */,
 				32E2E0D72AF80039009CA92E /* AppDelegate.swift in Sources */,
+				DA78270D2C9A8072004BCB66 /* AddFeatureView.swift in Sources */,
 				321B0ABC2B00C1E500E4300D /* CompressQualitySelectionViewController.swift in Sources */,
 				DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */,
+				DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */,
 				3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
@@ -815,6 +829,8 @@
 				32603A972B3A962100154775 /* ReminderTableViewCell.swift in Sources */,
 				DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */,
 				32BD2A762B483A270039E85E /* PhotoCollectionViewCell.swift in Sources */,
+				DA7827092C9A758B004BCB66 /* FireStoreManager.swift in Sources */,
+				DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */,
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
 				32ED57AF2B661D6900AED057 /* VerticalMediaCollectionViewCell.swift in Sources */,

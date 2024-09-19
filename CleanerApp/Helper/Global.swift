@@ -15,6 +15,13 @@ func vibrate() {
     generator.impactOccurred()
 }
 
+func isRunningInPreview() -> Bool {
+    ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+}
+
+func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+}
 
 enum ConstantString: String {
     case selectAll = "Select All"
