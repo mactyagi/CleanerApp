@@ -119,7 +119,7 @@ class AllContactsVIewModel{
                     self.allContacts.append(contact)
                 }
             } catch {
-                logError(error: error as NSError)
+                logError(error: error as NSError, VCName: "AllContactsVIewModel", functionName: #function, line: #line)
             }
 
             DispatchQueue.main.async { [weak self] in

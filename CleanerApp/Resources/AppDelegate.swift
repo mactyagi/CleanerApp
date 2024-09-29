@@ -10,15 +10,28 @@ import CoreData
 import Photos
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseAnalytics
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    
+    func configureFirebase() {
+        #if APPSTORE
+        // Enable Firebase Analytics for App Store builds
+        Analytics.setAnalyticsCollectionEnabled(true)
+        print("Firebase Analytics enabled for App Store build")
+        #else
+        // Ensure Firebase Analytics is disabled for non-App Store builds
+        Analytics.setAnalyticsCollectionEnabled(false)
+        print("Firebase Analytics disabled for non-App Store build")
+        #endif
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        configureFirebase()
         logEvent(Event.appLaunched.rawValue, parameter: nil)
         // Override point for customization after application launch.
         return true
@@ -47,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let container = NSPersistentContainer(name: "CleanerApp")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                logError(error: error)
+                logError(error: error, VCName: "AppDelegate", functionName: #function, line: #line)
             }
         })
         return container

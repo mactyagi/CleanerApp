@@ -23,7 +23,6 @@ class OrganizeContactsViewController: UIViewController {
     //MARK: - lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         setupViewModel()
     }
 

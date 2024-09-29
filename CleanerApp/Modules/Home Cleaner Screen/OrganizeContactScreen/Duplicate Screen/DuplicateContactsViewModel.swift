@@ -108,7 +108,7 @@ class DuplicateContactsViewModel{
             reloadAtIndex = nil
             
         } catch {
-            logError(error: error as NSError)
+            logError(error: error as NSError, VCName: "DuplicateContactsViewModel", functionName: #function, line: #line)
         }
     }
     

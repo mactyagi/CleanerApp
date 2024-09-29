@@ -196,13 +196,26 @@ func logEvent(_ event:String, parameter: [String: Any]?){
     Analytics.logEvent(event, parameters: parameter)
 }
 
-func logError(error: NSError){
-    logEvent("cleaner_error_found", parameter: ["error": error, "localized": error.localizedDescription, "userInfo": error.userInfo])
+
+func logError(error: NSError, VCName: String, functionName: String, line: Int){
+    
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    var userInfo = ["ViewController": VCName, "functionName": functionName, "line": line, "version": appVersion] as [String : Any]
+#if DEBUG
+    userInfo["debugging"] = true
+    Crashlytics.crashlytics().record(error: error, userInfo: userInfo)
+    Crashlytics.crashlytics().log("Testing Error")
+#else
+    Crashlytics.crashlytics().record(error: error, userInfo: userInfo)
+#endif
+    
+    
     print(error)
 }
 
-func logErrorString(errorString: String){
-    logEvent("cleaner_error_string_found", parameter: ["error": errorString])
+func logErrorString(errorString: String,  VCName: String, functionName: String, line: Int){
+    let error = NSError(domain: "mac.CleanerApp", code: 0, userInfo: [NSLocalizedDescriptionKey: errorString])
+    logError(error: error, VCName: VCName, functionName: functionName, line: line)
     print(errorString)
 }
 

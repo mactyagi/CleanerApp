@@ -7,10 +7,14 @@
 
 import SwiftUI
 
+enum FeatureSegmentType: String, CaseIterable{
+    case open
+    case building
+    case done
+}
 struct FeatureRequestView: View {
-    @State private var selectedSegment = 0
+    @State private var selectedSegment = FeatureSegmentType.open
     @State private var showAddFeatureView = false
-    let segments = ["Open", "Building", "Done"]
     let listElement: [(title: String, substring: String)] = [("TITle 1","Subtitle 2"), ("TITle 1","Subtitle 2")]
     
     var body: some View {
@@ -41,9 +45,9 @@ struct FeatureRequestView: View {
     
     var picker : some View {
         Picker("select a segment", selection: $selectedSegment) {
-            ForEach(0 ..< segments.count, id: \.self) { index in
-                Text(segments[index])
-                    .tag(index)
+            ForEach(FeatureSegmentType.allCases, id: \.self) { segment in
+                Text(segment.rawValue)
+                    .tag(segment)
             }
         }
 //        .background(Color.red)

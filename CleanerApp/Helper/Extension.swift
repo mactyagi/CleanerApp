@@ -21,7 +21,7 @@ extension PHAsset{
             if let avAsset{
                 comp(avAsset)
             }else{
-                logErrorString(errorString: "AVAsset not found")
+                logErrorString(errorString: "AVAsset not found", VCName: "PHAsset", functionName: #function, line: #line)
                 comp(nil)
             }
         }
@@ -37,7 +37,7 @@ extension PHAsset{
             return asset
         } else {
             print("PHAsset not found for local identifier: \(localIdentifier)")
-            logErrorString(errorString: "PHAsset not found for local identifier: \(localIdentifier)")
+            logErrorString(errorString: "PHAsset not found for local identifier: \(localIdentifier)", VCName: "PHAsset", functionName: #function, line: #line)
             return nil
         }
     }
@@ -48,7 +48,7 @@ extension PHAsset{
             PHAssetChangeRequest.deleteAssets([self] as NSArray)
         } completionHandler: { isComplete, error in
             if let error{
-                logError(error: error as NSError)
+                logError(error: error as NSError, VCName: "PHAsset", functionName: #function, line: #line)
             }
             
             completionHandler(isComplete, error)
@@ -60,7 +60,7 @@ extension PHAsset{
         guard let resource = resources.first,
               let unsignedInt64 = resource.value(forKey: "fileSize") as? CLong
         else {
-            logErrorString(errorString: "Not able to get file Size")
+            logErrorString(errorString: "Not able to get file Size", VCName: "PHAsset", functionName: #function, line: #line)
             return nil
         }
         return Int64(bitPattern: UInt64(unsignedInt64))
@@ -78,7 +78,7 @@ extension PHAsset{
         img = image
         }
         if img == nil{
-            logErrorString(errorString: "Can not get image from PHAsset")
+            logErrorString(errorString: "Can not get image from PHAsset", VCName: "PHAsset", functionName: #function, line: #line)
         }
         return img
     }
@@ -91,7 +91,7 @@ extension PHAsset{
         requestOptions.deliveryMode = .highQualityFormat
         manager.requestImage(for: self, targetSize: size, contentMode: .aspectFill, options: requestOptions) { image, _ in
             if image == nil{
-                logErrorString(errorString: "Can not get image from PHAsset by excaping")
+                logErrorString(errorString: "Can not get image from PHAsset by excaping", VCName: "PHAsset", functionName: #function, line: #line)
             }
         comp(image)
         }
@@ -142,7 +142,7 @@ extension Int64 {
             }
         } catch {
             print("Error creating regular expression: \(error.localizedDescription)")
-            logError(error: error as NSError)
+            logError(error: error as NSError, VCName: "PHAsset", functionName: #function, line: #line)
         }
         return (nil, nil)
     }

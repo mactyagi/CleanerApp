@@ -113,7 +113,7 @@ class OrganizeContactViewModel{
             
             
         } catch {
-            logError(error: error as NSError)
+            logError(error: error as NSError, VCName: "OrganizeContactViewModel", functionName: #function, line: #line)
         }
     }
     
@@ -126,7 +126,7 @@ class OrganizeContactViewModel{
                 allContacts.append(contact)
             }
         } catch {
-            logError(error: error as NSError)
+            logError(error: error as NSError ,VCName: "organizeContactViewModel", functionName: #function, line: #line)
         }
     }
 }

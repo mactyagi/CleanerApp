@@ -19,7 +19,7 @@ class CoreDataManager{
         let container = NSPersistentContainer(name: "CleanerApp")
         container.loadPersistentStores { storeDescription, error in
             if let error =  error as NSError?{
-                logError(error: error)
+                logError(error: error, VCName: "CoreDataManager", functionName: #function, line: #line)
             }
         }
         return container
@@ -38,7 +38,7 @@ class CoreDataManager{
                     
                 } catch {
                     let nserror = error as NSError
-                    logError(error: nserror)
+                    logError(error: nserror, VCName: "CoreDataManager", functionName: #function, line: #line)
                 }
             }else{
     //            print(" ** Already saved")
@@ -62,7 +62,7 @@ class CoreDataManager{
                 return object
             }catch{
                 print("Could not fetch, \(error.localizedDescription)")
-                logError(error: error as NSError)
+                logError(error: error as NSError, VCName: "DBAsset", functionName: #function, line: #line)
             }
             return []
         }
@@ -124,7 +124,7 @@ class CoreDataManager{
                     print("** Object deleted successfully.")
                 } catch {
                     print("** Error deleting object: \(error)")
-                    logError(error: error as NSError)
+                    logError(error: error as NSError, VCName: "CoreDataManager", functionName: #function, line: #line)
                 }
             }
         }
