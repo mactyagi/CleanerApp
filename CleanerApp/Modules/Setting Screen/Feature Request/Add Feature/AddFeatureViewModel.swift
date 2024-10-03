@@ -15,14 +15,16 @@ class AddFeatureViewModel: ObservableObject {
     
     
     func sendFeatureToFirebase(completion: @escaping (_ success: Bool) -> () ) {
+        let userUDID = getDeviceIdentifier() ?? ""
         let feature = Feature(
-            currentState: 0,
-            votedUsers: ["self"],
+            currentState: .userRequested,
+            votedUsers: [userUDID],
             featureTitle: title,
             featureDescription: description,
             createdAt: Date().toString(),
             updatedAt: Date().toString(),
-            createdBy: "Self")
+            createdBy: userUDID)
+        
         if isRunningInPreview(){ return }
         FireStoreManager().addFeatureInFeatureRequest(feature: feature) { success in
             completion(success)

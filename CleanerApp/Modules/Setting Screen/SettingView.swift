@@ -9,16 +9,10 @@ import SwiftUI
 
 struct SettingView: View {
     @StateObject private var viewModel = SettingViewModel()
-    var  sections: [(header:String, items: [SettingType])] = [
-        ("Customization", [.appearance]),
-        ("Support", [.featureRequest, .contactUS, .reportAnError]),
-        ("Support an Indie Developer", [.leaveReview, .followMe]),
-        ("More", [.refferAFriend, .privacyPolicy])
-    ]
     
     var body: some View {
         NavigationView {
-            List(sections, id: \.header) { section in
+            List(viewModel.sections, id: \.header) { section in
                 Section {
                     ForEach(section.items, id: \.self){ item in
                         RowView(item: item, viewModel: viewModel)

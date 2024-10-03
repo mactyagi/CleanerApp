@@ -13,15 +13,19 @@ enum FeatureSegmentType: String, CaseIterable{
     case done
 }
 struct FeatureRequestView: View {
-    @State private var selectedSegment = FeatureSegmentType.open
     @State private var showAddFeatureView = false
-    let listElement: [(title: String, substring: String)] = [("TITle 1","Subtitle 2"), ("TITle 1","Subtitle 2")]
+    @StateObject var viewModel: FeatureRequestViewModel = FeatureRequestViewModel()
     
     var body: some View {
 //        NavigationView {
             VStack {
                 picker
-                list
+                if viewModel.showLoader {
+                    Spacer()
+                    ProgressView()
+                }else {
+                    list
+                }
                 Spacer()
             }
             .background(Color(uiColor: .secondaryBackground))
@@ -38,13 +42,17 @@ struct FeatureRequestView: View {
             .sheet(isPresented: $showAddFeatureView, content: {
                 AddFeatureView()
             })
+            .onAppear {
+                viewModel.getData()
+            }
+        
 //        }
         
         
     }
     
     var picker : some View {
-        Picker("select a segment", selection: $selectedSegment) {
+        Picker("select a segment", selection: $viewModel.selectedSegment) {
             ForEach(FeatureSegmentType.allCases, id: \.self) { segment in
                 Text(segment.rawValue)
                     .tag(segment)
@@ -56,17 +64,17 @@ struct FeatureRequestView: View {
     
     var list: some View {
         ScrollView {
-            ForEach(listElement, id: \.title){ item in
-                    ListItemView()
+            ForEach($viewModel.list, id: \.id){ item in
+                ListItemView(feature: item.wrappedValue)
+                    .onTapGesture {
+                        viewModel.userHasVoted(for: item)
+                        print("listTapped")
+                    }
             }
             .padding(.top, 5)
         }
     }
-        
 }
-
-
-
 
 #Preview {
     NavigationView {
@@ -76,6 +84,7 @@ struct FeatureRequestView: View {
 
 
 struct ListItemView : View {
+    var feature: Feature
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
@@ -87,22 +96,38 @@ struct ListItemView : View {
             
             HStack {
                 ZStack{
-                   Circle()
-                        .stroke(Color(uiColor: .systemGray), lineWidth: 1)
-                        .background(Circle().fill(.offWhiteAndGray))
-                        .frame(width: 30, height: 30)
+                    Group {
+                        if feature.hasCurrentUserVoted {
+                            Circle()
+                                .stroke(Color(uiColor: .darkBlue), lineWidth: 2)
+                                 
+                        }else {
+                            Circle()
+                                 .stroke(Color(uiColor: .systemGray), lineWidth: 1)
+                        }
+                    }
+                    .background(Circle().fill(.offWhiteAndGray))
+                    .frame(width: 30, height: 30)
+                   
                         
-                        
-                    Text("10")
+                    Group {
+                        if feature.hasCurrentUserVoted {
+                            Text("\(feature.votedUsers.count)")
+                                .foregroundColor(.darkBlue)
+                        }else {
+                            Text("\(feature.votedUsers.count)")
+                                .foregroundColor(Color(uiColor: .label))
+                        }
+                    }
                         .font(.caption)
                         .fontWeight(.black)
-//                        .foregroundColor(.white)
                 }
+                
                 VStack(alignment: .leading){
-                    Text("Title")
+                    Text(feature.featureTitle)
                         .font(.callout)
                         .fontWeight(.bold)
-                    Text("Subtitle")
+                    Text(feature.featureDescription)
                         .font(.caption2)
                         .foregroundColor(.darkGray3)
                 }

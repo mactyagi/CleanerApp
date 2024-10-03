@@ -123,6 +123,7 @@
 		49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */; };
 		49DB037E2C5661A600F0052E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 49DB037D2C5661A600F0052E /* AlertToast */; };
 		49DB03862C567C3900F0052E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Global.swift */; };
+		DA45C51D2CA9AF45003C884B /* FeatureRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */; };
 		DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */; };
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
 		DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */; };
@@ -131,6 +132,7 @@
 		DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */; };
 		DA78270D2C9A8072004BCB66 /* AddFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */; };
 		DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */; };
+		DAAD0B5C2CAE58AA005FB4CC /* ReportErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD0B5B2CAE58AA005FB4CC /* ReportErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,6 +226,7 @@
 		49A0B11C2C70FE030079867A /* Media.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Media.storyboard; sourceTree = "<group>"; };
 		49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllContactsTableViewCell.xib; sourceTree = "<group>"; };
 		49DB03852C567C3900F0052E /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -232,6 +235,7 @@
 		DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestModel.swift; sourceTree = "<group>"; };
 		DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureView.swift; sourceTree = "<group>"; };
 		DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureViewModel.swift; sourceTree = "<group>"; };
+		DAAD0B5B2CAE58AA005FB4CC /* ReportErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,10 +283,8 @@
 				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
 				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
-				DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */,
-				DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */,
-				DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */,
-				DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */,
+				DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */,
+				DA45C51E2CA9B94C003C884B /* Feature Request */,
 				DA7827082C9A758B004BCB66 /* FireStoreManager.swift */,
 				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
 			);
@@ -633,6 +635,34 @@
 			path = "Media Cells";
 			sourceTree = "<group>";
 		};
+		DA45C51B2CA9AE89003C884B /* Add Feature */ = {
+			isa = PBXGroup;
+			children = (
+				DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */,
+				DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */,
+			);
+			path = "Add Feature";
+			sourceTree = "<group>";
+		};
+		DA45C51E2CA9B94C003C884B /* Feature Request */ = {
+			isa = PBXGroup;
+			children = (
+				DA45C51B2CA9AE89003C884B /* Add Feature */,
+				DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */,
+				DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */,
+				DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */,
+			);
+			path = "Feature Request";
+			sourceTree = "<group>";
+		};
+		DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */ = {
+			isa = PBXGroup;
+			children = (
+				DAAD0B5B2CAE58AA005FB4CC /* ReportErrorView.swift */,
+			);
+			path = "Report an Error ";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -819,6 +849,7 @@
 				326BF4BC2B9835B0003D8427 /* IncompleteContactViewModel.swift in Sources */,
 				327474C32B7AB8420034A587 /* EventsHandler.swift in Sources */,
 				32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */,
+				DA45C51D2CA9AF45003C884B /* FeatureRequestViewModel.swift in Sources */,
 				49DB03862C567C3900F0052E /* Global.swift in Sources */,
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
@@ -848,6 +879,7 @@
 				32BF2C8F2AF9468900045343 /* FutureHomeViewController.swift in Sources */,
 				328BFECB2B823F100007C1AE /* LaunchViewController.swift in Sources */,
 				32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */,
+				DAAD0B5C2CAE58AA005FB4CC /* ReportErrorView.swift in Sources */,
 				328BFECD2B83324C0007C1AE /* LoaderViewController.swift in Sources */,
 				323A25EF2B850174006AD2FB /* DuplicateContactsViewModel.swift in Sources */,
 				326709522B374ECC003515D4 /* HomeViewModel.swift in Sources */,

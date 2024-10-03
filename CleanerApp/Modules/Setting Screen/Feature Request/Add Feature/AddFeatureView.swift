@@ -58,7 +58,7 @@ struct AddFeatureView: View {
             
             if showLoader {
                 ZStack {
-                    Color.gray.opacity(0.5)
+                    Color.gray.opacity(0.2)
                         .ignoresSafeArea()
                         .blur(radius: 10)
                     if showLoader {
