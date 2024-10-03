@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -132,7 +132,6 @@
 		DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */; };
 		DA78270D2C9A8072004BCB66 /* AddFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */; };
 		DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */; };
-		DAAD0B5C2CAE58AA005FB4CC /* ReportErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD0B5B2CAE58AA005FB4CC /* ReportErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -235,8 +234,11 @@
 		DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestModel.swift; sourceTree = "<group>"; };
 		DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureView.swift; sourceTree = "<group>"; };
 		DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureViewModel.swift; sourceTree = "<group>"; };
-		DAAD0B5B2CAE58AA005FB4CC /* ReportErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DABF2C092CAEE38900D1B265 /* SwiftUICleaner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUICleaner; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		32E2E0D02AF80039009CA92E /* Frameworks */ = {
@@ -486,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				32E2E0D52AF80039009CA92E /* CleanerApp */,
+				DABF2C092CAEE38900D1B265 /* SwiftUICleaner */,
 				32E2E0D42AF80039009CA92E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -658,7 +661,6 @@
 		DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */ = {
 			isa = PBXGroup;
 			children = (
-				DAAD0B5B2CAE58AA005FB4CC /* ReportErrorView.swift */,
 			);
 			path = "Report an Error ";
 			sourceTree = "<group>";
@@ -721,7 +723,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					32E2E0D22AF80039009CA92E = {
@@ -879,7 +881,6 @@
 				32BF2C8F2AF9468900045343 /* FutureHomeViewController.swift in Sources */,
 				328BFECB2B823F100007C1AE /* LaunchViewController.swift in Sources */,
 				32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */,
-				DAAD0B5C2CAE58AA005FB4CC /* ReportErrorView.swift in Sources */,
 				328BFECD2B83324C0007C1AE /* LoaderViewController.swift in Sources */,
 				323A25EF2B850174006AD2FB /* DuplicateContactsViewModel.swift in Sources */,
 				326709522B374ECC003515D4 /* HomeViewModel.swift in Sources */,
@@ -1057,7 +1058,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1099,7 +1100,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

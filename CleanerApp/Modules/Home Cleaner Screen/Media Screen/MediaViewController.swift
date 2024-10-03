@@ -154,37 +154,8 @@ extension MediaViewController: UICollectionViewDataSource{
 extension MediaViewController:UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = viewModel.dataSource[indexPath.section].cells[indexPath.row]
-        switch cell.cellType{
-            
-        case .similarPhoto:
-            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarPhoto), groupType: .similar, type: .similarPhoto)
-            navigationController?.pushViewController(vc, animated: true)
-            break
-        case .duplicatePhoto:
-            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicatePhoto), groupType: .duplicate, type: .duplicatePhoto)
-            navigationController?.pushViewController(vc, animated: true)
-            break
-        case .otherPhoto:
-            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherPhoto), groupType: .other, type: .otherPhoto)
-            navigationController?.pushViewController(vc, animated: true)
-        case .similarScreenshot:
-            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .similarScreenshot), groupType: .similar, type: .similarScreenshot)
-            navigationController?.pushViewController(vc, animated: true)
-        case .duplicateScreenshot:
-            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .duplicateScreenshot), groupType: .duplicate, type: .duplicateScreenshot)
-            navigationController?.pushViewController(vc, animated: true)
-        case .otherScreenshot:
-            let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: .otherScreenshot), groupType: .other, type: .otherScreenshot)
-            navigationController?.pushViewController(vc, animated: true)
-        case .similarVideos:
-            break
-        case .duplicateVideos:
-            break
-        case .smallVideos:
-            break
-        case .otherVideos:
-            break
-        }
+        let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: cell.cellType), groupType: cell.cellType.groupType, type: cell.cellType)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

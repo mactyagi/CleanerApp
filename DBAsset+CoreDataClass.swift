@@ -91,10 +91,32 @@ extension DBAsset{
     
     
     func addFeaturePrint(){
+        let dispatchGroup = DispatchGroup()
         let phAsset = getPHAsset()
-        let image = phAsset?.getImage()
-        guard let cgImage = image?.cgImage else { return }
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage)
+        if phAsset?.mediaType == .image {
+         let image = phAsset?.getImage()
+            guard let cgImage = image?.cgImage, let featurePrint = getFeaturePrint(image: cgImage) else {
+                logErrorString(errorString: "No Image Found", VCName: "DBAsset", functionName: #function, line: #line)
+                return }
+            
+            self.featurePrints =  [featurePrint]
+        }else if phAsset?.mediaType == .video {
+            dispatchGroup.enter()
+            phAsset?.getAVAsset(comp: { avAsset in
+                if let avAsset {
+                    self.getFeaturePrintsFromAVAsset(avAsset: avAsset) { featurePrints, error in
+                        self.featurePrints = featurePrints
+                        dispatchGroup.leave()
+                    }
+                }
+            })
+        }
+        dispatchGroup.wait()
+        return
+    }
+    
+    private func getFeaturePrint(image: CGImage) -> VNFeaturePrintObservation?{
+        let requestHandler = VNImageRequestHandler(cgImage: image)
         let request = VNGenerateImageFeaturePrintRequest()
         
         #if targetEnvironment(simulator)
@@ -104,12 +126,59 @@ extension DBAsset{
         do {
             try requestHandler.perform([request])
             if let featurePrint = request.results?.first as? VNFeaturePrintObservation {
-                self.featurePrints =  [featurePrint]
+                return featurePrint
             }
         } catch {
+            logError(error: error as NSError, VCName: "DBAsset", functionName: #function, line: #line)
         }
-        return
+        return nil
     }
+
+    
+    private func getFeaturePrintsFromAVAsset(avAsset: AVAsset, completion: @escaping ([VNFeaturePrintObservation]?, Error?) -> Void) {
+        let duration = CMTimeGetSeconds(avAsset.duration)
+        let generator = AVAssetImageGenerator(asset: avAsset)
+        generator.appliesPreferredTrackTransform = true
+        var videoTime = CMTimeMakeWithSeconds(0, preferredTimescale: 600)
+        var arrOfTime = [NSValue]()
+        let videoDuration = min(Int(duration), 10)
+        
+        if videoDuration == 0 {
+            arrOfTime.append(NSValue(time: videoTime))
+        } else {
+            for index in 0..<videoDuration {
+                videoTime = CMTimeMakeWithSeconds(Float64(index), preferredTimescale: 600)
+                arrOfTime.append(NSValue(time: videoTime))
+            }
+        }
+        
+        var featurePrints = [VNFeaturePrintObservation]()
+        
+        generator.generateCGImagesAsynchronously(forTimes: arrOfTime) { time, image, secondTime, result, error in
+            DispatchQueue.global(qos: .userInteractive).async {
+                if let error = error {
+                    // Pass the error to the completion handler
+                    completion(nil, error)
+                    return
+                }
+                
+                if let image = image {
+                    if let featurePrint = self.getFeaturePrint(image: image) {
+                        featurePrints.append(featurePrint)
+                    }
+                }
+                
+                if videoTime == time {
+                    // Call completion when all images are processed
+                    DispatchQueue.main.async {
+                        completion(featurePrints, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    
     
     func calculateSHA(){
         let phAsset = getPHAsset()

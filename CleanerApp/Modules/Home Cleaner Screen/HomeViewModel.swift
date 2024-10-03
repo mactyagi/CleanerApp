@@ -92,7 +92,7 @@ class  HomeViewModel: NSObject {
         photosAndVideosCount = assets.count
         
         let option = PHFetchOptions()
-        let allPHAssetCount =  PHAsset.fetchAssets(with: .image, options: option).count
+        let allPHAssetCount =  PHAsset.fetchAssets(with: .image, options: option).count + PHAsset.fetchAssets(with: .video, options: option).count
         
         if allPHAssetCount == 0 && !assets.isEmpty{
             progress = 0

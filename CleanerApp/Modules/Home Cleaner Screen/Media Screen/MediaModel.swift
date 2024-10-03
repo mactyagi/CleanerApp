@@ -20,6 +20,19 @@ enum MediaCellType: String, CaseIterable{
     case smallVideos = "Small Videos"
     case otherVideos = "Other Videos"
 
+    var groupType: PHAssetGroupType{
+        switch self {
+        case .similarPhoto, .similarVideos, .similarScreenshot:
+            return .similar
+        case .duplicatePhoto, .duplicateScreenshot, .duplicateVideos:
+            return .duplicate
+        case .otherPhoto, .otherVideos, .otherScreenshot:
+            return .other
+        case .smallVideos:
+            return .other
+        }
+    }
+    
     var cell: MediaCell{
         switch self {
         case .similarPhoto:

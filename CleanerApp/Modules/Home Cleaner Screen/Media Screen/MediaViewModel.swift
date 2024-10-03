@@ -91,18 +91,21 @@ class MediaViewModel: NSObject{
     
     
     func fetchAllMediaType(){
-        for type in MediaCellType.allCases{
-            let context = CoreDataManager.customContext
-            let predicate = getPredicate(mediaType: type)
-            let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-            let assets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: predicate, sortDescriptor: sortDescriptor)
-            updateCell(assets: assets, type: type)
-            if CoreDataPHAssetManager.shared.status == .completed{
-                setupLogEvents(count: assets.count, type: type)
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let self else { return }
+            for type in MediaCellType.allCases{
+                let context = CoreDataManager.customContext
+                let predicate = getPredicate(mediaType: type)
+                let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+                let assets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: predicate, sortDescriptor: sortDescriptor)
+                updateCell(assets: assets, type: type)
+                if CoreDataPHAssetManager.shared.status == .completed{
+                    setupLogEvents(count: assets.count, type: type)
+                }
             }
-        }
-        if CoreDataPHAssetManager.shared.status == .completed{
-            logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count+size": "\(totalFiles) + \(totalSize.convertToFileString())"])
+            if CoreDataPHAssetManager.shared.status == .completed{
+                logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count+size": "\(totalFiles) + \(totalSize.convertToFileString())"])
+            }
         }
     }
     

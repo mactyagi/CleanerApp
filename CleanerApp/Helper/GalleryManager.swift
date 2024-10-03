@@ -114,13 +114,13 @@ class CoreDataPHAssetManager{
     }
    
     
-    func deleteExtraPHassetsFromCoreData(){
+    func deleteExtraPHassetsFromCoreData(){ // delete all those element which are not present in photos liberary but present in Core data of Cleaner app
         let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
         let data = CoreDataManager.shared.fetchDBAssets(context: context, predicate: nil)
         var dictToDelete = Dictionary(grouping: data, by: \.assetId)
         let allPhotos = PHAsset.fetchAssets(with: .none)
 //        totalCount = allPhotos * 4
-        let arrayToDelete = [String]()
+//        let arrayToDelete = [String]()
         
         withExecutionTime(title: "all photos Count") {
             allPhotos.enumerateObjects { asset, test, count in
@@ -151,25 +151,29 @@ class CoreDataPHAssetManager{
          guard status != .started else { return }
          status = .started
          postUpdate()
-        let queue = DispatchQueue.global(qos: .userInteractive)
+         let queue = DispatchQueue.global(qos: .userInteractive)
          
          queue.async {
              self.withExecutionTime(title: "delete Asset") {
-                 self.deleteExtraPHassetsFromCoreData()
-                 self.removeSingleElementFromCoreData()
+                 self.deleteExtraPHassetsFromCoreData() // delete all assets which is no more in Photos app
+                 self.removeSingleElementFromCoreData() // It should called after deleteExtraPHAsset. It removes and add on others in asset if find single.
              }
              
-             
+             self.dispatchGroup.enter()
+              queue.async {
+                  self.processPhotos()
+                  self.dispatchGroup.leave()
+              }
             
              self.dispatchGroup.enter()
              queue.async {
                  self.processScreenShots()
                  self.dispatchGroup.leave()
              }
-                        
-            self.dispatchGroup.enter()
+                
+             self.dispatchGroup.enter()
              queue.async {
-                 self.processPhotos()
+                 self.processVideos()
                  self.dispatchGroup.leave()
              }
              
@@ -178,9 +182,24 @@ class CoreDataPHAssetManager{
              print("** process completed")
              self.status = .completed
          }
-         
-         
     }
+    
+    
+    
+    private func processVideos() {
+        self.addNewPHAssetsTypeInCoreData(mediaType: .video)
+        withExecutionTime(title: "Process Duplicate Videos") {
+            // process duplicate videos
+        }
+        
+        withExecutionTime(title: "Process Similar Videos") {
+            
+            processSimilarAssetsFor(.video)
+            // process Similar Videos
+        }
+    }
+    
+    
     
     
     private func processPhotos(){
@@ -272,6 +291,7 @@ class CoreDataPHAssetManager{
             }
             
             for (secondIndex,secondAsset) in allAssets.enumerated(){
+                
                 if secondAsset.featurePrints?.first == nil{
                     secondAsset.addFeaturePrint()
                 }
@@ -285,7 +305,6 @@ class CoreDataPHAssetManager{
                 let distance = firstAsset.computeDistance(mediaType: .photo, secondCustomAsset: secondAsset)
                 
                 switch distance{
-                    
                 case 0 ... 0.45:
 //                    print("** similar \(mediaType.rawValue) found")
                     processSimilarAssets(firstAsset: firstAsset, secondAsset: secondAsset, context: context)
@@ -306,7 +325,6 @@ class CoreDataPHAssetManager{
             CoreDataManager.shared.saveContext(context: context)
         }
     }
-    
     
     
     private func processSimilarAssets(firstAsset: DBAsset, secondAsset: DBAsset, context: NSManagedObjectContext){
@@ -391,7 +409,7 @@ class CoreDataPHAssetManager{
         
         for (_, assets) in dict{
             if assets.count > 1 {
-                print(" ** Duplicate found")
+                print(" *** Duplicate found")
                 groupFoundCount += 1
                 let firstElement = assets.first!
                 if firstElement.mediaTypeValue == PHAssetGroupType.duplicate.rawValue{
