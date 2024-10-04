@@ -98,11 +98,9 @@ class BaseViewController: UIViewController {
             logEvent(Event.OtherScreenshotScreen.deleteButtonPressed.rawValue, parameter: ["count": viewModel.selectedIndexPath.count])
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .allVideos:
             break
-        case .otherVideos:
-            break
-        case .smallVideos:
+        case .screenRecordings:
             break
         case .none:
             break
@@ -126,11 +124,9 @@ class BaseViewController: UIViewController {
             logEvent(Event.OtherScreenshotScreen.loaded.rawValue, parameter: nil)
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .allVideos:
             break
-        case .otherVideos:
-            break
-        case .smallVideos:
+        case .screenRecordings:
             break
         case .none:
             break
@@ -153,11 +149,9 @@ class BaseViewController: UIViewController {
             logEvent(Event.OtherScreenshotScreen.appear.rawValue, parameter: nil)
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .allVideos:
             break
-        case .otherVideos:
-            break
-        case .smallVideos:
+        case .screenRecordings:
             break
         case .none:
             break
@@ -180,11 +174,9 @@ class BaseViewController: UIViewController {
             logEvent(Event.OtherScreenshotScreen.disappear.rawValue, parameter: nil)
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .allVideos:
             break
-        case .otherVideos:
-            break
-        case .smallVideos:
+        case .screenRecordings:
             break
         case .none:
             break

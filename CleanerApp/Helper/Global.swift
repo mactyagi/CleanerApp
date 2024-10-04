@@ -47,6 +47,8 @@ enum ConstantString: String {
     case similars = "Similars"
     case duplicates = "Duplicates"
     case others = "Others"
+    case screenRecordings = "Screen Recordings"
+    case allVideos = "All Videos"
 }
 
 enum UserDefaultKeys: String {

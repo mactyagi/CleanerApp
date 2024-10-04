@@ -60,11 +60,9 @@ class BaseViewModel{
             logEvent(Event.OtherScreenshotScreen.count.rawValue, parameter: ["count": count])
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .allVideos:
             break
-        case .otherVideos:
-            break
-        case .smallVideos:
+        case .screenRecordings:
             break
         }
     }
@@ -154,11 +152,9 @@ class BaseViewModel{
             logEvent(Event.OtherScreenshotScreen.deletedScreenshot.rawValue, parameter: ["count":count])
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .allVideos:
             break
-        case .otherVideos:
-            break
-        case .smallVideos:
+        case .screenRecordings:
             break
         }
     }

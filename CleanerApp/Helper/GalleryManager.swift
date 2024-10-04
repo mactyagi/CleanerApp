@@ -24,12 +24,13 @@ enum PHAssetGroupType: String{
     case similar
     case duplicate
     case other
+    case all
 }
 
 class PHAssetManager{
     
     private var PHAssetType:PHAssetCustomMediaType
-    
+    var screenRecordings: [PHAsset] = []
    var allAssets: PHFetchResult<PHAsset>!
 //    private var context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
     init(PHAssetType: PHAssetCustomMediaType) {
@@ -60,6 +61,25 @@ class PHAssetManager{
         case .screenRecording:
             break
         }
+    }
+    
+    class func getScreenRecordings() -> [PHAsset]{
+        let option = PHFetchOptions()
+        var screenRecordings = [PHAsset]()
+        let allVideos = PHAsset.fetchAssets(with: .video, options: option)
+        let dispatchGroup = DispatchGroup()
+        
+        allVideos.enumerateObjects { asset, _, _ in
+            dispatchGroup.enter()
+            if let res = PHAssetResource.assetResources(for: asset).first {
+                   if res.originalFilename.hasPrefix("RPReplay") {
+                      screenRecordings.append(asset)
+                   }
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.wait()
+        return screenRecordings
     }
     
     class func deleteAssetsById(assetIds: [String], comp: @escaping(_ isComplete: Bool, _ error: Error?) -> ()){

@@ -16,20 +16,22 @@ enum MediaCellType: String, CaseIterable{
     case duplicateScreenshot = "Duplicate Screenshots"
     case otherScreenshot = "Other Screenshots"
     case similarVideos = "Similar Videos"
-    case duplicateVideos = "Duplicate Videos"
-    case smallVideos = "Small Videos"
-    case otherVideos = "Other Videos"
+//    case duplicateVideos = "Duplicate Videos"
+//    case smallVideos = "Small Videos"
+//    case otherVideos = "Other Videos"
+    case screenRecordings = "Screen Recordings"
+    case allVideos = "All Videos"
 
     var groupType: PHAssetGroupType{
         switch self {
         case .similarPhoto, .similarVideos, .similarScreenshot:
             return .similar
-        case .duplicatePhoto, .duplicateScreenshot, .duplicateVideos:
+        case .duplicatePhoto, .duplicateScreenshot:
             return .duplicate
-        case .otherPhoto, .otherVideos, .otherScreenshot:
+        case .otherPhoto, .otherScreenshot:
             return .other
-        case .smallVideos:
-            return .other
+        case .allVideos, .screenRecordings:
+            return .all
         }
     }
     
@@ -49,12 +51,12 @@ enum MediaCellType: String, CaseIterable{
             return MediaCell(mainTitle: ConstantString.others.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         case .similarVideos:
             return MediaCell(mainTitle: ConstantString.similars.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
-        case .duplicateVideos:
-            return MediaCell(mainTitle: ConstantString.duplicates.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
-        case .smallVideos:
-            return MediaCell(mainTitle: ConstantString.similars.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
-        case .otherVideos:
-            return MediaCell(mainTitle: ConstantString.others.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+        case .screenRecordings:
+            return MediaCell(mainTitle: ConstantString.screenRecordings.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+        case .allVideos:
+            return MediaCell(mainTitle: ConstantString.allVideos.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
+//        case .otherVideos:
+//            return MediaCell(mainTitle: ConstantString.others.rawValue, imageName: "text.below.photo.fill", cellType: self, asset: [], size: 0, stackShouldVertical: false)
         }
     }
 }

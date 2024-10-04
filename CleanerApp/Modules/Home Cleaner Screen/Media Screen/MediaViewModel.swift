@@ -15,7 +15,7 @@ class MediaViewModel: NSObject{
     var sectionsType: [(title:String, cells: [MediaCellType])] = [
         ("Photos", [.duplicatePhoto, .similarPhoto, .otherPhoto]),
         ("Screenshots", [.duplicateScreenshot, .similarScreenshot, .otherScreenshot]),
-        ("Videos", [.duplicateVideos, .similarVideos, .otherVideos])
+        ("Videos", [.similarVideos, .screenRecordings, .allVideos])
 
     ]
     
@@ -70,14 +70,12 @@ class MediaViewModel: NSObject{
         case .similarVideos:
             assetMediaType = .video
             groupType = .similar
-        case .duplicateVideos:
+        case .screenRecordings:
+            assetMediaType = .screenRecording
+            groupType = .all
+        case .allVideos:
             assetMediaType = .video
-            groupType = .duplicate
-        case .smallVideos:
-           return nil
-        case .otherVideos:
-            assetMediaType = .video
-            groupType = .other
+            groupType = .all
         }
         
         let mediaPredicate = NSPredicate(format: "mediaTypeValue == %@", assetMediaType.rawValue)
@@ -125,11 +123,9 @@ class MediaViewModel: NSObject{
             logEvent(Event.MediaScreen.otherScreenshotCount.rawValue, parameter: ["count": count])
         case .similarVideos:
             break
-        case .duplicateVideos:
+        case .screenRecordings:
             break
-        case .smallVideos:
-            break
-        case .otherVideos:
+        case .allVideos:
             break
         }
     }
