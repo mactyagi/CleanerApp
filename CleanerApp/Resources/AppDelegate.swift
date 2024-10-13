@@ -11,21 +11,27 @@ import Photos
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAnalytics
+import FirebaseCrashlytics
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func configureFirebase() {
-        #if APPSTORE
-        // Enable Firebase Analytics for App Store builds
-        Analytics.setAnalyticsCollectionEnabled(true)
-        print("Firebase Analytics enabled for App Store build")
-        #else
-        // Ensure Firebase Analytics is disabled for non-App Store builds
-        Analytics.setAnalyticsCollectionEnabled(false)
-        print("Firebase Analytics disabled for non-App Store build")
-        #endif
+        DispatchQueue.global(qos: .background).async {
+            #if APPSTORE
+            // Enable Firebase Analytics for App Store builds
+            Analytics.setAnalyticsCollectionEnabled(true)
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+            print("Firebase Analytics and Crashlytics enabled for App Store build")
+            #else
+            // Ensure Firebase Analytics is disabled for non-App Store builds
+            Analytics.setAnalyticsCollectionEnabled(false)
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(false)
+            print("Firebase Analytics and Crashlytics disabled for non-App Store build")
+            #endif
+        }
+    
     }
 
 
