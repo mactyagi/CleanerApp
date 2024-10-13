@@ -252,7 +252,12 @@ extension CalendarViewController{
             .sink { [weak self] count in
                 DispatchQueue.main.async {
                     let eventStr = count > 1 ? ConstantString.events.rawValue : ConstantString.event.rawValue
-                    self?.title = "\(count) \(eventStr) \(ConstantString.selected.rawValue)"
+
+                    if self!.viewModel.allEvents.isEmpty {
+                        self?.title = ""
+                    } else {
+                        self?.title = "\(count) \(eventStr) \(ConstantString.selected.rawValue)"
+                    }
                     self?.configureTitle()
                     self?.deleteButton.backgroundColor = count > 0 ? .darkBlue : .darkGray2
                     self?.deleteButton.isEnabled = count > 0
@@ -273,7 +278,7 @@ extension CalendarViewController{
                 self?.settingView.isHidden = isAuthorized
                 self?.headerView.frame.size.height = isAuthorized ? 100 : 320
                 self?.deleteButton.isHidden = !isAuthorized
-                self?.navigationItem.rightBarButtonItem?.isEnabled = isAuthorized
+//                self?.navigationItem.rightBarButtonItem?.isEnabled = isAuthorized
                 self?.tableView.reloadData()
                 if !isAuthorized{
                     self?.title = ""
