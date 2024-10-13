@@ -125,6 +125,10 @@ extension RowView {
         switch item {
         case .featureRequest:
             FeatureRequestView()
+        case .privacyPolicy:
+            PrivacyPolicyViewControllerWrapper()
+                .edgesIgnoringSafeArea(.all)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         default:
             Text("Unknown Destination")
         }
