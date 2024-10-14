@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */; };
+		07A072A42CBBBD92009FCA82 /* ReferAFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A072A32CBBBD92009FCA82 /* ReferAFriendView.swift */; };
 		07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */; };
 		07E1EABC2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */; };
 		3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2682B38A605003DB928 /* CalendarViewController.swift */; };
@@ -136,6 +137,7 @@
 
 /* Begin PBXFileReference section */
 		079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		07A072A32CBBBD92009FCA82 /* ReferAFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferAFriendView.swift; sourceTree = "<group>"; };
 		07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactTableViewCell.swift; sourceTree = "<group>"; };
 		07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncompleteContactTableViewCell.xib; sourceTree = "<group>"; };
 		3201A2682B38A605003DB928 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				DA45C51E2CA9B94C003C884B /* Feature Request */,
 				DA7827082C9A758B004BCB66 /* FireStoreManager.swift */,
 				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
+				07A072A22CBBBD3D009FCA82 /* ReferAFriendViewController */,
 			);
 			path = "Setting Screen";
 			sourceTree = "<group>";
@@ -299,6 +302,14 @@
 				079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */,
 			);
 			path = PrivacyPolicyViewController;
+			sourceTree = "<group>";
+		};
+		07A072A22CBBBD3D009FCA82 /* ReferAFriendViewController */ = {
+			isa = PBXGroup;
+			children = (
+				07A072A32CBBBD92009FCA82 /* ReferAFriendView.swift */,
+			);
+			path = ReferAFriendViewController;
 			sourceTree = "<group>";
 		};
 		3201A26A2B38A739003DB928 /* Calendar Screen */ = {
@@ -882,6 +893,7 @@
 				328BFECB2B823F100007C1AE /* LaunchViewController.swift in Sources */,
 				32231B5F2B04B65A009AE1E0 /* SecretSpaceViewController.swift in Sources */,
 				328BFECD2B83324C0007C1AE /* LoaderViewController.swift in Sources */,
+				07A072A42CBBBD92009FCA82 /* ReferAFriendView.swift in Sources */,
 				323A25EF2B850174006AD2FB /* DuplicateContactsViewModel.swift in Sources */,
 				326709522B374ECC003515D4 /* HomeViewModel.swift in Sources */,
 				3201A26E2B38A78F003DB928 /* CalendarTableViewCell.swift in Sources */,

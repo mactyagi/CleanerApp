@@ -7,16 +7,19 @@
 
 import SwiftUI
 
+
+
+
+
 struct SettingView: View {
     @StateObject private var viewModel = SettingViewModel()
-    
+    @State private var showReferAFriendSheet = false
     var body: some View {
         NavigationView {
             List(viewModel.sections, id: \.header) { section in
                 Section {
                     ForEach(section.items, id: \.self){ item in
-                        RowView(item: item, viewModel: viewModel)
-                            .addNavigationLink(item: item)
+                        row(type: item)
                     }
                     .listRowBackground(Color(uiColor: .offWhiteAndGray))
         
@@ -29,6 +32,35 @@ struct SettingView: View {
             .background(Color.lightBlueDarkGrey)
         }
         
+    }
+    
+    
+    @ViewBuilder
+    func row(type:SettingType) -> some View{
+        switch type {
+        case .appearance:
+            RowView(item: .appearance, viewModel: viewModel)
+                .addAppearanceMenu()
+        case .refferAFriend:
+            referAFriendView
+        case .featureRequest:
+            RowView(item: .featureRequest, viewModel: viewModel)
+                .addNavigationLink(item: type)
+            
+        default:
+            RowView(item: type, viewModel: viewModel)
+        }
+    }
+    
+    var referAFriendView: some View {
+        Button {
+            showReferAFriendSheet.toggle()
+        } label: {
+            RowView(item: .refferAFriend, viewModel: viewModel)
+        }
+        .sheet(isPresented: $showReferAFriendSheet) {
+            ReferAFriendView(shareText: "Check out this amazing app!", appLink: URL(string: "https://apps.apple.com/in/app/space-cleaner-all-in-one/id6478117627")!)
+        }
     }
 }
 
@@ -50,6 +82,7 @@ struct RowView: View {
         VStack(alignment:.leading) {
             Text(item.model.title)
                 .font(.headline)
+                .foregroundColor(Color(UIColor.label))
             if !item.model.subTitle.isEmpty{
                 Text(item.model.subTitle)
                     .font(.caption2)
@@ -96,32 +129,33 @@ struct RowView: View {
 
 
 extension RowView {
+    
     @ViewBuilder
     func addNavigationLink(item: SettingType) -> some View {
-        
-        switch item {
-        case .appearance:
+        NavigationLink {
+            destinationView(item: item)
+        } label: {
             HStack {
                 self
-                Spacer()
-                HStack{
-                    menu
-                }
             }
-            
-        default:
-            NavigationLink {
-                destinationView(item: item)
-            } label: {
-                HStack {
-                    self
-                }
+        }
+    }
+    
+    
+    @ViewBuilder
+    func addAppearanceMenu() -> some View {
+        HStack {
+            self
+            Spacer()
+            HStack{
+                menu
             }
         }
     }
     
     @ViewBuilder
     func destinationView(item: SettingType) -> some View {
+        
         switch item {
         case .featureRequest:
             FeatureRequestView()
