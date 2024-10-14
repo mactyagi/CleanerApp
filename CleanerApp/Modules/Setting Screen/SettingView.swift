@@ -60,6 +60,7 @@ struct SettingView: View {
         }
         .sheet(isPresented: $showReferAFriendSheet) {
             ReferAFriendView(shareText: "Check out this amazing app!", appLink: URL(string: "https://apps.apple.com/in/app/space-cleaner-all-in-one/id6478117627")!)
+                .presentationDetents([.medium])
         }
     }
 }
