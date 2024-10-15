@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		079F29CD2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */; };
 		07A072A42CBBBD92009FCA82 /* ReferAFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A072A32CBBBD92009FCA82 /* ReferAFriendView.swift */; };
+		07A072A62CBD2BCA009FCA82 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07A072A52CBD2BCA009FCA82 /* Setting.storyboard */; };
+		07A072AA2CBD64A8009FCA82 /* ReportErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A072A92CBD64A8009FCA82 /* ReportErrorViewController.swift */; };
+		07A072AF2CBD8190009FCA82 /* ReportAnErrorViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A072AE2CBD8190009FCA82 /* ReportAnErrorViewControllerWrapper.swift */; };
 		07E1EABB2BFB426A00B634A8 /* IncompleteContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */; };
 		07E1EABC2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */; };
 		3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2682B38A605003DB928 /* CalendarViewController.swift */; };
@@ -138,6 +141,9 @@
 /* Begin PBXFileReference section */
 		079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		07A072A32CBBBD92009FCA82 /* ReferAFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferAFriendView.swift; sourceTree = "<group>"; };
+		07A072A52CBD2BCA009FCA82 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		07A072A92CBD64A8009FCA82 /* ReportErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportErrorViewController.swift; path = "CleanerApp/Modules/Setting Screen/ReportAnError/ReportErrorViewController.swift"; sourceTree = SOURCE_ROOT; };
+		07A072AE2CBD8190009FCA82 /* ReportAnErrorViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAnErrorViewControllerWrapper.swift; sourceTree = "<group>"; };
 		07E1EAB92BFB426A00B634A8 /* IncompleteContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactTableViewCell.swift; sourceTree = "<group>"; };
 		07E1EABA2BFB426A00B634A8 /* IncompleteContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncompleteContactTableViewCell.xib; sourceTree = "<group>"; };
 		3201A2682B38A605003DB928 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -285,9 +291,10 @@
 			isa = PBXGroup;
 			children = (
 				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
+				07A072A52CBD2BCA009FCA82 /* Setting.storyboard */,
 				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
-				DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */,
+				07A072AB2CBD7788009FCA82 /* ReportAnError */,
 				DA45C51E2CA9B94C003C884B /* Feature Request */,
 				DA7827082C9A758B004BCB66 /* FireStoreManager.swift */,
 				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
@@ -310,6 +317,15 @@
 				07A072A32CBBBD92009FCA82 /* ReferAFriendView.swift */,
 			);
 			path = ReferAFriendViewController;
+			sourceTree = "<group>";
+		};
+		07A072AB2CBD7788009FCA82 /* ReportAnError */ = {
+			isa = PBXGroup;
+			children = (
+				07A072A92CBD64A8009FCA82 /* ReportErrorViewController.swift */,
+				07A072AE2CBD8190009FCA82 /* ReportAnErrorViewControllerWrapper.swift */,
+			);
+			path = ReportAnError;
 			sourceTree = "<group>";
 		};
 		3201A26A2B38A739003DB928 /* Calendar Screen */ = {
@@ -669,13 +685,6 @@
 			path = "Feature Request";
 			sourceTree = "<group>";
 		};
-		DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Report an Error ";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -781,6 +790,7 @@
 				323A25E52B84E69E006AD2FB /* ContactView.xib in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
 				49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */,
+				07A072A62CBD2BCA009FCA82 /* Setting.storyboard in Resources */,
 				49A0B1132C70BC630079867A /* Contact.storyboard in Resources */,
 				32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */,
 				32BD2A772B483A270039E85E /* PhotoCollectionViewCell.xib in Resources */,
@@ -897,8 +907,10 @@
 				323A25EF2B850174006AD2FB /* DuplicateContactsViewModel.swift in Sources */,
 				326709522B374ECC003515D4 /* HomeViewModel.swift in Sources */,
 				3201A26E2B38A78F003DB928 /* CalendarTableViewCell.swift in Sources */,
+				07A072AA2CBD64A8009FCA82 /* ReportErrorViewController.swift in Sources */,
 				32BD2A822B493E1A0039E85E /* MediaViewController.swift in Sources */,
 				32B3C1F92B4974F4000B0727 /* MediaViewModel.swift in Sources */,
+				07A072AF2CBD8190009FCA82 /* ReportAnErrorViewControllerWrapper.swift in Sources */,
 				326BF4BE2B9B14F6003D8427 /* ImagePreviewViewController.swift in Sources */,
 				323A25E22B84A62E006AD2FB /* OrganizeContactViewModel.swift in Sources */,
 				49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */,

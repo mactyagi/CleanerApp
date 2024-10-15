@@ -43,9 +43,12 @@ struct SettingView: View {
                 .addAppearanceMenu()
         case .refferAFriend:
             referAFriendView
+        case .reportAnError:
+            RowView(item: .reportAnError, viewModel: viewModel)
+                .addNavigationLink()
         case .featureRequest:
             RowView(item: .featureRequest, viewModel: viewModel)
-                .addNavigationLink(item: type)
+                .addNavigationLink()
             
         default:
             RowView(item: type, viewModel: viewModel)
@@ -132,9 +135,9 @@ struct RowView: View {
 extension RowView {
     
     @ViewBuilder
-    func addNavigationLink(item: SettingType) -> some View {
+    func addNavigationLink() -> some View {
         NavigationLink {
-            destinationView(item: item)
+            destinationView(item: self.item)
         } label: {
             HStack {
                 self
@@ -160,6 +163,8 @@ extension RowView {
         switch item {
         case .featureRequest:
             FeatureRequestView()
+        case .reportAnError:
+            ReportErrorViewControllerWrapper()
         default:
             Text("Unknown Destination")
         }
