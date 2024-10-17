@@ -165,6 +165,7 @@ extension RowView {
             FeatureRequestView()
         case .reportAnError:
             ReportErrorViewControllerWrapper()
+                .foregroundStyle(.darkBlue)
         default:
             Text("Unknown Destination")
         }
