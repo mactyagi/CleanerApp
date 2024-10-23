@@ -46,6 +46,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var progressLabel: UILabel!
     
+    @IBOutlet weak var startTrialButton: UIButton!
     
         //MARK: - Variables
     private var cancelables: Set<AnyCancellable> = []
@@ -94,6 +95,14 @@ class HomeViewController: UIViewController {
     }
    
     
+    //MARK: - IBActions
+    
+    @IBAction func startTrialButtonPressed(_ sender: UIButton) {
+        
+        
+    }
+    
+    
     
     //MARK: - setup Functions
     
@@ -103,6 +112,7 @@ class HomeViewController: UIViewController {
     }
     
     func setupView(){
+        startTrialButton.layer.cornerRadius = 4
         scrollView.bounces = false
         infoImageView.makeCornerRadiusCircle()
         addCornerRadius(10, views: EventView, contactCountView, mediaMemoryView)

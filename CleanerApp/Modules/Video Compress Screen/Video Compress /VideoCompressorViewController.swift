@@ -13,7 +13,6 @@ class VideoCompressorViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var secondaryLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     //MARK: - Variables
     var viewModel: VideoCompressViewModel!
