@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -245,7 +245,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DABF2C092CAEE38900D1B265 /* SwiftUICleaner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUICleaner; sourceTree = "<group>"; };
+		DABF2C092CAEE38900D1B265 /* SwiftUICleaner */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SwiftUICleaner;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -752,7 +756,6 @@
 				};
 			};
 			buildConfigurationList = 32E2E0CE2AF80039009CA92E /* Build configuration list for PBXProject "CleanerApp" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -764,6 +767,7 @@
 				327C25BF2B79509100EA0E36 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				49DB037C2C5661A600F0052E /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 32E2E0D42AF80039009CA92E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
