@@ -128,7 +128,6 @@
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
 		DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */; };
 		DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */; };
-		DA7827092C9A758B004BCB66 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7827082C9A758B004BCB66 /* FireStoreManager.swift */; };
 		DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */; };
 		DA78270D2C9A8072004BCB66 /* AddFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */; };
 		DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */; };
@@ -230,13 +229,13 @@
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestView.swift; sourceTree = "<group>"; };
-		DA7827082C9A758B004BCB66 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestModel.swift; sourceTree = "<group>"; };
 		DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureView.swift; sourceTree = "<group>"; };
 		DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeatureViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		24D48CD72E46529C0014CDCA /* FireStore  */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "FireStore "; sourceTree = "<group>"; };
 		DABF2C092CAEE38900D1B265 /* SwiftUICleaner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUICleaner; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -282,12 +281,13 @@
 		04284B092BF489190078B939 /* Setting Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
-				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
-				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
+				24D48CCF2E4651FF0014CDCA /* Model */,
+				24D48CD12E4652130014CDCA /* View */,
+				24D48CD02E4652090014CDCA /* View Model */,
 				DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */,
-				DA45C51E2CA9B94C003C884B /* Feature Request */,
-				DA7827082C9A758B004BCB66 /* FireStoreManager.swift */,
+				DA45C51E2CA9B94C003C884B /* Feature Request Screen */,
+				DA45C51B2CA9AE89003C884B /* Add Feature Screen */,
+				24D48CD72E46529C0014CDCA /* FireStore  */,
 				079F29CB2BF4B904006EE9A1 /* PrivacyPolicyViewController */,
 			);
 			path = "Setting Screen";
@@ -299,6 +299,70 @@
 				079F29CC2BF4BA61006EE9A1 /* PrivacyPolicyViewController.swift */,
 			);
 			path = PrivacyPolicyViewController;
+			sourceTree = "<group>";
+		};
+		24D48CCF2E4651FF0014CDCA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		24D48CD02E4652090014CDCA /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		24D48CD12E4652130014CDCA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		24D48CD22E4652380014CDCA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		24D48CD32E46523F0014CDCA /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		24D48CD42E4652470014CDCA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		24D48CD52E46526D0014CDCA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		24D48CD62E4652770014CDCA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		3201A26A2B38A739003DB928 /* Calendar Screen */ = {
@@ -638,24 +702,23 @@
 			path = "Media Cells";
 			sourceTree = "<group>";
 		};
-		DA45C51B2CA9AE89003C884B /* Add Feature */ = {
+		DA45C51B2CA9AE89003C884B /* Add Feature Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DA78270C2C9A8072004BCB66 /* AddFeatureView.swift */,
-				DA78270E2C9A987B004BCB66 /* AddFeatureViewModel.swift */,
+				24D48CD52E46526D0014CDCA /* View */,
+				24D48CD62E4652770014CDCA /* ViewModel */,
 			);
-			path = "Add Feature";
+			path = "Add Feature Screen";
 			sourceTree = "<group>";
 		};
-		DA45C51E2CA9B94C003C884B /* Feature Request */ = {
+		DA45C51E2CA9B94C003C884B /* Feature Request Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DA45C51B2CA9AE89003C884B /* Add Feature */,
-				DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */,
-				DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */,
-				DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */,
+				24D48CD42E4652470014CDCA /* Model */,
+				24D48CD22E4652380014CDCA /* View */,
+				24D48CD32E46523F0014CDCA /* View Model */,
 			);
-			path = "Feature Request";
+			path = "Feature Request Screen";
 			sourceTree = "<group>";
 		};
 		DAAD0B5D2CAE58BE005FB4CC /* Report an Error  */ = {
@@ -680,6 +743,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				24D48CD72E46529C0014CDCA /* FireStore  */,
 			);
 			name = CleanerApp;
 			packageProductDependencies = (
@@ -862,7 +928,6 @@
 				32603A972B3A962100154775 /* ReminderTableViewCell.swift in Sources */,
 				DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */,
 				32BD2A762B483A270039E85E /* PhotoCollectionViewCell.swift in Sources */,
-				DA7827092C9A758B004BCB66 /* FireStoreManager.swift in Sources */,
 				DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */,
 				32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */,
 				32D336CD2AFE0494006C504E /* CompressVideosHeaderView.swift in Sources */,
@@ -1043,7 +1108,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = BVX54XCJ2D;
+				DEVELOPMENT_TEAM = F638V29VVL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
@@ -1085,7 +1150,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BVX54XCJ2D;
+				DEVELOPMENT_TEAM = F638V29VVL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";

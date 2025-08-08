@@ -19,8 +19,18 @@ class FeatureRequestViewModel: ObservableObject {
         }
     }
     
-    init() {
-        getData()
+    init(isMockData: Bool = false) {
+        if  isMockData {
+            getMockData()
+        }else {
+            getData()
+        }
+    }
+    
+    
+    func getMockData() {
+        allData = Feature.mockFeatures()
+        getfilteredData()
     }
     
     func getData() {
@@ -45,6 +55,7 @@ class FeatureRequestViewModel: ObservableObject {
     }
     
     func userHasVoted(for feature: Binding<Feature>) {
+        
         if feature.wrappedValue.hasCurrentUserVoted {
             feature.wrappedValue.votedUsers.remove(getDeviceIdentifier() ?? "")
         }else {

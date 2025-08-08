@@ -124,7 +124,7 @@ extension RowView {
     func destinationView(item: SettingType) -> some View {
         switch item {
         case .featureRequest:
-            FeatureRequestView()
+            FeatureRequestView(viewModel: FeatureRequestViewModel())
         default:
             Text("Unknown Destination")
         }

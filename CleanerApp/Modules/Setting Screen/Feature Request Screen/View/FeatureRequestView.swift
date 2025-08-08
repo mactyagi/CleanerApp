@@ -12,9 +12,10 @@ enum FeatureSegmentType: String, CaseIterable{
     case building
     case done
 }
+
 struct FeatureRequestView: View {
     @State private var showAddFeatureView = false
-    @StateObject var viewModel: FeatureRequestViewModel = FeatureRequestViewModel()
+    @StateObject var viewModel: FeatureRequestViewModel
     
     var body: some View {
 //        NavigationView {
@@ -78,7 +79,7 @@ struct FeatureRequestView: View {
 
 #Preview {
     NavigationView {
-        FeatureRequestView()
+        FeatureRequestView(viewModel: FeatureRequestViewModel(isMockData: true))
     }
 }
 
@@ -95,33 +96,16 @@ struct ListItemView : View {
                 )
             
             HStack {
-                ZStack{
-                    Group {
-                        if feature.hasCurrentUserVoted {
-                            Circle()
-                                .stroke(Color(uiColor: .darkBlue), lineWidth: 2)
-                                 
-                        }else {
-                            Circle()
-                                 .stroke(Color(uiColor: .systemGray), lineWidth: 1)
-                        }
+                Circle()
+                    .fill(Color(uiColor: feature.hasCurrentUserVoted ? .systemGreen : .clear))
+                    .stroke(Color(uiColor: .systemGray), lineWidth: feature.hasCurrentUserVoted ? 2 : 1)
+                    .overlay{
+                        Text("\(feature.votedUsers.count)")
+                            .foregroundColor(Color(uiColor: .label))
+                            .font(.caption)
+                            .fontWeight(.black)
                     }
-                    .background(Circle().fill(.offWhiteAndGray))
                     .frame(width: 30, height: 30)
-                   
-                        
-                    Group {
-                        if feature.hasCurrentUserVoted {
-                            Text("\(feature.votedUsers.count)")
-                                .foregroundColor(.darkBlue)
-                        }else {
-                            Text("\(feature.votedUsers.count)")
-                                .foregroundColor(Color(uiColor: .label))
-                        }
-                    }
-                        .font(.caption)
-                        .fontWeight(.black)
-                }
                 
                 VStack(alignment: .leading){
                     Text(feature.featureTitle)
