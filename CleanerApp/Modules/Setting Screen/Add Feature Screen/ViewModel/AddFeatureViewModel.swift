@@ -53,15 +53,14 @@ class AddFeatureViewModel: ObservableObject {
     }
     
     func sendFeatureToFirebase(completion: @escaping (_ success: Bool) -> () ) {
-        let userUDID = getDeviceIdentifier() ?? ""
         let feature = Feature(
             currentState: .userRequested,
-            votedUsers: [userUDID],
+            votedUsers: [UIDevice.deviceId],
             featureTitle: title,
             featureDescription: description,
             createdAt: formatDate(Date()),
             updatedAt: formatDate(Date()),
-            createdBy: userUDID)
+            createdBy: UIDevice.deviceId)
         
         if isRunningInPreview() { 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -78,15 +77,6 @@ class AddFeatureViewModel: ObservableObject {
     func resetAlerts() {
         showCompletionAlert = false
         showErrorAlert = false
-    }
-    
-    // Helper functions
-    private func getDeviceIdentifier() -> String? {
-        #if targetEnvironment(simulator)
-        return "simulator-device"
-        #else
-        return UUID().uuidString
-        #endif
     }
     
     private func formatDate(_ date: Date) -> String {

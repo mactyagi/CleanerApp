@@ -57,9 +57,9 @@ class FeatureRequestViewModel: ObservableObject {
     func userHasVoted(for feature: Binding<Feature>) {
         
         if feature.wrappedValue.hasCurrentUserVoted {
-            feature.wrappedValue.votedUsers.remove(getDeviceIdentifier() ?? "")
+            feature.wrappedValue.votedUsers.remove(UIDevice.deviceId)
         }else {
-            feature.wrappedValue.votedUsers.insert(getDeviceIdentifier() ?? "")
+            feature.wrappedValue.votedUsers.insert(UIDevice.deviceId)
         }
         
         FireStoreManager().updateFeature(feature: feature.wrappedValue) { success in

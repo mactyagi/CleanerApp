@@ -19,7 +19,7 @@ struct Feature: Codable {
     var createdBy: String
     
     var hasCurrentUserVoted: Bool {
-       votedUsers.contains(getDeviceIdentifier() ?? "")
+        votedUsers.contains(UIDevice.deviceId)
     }
     
     
@@ -74,9 +74,9 @@ extension Feature {
     }
 }
 
-
+// MARK: - Don't Edit, add only if in production
 enum FeatureState: String, Codable {
-    case userRequested
+    case userRequested = "user_requested"
     case open
     case building
     case completed

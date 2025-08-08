@@ -15,13 +15,6 @@ func vibrate() {
     generator.impactOccurred()
 }
 
-func getDeviceIdentifier() -> String? {
-    if let uuid = UIDevice.current.identifierForVendor?.uuidString {
-        return uuid
-    }
-    return nil
-}
-
 func isRunningInPreview() -> Bool {
     ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
 }
