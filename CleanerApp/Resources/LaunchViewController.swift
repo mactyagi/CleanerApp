@@ -19,13 +19,9 @@ class LaunchViewController: UIViewController {
     }
     
     func goToTabVC(){
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = (windowScene.delegate as? SceneDelegate)?.window else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            let initialViewController = TabBarController.customInit()
-            window.rootViewController = initialViewController
-            window.makeKeyAndVisible()
-        }
+        // Note: This UIKit launch flow is now handled by SwiftUI (RootView + LaunchView)
+        // This function is kept for backward compatibility but is no longer used
+        // The SwiftUI App entry point (CleanerApp.swift) now manages the app launch
     }
     
     func animateImage() {

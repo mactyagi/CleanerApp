@@ -88,9 +88,8 @@ struct RowView: View {
     }
     
     private func applyAppearanceMode(_ mode: AppearanceMode) {
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = scene.delegate as? SceneDelegate {
-            sceneDelegate.changeAppearance(to: mode)
-            }
+        // Save to UserDefaults - SwiftUI's @AppStorage in AppearanceManager will react automatically
+        UserDefaults.standard.set(mode.rawValue, forKey: "appearanceMode")
     }
 }
 
