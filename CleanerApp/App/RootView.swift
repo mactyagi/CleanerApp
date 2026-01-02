@@ -21,8 +21,7 @@ struct RootView: View {
                 })
                 .transition(.opacity)
             } else {
-                TabBarControllerWrapper()
-                    .ignoresSafeArea()
+                TabBarView()
                     .transition(.opacity)
             }
         }
@@ -32,5 +31,6 @@ struct RootView: View {
 
 #Preview {
     RootView()
+        .environmentObject(AppState())
         .environmentObject(AppearanceManager())
 }

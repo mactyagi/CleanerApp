@@ -379,28 +379,6 @@ extension Notification.Name{
 }
 
 
-extension UIViewController{
-    func showFullScreenLoader(){
-        DispatchQueue.main.async {
-            let vc = UIStoryboard.main.instantiateViewController(identifier: LoaderViewController.identifier) as! LoaderViewController
-            vc.modalPresentationStyle = .overFullScreen
-            self.present(vc, animated: false)
-        }
-    }
-    
-    func hideFullScreenLoader(){
-        DispatchQueue.main.async {
-            if let viewControllerToDismiss = self.presentedViewController as? LoaderViewController {
-                viewControllerToDismiss.dismiss(animated: false, completion: nil)
-            }
-        }
-    }
-    
-    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
-        navigationController?.navigationBar.isHidden = flag
-        tabBarController?.tabBar.isHidden = !flag
-    }
-}
 
 
 extension UIFont{

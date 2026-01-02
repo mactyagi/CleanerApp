@@ -9,6 +9,11 @@ import Foundation
 import EventKit
 import Combine
 
+enum SegmentType: Int, CaseIterable {
+    case Calendar = 0
+    case Reminder = 1
+}
+
 class CalendarViewModel {
     
     var eventStore: EKEventStore

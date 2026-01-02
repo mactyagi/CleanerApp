@@ -61,7 +61,7 @@ class HomeViewModel: NSObject, ObservableObject {
         
     }
 
-    
+    @MainActor
     func getStorageInfo() {
         let fileManager = FileManager.default
         let documentDirectory = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -117,12 +117,15 @@ class HomeViewModel: NSObject, ObservableObject {
         }
     }
     
+    @MainActor
     private func getContactsData(){
         
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized{
             fetchContacts()
         }
     }
+    
+    @MainActor
     private func fetchContacts() {
         let request = CNContactFetchRequest(keysToFetch: [])
         contactsCount = 0
@@ -137,7 +140,6 @@ class HomeViewModel: NSObject, ObservableObject {
         }
     }
 
-    
    private func getCalendarData() {
        if #available(iOS 17.0, *) {
            if EKEventStore.authorizationStatus(for: .event) == .fullAccess{
