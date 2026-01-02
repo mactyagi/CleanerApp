@@ -8,11 +8,12 @@
 import Foundation
 import Photos
 import Combine
-class VideoCompressViewModel{
+
+class VideoCompressViewModel: ObservableObject {
     @Published var compressVideoModel = [CompressVideoModel]()
-    var totalSize:Int64 = 0
+    @Published var totalSize: Int64 = 0
     @Published var isLoading = true
-    var totalCompressSize: Int64 = 0
+    @Published var totalCompressSize: Int64 = 0
 }
 
 extension VideoCompressViewModel{

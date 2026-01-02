@@ -13,7 +13,7 @@ import UIKit
 import CoreData
 import Contacts
 
-class  HomeViewModel: NSObject {
+class HomeViewModel: NSObject, ObservableObject {
 
     @Published var availableRAM: UInt64 = 0
     @Published var eventsCount: Int?
