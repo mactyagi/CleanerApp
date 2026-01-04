@@ -14,7 +14,7 @@ import Contacts
 import ContactsUI
 
 // MARK: - Design 3: Modern Gradient Design
-struct DuplicateContactsViewDesign3: View {
+struct DuplicateContactsViewDesign: View {
     @ObservedObject var viewModel: DuplicateContactsViewModel
     @State private var showMergeAlert = false
     @State private var selectedIndex: Int?
@@ -125,7 +125,7 @@ struct Design3StatPill: View {
                 .frame(width: 32, height: 32)
                 .background(
                     LinearGradient(
-                        colors: [Color(uiColor: .darkBlue), Color(uiColor: .darkBlue).opacity(0.7)],
+                        colors: [Color.blue, Color.blue.opacity(0.7)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -191,7 +191,7 @@ struct Design3GroupCard: View {
                     Text(isAllSelected ? "Deselect" : "Select All")
                         .font(.caption)
                         .fontWeight(.medium)
-                        .foregroundColor(Color(uiColor: .darkBlue))
+                        .foregroundColor(.blue)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(.white)
@@ -201,7 +201,7 @@ struct Design3GroupCard: View {
             .padding(16)
             .background(
                 LinearGradient(
-                    colors: [Color(uiColor: .darkBlue), Color(uiColor: .darkBlue).opacity(0.8)],
+                    colors: [Color.blue, Color.blue.opacity(0.8)],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
@@ -247,7 +247,7 @@ struct Design3GroupCard: View {
                 .background(
                     canMerge ?
                     LinearGradient(
-                        colors: [Color(uiColor: .darkBlue), Color(uiColor: .darkBlue).opacity(0.8)],
+                        colors: [Color.blue, Color.blue.opacity(0.8)],
                         startPoint: .leading,
                         endPoint: .trailing
                     ) :
@@ -286,7 +286,7 @@ struct Design3MergedPreview: View {
                     Circle()
                         .stroke(
                             LinearGradient(
-                                colors: [Color(uiColor: .darkBlue), Color(uiColor: .darkBlue).opacity(0.5)],
+                                colors: [Color.blue, Color.blue.opacity(0.5)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),
@@ -294,7 +294,7 @@ struct Design3MergedPreview: View {
                         )
                     Image(systemName: "person.crop.circle.badge.checkmark.fill")
                         .font(.title3)
-                        .foregroundColor(Color(uiColor: .darkBlue))
+                        .foregroundColor(.blue)
                 }
                 .frame(width: 44, height: 44)
 
@@ -302,7 +302,7 @@ struct Design3MergedPreview: View {
                     Text("MERGED RESULT")
                         .font(.caption2)
                         .fontWeight(.bold)
-                        .foregroundColor(Color(uiColor: .darkBlue))
+                        .foregroundColor(.blue)
                         .tracking(0.5)
 
                     Text(fullName.isEmpty ? "No Name" : fullName)
@@ -321,7 +321,7 @@ struct Design3MergedPreview: View {
                     .foregroundColor(Color(uiColor: .tertiaryLabel))
             }
             .padding(12)
-            .background(Color(uiColor: .lightBlueDarkGrey).opacity(0.5))
+            .background(Color.blue.opacity(0.1))
             .cornerRadius(12)
         }
         .buttonStyle(.plain)
@@ -362,7 +362,7 @@ struct Design3ContactRow: View {
                         .fill(
                             isSelected ?
                             LinearGradient(
-                                colors: [Color(uiColor: .darkBlue), Color(uiColor: .darkBlue).opacity(0.7)],
+                                colors: [Color.blue, Color.blue.opacity(0.7)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ) :
@@ -407,13 +407,13 @@ struct Design3ContactRow: View {
                     Text(isSelected ? "Selected" : "Select")
                         .font(.caption)
                         .fontWeight(.medium)
-                        .foregroundColor(isSelected ? .white : Color(uiColor: .darkBlue))
+                        .foregroundColor(isSelected ? .white : .blue)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(
                             isSelected ?
-                            Color(uiColor: .darkBlue) :
-                            Color(uiColor: .darkBlue).opacity(0.1)
+                            Color.blue :
+                            Color.blue.opacity(0.1)
                         )
                         .cornerRadius(20)
                 }
@@ -475,6 +475,6 @@ struct ContactDetailViewDesign3: UIViewControllerRepresentable {
 // MARK: - Preview
 #Preview("Design 3 - Modern Gradient") {
     NavigationView {
-        DuplicateContactsViewDesign3(viewModel: DuplicateContactsViewModel(contactStore: CNContactStore()))
+        DuplicateContactsViewDesign(viewModel: DuplicateContactsViewModel(contactStore: CNContactStore()))
     }
 }

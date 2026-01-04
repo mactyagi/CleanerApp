@@ -26,6 +26,21 @@ class OrganizeContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewModel()
+        setupNavigationBarButton()
+    }
+
+    private func setupNavigationBarButton() {
+        let previewButton = UIBarButtonItem(
+            image: UIImage(systemName: "rectangle.on.rectangle"),
+            style: .plain,
+            target: self,
+            action: #selector(previewDesignsTapped)
+        )
+        navigationItem.rightBarButtonItem = previewButton
+    }
+
+    @objc private func previewDesignsTapped() {
+        showOrganizeContactsSwiftUIView()
     }
 
 
@@ -58,10 +73,6 @@ class OrganizeContactsViewController: UIViewController {
             self?.navigateToDuplicateContacts(design: 0)
         })
 
-        alert.addAction(UIAlertAction(title: "Design 1 - Card Based", style: .default) { [weak self] _ in
-            self?.navigateToDuplicateContacts(design: 1)
-        })
-
         alert.addAction(UIAlertAction(title: "Design 3 - Modern Gradient", style: .default) { [weak self] _ in
             self?.navigateToDuplicateContacts(design: 3)
         })
@@ -87,18 +98,11 @@ class OrganizeContactsViewController: UIViewController {
             let vc = DuplicateContactsViewController.customInit(viewModel: duplicateViewModel)
             navigationController?.pushViewController(vc, animated: true)
 
-        case 1:
-            // SwiftUI Design 1 - Card Based
-            let swiftUIView = DuplicateContactsViewDesign1(viewModel: duplicateViewModel)
-            let hostingController = UIHostingController(rootView: swiftUIView)
-            hostingController.title = "Design 1 - Card Based"
-            navigationController?.pushViewController(hostingController, animated: true)
-
         case 3:
             // SwiftUI Design 3 - Modern Gradient
-            let swiftUIView = DuplicateContactsViewDesign3(viewModel: duplicateViewModel)
+            let swiftUIView = DuplicateContactsViewDesign(viewModel: duplicateViewModel)
             let hostingController = UIHostingController(rootView: swiftUIView)
-            hostingController.title = "Design 3 - Modern Gradient"
+            hostingController.title = "Duplicate Contacts"
             navigationController?.pushViewController(hostingController, animated: true)
 
         default:
@@ -108,9 +112,10 @@ class OrganizeContactsViewController: UIViewController {
     
 
     @IBAction func inCompletContactButtonPressed(_ sender: UIButton) {
-        let viewModel = IncompleteContactViewModel(contactStore: viewModel.contactStore)
-        let vc = IncompleteContactViewController.customInit(viewModel: viewModel)
-        navigationController?.pushViewController(vc, animated: true)
+        let incompleteViewModel = IncompleteContactViewModel(contactStore: viewModel.contactStore)
+        let swiftUIView = IncompleteContactView(viewModel: incompleteViewModel)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        navigationController?.pushViewController(hostingController, animated: true)
     }
     
     @IBAction func backUpButtonPressed(_ sender: UIButton) {
@@ -119,10 +124,9 @@ class OrganizeContactsViewController: UIViewController {
     
     @IBAction func AllContactsButtonPressed(_ sender: UIButton) {
         let allContactViewModel = AllContactsVIewModel(contactStore: viewModel.contactStore)
-        let vc = AllContactsViewController.customInit(viewModel: allContactViewModel)
-        
-//        let vc = TestViewController.customInit()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let swiftUIView = AllContactsView(viewModel: allContactViewModel)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        navigationController?.pushViewController(hostingController, animated: true)
     }
     
     
@@ -130,6 +134,20 @@ class OrganizeContactsViewController: UIViewController {
     //MARK: - setup Functions
     func setupViewModel(){
         setSubscribers()
+    }
+
+    //MARK: - SwiftUI Organize Contacts View
+    private func showOrganizeContactsSwiftUIView() {
+        let swiftUIView = OrganizeContactsView(
+            viewModel: viewModel,
+            onDuplicatesTapped: { [weak self] in self?.duplicateButtonPressed(UIButton()) },
+            onIncompleteTapped: { [weak self] in self?.inCompletContactButtonPressed(UIButton()) },
+            onBackupTapped: { [weak self] in self?.backUpButtonPressed(UIButton()) },
+            onAllContactsTapped: { [weak self] in self?.AllContactsButtonPressed(UIButton()) }
+        )
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        hostingController.title = "Contacts"
+        navigationController?.pushViewController(hostingController, animated: true)
     }
 }
 

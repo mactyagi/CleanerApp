@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Combine
 import EventKit
 import Firebase
@@ -188,7 +189,13 @@ class HomeViewController: UIViewController {
     
     @objc func calendarViewTapped(){
         logEvent(Event.HomeScreen.tapCalendar.rawValue, parameter: nil)
-        navigationController?.pushViewController(CalendarViewController.customInit(), animated: true)
+        let designSelector = CalendarDesignSelector()
+        let hostingController = UIHostingController(rootView: designSelector)
+        hostingController.title = "Calendar"
+        hostingController.hidesBottomBarWhenPushed = true
+        // Show navigation bar (it's hidden on Home screen)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.pushViewController(hostingController, animated: true)
     }
     
     @objc func contactViewTapped(){
@@ -197,10 +204,8 @@ class HomeViewController: UIViewController {
         store.requestAccess(for: .contacts) { granted, error in
             DispatchQueue.main.async {
                 if granted {
-                    let vc = ComingSoonViewController.customInit()
                     let organizeViewModel = OrganizeContactViewModel(contactStore: self.viewModel.contactStore)
-                    let contactVC = OrganizeContactsViewController.customInit(viewModel: organizeViewModel)
-                    self.navigationController?.pushViewController(contactVC, animated: true)
+                    self.navigateToOrganizeContactsSwiftUI(viewModel: organizeViewModel)
                 } else {
                     self.goToSettingAlertVC(message: "In order to find duplicate and empty contacts, the app needs an access to contacts.")
                 }
@@ -226,7 +231,7 @@ class HomeViewController: UIViewController {
     
     func goToSettingAlertVC(message: String){
         let alertVc = UIAlertController(title: "Access Needed", message: message, preferredStyle: .alert)
-        
+
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
         let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { action in
             let url = URL(string:UIApplication.openSettingsURLString)
@@ -234,13 +239,65 @@ class HomeViewController: UIViewController {
                     UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                 }
         }
-        
+
         alertVc.addAction(cancelButton)
         alertVc.addAction(goToSettingAction)
-        
+
         self.present(alertVc, animated: true)
     }
-    
+
+    func navigateToOrganizeContactsSwiftUI(viewModel: OrganizeContactViewModel) {
+        // Load data
+        viewModel.getData()
+
+        let swiftUIView = OrganizeContactsView(
+            viewModel: viewModel,
+            onDuplicatesTapped: { [weak self] in
+                self?.navigateToDuplicateContacts(viewModel: viewModel)
+            },
+            onIncompleteTapped: { [weak self] in
+                self?.navigateToIncompleteContacts(viewModel: viewModel)
+            },
+            onBackupTapped: {
+                // Backup functionality - coming soon
+            },
+            onAllContactsTapped: { [weak self] in
+                self?.navigateToAllContacts(viewModel: viewModel)
+            }
+        )
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        hostingController.title = "Contacts"
+        hostingController.hidesBottomBarWhenPushed = true
+        // Show navigation bar (it's hidden on Home screen)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.pushViewController(hostingController, animated: true)
+    }
+
+    private func navigateToDuplicateContacts(viewModel: OrganizeContactViewModel) {
+        let duplicateViewModel = DuplicateContactsViewModel(contactStore: viewModel.contactStore)
+        let swiftUIView = DuplicateContactsViewDesign(viewModel: duplicateViewModel)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        hostingController.title = "Duplicate Contacts"
+        hostingController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(hostingController, animated: true)
+    }
+
+    private func navigateToIncompleteContacts(viewModel: OrganizeContactViewModel) {
+        let incompleteViewModel = IncompleteContactViewModel(contactStore: viewModel.contactStore)
+        let swiftUIView = IncompleteContactView(viewModel: incompleteViewModel)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        hostingController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(hostingController, animated: true)
+    }
+
+    private func navigateToAllContacts(viewModel: OrganizeContactViewModel) {
+        let allContactViewModel = AllContactsVIewModel(contactStore: viewModel.contactStore)
+        let swiftUIView = AllContactsView(viewModel: allContactViewModel)
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        hostingController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(hostingController, animated: true)
+    }
+
 }
 
 

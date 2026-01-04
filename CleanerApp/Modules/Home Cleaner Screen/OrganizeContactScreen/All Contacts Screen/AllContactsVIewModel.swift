@@ -10,7 +10,7 @@ import Contacts
 import Combine
 import ContactsUI
 
-class AllContactsVIewModel{
+class AllContactsVIewModel: ObservableObject {
     
     @Published var allContacts: [CNContact] = []
     var contactStore: CNContactStore
@@ -70,6 +70,11 @@ class AllContactsVIewModel{
         }
     }
 
+    // Alias for SwiftUI views
+    func selectContact(contact: CNContact) {
+        selectedContact(contact)
+    }
+
     func selectAll() {
         for contact in allContacts{
             selectedContacts.insert(contact)
@@ -77,9 +82,19 @@ class AllContactsVIewModel{
         isAllSelected = true
     }
 
+    // Alias for SwiftUI views
+    func selectAllContacts() {
+        selectAll()
+    }
+
     func deselectAll() {
         selectedContacts.removeAll()
         isAllSelected = false
+    }
+
+    // Alias for SwiftUI views
+    func deselectAllContacts() {
+        deselectAll()
     }
 
 

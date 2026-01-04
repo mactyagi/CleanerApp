@@ -9,7 +9,7 @@ import Foundation
 import Contacts
 import Combine
 import ContactsUI
-class OrganizeContactViewModel{
+class OrganizeContactViewModel: ObservableObject {
     @Published var allContacts: [CNContact] = []
     @Published var duplicateCount = 0
     @Published var incompleteContactsCount = 0

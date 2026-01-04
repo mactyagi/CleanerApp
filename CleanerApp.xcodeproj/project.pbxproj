@@ -124,8 +124,12 @@
 		49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */; };
 		49DB037E2C5661A600F0052E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 49DB037D2C5661A600F0052E /* AlertToast */; };
 		49DB03862C567C3900F0052E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Global.swift */; };
-		DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift */; };
-		DA3EFED12F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECC2F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift */; };
+		DA0001022F0A700000C69C9B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0001012F0A700000C69C9B /* CalendarView.swift */; };
+		DA0001042F0A800000C69C9B /* CalendarDesignSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */; };
+		DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */; };
+		DA3EFEE22F0A581E00C69C9B /* IncompleteContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */; };
+		DA3EFEF82F0A591E00C69C9B /* AllContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */; };
+		DA3EFF042F0A600000C69C9B /* OrganizeContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFF052F0A600000C69C9B /* OrganizeContactsView.swift */; };
 		DA45C51D2CA9AF45003C884B /* FeatureRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */; };
 		DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */; };
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
@@ -228,8 +232,12 @@
 		49A0B11C2C70FE030079867A /* Media.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Media.storyboard; sourceTree = "<group>"; };
 		49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllContactsTableViewCell.xib; sourceTree = "<group>"; };
 		49DB03852C567C3900F0052E /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
-		DA3EFECC2F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign1.swift; sourceTree = "<group>"; };
-		DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign3.swift; sourceTree = "<group>"; };
+		DA0001012F0A700000C69C9B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDesignSelector.swift; sourceTree = "<group>"; };
+		DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign.swift; sourceTree = "<group>"; };
+		DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactView.swift; sourceTree = "<group>"; };
+		DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsView.swift; sourceTree = "<group>"; };
+		DA3EFF052F0A600000C69C9B /* OrganizeContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizeContactsView.swift; sourceTree = "<group>"; };
 		DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -384,6 +392,8 @@
 			isa = PBXGroup;
 			children = (
 				3201A2682B38A605003DB928 /* CalendarViewController.swift */,
+				DA0001012F0A700000C69C9B /* CalendarView.swift */,
+				DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */,
 				49A0B11A2C70FD2C0079867A /* Calendar.storyboard */,
 				3201A2772B394D1D003DB928 /* CustomEKEventModel.swift */,
 				3201A26F2B38B023003DB928 /* CalendarViewModel.swift */,
@@ -408,6 +418,7 @@
 			children = (
 				323A25E12B84A62E006AD2FB /* OrganizeContactViewModel.swift */,
 				328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */,
+				DA3EFF052F0A600000C69C9B /* OrganizeContactsView.swift */,
 				326BF4B82B983363003D8427 /* Incomplete Contact Screen */,
 				326BF4B72B983321003D8427 /* Duplicate Screen */,
 				49A0B1142C70BCAB0079867A /* All Contacts Screen */,
@@ -448,8 +459,7 @@
 		326BF4B72B983321003D8427 /* Duplicate Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DA3EFECC2F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift */,
-				DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift */,
+				DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */,
 				323A25E82B84E94E006AD2FB /* DuplicateContactsViewController.swift */,
 				323A25EE2B850173006AD2FB /* DuplicateContactsViewModel.swift */,
 				49A0B1192C70BE520079867A /* Duplicate Contact Cells */,
@@ -463,6 +473,7 @@
 				326BF4B92B9833A9003D8427 /* IncompleteContactViewController.swift */,
 				326BF4BB2B9835B0003D8427 /* IncompleteContactViewModel.swift */,
 				49A0B1182C70BD990079867A /* Incomplete Contact Cell */,
+				DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */,
 			);
 			path = "Incomplete Contact Screen";
 			sourceTree = "<group>";
@@ -648,6 +659,7 @@
 				49809DDE2C019C8500373865 /* AllContactsViewController.swift */,
 				49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */,
 				49A0B1162C70BCE40079867A /* All Contact Cell */,
+				DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */,
 			);
 			path = "All Contacts Screen";
 			sourceTree = "<group>";
@@ -907,6 +919,8 @@
 				DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */,
 				DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */,
 				3201A2692B38A605003DB928 /* CalendarViewController.swift in Sources */,
+				DA0001022F0A700000C69C9B /* CalendarView.swift in Sources */,
+				DA0001042F0A800000C69C9B /* CalendarDesignSelector.swift in Sources */,
 				24D48CDA2E465A4E0014CDCA /* UIDevice + Extension.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
@@ -922,8 +936,7 @@
 				323A25E72B84E8E4006AD2FB /* ContactView.swift in Sources */,
 				32682CB02B36D17800B9B7BD /* IconView.swift in Sources */,
 				324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */,
-				DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift in Sources */,
-				DA3EFED12F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift in Sources */,
+				DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift in Sources */,
 				323A25EC2B84E9E5006AD2FB /* DuplicateContactTableViewCell.swift in Sources */,
 				326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */,
 				32BF2C922AF947DA00045343 /* FutureHomeTableViewCell.swift in Sources */,
@@ -956,6 +969,7 @@
 				32ED57D52B66835100AED057 /* MediaHeaderView.swift in Sources */,
 				324943452B680C700035FE64 /* CircularProgressView.swift in Sources */,
 				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
+				DA3EFEE22F0A581E00C69C9B /* IncompleteContactView.swift in Sources */,
 				32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */,
 				323A25E92B84E94E006AD2FB /* DuplicateContactsViewController.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,
@@ -975,6 +989,8 @@
 				326BF4BE2B9B14F6003D8427 /* ImagePreviewViewController.swift in Sources */,
 				323A25E22B84A62E006AD2FB /* OrganizeContactViewModel.swift in Sources */,
 				49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */,
+				DA3EFEF82F0A591E00C69C9B /* AllContactsView.swift in Sources */,
+				DA3EFF042F0A600000C69C9B /* OrganizeContactsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
