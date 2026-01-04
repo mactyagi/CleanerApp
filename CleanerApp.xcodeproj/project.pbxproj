@@ -124,6 +124,8 @@
 		49DB03752C5622DC00F0052E /* AllContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */; };
 		49DB037E2C5661A600F0052E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 49DB037D2C5661A600F0052E /* AlertToast */; };
 		49DB03862C567C3900F0052E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Global.swift */; };
+		DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift */; };
+		DA3EFED12F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECC2F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift */; };
 		DA45C51D2CA9AF45003C884B /* FeatureRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */; };
 		DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */; };
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
@@ -226,6 +228,8 @@
 		49A0B11C2C70FE030079867A /* Media.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Media.storyboard; sourceTree = "<group>"; };
 		49DB03732C5622DC00F0052E /* AllContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllContactsTableViewCell.xib; sourceTree = "<group>"; };
 		49DB03852C567C3900F0052E /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		DA3EFECC2F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign1.swift; sourceTree = "<group>"; };
+		DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign3.swift; sourceTree = "<group>"; };
 		DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -444,6 +448,8 @@
 		326BF4B72B983321003D8427 /* Duplicate Screen */ = {
 			isa = PBXGroup;
 			children = (
+				DA3EFECC2F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift */,
+				DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift */,
 				323A25E82B84E94E006AD2FB /* DuplicateContactsViewController.swift */,
 				323A25EE2B850173006AD2FB /* DuplicateContactsViewModel.swift */,
 				49A0B1192C70BE520079867A /* Duplicate Contact Cells */,
@@ -916,6 +922,8 @@
 				323A25E72B84E8E4006AD2FB /* ContactView.swift in Sources */,
 				32682CB02B36D17800B9B7BD /* IconView.swift in Sources */,
 				324A76B72AFB20F000EE5AD5 /* VideoCompressorViewController.swift in Sources */,
+				DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign3.swift in Sources */,
+				DA3EFED12F0A4A4700C69C9B /* DuplicateContactsViewDesign1.swift in Sources */,
 				323A25EC2B84E9E5006AD2FB /* DuplicateContactTableViewCell.swift in Sources */,
 				326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */,
 				32BF2C922AF947DA00045343 /* FutureHomeTableViewCell.swift in Sources */,
@@ -1124,12 +1132,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Access is needed to search for old calendar events and remove them.";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to fetch events.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App need to use the camera";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Space cleaner needs access to your contacts to find and merge duplicate contacts. Your contacts will not be stored or used on any of our servers and will not be shared with third parties.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App need to use microphone";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access is needed to search for similar and duplicate photos. Your photos will NOT be stored or used on any of our servers and will not be shared with third parties.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Access is needed to search for old reminder events and remove them.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Access is needed to search for old reminder events and remove them.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1141,7 +1152,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApps;
+				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1166,12 +1177,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Access is needed to search for old calendar events and remove them.";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to fetch events.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App need to use the camera";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Space cleaner needs access to your contacts to find and merge duplicate contacts. Your contacts will not be stored or used on any of our servers and will not be shared with third parties.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App need to use microphone";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Access is needed to search for similar and duplicate photos. Your photos will NOT be stored or used on any of our servers and will not be shared with third parties.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Access is needed to search for old reminder events and remove them.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Access is needed to search for old reminder events and remove them.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

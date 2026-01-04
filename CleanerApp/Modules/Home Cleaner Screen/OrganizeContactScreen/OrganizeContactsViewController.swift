@@ -7,6 +7,8 @@
 
 import UIKit
 import Combine
+import SwiftUI
+
 class OrganizeContactsViewController: UIViewController {
 
     //MARK: - IBOutlets
@@ -45,9 +47,63 @@ class OrganizeContactsViewController: UIViewController {
 
     //MARK: - IBActions
     @IBAction func duplicateButtonPressed(_ sender: UIButton) {
+        showDesignSelector()
+    }
+
+    //MARK: - Design Selector for Duplicate Contacts
+    private func showDesignSelector() {
+        let alert = UIAlertController(title: "Select Design", message: "Choose a design to preview", preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Design 0 - UIKit (Original)", style: .default) { [weak self] _ in
+            self?.navigateToDuplicateContacts(design: 0)
+        })
+
+        alert.addAction(UIAlertAction(title: "Design 1 - Card Based", style: .default) { [weak self] _ in
+            self?.navigateToDuplicateContacts(design: 1)
+        })
+
+        alert.addAction(UIAlertAction(title: "Design 3 - Modern Gradient", style: .default) { [weak self] _ in
+            self?.navigateToDuplicateContacts(design: 3)
+        })
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        // For iPad support
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = view
+            popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
+
+        present(alert, animated: true)
+    }
+
+    private func navigateToDuplicateContacts(design: Int) {
         let duplicateViewModel = DuplicateContactsViewModel(contactStore: viewModel.contactStore)
-        let vc = DuplicateContactsViewController.customInit(viewModel: duplicateViewModel)
-        navigationController?.pushViewController(vc, animated: true)
+
+        switch design {
+        case 0:
+            // Original UIKit Design
+            let vc = DuplicateContactsViewController.customInit(viewModel: duplicateViewModel)
+            navigationController?.pushViewController(vc, animated: true)
+
+        case 1:
+            // SwiftUI Design 1 - Card Based
+            let swiftUIView = DuplicateContactsViewDesign1(viewModel: duplicateViewModel)
+            let hostingController = UIHostingController(rootView: swiftUIView)
+            hostingController.title = "Design 1 - Card Based"
+            navigationController?.pushViewController(hostingController, animated: true)
+
+        case 3:
+            // SwiftUI Design 3 - Modern Gradient
+            let swiftUIView = DuplicateContactsViewDesign3(viewModel: duplicateViewModel)
+            let hostingController = UIHostingController(rootView: swiftUIView)
+            hostingController.title = "Design 3 - Modern Gradient"
+            navigationController?.pushViewController(hostingController, animated: true)
+
+        default:
+            break
+        }
     }
     
 

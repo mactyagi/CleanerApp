@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Access is needed to search for old calendar events and remove them.</string>
-	<key>NSRemindersFullAccessUsageDescription</key>
-	<string>Access is needed to search for old reminder events and remove them.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
