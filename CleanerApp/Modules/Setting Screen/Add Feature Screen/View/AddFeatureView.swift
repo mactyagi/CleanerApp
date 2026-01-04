@@ -10,8 +10,12 @@ import AlertToast
 
 struct AddFeatureView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject private var viewModel = AddFeatureViewModel()
+    @ObservedObject private var viewModel: AddFeatureViewModel
     @FocusState private var isTitleFocused: Bool
+    
+    init(viewModel: AddFeatureViewModel) {
+        _viewModel = ObservedObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         ZStack {
@@ -74,13 +78,16 @@ struct AddFeatureView: View {
     }
     
     var mainContent: some View {
-        VStack(spacing: 20) {
-            instructionCard
-            titleInputField
-            descriptionInputField
-            Spacer()
+        ScrollView {
+            VStack(spacing: 20) {
+                instructionCard
+                titleInputField
+                descriptionInputField
+                suggestionsSection
+                Spacer(minLength: 0)
+            }
+            .padding()
         }
-        .padding()
     }
     
     var instructionCard: some View {
@@ -109,10 +116,16 @@ struct AddFeatureView: View {
     
     var titleInputField: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Title")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(Color(uiColor: .darkGray3))
+            HStack {
+                Text("Title")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color(uiColor: .darkGray3))
+                Spacer()
+                Text("\(viewModel.title.count)/\(viewModel.maxTitleLength)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
             
             TextField("What would you like to see", text: $viewModel.title)
                 .focused($isTitleFocused)
@@ -120,24 +133,29 @@ struct AddFeatureView: View {
                 .font(.body)
                 .background(Color.whiteAndGray2)
                 .background(in: .buttonBorder)
+            
+            if viewModel.title.trimmingCharacters(in: .whitespacesAndNewlines).count < viewModel.minTitleLength {
+                Text("Title should be at least \(viewModel.minTitleLength) characters")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
         }
     }
     
     var descriptionInputField: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Description")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(Color(uiColor: .darkGray3))
+            HStack {
+                Text("Description")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color(uiColor: .darkGray3))
+                Spacer()
+                Text("\(viewModel.description.count)/\(viewModel.maxDescriptionLength)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
             
             ZStack(alignment: .topLeading) {
-//                RoundedRectangle(cornerRadius: 8)
-//                    .stroke(Color(uiColor: .systemGray4), lineWidth: 1)
-//                    .background(
-//                        RoundedRectangle(cornerRadius: 8)
-//                            .fill(Color.white)
-//                    )
-                
                 TextEditor(text: $viewModel.description)
                     .padding(5)
                     .font(.body)
@@ -156,6 +174,47 @@ struct AddFeatureView: View {
                     )
             }
             .frame(height: 150)
+            
+            if viewModel.description.trimmingCharacters(in: .whitespacesAndNewlines).count < viewModel.minDescriptionLength {
+                Text("Description should be at least \(viewModel.minDescriptionLength) characters")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var suggestionsSection: some View {
+        if !viewModel.suggestedFeatures.isEmpty {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Similar requests")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundColor(Color(uiColor: .darkGray3))
+                ForEach(viewModel.suggestedFeatures, id: \.id) { feature in
+                    HStack(spacing: 10) {
+                        Text(feature.featureTitle)
+                            .font(.callout)
+                            .foregroundColor(Color(uiColor: .label))
+                            .lineLimit(1)
+                        Spacer()
+                        Label("\(feature.votedUsers.count)", systemImage: "hand.thumbsup.fill")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .labelStyle(.titleAndIcon)
+                    }
+                    .padding(10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(uiColor: .systemGray5), lineWidth: 0.5)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(uiColor: .offWhiteAndGray))
+                            )
+                    )
+                }
+            }
+        } else {
+            EmptyView()
         }
     }
 }
@@ -170,5 +229,5 @@ extension View {
 }
 
 #Preview {
-    AddFeatureView()
+    AddFeatureView(viewModel: AddFeatureViewModel(existingFeatures: Feature.mockFeatures()))
 }

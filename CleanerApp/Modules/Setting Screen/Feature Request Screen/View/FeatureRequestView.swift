@@ -20,7 +20,6 @@ struct FeatureRequestView: View {
     var body: some View {
         VStack(spacing: 12) {
             picker
-            searchAndSort
             content
         }
         .padding(.top, 8)
@@ -29,14 +28,28 @@ struct FeatureRequestView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Picker("Sort", selection: $viewModel.sort) {
+                        ForEach(FeatureRequestViewModel.SortOption.allCases, id: \.self) { option in
+                            Text(option.title).tag(option)
+                        }
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down.circle")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("", systemImage: "plus") {
                     showAddFeatureView.toggle()
                 }
             }
         }
         .sheet(isPresented: $showAddFeatureView, content: {
-            AddFeatureView()
+            let addVM = AddFeatureViewModel(existingFeatures: viewModel.list)
+            AddFeatureView(viewModel: addVM)
         })
+        // Native search for a cleaner UI
+        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search features")
         // Fetch is triggered in FeatureRequestViewModel.init
     }
     
@@ -48,39 +61,6 @@ struct FeatureRequestView: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding(.horizontal)
-    }
-    
-    private var searchAndSort: some View {
-        HStack(alignment: .center, spacing: 12) {
-            HStack(spacing: 8) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
-                TextField("Search features", text: $viewModel.searchText)
-                    .textInputAutocapitalization(.sentences)
-                    .disableAutocorrection(true)
-            }
-            .padding(10)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color(uiColor: .tertiarySystemBackground)))
-            
-            Menu {
-                Picker("Sort", selection: $viewModel.sort) {
-                    ForEach(FeatureRequestViewModel.SortOption.allCases, id: \.self) { option in
-                        Text(option.title).tag(option)
-                    }
-                }
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "arrow.up.arrow.down")
-                    Text(viewModel.sort.title)
-                        .lineLimit(1)
-                }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-                .background(RoundedRectangle(cornerRadius: 10).stroke(Color(uiColor: .quaternaryLabel)))
-            }
-            .fixedSize()
-        }
         .padding(.horizontal)
     }
     
@@ -97,7 +77,7 @@ struct FeatureRequestView: View {
     
     private var list: some View {
         ScrollView {
-            LazyVStack(spacing: 12) {
+            LazyVStack(spacing: 14) {
                 ForEach(viewModel.list, id: \.id) { feature in
                     ListItemView(
                         feature: feature,
@@ -160,50 +140,60 @@ struct ListItemView : View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 14)
                 .fill(Color(uiColor: .secondarySystemBackground))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 14)
                         .stroke(Color(uiColor: .quaternaryLabel))
                 )
+                .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
             HStack(alignment: .top, spacing: 12) {
                 voteButton
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 8) {
                         Text(feature.featureTitle)
-                            .font(.callout.weight(.semibold))
+                            .font(.headline.weight(.semibold))
                             .foregroundColor(Color(uiColor: .label))
                             .lineLimit(2)
                         Spacer()
                         statusBadge
                     }
                     Text(feature.featureDescription)
-                        .font(.caption)
+                        .font(.subheadline)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                         .lineLimit(3)
                     if let updatedDate = ISO8601DateFormatter.cached.date(from: feature.updatedAt) {
                         Text("Updated " + updatedDate.relativeDescription)
-                            .font(.caption2)
+                            .font(.caption)
                             .foregroundColor(Color(uiColor: .tertiaryLabel))
                     }
                 }
             }
-            .padding(12)
+            .padding(14)
         }
         .padding(.horizontal)
     }
     
     private var voteButton: some View {
-        Button(action: onVoteTapped) {
-            ZStack {
-                Circle()
-                    .strokeBorder(borderColor, lineWidth: feature.hasCurrentUserVoted ? 2 : 1)
-                    .background(Circle().fill(fillColor))
-                    .frame(width: 36, height: 36)
+        Button(action: {
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+            onVoteTapped()
+        }) {
+            HStack(spacing: 6) {
+                Image(systemName: feature.hasCurrentUserVoted ? "hand.thumbsup.fill" : "hand.thumbsup")
                 Text("\(feature.votedUsers.count)")
-                    .font(.caption.weight(.bold))
-                    .foregroundColor(Color(uiColor: .label))
+                    .font(.footnote.weight(.bold))
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(
+                Capsule()
+                    .fill(feature.hasCurrentUserVoted ? Color.green.opacity(0.15) : Color.clear)
+            )
+            .overlay(
+                Capsule().stroke(Color(uiColor: .systemGray3), lineWidth: feature.hasCurrentUserVoted ? 2 : 1)
+            )
         }
         .buttonStyle(.plain)
         .disabled(isInFlight)
@@ -233,9 +223,6 @@ struct ListItemView : View {
             }
         }
     }
-    
-    private var borderColor: Color { Color(uiColor: .systemGray) }
-    private var fillColor: Color { feature.hasCurrentUserVoted ? Color(uiColor: .systemGreen).opacity(0.25) : Color.clear }
 }
 
 private extension Date {
