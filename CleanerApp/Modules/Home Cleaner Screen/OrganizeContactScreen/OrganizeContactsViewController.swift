@@ -47,7 +47,10 @@ class OrganizeContactsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getData()
+        Task {
+            await viewModel.getData()
+        }
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         setupNavigationAndTabBar(isScreenVisible: false)
     }

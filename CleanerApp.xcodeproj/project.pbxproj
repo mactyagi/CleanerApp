@@ -1144,7 +1144,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = F638V29VVL;
+				DEVELOPMENT_TEAM = BVX54XCJ2D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
@@ -1168,7 +1168,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

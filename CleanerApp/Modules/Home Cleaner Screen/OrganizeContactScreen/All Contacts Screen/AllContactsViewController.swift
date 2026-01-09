@@ -289,17 +289,22 @@ extension AllContactsViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         guard let contact = viewModel.contactsDictionary[viewModel.sectionTitles[indexPath.section]]?[indexPath.row] else { return }
-        if viewModel.isSelectionMode{
-
+        if viewModel.isSelectionMode {
             vibrate()
-                viewModel.selectedContact(contact)
+            viewModel.selectedContact(contact)
             tableView.reloadRows(at: [indexPath], with: .automatic)
-        }else{
-            let keysToFetch = [CNContactViewController.descriptorForRequiredKeys()]
-            let contactViewController = CNContactViewController(for: contact)
-            contactViewController.allowsEditing = false
-            contactViewController.allowsActions = true
-            self.navigationController?.pushViewController(contactViewController, animated: true)
+        } else {
+            // Fetch full contact with all keys for CNContactViewController
+            Task {
+                if let fullContact = await viewModel.getFullContact(for: contact) {
+                    await MainActor.run {
+                        let contactViewController = CNContactViewController(for: fullContact)
+                        contactViewController.allowsEditing = false
+                        contactViewController.allowsActions = true
+                        self.navigationController?.pushViewController(contactViewController, animated: true)
+                    }
+                }
+            }
         }
     }
 

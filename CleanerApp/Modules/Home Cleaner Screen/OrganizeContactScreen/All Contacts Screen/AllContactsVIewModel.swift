@@ -10,8 +10,45 @@ import Contacts
 import Combine
 import ContactsUI
 
+// MARK: - Background Actor for Contact List Operations
+actor ContactListActor {
+    private let contactStore: CNContactStore
+
+    // Minimal keys for fast list loading
+    private static let listKeys: [CNKeyDescriptor] = [
+        CNContactIdentifierKey as CNKeyDescriptor,
+        CNContactGivenNameKey as CNKeyDescriptor,
+        CNContactMiddleNameKey as CNKeyDescriptor,
+        CNContactFamilyNameKey as CNKeyDescriptor,
+        CNContactPhoneNumbersKey as CNKeyDescriptor,
+        CNContactEmailAddressesKey as CNKeyDescriptor,
+        CNContactThumbnailImageDataKey as CNKeyDescriptor,
+        CNContactImageDataKey as CNKeyDescriptor
+    ]
+
+    init(contactStore: CNContactStore) {
+        self.contactStore = contactStore
+    }
+
+    func fetchAllContacts() throws -> [CNContact] {
+        var contacts: [CNContact] = []
+        let request = CNContactFetchRequest(keysToFetch: Self.listKeys)
+        try contactStore.enumerateContacts(with: request) { contact, _ in
+            contacts.append(contact)
+        }
+        return contacts
+    }
+
+    /// Refetch a single contact with all keys for CNContactViewController
+    func fetchFullContact(identifier: String) throws -> CNContact? {
+        let keysToFetch = [CNContactViewController.descriptorForRequiredKeys()]
+        return try contactStore.unifiedContact(withIdentifier: identifier, keysToFetch: keysToFetch)
+    }
+}
+
+// MARK: - ViewModel
 class AllContactsVIewModel: ObservableObject {
-    
+
     @Published var allContacts: [CNContact] = []
     var contactStore: CNContactStore
     var contactsDictionary = [String: [CNContact]]()
@@ -20,10 +57,13 @@ class AllContactsVIewModel: ObservableObject {
     var isSearchActive = false
     @Published var isSelectionMode = false
     @Published var isAllSelected = false
-    @Published var showLoader =  false
+    @Published var showLoader = false
 
-    init( contactStore: CNContactStore) {
+    private let contactListActor: ContactListActor
+
+    init(contactStore: CNContactStore) {
         self.contactStore = contactStore
+        self.contactListActor = ContactListActor(contactStore: contactStore)
         fetchContacts()
     }
 
@@ -126,24 +166,31 @@ class AllContactsVIewModel: ObservableObject {
     private func fetchContacts() {
         self.allContacts = []
         showLoader = true
-        DispatchQueue.global().async { [weak self] in
-            guard let self else { return }
-            let request = CNContactFetchRequest(keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+        Task {
             do {
-                try contactStore.enumerateContacts(with: request) { contact, _ in
-                    self.allContacts.append(contact)
+                let contacts = try await contactListActor.fetchAllContacts()
+                await MainActor.run {
+                    self.allContacts = contacts
+                    self.setupContacts(contacts: contacts)
+                    self.showLoader = false
                 }
             } catch {
-                logError(error: error as NSError, VCName: "AllContactsVIewModel", functionName: #function, line: #line)
-            }
-
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                setupContacts(contacts: allContacts)
-                showLoader = false
+                await MainActor.run {
+                    self.showLoader = false
+                }
+                print("Error fetching contacts: \(error)")
             }
         }
+    }
 
+    /// Get full contact with all keys for CNContactViewController
+    func getFullContact(for contact: CNContact) async -> CNContact? {
+        do {
+            return try await contactListActor.fetchFullContact(identifier: contact.identifier)
+        } catch {
+            print("Error fetching full contact: \(error)")
+            return nil
+        }
     }
 
 

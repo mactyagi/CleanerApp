@@ -247,8 +247,11 @@ class HomeViewController: UIViewController {
     }
 
     func navigateToOrganizeContactsSwiftUI(viewModel: OrganizeContactViewModel) {
-        // Load data
-        viewModel.getData()
+        Task {
+            // Load data
+            await viewModel.getData()
+        }
+        
 
         let swiftUIView = OrganizeContactsView(
             viewModel: viewModel,
