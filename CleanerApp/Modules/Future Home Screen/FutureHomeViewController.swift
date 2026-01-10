@@ -65,7 +65,7 @@ extension FutureHomeViewController: UITableViewDelegate{
         case .widgetCell:
             break
         case .videoCompressor:
-            let vc = VideoCompressorViewController.initWith()
+            let vc = VideoCompressorHostingController()
             self.navigationController?.pushViewController(vc, animated: true)
         case .secretSpace:
             let vc = SecretSpaceViewController.customInit()

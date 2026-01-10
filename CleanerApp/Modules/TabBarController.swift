@@ -28,8 +28,8 @@ class TabBarController : UITabBarController{
         let homeNavVC = UINavigationController(rootViewController: HomeViewController.customInit())
         homeNavVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
 
-        // compress VC
-        let compressNavVC = UINavigationController(rootViewController: VideoCompressorViewController.initWith())
+        // compress VC - Using SwiftUI Stats Focus design
+        let compressNavVC = UINavigationController(rootViewController: VideoCompressorHostingController())
         compressNavVC.tabBarItem = UITabBarItem(title: "Compressor", image: UIImage(systemName: "digitalcrown.horizontal.press"), selectedImage: UIImage(systemName: "digitalcrown.horizontal.press.fill"))
 
         // Setting VC

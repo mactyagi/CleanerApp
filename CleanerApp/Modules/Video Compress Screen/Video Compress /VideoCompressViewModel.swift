@@ -29,7 +29,7 @@ extension VideoCompressViewModel{
                 let phAsset = phAssets[index]
                 phAsset.getAVAsset { avAsset in
                     if let avAsset{
-                        let compressor = LightCompressor(quality: .very_high, asset: avAsset)
+                        let compressor = LightCompressor(quality: .low, asset: avAsset)
                         if let size = phAsset.getSize(){
                             self.totalSize += size
                             self.totalCompressSize += compressor.estimatedOutputSize()

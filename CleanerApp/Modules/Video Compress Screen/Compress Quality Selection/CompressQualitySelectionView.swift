@@ -30,6 +30,14 @@ enum QualityOption: Int, CaseIterable {
         case .maximum: return "Maximum"
         }
     }
+
+    var compressionPercent: Int {
+        switch self {
+        case .optimal: return 40   // 0.6 bitrate = 40% reduction
+        case .medium: return 60    // 0.4 bitrate = 60% reduction
+        case .maximum: return 70   // 0.3 bitrate = 70% reduction
+        }
+    }
 }
 
 // MARK: - Main View
@@ -40,6 +48,7 @@ struct CompressQualitySelectionView: View {
     @State private var progress: Float = 0
     @State private var compressedSize: Int64 = 0
     @State private var spaceSaved: Int64 = 0
+    @State private var compressedVideoURL: URL?
 
     var onDismiss: (() -> Void)?
     var onDataChanged: (() -> Void)?
@@ -71,9 +80,31 @@ struct CompressQualitySelectionView: View {
 
     // MARK: - Video Player
     private var videoPlayer: some View {
-        VideoPlayerView(asset: viewModel.compressAsset.avAsset)
-            .frame(height: 220)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+        ZStack(alignment: .top) {
+            if state == .completed, let compressedURL = compressedVideoURL {
+                // Show compressed video after completion
+                CompressedVideoPlayerView(url: compressedURL)
+                    .frame(height: 220)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+
+                // Compressed label at top center
+                Text("Compressed")
+                    .font(.caption.bold())
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule()
+                            .fill(Color.green)
+                    )
+                    .padding(.top, 12)
+            } else {
+                // Show original video before/during compression
+                VideoPlayerView(asset: viewModel.compressAsset.avAsset)
+                    .frame(height: 220)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+        }
     }
 
     // MARK: - Content
@@ -134,17 +165,30 @@ struct CompressQualitySelectionView: View {
 
     private var qualitySelector: some View {
         VStack(spacing: 12) {
-            Text("Select Quality")
+            Text("Select Compression Quality")
                 .font(.headline)
 
-            Picker("Quality", selection: $selectedQuality) {
+            HStack(spacing: 8) {
                 ForEach(QualityOption.allCases, id: \.self) { quality in
-                    Text(quality.title).tag(quality)
+                    Button {
+                        selectedQuality = quality
+                        updateQuality(quality)
+                    } label: {
+                        VStack(spacing: 4) {
+                            Text(quality.title)
+                                .font(.subheadline.bold())
+                            Text("\(quality.compressionPercent)%")
+                                .font(.caption)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(selectedQuality == quality ? Color.blue : Color(UIColor.tertiarySystemBackground))
+                        )
+                        .foregroundColor(selectedQuality == quality ? .white : .primary)
+                    }
                 }
-            }
-            .pickerStyle(.segmented)
-            .onChange(of: selectedQuality) { newValue in
-                updateQuality(newValue)
             }
         }
         .padding()
@@ -156,12 +200,28 @@ struct CompressQualitySelectionView: View {
 
     private var savingsText: some View {
         let savings = viewModel.compressAsset.originalSize - viewModel.compressAsset.reduceSize
-        return HStack(spacing: 4) {
-            Text("You will save about")
-                .foregroundColor(.blue)
-            Text(savings.convertToFileString())
-                .fontWeight(.bold)
+        let savingsPercent = viewModel.compressAsset.originalSize > 0
+            ? Int(Double(savings) / Double(viewModel.compressAsset.originalSize) * 100)
+            : 0
+        return VStack(spacing: 8) {
+            Text("You will save")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            HStack(spacing: 12) {
+                Text(savings.convertToFileString())
+                    .font(.title.bold())
+                    .foregroundColor(.green)
+                Text("(\(savingsPercent)%)")
+                    .font(.title3.bold())
+                    .foregroundColor(.green)
+            }
         }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.green.opacity(0.1))
+        )
     }
 
     private var compressButton: some View {
@@ -218,12 +278,14 @@ struct CompressQualitySelectionView: View {
     // MARK: - Completed View
     private var completedView: some View {
         VStack(spacing: 16) {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 50))
-                .foregroundColor(.green)
+            HStack(spacing: 8) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 24))
+                    .foregroundColor(.green)
 
-            Text("Compression Complete!")
-                .font(.headline)
+                Text("Compression Complete!")
+                    .font(.headline)
+            }
 
             Text("Space saved: \(spaceSaved.convertToFileString())")
                 .foregroundColor(.green)
@@ -294,6 +356,9 @@ struct CompressQualitySelectionView: View {
                 print("Compression started")
             case .onSuccess(let url):
                 onDataChanged?()
+                DispatchQueue.main.async {
+                    self.compressedVideoURL = url
+                }
                 viewModel.saveVideoToPhotosLibrary(videoURL: url) { size, error in
                     DispatchQueue.main.async {
                         if error == nil {
@@ -352,6 +417,26 @@ struct VideoPlayerView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let playerViewController = AVPlayerViewController()
         let player = AVPlayer(playerItem: AVPlayerItem(asset: asset))
+        player.isMuted = true  // Disable audio by default
+        playerViewController.player = player
+        playerViewController.view.backgroundColor = UIColor.primaryCell
+        playerViewController.view.layer.cornerRadius = 20
+        playerViewController.view.clipsToBounds = true
+        player.play()
+        return playerViewController
+    }
+
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
+}
+
+// MARK: - Compressed Video Player View
+struct CompressedVideoPlayerView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let playerViewController = AVPlayerViewController()
+        let player = AVPlayer(url: url)
+        player.isMuted = true  // Disable audio by default
         playerViewController.player = player
         playerViewController.view.backgroundColor = UIColor.primaryCell
         playerViewController.view.layer.cornerRadius = 20

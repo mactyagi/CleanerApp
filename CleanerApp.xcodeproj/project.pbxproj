@@ -127,6 +127,7 @@
 		DA0001022F0A700000C69C9B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0001012F0A700000C69C9B /* CalendarView.swift */; };
 		DA0001042F0A800000C69C9B /* CalendarDesignSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */; };
 		DA3E00602F116D0000C69C9B /* CompressQualitySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00612F116D0000C69C9B /* CompressQualitySelectionView.swift */; };
+		DA3E00802F117B0000C69C9B /* VideoCompressorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00812F117B0000C69C9B /* VideoCompressorView.swift */; };
 		DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */; };
 		DA3EFEE22F0A581E00C69C9B /* IncompleteContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */; };
 		DA3EFEF82F0A591E00C69C9B /* AllContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */; };
@@ -236,6 +237,7 @@
 		DA0001012F0A700000C69C9B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDesignSelector.swift; sourceTree = "<group>"; };
 		DA3E00612F116D0000C69C9B /* CompressQualitySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionView.swift; sourceTree = "<group>"; };
+		DA3E00812F117B0000C69C9B /* VideoCompressorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorView.swift; sourceTree = "<group>"; };
 		DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign.swift; sourceTree = "<group>"; };
 		DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactView.swift; sourceTree = "<group>"; };
 		DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsView.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 			children = (
 				324A76B62AFB20F000EE5AD5 /* VideoCompressorViewController.swift */,
 				324A76B92AFB229900EE5AD5 /* VideoCompressViewModel.swift */,
+				DA3E00812F117B0000C69C9B /* VideoCompressorView.swift */,
 			);
 			path = "Video Compress ";
 			sourceTree = "<group>";
@@ -991,6 +994,7 @@
 				32B3C1F92B4974F4000B0727 /* MediaViewModel.swift in Sources */,
 				326BF4BE2B9B14F6003D8427 /* ImagePreviewViewController.swift in Sources */,
 				DA3E00602F116D0000C69C9B /* CompressQualitySelectionView.swift in Sources */,
+				DA3E00802F117B0000C69C9B /* VideoCompressorView.swift in Sources */,
 				323A25E22B84A62E006AD2FB /* OrganizeContactViewModel.swift in Sources */,
 				49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */,
 				DA3EFEF82F0A591E00C69C9B /* AllContactsView.swift in Sources */,
