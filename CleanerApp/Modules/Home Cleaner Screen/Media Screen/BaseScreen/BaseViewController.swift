@@ -44,7 +44,7 @@ class BaseViewController: UIViewController {
         setupCollectionView()
         setupViews()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupEventsForViewAppear()

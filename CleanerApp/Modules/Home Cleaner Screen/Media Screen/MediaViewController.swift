@@ -154,8 +154,48 @@ extension MediaViewController: UICollectionViewDataSource{
 extension MediaViewController:UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = viewModel.dataSource[indexPath.section].cells[indexPath.row]
-        let vc = BaseViewController.customInit(predicate: viewModel.getPredicate(mediaType: cell.cellType), groupType: cell.cellType.groupType, type: cell.cellType)
-        navigationController?.pushViewController(vc, animated: true)
+
+        // Use different view for "Other" photos (swipe style)
+        if cell.cellType.groupType == .other {
+            let predicate = viewModel.getPredicate(mediaType: cell.cellType)
+            let context = CoreDataManager.shared.persistentContainer.viewContext
+            let assets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: predicate)
+            let vc = OtherPhotosSwipeHostingController.create(
+                assets: assets,
+                section: 0,
+                selectedIndexPaths: [],
+                onDismiss: { [weak self] selectedIndexPaths in
+                    // Handle deletion of selected photos
+                    guard !selectedIndexPaths.isEmpty else { return }
+
+                    let assetIds = selectedIndexPaths.compactMap { indexPath -> String? in
+                        guard indexPath.row < assets.count else { return nil }
+                        return assets[indexPath.row].assetId
+                    }
+
+                    let assetsToDelete = selectedIndexPaths.compactMap { indexPath -> DBAsset? in
+                        guard indexPath.row < assets.count else { return nil }
+                        return assets[indexPath.row]
+                    }
+
+                    PHAssetManager.deleteAssetsById(assetIds: assetIds) { isComplete, error in
+                        if isComplete {
+                            assetsToDelete.forEach { asset in
+                                CoreDataManager.shared.deleteAsset(asset: asset)
+                            }
+                            DispatchQueue.main.async {
+                                self?.viewModel.fetchAllMediaType()
+                            }
+                        }
+                    }
+                }
+            )
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // Use SwiftUI BaseViewHostingController for grouped photos
+            let vc = BaseViewHostingController.customInit(predicate: viewModel.getPredicate(mediaType: cell.cellType), groupType: cell.cellType.groupType, type: cell.cellType)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 

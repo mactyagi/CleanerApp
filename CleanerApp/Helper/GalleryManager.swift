@@ -325,11 +325,11 @@ class CoreDataPHAssetManager{
                 let distance = firstAsset.computeDistance(mediaType: .photo, secondCustomAsset: secondAsset)
                 
                 switch distance{
-                case 0 ... 0.45:
+                case 0 ... 0.48:
 //                    print("** similar \(mediaType.rawValue) found")
                     processSimilarAssets(firstAsset: firstAsset, secondAsset: secondAsset, context: context)
                     
-                case 0.45 ... 9:
+                case 0.48 ... 9:
                     if #available(iOS 17.0, *) {
                         break
                     }else{

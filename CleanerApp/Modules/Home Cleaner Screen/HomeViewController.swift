@@ -222,7 +222,7 @@ class HomeViewController: UIViewController {
     @objc func photoAndVideoTapped(){
         logEvent(Event.HomeScreen.tapPhotos.rawValue, parameter: nil)
         if viewModel.photosAndVideosSize != nil{
-            navigationController?.pushViewController(MediaViewController.customInit(), animated: true)
+            navigationController?.pushViewController(MediaScreenHostingController(), animated: true)
         }else{
             goToSettingAlertVC(message: "Allow the app access to Photos. No files will be deleted without your permission.")
         }
