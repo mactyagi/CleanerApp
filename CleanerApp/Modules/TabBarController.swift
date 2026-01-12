@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Contacts
 
 class TabBarController : UITabBarController{
 
@@ -24,8 +25,9 @@ class TabBarController : UITabBarController{
 
     //MARK: - private functions
     private func setupControllers() {
-        // Home VC
-        let homeNavVC = UINavigationController(rootViewController: HomeViewController.customInit())
+        // Home VC - Using new SwiftUI HomeScreen
+        let homeVC = HomeScreenHostingController()
+        let homeNavVC = UINavigationController(rootViewController: homeVC)
         homeNavVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
 
         // compress VC - Using SwiftUI Stats Focus design
@@ -40,11 +42,50 @@ class TabBarController : UITabBarController{
     }
 }
 
+// MARK: - Home Screen Hosting Controller
+class HomeScreenHostingController: UIViewController {
+    private var hostingController: UIHostingController<HomeScreen>?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let homeScreen = HomeScreen(
+            onMediaTapped: { [weak self] in
+                let mediaVC = MediaScreenHostingController()
+                self?.navigationController?.pushViewController(mediaVC, animated: true)
+            },
+            onContactsTapped: { [weak self] in
+                let viewModel = OrganizeContactViewModel(contactStore: CNContactStore())
+                let contactsVC = OrganizeContactsViewController.customInit(viewModel: viewModel)
+                self?.navigationController?.pushViewController(contactsVC, animated: true)
+            },
+            onCalendarTapped: { [weak self] in
+                let calendarView = CalendarDesignSelector()
+                let calendarVC = UIHostingController(rootView: calendarView)
+                calendarVC.title = "Calendar"
+                self?.navigationController?.pushViewController(calendarVC, animated: true)
+            },
+            onCompressTapped: { [weak self] in
+                let compressVC = VideoCompressorHostingController()
+                self?.navigationController?.pushViewController(compressVC, animated: true)
+            }
+        )
+
+        let hosting = UIHostingController(rootView: homeScreen)
+        addChild(hosting)
+        hosting.view.frame = view.bounds
+        hosting.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(hosting.view)
+        hosting.didMove(toParent: self)
+        hostingController = hosting
+    }
+}
+
 class SettingViewSwiftUIVC: UIHostingController<SettingView> {
     init() {
         super.init(rootView: SettingView())
     }
-    
+
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

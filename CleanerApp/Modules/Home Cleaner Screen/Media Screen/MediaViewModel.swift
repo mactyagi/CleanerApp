@@ -10,7 +10,7 @@ import Combine
 import CoreData
 import Photos
 
-class MediaViewModel: NSObject{
+class MediaViewModel: ObservableObject {
     
     var sectionsType: [(title:String, cells: [MediaCellType])] = [
         ("Photos", [.duplicatePhoto, .similarPhoto, .otherPhoto]),
@@ -32,9 +32,7 @@ class MediaViewModel: NSObject{
     }
     
     
-    
-    override init() {
-        super.init()
+    init() {
         dataSource = sectionsType.map({ tuple in
             let cells = tuple.cells.map { $0.cell }
             return (tuple.title, cells)

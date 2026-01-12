@@ -99,7 +99,6 @@ struct MediaScreenView: View {
 struct MediaCategoryCard: View {
     let cell: MediaCell
     let sectionTotal: Int64
-    @State private var thumbnails: [UIImage] = []
 
     var progress: CGFloat {
         guard sectionTotal > 0 else { return 0 }
@@ -110,8 +109,8 @@ struct MediaCategoryCard: View {
         HStack(spacing: 12) {
             // Stacked thumbnails
             ZStack {
-                ForEach(0..<min(thumbnails.count, 3), id: \.self) { index in
-                    Image(uiImage: thumbnails[index])
+                ForEach(0..<min(cell.asset.count, 3), id: \.self) { index in
+                    Image(uiImage: cell.asset[index].getImage() ?? UIImage())
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 44, height: 44)
@@ -120,7 +119,7 @@ struct MediaCategoryCard: View {
                         .shadow(radius: 2)
                 }
 
-                if thumbnails.isEmpty {
+                if  cell.asset.isEmpty {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.blue.opacity(0.1))
                         .frame(width: 44, height: 44)
@@ -170,21 +169,6 @@ struct MediaCategoryCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(UIColor.systemBackground))
         )
-        .onAppear {
-            loadThumbnails()
-        }
-    }
-
-    private func loadThumbnails() {
-        for asset in cell.asset.prefix(3) {
-            asset.getImage { image in
-                if let image = image {
-                    DispatchQueue.main.async {
-                        thumbnails.append(image)
-                    }
-                }
-            }
-        }
     }
 }
 

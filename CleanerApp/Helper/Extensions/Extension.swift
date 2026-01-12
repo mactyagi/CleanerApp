@@ -9,6 +9,7 @@ import Foundation
 import Photos
 import UIKit
 import EventKit
+import SwiftUI
 //MARK: - PHAsset
 
 extension PHAsset{
@@ -96,6 +97,35 @@ extension PHAsset{
         comp(image)
         }
     }
+    
+    
+    func loadSwiftUIImage(
+            targetSize: CGSize = CGSize(
+                width: UIScreen.main.bounds.width / 2,
+                height: UIScreen.main.bounds.width / 2
+            )
+        ) async -> Image? {
+
+            await withCheckedContinuation { continuation in
+                let manager = PHImageManager.default()
+                let options = PHImageRequestOptions()
+                options.isSynchronous = false
+                options.deliveryMode = .highQualityFormat
+
+                manager.requestImage(
+                    for: self,
+                    targetSize: targetSize,
+                    contentMode: .aspectFill,
+                    options: options
+                ) { uiImage, _ in
+                    if let uiImage {
+                        continuation.resume(returning: Image(uiImage: uiImage))
+                    } else {
+                        continuation.resume(returning: nil)
+                    }
+                }
+            }
+        }
 }
 
 
