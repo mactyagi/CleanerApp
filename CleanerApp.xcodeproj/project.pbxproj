@@ -113,6 +113,9 @@
 		32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ED57D42B66835100AED057 /* MediaHeaderView.xib */; };
 		4970EB702C70906D00B09C9A /* SecretSpace.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4970EB6F2C70906D00B09C9A /* SecretSpace.storyboard */; };
 		4970EB762C709AC600B09C9A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970EB752C709AC600B09C9A /* TabBarController.swift */; };
+		DA3E01012F12E00000C69C9B /* MediaFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */; };
+		DA3E01032F12E00000C69C9B /* ContactsFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */; };
+		DA3E01052F12E00000C69C9B /* CompressorFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */; };
 		49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DDE2C019C8500373865 /* AllContactsViewController.swift */; };
 		49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */; };
 		49809DE32C01ADFB00373865 /* AllContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */; };
@@ -231,6 +234,9 @@
 		32ED57D42B66835100AED057 /* MediaHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaHeaderView.xib; sourceTree = "<group>"; };
 		4970EB6F2C70906D00B09C9A /* SecretSpace.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SecretSpace.storyboard; sourceTree = "<group>"; };
 		4970EB752C709AC600B09C9A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaFlowViews.swift; sourceTree = "<group>"; };
+		DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowViews.swift; sourceTree = "<group>"; };
+		DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorFlowViews.swift; sourceTree = "<group>"; };
 		49809DDE2C019C8500373865 /* AllContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsViewController.swift; sourceTree = "<group>"; };
 		49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsVIewModel.swift; sourceTree = "<group>"; };
 		49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsTableViewCell.swift; sourceTree = "<group>"; };
@@ -437,6 +443,7 @@
 				323A25E12B84A62E006AD2FB /* OrganizeContactViewModel.swift */,
 				328A5D552B841A2C005B041A /* OrganizeContactsViewController.swift */,
 				DA3EFF052F0A600000C69C9B /* OrganizeContactsView.swift */,
+				DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */,
 				326BF4B82B983363003D8427 /* Incomplete Contact Screen */,
 				326BF4B72B983321003D8427 /* Duplicate Screen */,
 				49A0B1142C70BCAB0079867A /* All Contacts Screen */,
@@ -455,6 +462,7 @@
 				32B6C5AB2B01353C00A691AE /* Compress CollectionView Cell */,
 				324A76BD2AFB28E500EE5AD5 /* CompressVideoModel.swift */,
 				49A0B10E2C70B9CA0079867A /* VideoCompress.storyboard */,
+				DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */,
 			);
 			path = "Video Compress Screen";
 			sourceTree = "<group>";
@@ -582,6 +590,7 @@
 				32BD2A812B493E1A0039E85E /* MediaViewController.swift */,
 				32B3C1F82B4974F4000B0727 /* MediaViewModel.swift */,
 				32B3C1F62B497355000B0727 /* MediaModel.swift */,
+				DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */,
 				DA3E00A12F12800000C69C9B /* MediaScreenView.swift */,
 				49A0B11C2C70FE030079867A /* Media.storyboard */,
 				49A0B11E2C70FE420079867A /* MediaHeaderView */,
@@ -953,6 +962,9 @@
 				328D897A2B6B8708005E95A3 /* ComingSoonViewController.swift in Sources */,
 				32D336CA2AFCBFCA006C504E /* CompressCollectionViewCell.swift in Sources */,
 				4970EB762C709AC600B09C9A /* TabBarController.swift in Sources */,
+				DA3E01012F12E00000C69C9B /* MediaFlowViews.swift in Sources */,
+				DA3E01032F12E00000C69C9B /* ContactsFlowViews.swift in Sources */,
+				DA3E01052F12E00000C69C9B /* CompressorFlowViews.swift in Sources */,
 				49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */,
 				32BD2A7D2B483D010039E85E /* BaseViewModel.swift in Sources */,
 				DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */,
@@ -1180,7 +1192,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = BVX54XCJ2D;
+				DEVELOPMENT_TEAM = XQ532W4M65;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
@@ -1204,7 +1216,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppss;
+				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppsss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

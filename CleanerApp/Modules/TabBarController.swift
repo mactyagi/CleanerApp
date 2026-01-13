@@ -1,92 +1,67 @@
 //
-//  TabViewController.swift
+//  TabBarController.swift
 //  CleanerApp
 //
 //  Created by Manukant Tyagi on 17/08/24.
 //
 
 import Foundation
-import UIKit
 import SwiftUI
-import Contacts
 
-class TabBarController : UITabBarController{
-
-    //MARK: - LifeCycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupControllers()
-    }
-
-    //MARK: - static functions
-    static func customInit() -> Self {
-        UIStoryboard.main.instantiateViewController(withIdentifier: Self.className) as! Self
-    }
-
-    //MARK: - private functions
-    private func setupControllers() {
-        // Home VC - Using new SwiftUI HomeScreen
-        let homeVC = HomeScreenHostingController()
-        let homeNavVC = UINavigationController(rootViewController: homeVC)
-        homeNavVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-
-        // compress VC - Using SwiftUI Stats Focus design
-        let compressNavVC = UINavigationController(rootViewController: VideoCompressorHostingController())
-        compressNavVC.tabBarItem = UITabBarItem(title: "Compressor", image: UIImage(systemName: "digitalcrown.horizontal.press"), selectedImage: UIImage(systemName: "digitalcrown.horizontal.press.fill"))
-
-        // Setting VC
-        let settingVC = SettingViewSwiftUIVC()
-        settingVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear.circle"), selectedImage: UIImage(systemName: "gear.circle.fill"))
-
-        viewControllers = [homeNavVC, compressNavVC, settingVC]
+// MARK: - SwiftUI Main Tab View
+struct MainTabView: View {
+    @State private var selectedTab = 0
+    @State private var homeNavPath = NavigationPath()
+    @State private var settingsNavPath = NavigationPath()
+    
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            // Home Tab
+            HomeTabView(path: $homeNavPath)
+                .tabItem {
+                    Label("Home", systemImage: selectedTab == 0 ? "house.fill" : "house")
+                }
+                .tag(0)
+            
+            // Settings Tab
+            SettingsTabView(path: $settingsNavPath)
+                .tabItem {
+                    Label("Settings", systemImage: selectedTab == 1 ? "gear.circle.fill" : "gear.circle")
+                }
+                .tag(1)
+        }
+        .tint(.blue)
     }
 }
 
-// MARK: - Home Screen Hosting Controller
-class HomeScreenHostingController: UIViewController {
-    private var hostingController: UIHostingController<HomeScreen>?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let homeScreen = HomeScreen(
-            onMediaTapped: { [weak self] in
-                let mediaVC = MediaScreenHostingController()
-                self?.navigationController?.pushViewController(mediaVC, animated: true)
-            },
-            onContactsTapped: { [weak self] in
-                let viewModel = OrganizeContactViewModel(contactStore: CNContactStore())
-                let contactsVC = OrganizeContactsViewController.customInit(viewModel: viewModel)
-                self?.navigationController?.pushViewController(contactsVC, animated: true)
-            },
-            onCalendarTapped: { [weak self] in
-                let calendarView = CalendarDesignSelector()
-                let calendarVC = UIHostingController(rootView: calendarView)
-                calendarVC.title = "Calendar"
-                self?.navigationController?.pushViewController(calendarVC, animated: true)
-            },
-            onCompressTapped: { [weak self] in
-                let compressVC = VideoCompressorHostingController()
-                self?.navigationController?.pushViewController(compressVC, animated: true)
-            }
-        )
-
-        let hosting = UIHostingController(rootView: homeScreen)
-        addChild(hosting)
-        hosting.view.frame = view.bounds
-        hosting.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(hosting.view)
-        hosting.didMove(toParent: self)
-        hostingController = hosting
+// MARK: - Settings Tab View
+struct SettingsTabView: View {
+    @Binding var path: NavigationPath
+    
+    var body: some View {
+        NavigationStack(path: $path) {
+            SettingView()
+        }
     }
 }
 
-class SettingViewSwiftUIVC: UIHostingController<SettingView> {
+// MARK: - Main Tab View Hosting Controller
+class MainTabViewHostingController: UIHostingController<MainTabView> {
     init() {
-        super.init(rootView: SettingView())
+        super.init(rootView: MainTabView())
     }
-
+    
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+}
+
+// MARK: - Preview
+#Preview {
+    MainTabView()
 }

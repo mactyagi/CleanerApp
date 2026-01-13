@@ -10,6 +10,99 @@ import Contacts
 import EventKit
 import Photos
 
+// MARK: - Home Tab View (Navigation Container)
+struct HomeTabView: View {
+    @Binding var path: NavigationPath
+    @StateObject private var contactsViewModel = OrganizeContactViewModel(contactStore: CNContactStore())
+    @StateObject private var mediaViewModel = MediaViewModel()
+    
+    var body: some View {
+        NavigationStack(path: $path) {
+            HomeScreen(
+                onMediaTapped: { path.append(HomeDestination.media) },
+                onContactsTapped: { path.append(HomeDestination.contacts) },
+                onCalendarTapped: { path.append(HomeDestination.calendar) },
+                onCompressTapped: { path.append(HomeDestination.compress) }
+            )
+            .navigationDestination(for: HomeDestination.self) { destination in
+                homeDestinationView(for: destination)
+                    .toolbar(.hidden, for: .tabBar)
+            }
+            .navigationDestination(for: ContactsDestination.self) { destination in
+                contactsDestinationView(for: destination)
+                    .toolbar(.hidden, for: .tabBar)
+            }
+            .navigationDestination(for: MediaDestination.self) { destination in
+                mediaDestinationView(for: destination)
+                    .toolbar(.hidden, for: .tabBar)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func homeDestinationView(for destination: HomeDestination) -> some View {
+        switch destination {
+        case .media:
+            MediaFlowView(viewModel: mediaViewModel, path: $path)
+        case .contacts:
+            ContactsFlowView(viewModel: contactsViewModel, path: $path)
+        case .calendar:
+            CalendarDesignSelector()
+        case .compress:
+            CompressorDetailView()
+        }
+    }
+    
+    @ViewBuilder
+    private func contactsDestinationView(for destination: ContactsDestination) -> some View {
+        switch destination {
+        case .duplicates:
+            DuplicateContactsViewDesign(
+                viewModel: DuplicateContactsViewModel(contactStore: CNContactStore())
+            )
+        case .incomplete:
+            IncompleteContactView(
+                viewModel: IncompleteContactViewModel(contactStore: CNContactStore())
+            )
+        case .allContacts:
+            AllContactsView(
+                viewModel: AllContactsVIewModel(contactStore: CNContactStore())
+            )
+        case .backup:
+            ContactsBackupView(contacts: contactsViewModel.allContacts)
+        }
+    }
+    
+    @ViewBuilder
+    private func mediaDestinationView(for destination: MediaDestination) -> some View {
+        switch destination {
+        case .baseView(let cellType):
+            if let predicate = mediaViewModel.getPredicate(mediaType: cellType) {
+                BaseViewSwiftUI(
+                    predicate: predicate,
+                    groupType: cellType.groupType,
+                    type: cellType
+                )
+            } else {
+                Text("No data available")
+            }
+        case .otherPhotos(let cellType):
+            OtherPhotosSwiftUI(
+                predicate: mediaViewModel.getPredicate(mediaType: cellType),
+                cellType: cellType
+            )
+        }
+    }
+}
+
+// MARK: - Home Destinations
+enum HomeDestination: Hashable {
+    case media
+    case contacts
+    case calendar
+    case compress
+}
+
 // MARK: - Home Screen View
 struct HomeScreen: View {
     @StateObject private var viewModel = HomeScreenViewModel()

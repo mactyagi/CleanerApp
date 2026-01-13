@@ -8,12 +8,12 @@
 import Foundation
 import Photos
 
-struct CompressVideoModel{
+struct CompressVideoModel: Hashable {
     var phAsset: PHAsset
     var avAsset: AVAsset
     var originalSize: Int64
     var compressor: LightCompressor
-    var reduceSize: Int64{
+    var reduceSize: Int64 {
         compressor.estimatedOutputSize()
     }
     
@@ -22,5 +22,14 @@ struct CompressVideoModel{
         self.avAsset = avAsset
         self.originalSize = originalSize
         self.compressor = compressor
+    }
+    
+    // MARK: - Hashable conformance
+    static func == (lhs: CompressVideoModel, rhs: CompressVideoModel) -> Bool {
+        lhs.phAsset.localIdentifier == rhs.phAsset.localIdentifier
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(phAsset.localIdentifier)
     }
 }

@@ -126,6 +126,22 @@ extension PHAsset{
                 }
             }
         }
+    
+    /// Fetches full resolution image for preview
+    func getFullImage(completion: @escaping (UIImage?) -> Void) {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        
+        PHImageManager.default().requestImage(
+            for: self,
+            targetSize: PHImageManagerMaximumSize,
+            contentMode: .aspectFit,
+            options: options
+        ) { image, _ in
+            completion(image)
+        }
+    }
 }
 
 
