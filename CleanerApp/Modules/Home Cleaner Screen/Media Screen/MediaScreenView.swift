@@ -22,12 +22,8 @@ struct MediaScreenView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Stats Header (Design 1 style)
+                // Stats Header
                 VStack(spacing: 16) {
-                    Text("Media Cleaner")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-
                     VStack(spacing: 4) {
                         Text("Total Storage")
                             .font(.subheadline)

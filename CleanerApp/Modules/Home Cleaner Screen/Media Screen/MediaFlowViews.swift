@@ -32,7 +32,7 @@ struct MediaFlowView: View {
                 }
             }
         )
-        .navigationTitle("Media")
+        .navigationTitle("Media Cleaner")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.fetchAllMediaType()

@@ -21,6 +21,8 @@ struct CompressorDetailView: View {
                 showQualitySelection = true
             }
         )
+        .navigationTitle("Compress Videos")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $showQualitySelection) {
             if let video = selectedVideo {
                 CompressQualityDetailView(video: video, onComplete: {

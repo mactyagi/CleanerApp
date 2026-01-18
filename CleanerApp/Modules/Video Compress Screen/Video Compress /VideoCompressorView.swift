@@ -78,10 +78,6 @@ struct VideoCompressorView: View {
     // MARK: - Stats Header
     private var statsHeader: some View {
         VStack(spacing: 16) {
-            Text("Video Compressor")
-                .font(.headline)
-                .foregroundColor(.secondary)
-
             // Main Stat - Potential Savings
             VStack(spacing: 4) {
                 Text("Potential Savings")
