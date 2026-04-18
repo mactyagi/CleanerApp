@@ -29,72 +29,90 @@ struct OtherPhotosOverviewScreen: View {
 
     var body: some View {
         ZStack {
-            Color(UIColor.systemBackground).ignoresSafeArea()
+            Color(UIColor.systemGroupedBackground).ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                // Header
-                VStack(alignment: .leading, spacing: 8) {
+            if assets.isEmpty {
+                VStack(spacing: 0) {
                     HStack {
                         Button(action: { isPresented = false }) {
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.blue)
                         }
-
                         Spacer()
                     }
+                    .padding()
 
-                    Text("Other Photos")
-                        .font(.system(size: 34, weight: .bold))
-
-                    HStack(spacing: 16) {
-                        Label("\(assets.count) photos", systemImage: "photo")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-
-                        Label(totalSize.convertToFileString(), systemImage: "internaldrive")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
+                    MediaEmptyStateView(
+                        mediaType: .otherPhoto,
+                        groupType: .other
+                    )
                 }
-                .padding()
-                .background(Color(UIColor.systemBackground))
+            } else {
+                VStack(spacing: 0) {
+                    // Header
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Button(action: { isPresented = false }) {
+                                Image(systemName: "chevron.left")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundColor(.blue)
+                            }
 
-                // Photo Grid
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(assets.indices, id: \.self) { index in
-                            PhotoGridCell(asset: assets[index])
+                            Spacer()
+                        }
+
+                        Text("Other Photos")
+                            .font(.system(size: 34, weight: .bold))
+
+                        HStack(spacing: 16) {
+                            Label("\(assets.count) photos", systemImage: "photo")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+
+                            Label(totalSize.convertToFileString(), systemImage: "internaldrive")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
                     }
-                    .padding(.horizontal, 8)
-                }
+                    .padding()
+                    .background(Color(UIColor.secondarySystemGroupedBackground))
 
-                // Bottom Action Bar
-                VStack(spacing: 12) {
-                    // Start Review Button
-                    Button(action: { showSwipeView = true }) {
-                        HStack(spacing: 10) {
-                            Image(systemName: "hand.draw")
-                                .font(.system(size: 20))
-                            Text("Start Swipe Review")
-                                .font(.system(size: 18, weight: .semibold))
+                    // Photo Grid
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 8) {
+                            ForEach(assets.indices, id: \.self) { index in
+                                PhotoGridCell(asset: assets[index])
+                            }
                         }
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 14)
-                                .fill(Color.blue)
-                        )
+                        .padding(.horizontal, 8)
                     }
-                    .padding(.horizontal)
+
+                    // Bottom Action Bar
+                    VStack(spacing: 12) {
+                        Button(action: { showSwipeView = true }) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "hand.draw")
+                                    .font(.system(size: 20))
+                                Text("Start Swipe Review")
+                                    .font(.system(size: 18, weight: .semibold))
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .fill(Color.blue)
+                            )
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding(.vertical, 16)
+                    .background(
+                        Color(UIColor.secondarySystemGroupedBackground)
+                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: -5)
+                    )
                 }
-                .padding(.vertical, 16)
-                .background(
-                    Color(UIColor.systemBackground)
-                        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: -5)
-                )
             }
         }
         .fullScreenCover(isPresented: $showSwipeView) {

@@ -77,15 +77,17 @@ struct BaseViewSwiftUI: View {
         .navigationTitle(type.rawValue)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(viewModelWrapper.viewModel.isAllSelected ? "Deselect All" : "Select All") {
-                    viewModelWrapper.viewModel.isAllSelected.toggle()
-                    if viewModelWrapper.viewModel.isAllSelected {
-                        viewModelWrapper.viewModel.selectAll()
-                    } else {
-                        viewModelWrapper.viewModel.deselectAll()
+            if !viewModelWrapper.viewModel.assetRows.isEmpty {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(viewModelWrapper.viewModel.isAllSelected ? "Deselect All" : "Select All") {
+                        viewModelWrapper.viewModel.isAllSelected.toggle()
+                        if viewModelWrapper.viewModel.isAllSelected {
+                            viewModelWrapper.viewModel.selectAll()
+                        } else {
+                            viewModelWrapper.viewModel.deselectAll()
+                        }
+                        selectedIndexPaths = viewModelWrapper.viewModel.selectedIndexPath
                     }
-                    selectedIndexPaths = viewModelWrapper.viewModel.selectedIndexPath
                 }
             }
         }

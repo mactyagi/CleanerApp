@@ -34,88 +34,90 @@ struct BaseView: View {
             Color(UIColor.systemGroupedBackground)
                 .ignoresSafeArea()
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    // Header
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(viewModel.type.rawValue)
-                            .font(.largeTitle.bold())
-                        Text(viewModel.sizeLabel)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.horizontal)
-
-                    // Grouped Sections
-                    ForEach(viewModel.assetRows.indices, id: \.self) { section in
-                        VStack(alignment: .leading, spacing: 8) {
-                            // Section Header
-                            if viewModel.groupType != .other {
-                                HStack {
-                                    Text("\(viewModel.groupType.rawValue.capitalized): \(viewModel.assetRows[section].count)")
-                                        .font(.headline)
-                                    Spacer()
-                                    Button(action: {
-                                        toggleSelectAllInSection(section)
-                                    }) {
-                                        Text(isAllSelectedInSection(section) ? "Deselect All" : "Select All")
-                                            .font(.subheadline.weight(.medium))
-                                            .foregroundColor(isAllSelectedInSection(section) ? .red : .blue)
-                                            .padding(.horizontal, 14)
-                                            .padding(.vertical, 8)
-                                            .background(
-                                                Capsule()
-                                                    .fill(isAllSelectedInSection(section) ? Color.red.opacity(0.1) : Color.blue.opacity(0.1))
-                                            )
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
-
-                            // Photos in section
-                            if viewModel.groupType == .other {
-                                // Tinder-style swipe cards for "Other" photos
-                                SwipeCardPhotoView(
-                                    assets: viewModel.assetRows[section],
-                                    section: section,
-                                    selectedIndexPaths: $selectedIndexPaths,
-                                    onPreview: { row in
-                                        previewSection = section
-                                        previewIndex = row
-                                        showPreview = true
-                                    }
-                                )
-                            } else {
-                                // Horizontal scroll for grouped photos
-                                PhotoSectionView(
-                                    assets: viewModel.assetRows[section],
-                                    section: section,
-                                    groupType: viewModel.groupType,
-                                    selectedIndexPaths: $selectedIndexPaths,
-                                    onPreview: { row in
-                                        previewSection = section
-                                        previewIndex = row
-                                        showPreview = true
-                                    }
-                                )
-                            }
+            if viewModel.assetRows.isEmpty || !viewModel.assetRows.contains(where: { !$0.isEmpty }) {
+                MediaEmptyStateView(mediaType: viewModel.type, groupType: viewModel.groupType)
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        // Header
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(viewModel.type.rawValue)
+                                .font(.largeTitle.bold())
+                            Text(viewModel.sizeLabel)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
-                        .padding(.vertical, 8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(UIColor.secondarySystemGroupedBackground))
-                        )
                         .padding(.horizontal)
-                    }
-                }
-                .padding(.top)
-                .padding(.bottom, 100)
-            }
 
-            // Floating Delete Button
-            if selectedCount > 0 {
-                deleteButton
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                        // Grouped Sections
+                        ForEach(viewModel.assetRows.indices, id: \.self) { section in
+                            VStack(alignment: .leading, spacing: 8) {
+                                // Section Header
+                                if viewModel.groupType != .other {
+                                    HStack {
+                                        Text("\(viewModel.groupType.rawValue.capitalized): \(viewModel.assetRows[section].count)")
+                                            .font(.headline)
+                                        Spacer()
+                                        Button(action: {
+                                            toggleSelectAllInSection(section)
+                                        }) {
+                                            Text(isAllSelectedInSection(section) ? "Deselect All" : "Select All")
+                                                .font(.subheadline.weight(.medium))
+                                                .foregroundColor(isAllSelectedInSection(section) ? .red : .blue)
+                                                .padding(.horizontal, 14)
+                                                .padding(.vertical, 8)
+                                                .background(
+                                                    Capsule()
+                                                        .fill(isAllSelectedInSection(section) ? Color.red.opacity(0.1) : Color.blue.opacity(0.1))
+                                                )
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+
+                                // Photos in section
+                                if viewModel.groupType == .other {
+                                    SwipeCardPhotoView(
+                                        assets: viewModel.assetRows[section],
+                                        section: section,
+                                        selectedIndexPaths: $selectedIndexPaths,
+                                        onPreview: { row in
+                                            previewSection = section
+                                            previewIndex = row
+                                            showPreview = true
+                                        }
+                                    )
+                                } else {
+                                    PhotoSectionView(
+                                        assets: viewModel.assetRows[section],
+                                        section: section,
+                                        groupType: viewModel.groupType,
+                                        selectedIndexPaths: $selectedIndexPaths,
+                                        onPreview: { row in
+                                            previewSection = section
+                                            previewIndex = row
+                                            showPreview = true
+                                        }
+                                    )
+                                }
+                            }
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(UIColor.secondarySystemGroupedBackground))
+                            )
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.top)
+                    .padding(.bottom, 100)
+                }
+
+                // Floating Delete Button
+                if selectedCount > 0 {
+                    deleteButton
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
             }
         }
         .animation(.spring(), value: selectedCount)
@@ -727,6 +729,172 @@ struct PhotoPreviewView: View {
     }
 }
 
+// MARK: - Empty State View
+struct MediaEmptyStateView: View {
+    let mediaType: MediaCellType
+    let groupType: PHAssetGroupType
+
+    @State private var animate = false
+    @State private var showConfetti = false
+
+    private var icon: String {
+        switch groupType {
+        case .duplicate: return "doc.on.doc.fill"
+        case .similar: return "photo.on.rectangle.angled"
+        default: return "photo.stack.fill"
+        }
+    }
+
+    private var title: String {
+        switch groupType {
+        case .duplicate: return "No Duplicates Found"
+        case .similar: return "No Similar Items Found"
+        default: return "All Clean!"
+        }
+    }
+
+    private var subtitle: String {
+        switch groupType {
+        case .duplicate: return "Your library has no duplicate files.\nEverything is unique!"
+        case .similar: return "No similar-looking items detected.\nYour collection is well-curated!"
+        default: return "Nothing to clean up here.\nYour library is in great shape!"
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            ZStack {
+                // Pulsing background rings
+                ForEach(0..<3, id: \.self) { index in
+                    Circle()
+                        .stroke(Color.green.opacity(0.08 - Double(index) * 0.02), lineWidth: 2)
+                        .frame(
+                            width: CGFloat(160 + index * 50),
+                            height: CGFloat(160 + index * 50)
+                        )
+                        .scaleEffect(animate ? 1.05 : 0.95)
+                        .animation(
+                            .easeInOut(duration: 2.0)
+                            .repeatForever(autoreverses: true)
+                            .delay(Double(index) * 0.3),
+                            value: animate
+                        )
+                }
+
+                // Main icon circle
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.green.opacity(0.2), Color.green.opacity(0.05)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 130, height: 130)
+
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.green, Color.green.opacity(0.8)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 90, height: 90)
+                        .shadow(color: Color.green.opacity(0.4), radius: 16, x: 0, y: 8)
+
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .scaleEffect(animate ? 1.0 : 0.5)
+                .opacity(animate ? 1.0 : 0.0)
+
+                // Floating sparkles
+                ForEach(0..<6, id: \.self) { index in
+                    Image(systemName: "sparkle")
+                        .font(.system(size: CGFloat.random(in: 10...18)))
+                        .foregroundColor(sparkleColor(for: index))
+                        .offset(sparkleOffset(for: index))
+                        .opacity(showConfetti ? 1 : 0)
+                        .scaleEffect(showConfetti ? 1 : 0.3)
+                        .animation(
+                            .spring(response: 0.6, dampingFraction: 0.5)
+                            .delay(0.4 + Double(index) * 0.08),
+                            value: showConfetti
+                        )
+                }
+            }
+
+            Spacer().frame(height: 40)
+
+            // Title
+            Text(title)
+                .font(.title2.bold())
+                .multilineTextAlignment(.center)
+                .opacity(animate ? 1 : 0)
+                .offset(y: animate ? 0 : 20)
+
+            Spacer().frame(height: 12)
+
+            // Subtitle
+            Text(subtitle)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4)
+                .opacity(animate ? 1 : 0)
+                .offset(y: animate ? 0 : 20)
+
+            Spacer().frame(height: 32)
+
+            // Category pill
+            HStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.system(size: 14))
+                Text(mediaType.rawValue)
+                    .font(.subheadline.weight(.medium))
+            }
+            .foregroundColor(.green)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            .background(
+                Capsule()
+                    .fill(Color.green.opacity(0.1))
+            )
+            .opacity(animate ? 1 : 0)
+            .scaleEffect(animate ? 1 : 0.8)
+
+            Spacer()
+            Spacer()
+        }
+        .padding(.horizontal, 32)
+        .onAppear {
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.7)) {
+                animate = true
+            }
+            showConfetti = true
+        }
+    }
+
+    private func sparkleColor(for index: Int) -> Color {
+        let colors: [Color] = [.green, .yellow, .blue, .green, .orange, .mint]
+        return colors[index % colors.count]
+    }
+
+    private func sparkleOffset(for index: Int) -> CGSize {
+        let angle = Double(index) * (360.0 / 6.0) * .pi / 180
+        let radius: CGFloat = 85
+        return CGSize(
+            width: cos(angle) * radius,
+            height: sin(angle) * radius
+        )
+    }
+}
+
 // MARK: - ViewModel Wrapper
 class BaseViewModelWrapper: ObservableObject {
     let viewModel: BaseViewModel
@@ -838,21 +1006,39 @@ class BaseViewHostingController: UIViewController {
         // The binding automatically updates the view
     }
 
+    private var hasData: Bool {
+        !viewModel.assetRows.isEmpty && viewModel.assetRows.contains { !$0.isEmpty }
+    }
+
     private func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .never
+        updateNavigationBarButton()
+    }
 
-        let selectButton = UIBarButtonItem(
-            title: viewModel.isAllSelected ? "Deselect All" : "Select All",
-            style: .plain,
-            target: self,
-            action: #selector(selectionButtonPressed)
-        )
-        navigationItem.rightBarButtonItem = selectButton
+    private func updateNavigationBarButton() {
+        guard hasData else {
+            navigationItem.rightBarButtonItem = nil
+            return
+        }
+
+        if navigationItem.rightBarButtonItem == nil {
+            let selectButton = UIBarButtonItem(
+                title: viewModel.isAllSelected ? "Deselect All" : "Select All",
+                style: .plain,
+                target: self,
+                action: #selector(selectionButtonPressed)
+            )
+            navigationItem.rightBarButtonItem = selectButton
+        }
 
         viewModel.$isAllSelected
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isAllSelected in
-                self?.navigationItem.rightBarButtonItem?.title = isAllSelected ? "Deselect All" : "Select All"
+                guard let self, self.hasData else {
+                    self?.navigationItem.rightBarButtonItem = nil
+                    return
+                }
+                self.navigationItem.rightBarButtonItem?.title = isAllSelected ? "Deselect All" : "Select All"
             }
             .store(in: &cancellables)
     }

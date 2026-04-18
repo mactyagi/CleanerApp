@@ -57,7 +57,7 @@ struct MediaScreenView: View {
                                     Image(systemName: sectionIcon(for: section.title))
                                         .foregroundColor(.blue)
                                     Text(section.title)
-                                        .font(.headline)
+                                        .font(.title3.bold())
                                 }
                                 .padding(.horizontal)
 
@@ -129,7 +129,7 @@ struct MediaCategoryCard: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(cell.mainTitle)
-                    .font(.subheadline.bold())
+                    .font(.headline)
 
                 // Progress bar
                 GeometryReader { geometry in
