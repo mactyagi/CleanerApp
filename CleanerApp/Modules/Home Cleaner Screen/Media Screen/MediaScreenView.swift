@@ -41,7 +41,7 @@ struct MediaScreenView: View {
                 .frame(maxWidth: .infinity)
                 .background(
                     LinearGradient(
-                        colors: [Color.blue.opacity(0.15), Color(UIColor.systemBackground)],
+                        colors: [Color.blue.opacity(0.15), Color(UIColor.systemGroupedBackground)],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -163,7 +163,7 @@ struct MediaCategoryCard: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(UIColor.systemBackground))
+                .fill(Color(UIColor.secondarySystemGroupedBackground))
         )
     }
 }

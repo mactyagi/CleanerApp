@@ -252,7 +252,7 @@ struct BaseViewDesign2: View {
                         .padding(.vertical, 8)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(UIColor.systemBackground))
+                                .fill(Color(UIColor.secondarySystemGroupedBackground))
                         )
                         .padding(.horizontal)
                     }
