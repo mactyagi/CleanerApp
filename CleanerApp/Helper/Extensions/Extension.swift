@@ -289,39 +289,6 @@ extension UIView{
 }
 
 
-extension UIStoryboard{
-    static var main: UIStoryboard{
-        UIStoryboard(name: "Main", bundle: nil)
-    }
-    
-    static var videoCompress: UIStoryboard{
-        UIStoryboard(name: "VideoCompress", bundle: nil)
-    }
-
-    static var setting: UIStoryboard {
-        UIStoryboard(name: "Setting", bundle: nil)
-    }
-
-    static var secretSpace: UIStoryboard{
-        UIStoryboard(name: "SecretSpace", bundle: nil)
-    }
-
-    static var home: UIStoryboard {
-        UIStoryboard(name: "Home", bundle: nil)
-    }
-
-    static var contact: UIStoryboard {
-        UIStoryboard(name: "Contact", bundle: nil)
-    }
-
-    static var calendar: UIStoryboard {
-        UIStoryboard(name: "Calendar", bundle: nil)
-    }
-
-    static var media: UIStoryboard {
-        UIStoryboard(name: "Media", bundle: nil)
-    }
-}
 
 
 extension Date{
@@ -425,28 +392,6 @@ extension Notification.Name{
 }
 
 
-extension UIViewController{
-    func showFullScreenLoader(){
-        DispatchQueue.main.async {
-            let vc = UIStoryboard.main.instantiateViewController(identifier: LoaderViewController.identifier) as! LoaderViewController
-            vc.modalPresentationStyle = .overFullScreen
-            self.present(vc, animated: false)
-        }
-    }
-    
-    func hideFullScreenLoader(){
-        DispatchQueue.main.async {
-            if let viewControllerToDismiss = self.presentedViewController as? LoaderViewController {
-                viewControllerToDismiss.dismiss(animated: false, completion: nil)
-            }
-        }
-    }
-    
-    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
-        navigationController?.navigationBar.isHidden = flag
-        tabBarController?.tabBar.isHidden = !flag
-    }
-}
 
 
 extension UIFont{
