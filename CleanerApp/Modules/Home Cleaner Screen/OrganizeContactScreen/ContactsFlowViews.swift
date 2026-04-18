@@ -121,46 +121,39 @@ struct ContactsBackupView: View {
     
     private func exportContacts() {
         isExporting = true
-        
-        Task {
+
+        DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let url = try await createVCardFile()
-                await MainActor.run {
-                    vCardURL = url
+                let contactStore = CNContactStore()
+                let keysToFetch = [CNContactVCardSerialization.descriptorForRequiredKeys()]
+                let fetchRequest = CNContactFetchRequest(keysToFetch: keysToFetch)
+
+                var fullContacts: [CNContact] = []
+                try contactStore.enumerateContacts(with: fetchRequest) { contact, _ in
+                    fullContacts.append(contact)
+                }
+
+                let vCardData = try CNContactVCardSerialization.data(with: fullContacts)
+
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                let fileName = "Contacts_Backup_\(formatter.string(from: Date())).vcf"
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+
+                try vCardData.write(to: tempURL)
+
+                DispatchQueue.main.async {
+                    vCardURL = tempURL
                     isExporting = false
                     showShareSheet = true
                 }
             } catch {
-                await MainActor.run {
+                DispatchQueue.main.async {
                     isExporting = false
                 }
                 print("Error exporting contacts: \(error)")
             }
         }
-    }
-    
-    private func createVCardFile() async throws -> URL {
-        let contactStore = CNContactStore()
-        let keysToFetch = [CNContactVCardSerialization.descriptorForRequiredKeys()]
-        
-        var fullContacts: [CNContact] = []
-        for contact in contacts {
-            if let fullContact = try? contactStore.unifiedContact(
-                withIdentifier: contact.identifier,
-                keysToFetch: keysToFetch
-            ) {
-                fullContacts.append(fullContact)
-            }
-        }
-        
-        let vCardData = try CNContactVCardSerialization.data(with: fullContacts)
-        
-        let fileName = "Contacts_Backup_\(Date().formatted(.dateTime.year().month().day())).vcf"
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-        
-        try vCardData.write(to: tempURL)
-        
-        return tempURL
     }
 }
 
