@@ -124,7 +124,8 @@ extension RowView {
         switch item {
         case .featureRequest:
             FeatureRequestView(viewModel: FeatureRequestViewModel())
-                
+        case .privacyPolicy:
+            PrivacyPolicyView()
         default:
             Text("Unknown Destination")
         }

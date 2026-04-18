@@ -43,22 +43,6 @@ struct SettingsTabView: View {
     }
 }
 
-// MARK: - Main Tab View Hosting Controller
-class MainTabViewHostingController: UIHostingController<MainTabView> {
-    init() {
-        super.init(rootView: MainTabView())
-    }
-    
-    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-}
-
 // MARK: - Preview
 #Preview {
     MainTabView()

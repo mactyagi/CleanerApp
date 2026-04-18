@@ -50,8 +50,6 @@
 		327C25F12B79509100EA0E36 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25F02B79509100EA0E36 /* FirebaseRemoteConfigSwift */; };
 		327C25F32B79509100EA0E36 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25F22B79509100EA0E36 /* FirebaseStorage */; };
 		327C25F52B79509100EA0E36 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 327C25F42B79509100EA0E36 /* FirebaseStorageCombine-Community */; };
-		328BFECB2B823F100007C1AE /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328BFECA2B823F100007C1AE /* LaunchViewController.swift */; };
-		328BFECD2B83324C0007C1AE /* LoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328BFECC2B83324C0007C1AE /* LoaderViewController.swift */; };
 		32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */; };
 		32A2D08F2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08D2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift */; };
 		32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A2D08E2B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift */; };
@@ -63,11 +61,11 @@
 		32D336CF2AFE152B006C504E /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D336CE2AFE152B006C504E /* GridCollectionViewFlowLayout.swift */; };
 		32E2E0D72AF80039009CA92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D62AF80039009CA92E /* AppDelegate.swift */; };
 		32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0D82AF80039009CA92E /* SceneDelegate.swift */; };
-		32E2E0DE2AF80039009CA92E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0DC2AF80039009CA92E /* Main.storyboard */; };
+		DA4E00012F1400000000001 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E00002F1400000000001 /* RootView.swift */; };
 		32E2E0E12AF80039009CA92E /* CleanerApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 32E2E0DF2AF80039009CA92E /* CleanerApp.xcdatamodeld */; };
 		32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0E22AF8003A009CA92E /* Assets.xcassets */; };
 		32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32E2E0E42AF8003A009CA92E /* LaunchScreen.storyboard */; };
-		4970EB762C709AC600B09C9A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970EB752C709AC600B09C9A /* TabBarController.swift */; };
+		4970EB762C709AC600B09C9A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970EB752C709AC600B09C9A /* MainTabView.swift */; };
 		49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */; };
 		49DB037E2C5661A600F0052E /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 49DB037D2C5661A600F0052E /* AlertToast */; };
 		49DB03862C567C3900F0052E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DB03852C567C3900F0052E /* Global.swift */; };
@@ -92,6 +90,7 @@
 		DA45C51D2CA9AF45003C884B /* FeatureRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */; };
 		DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */; };
 		DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9132C996C0A006B1BF4 /* SettingView.swift */; };
+		DA4E00112F1400000000002 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E00102F1400000000002 /* PrivacyPolicyView.swift */; };
 		DA6FD9162C99953E006B1BF4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */; };
 		DA6FD9182C99C1E5006B1BF4 /* FeatureRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */; };
 		DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */; };
@@ -116,8 +115,6 @@
 		326BF4BB2B9835B0003D8427 /* IncompleteContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactViewModel.swift; sourceTree = "<group>"; };
 		327474C22B7AB8420034A587 /* EventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsHandler.swift; sourceTree = "<group>"; };
 		327C25BD2B794F8C00EA0E36 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		328BFECA2B823F100007C1AE /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
-		328BFECC2B83324C0007C1AE /* LoaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderViewController.swift; sourceTree = "<group>"; };
 		32A2D08A2B3C0FD700C27BA0 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryManager.swift; sourceTree = "<group>"; };
 		32A2D08D2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAsset+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		32A2D08E2B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAsset+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -130,12 +127,12 @@
 		32E2E0D32AF80039009CA92E /* CleanerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E2E0D62AF80039009CA92E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32E2E0D82AF80039009CA92E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		32E2E0DD2AF80039009CA92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DA4E00002F1400000000001 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		32E2E0E02AF80039009CA92E /* CleanerApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CleanerApp.xcdatamodel; sourceTree = "<group>"; };
 		32E2E0E22AF8003A009CA92E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32E2E0E52AF8003A009CA92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32E2E0E72AF8003A009CA92E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4970EB752C709AC600B09C9A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		4970EB752C709AC600B09C9A /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsVIewModel.swift; sourceTree = "<group>"; };
 		49DB03852C567C3900F0052E /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		DA0001012F0A700000C69C9B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -159,6 +156,7 @@
 		DA45C51C2CA9AF45003C884B /* FeatureRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		DA6FD9132C996C0A006B1BF4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		DA4E00102F1400000000002 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		DA6FD9172C99C1E5006B1BF4 /* FeatureRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestView.swift; sourceTree = "<group>"; };
 		DA78270A2C9A7EAB004BCB66 /* FeatureRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestModel.swift; sourceTree = "<group>"; };
@@ -243,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
+				DA4E00102F1400000000002 /* PrivacyPolicyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -469,9 +468,7 @@
 		4970EB712C70949600B09C9A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				328BFECC2B83324C0007C1AE /* LoaderViewController.swift */,
-				4970EB752C709AC600B09C9A /* TabBarController.swift */,
-				32E2E0DC2AF80039009CA92E /* Main.storyboard */,
+				4970EB752C709AC600B09C9A /* MainTabView.swift */,
 				32682CB32B36D7D300B9B7BD /* Home Cleaner Screen */,
 				04284B092BF489190078B939 /* Setting Screen */,
 				324A76B82AFB225200EE5AD5 /* Video Compress Screen */,
@@ -494,9 +491,9 @@
 				32A2D08C2B3D339600C27BA0 /* Storage */,
 				32E2E0D62AF80039009CA92E /* AppDelegate.swift */,
 				32E2E0D82AF80039009CA92E /* SceneDelegate.swift */,
+				DA4E00002F1400000000001 /* RootView.swift */,
 				32E2E0E22AF8003A009CA92E /* Assets.xcassets */,
 				32E2E0E42AF8003A009CA92E /* LaunchScreen.storyboard */,
-				328BFECA2B823F100007C1AE /* LaunchViewController.swift */,
 				32E2E0DF2AF80039009CA92E /* CleanerApp.xcdatamodeld */,
 			);
 			path = Resources;
@@ -628,7 +625,6 @@
 			files = (
 				32E2E0E62AF8003A009CA92E /* LaunchScreen.storyboard in Resources */,
 				32E2E0E32AF8003A009CA92E /* Assets.xcassets in Resources */,
-				32E2E0DE2AF80039009CA92E /* Main.storyboard in Resources */,
 				327C25BE2B794F8C00EA0E36 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,13 +670,14 @@
 				DA0001042F0A800000C69C9B /* CalendarDesignSelector.swift in Sources */,
 				24D48CDA2E465A4E0014CDCA /* UIDevice + Extension.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
-				4970EB762C709AC600B09C9A /* TabBarController.swift in Sources */,
+				4970EB762C709AC600B09C9A /* MainTabView.swift in Sources */,
 				DA3E01012F12E00000C69C9B /* MediaFlowViews.swift in Sources */,
 				DA3E01032F12E00000C69C9B /* ContactsFlowViews.swift in Sources */,
 				DA3E01052F12E00000C69C9B /* CompressorFlowViews.swift in Sources */,
 				49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */,
 				32BD2A7D2B483D010039E85E /* BaseViewModel.swift in Sources */,
 				DA6FD9142C996C0A006B1BF4 /* SettingView.swift in Sources */,
+				DA4E00112F1400000000002 /* PrivacyPolicyView.swift in Sources */,
 				3201A2782B394D1D003DB928 /* CustomEKEventModel.swift in Sources */,
 				DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift in Sources */,
 				326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */,
@@ -707,14 +704,13 @@
 				DA3E00D02F12B00000C69C9B /* BaseViewPreviewOptions.swift in Sources */,
 				DA3E00E02F12C00000C69C9B /* ImagePreviewDesigns.swift in Sources */,
 				DA3E00F02F12D00000C69C9B /* OtherPhotosSwipeView.swift in Sources */,
+				DA4E00012F1400000000001 /* RootView.swift in Sources */,
 				324943452B680C700035FE64 /* CircularProgressView.swift in Sources */,
 				3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */,
 				DA3EFEE22F0A581E00C69C9B /* IncompleteContactView.swift in Sources */,
 				32A2D0902B3D33EC00C27BA0 /* DBAsset+CoreDataProperties.swift in Sources */,
 				32E2E0D92AF80039009CA92E /* SceneDelegate.swift in Sources */,
 				32A2D08F2B3D33EC00C27BA0 /* DBAsset+CoreDataClass.swift in Sources */,
-				328BFECB2B823F100007C1AE /* LaunchViewController.swift in Sources */,
-				328BFECD2B83324C0007C1AE /* LoaderViewController.swift in Sources */,
 				323A25EF2B850174006AD2FB /* DuplicateContactsViewModel.swift in Sources */,
 				326709522B374ECC003515D4 /* HomeViewModel.swift in Sources */,
 				32B3C1F92B4974F4000B0727 /* MediaViewModel.swift in Sources */,
@@ -729,14 +725,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		32E2E0DC2AF80039009CA92E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				32E2E0DD2AF80039009CA92E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		32E2E0E42AF8003A009CA92E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -892,7 +880,6 @@
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Access is needed to search for old reminder events and remove them.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -937,7 +924,6 @@
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Access is needed to search for old reminder events and remove them.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
