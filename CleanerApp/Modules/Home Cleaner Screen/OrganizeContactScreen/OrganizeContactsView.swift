@@ -10,12 +10,7 @@ import Contacts
 
 struct OrganizeContactsView: View {
     @ObservedObject var viewModel: OrganizeContactViewModel
-
-    // Navigation callbacks
-    var onDuplicatesTapped: (() -> Void)?
-    var onIncompleteTapped: (() -> Void)?
-    var onBackupTapped: (() -> Void)?
-    var onAllContactsTapped: (() -> Void)?
+    @Binding var path: NavigationPath
 
     var body: some View {
         ScrollView {
@@ -39,7 +34,7 @@ struct OrganizeContactsView: View {
                             color: .blue,
                             isPrimary: viewModel.duplicateCount > 0
                         ) {
-                            onDuplicatesTapped?()
+                            path.append(ContactsDestination.duplicates)
                         }
 
                         OCActionCard(
@@ -49,7 +44,7 @@ struct OrganizeContactsView: View {
                             color: .orange,
                             isPrimary: viewModel.incompleteContacts.count > 0
                         ) {
-                            onIncompleteTapped?()
+                            path.append(ContactsDestination.incomplete)
                         }
                     }
 
@@ -61,7 +56,7 @@ struct OrganizeContactsView: View {
                             color: .teal,
                             isPrimary: true
                         ) {
-                            onBackupTapped?()
+                            path.append(ContactsDestination.backup)
                         }
 
                         OCActionCard(
@@ -71,7 +66,7 @@ struct OrganizeContactsView: View {
                             color: .indigo,
                             isPrimary: true
                         ) {
-                            onAllContactsTapped?()
+                            path.append(ContactsDestination.allContacts)
                         }
                     }
                 }
@@ -82,6 +77,9 @@ struct OrganizeContactsView: View {
 
                 Spacer(minLength: 100)
             }
+        }
+        .task {
+            await viewModel.getData()
         }
         .background(
             LinearGradient(
@@ -370,6 +368,6 @@ extension Color {
 // MARK: - Preview
 #Preview {
     NavigationView {
-        OrganizeContactsView(viewModel: OrganizeContactViewModel(contactStore: CNContactStore()))
+        OrganizeContactsView(viewModel: OrganizeContactViewModel(contactStore: CNContactStore()), path: .constant( NavigationPath()))
     }
 }

@@ -8,69 +8,6 @@
 import SwiftUI
 import Contacts
 
-// MARK: - Contacts Flow View (Without its own NavigationStack)
-struct ContactsFlowView: View {
-    @ObservedObject var viewModel: OrganizeContactViewModel
-    @Binding var path: NavigationPath
-    
-    var body: some View {
-        OrganizeContactsView(
-            viewModel: viewModel,
-            onDuplicatesTapped: { path.append(ContactsDestination.duplicates) },
-            onIncompleteTapped: { path.append(ContactsDestination.incomplete) },
-            onBackupTapped: { path.append(ContactsDestination.backup) },
-            onAllContactsTapped: { path.append(ContactsDestination.allContacts) }
-        )
-        .task {
-            await viewModel.getData()
-        }
-    }
-}
-
-// MARK: - Contacts Screen (Standalone - with its own NavigationStack)
-/// Use this when ContactsScreen is the root of navigation (e.g., if it had its own tab)
-struct ContactsScreenView: View {
-    @StateObject private var viewModel = OrganizeContactViewModel(contactStore: CNContactStore())
-    @State private var path = NavigationPath()
-    
-    var body: some View {
-        NavigationStack(path: $path) {
-            OrganizeContactsView(
-                viewModel: viewModel,
-                onDuplicatesTapped: { path.append(ContactsDestination.duplicates) },
-                onIncompleteTapped: { path.append(ContactsDestination.incomplete) },
-                onBackupTapped: { path.append(ContactsDestination.backup) },
-                onAllContactsTapped: { path.append(ContactsDestination.allContacts) }
-            )
-            .navigationDestination(for: ContactsDestination.self) { destination in
-                contactsDestinationView(for: destination)
-            }
-        }
-        .task {
-            await viewModel.getData()
-        }
-    }
-    
-    @ViewBuilder
-    private func contactsDestinationView(for destination: ContactsDestination) -> some View {
-        switch destination {
-        case .duplicates:
-            DuplicateContactsViewDesign(
-                viewModel: DuplicateContactsViewModel(contactStore: CNContactStore())
-            )
-        case .incomplete:
-            IncompleteContactView(
-                viewModel: IncompleteContactViewModel(contactStore: CNContactStore())
-            )
-        case .allContacts:
-            AllContactsView(
-                viewModel: AllContactsVIewModel(contactStore: CNContactStore())
-            )
-        case .backup:
-            ContactsBackupView(contacts: viewModel.allContacts)
-        }
-    }
-}
 
 // MARK: - Contacts Navigation Destinations
 enum ContactsDestination: Hashable {

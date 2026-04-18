@@ -11,20 +11,18 @@ import SwiftUI
 // MARK: - SwiftUI Main Tab View
 struct MainTabView: View {
     @State private var selectedTab = 0
-    @State private var homeNavPath = NavigationPath()
-    @State private var settingsNavPath = NavigationPath()
     
     var body: some View {
         TabView(selection: $selectedTab) {
             // Home Tab
-            HomeTabView(path: $homeNavPath)
+            HomeNavigationView()
                 .tabItem {
                     Label("Home", systemImage: selectedTab == 0 ? "house.fill" : "house")
                 }
                 .tag(0)
             
             // Settings Tab
-            SettingsTabView(path: $settingsNavPath)
+            SettingsTabView()
                 .tabItem {
                     Label("Settings", systemImage: selectedTab == 1 ? "gear.circle.fill" : "gear.circle")
                 }
@@ -36,7 +34,7 @@ struct MainTabView: View {
 
 // MARK: - Settings Tab View
 struct SettingsTabView: View {
-    @Binding var path: NavigationPath
+    @State var path: NavigationPath = NavigationPath()
     
     var body: some View {
         NavigationStack(path: $path) {

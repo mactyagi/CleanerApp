@@ -113,9 +113,6 @@
 		32ED57D62B66835100AED057 /* MediaHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32ED57D42B66835100AED057 /* MediaHeaderView.xib */; };
 		4970EB702C70906D00B09C9A /* SecretSpace.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4970EB6F2C70906D00B09C9A /* SecretSpace.storyboard */; };
 		4970EB762C709AC600B09C9A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970EB752C709AC600B09C9A /* TabBarController.swift */; };
-		DA3E01012F12E00000C69C9B /* MediaFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */; };
-		DA3E01032F12E00000C69C9B /* ContactsFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */; };
-		DA3E01052F12E00000C69C9B /* CompressorFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */; };
 		49809DDF2C019C8500373865 /* AllContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DDE2C019C8500373865 /* AllContactsViewController.swift */; };
 		49809DE12C019E5B00373865 /* AllContactsVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */; };
 		49809DE32C01ADFB00373865 /* AllContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */; };
@@ -138,6 +135,9 @@
 		DA3E00D02F12B00000C69C9B /* BaseViewPreviewOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00D12F12B00000C69C9B /* BaseViewPreviewOptions.swift */; };
 		DA3E00E02F12C00000C69C9B /* ImagePreviewDesigns.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00E12F12C00000C69C9B /* ImagePreviewDesigns.swift */; };
 		DA3E00F02F12D00000C69C9B /* OtherPhotosSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00F12F12D00000C69C9B /* OtherPhotosSwipeView.swift */; };
+		DA3E01012F12E00000C69C9B /* MediaFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */; };
+		DA3E01032F12E00000C69C9B /* ContactsFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */; };
+		DA3E01052F12E00000C69C9B /* CompressorFlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */; };
 		DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */; };
 		DA3EFEE22F0A581E00C69C9B /* IncompleteContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */; };
 		DA3EFEF82F0A591E00C69C9B /* AllContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */; };
@@ -234,9 +234,6 @@
 		32ED57D42B66835100AED057 /* MediaHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaHeaderView.xib; sourceTree = "<group>"; };
 		4970EB6F2C70906D00B09C9A /* SecretSpace.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SecretSpace.storyboard; sourceTree = "<group>"; };
 		4970EB752C709AC600B09C9A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaFlowViews.swift; sourceTree = "<group>"; };
-		DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowViews.swift; sourceTree = "<group>"; };
-		DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorFlowViews.swift; sourceTree = "<group>"; };
 		49809DDE2C019C8500373865 /* AllContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsViewController.swift; sourceTree = "<group>"; };
 		49809DE02C019E5B00373865 /* AllContactsVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsVIewModel.swift; sourceTree = "<group>"; };
 		49809DE22C01ADFA00373865 /* AllContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsTableViewCell.swift; sourceTree = "<group>"; };
@@ -258,6 +255,9 @@
 		DA3E00D12F12B00000C69C9B /* BaseViewPreviewOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewPreviewOptions.swift; sourceTree = "<group>"; };
 		DA3E00E12F12C00000C69C9B /* ImagePreviewDesigns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewDesigns.swift; sourceTree = "<group>"; };
 		DA3E00F12F12D00000C69C9B /* OtherPhotosSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherPhotosSwipeView.swift; sourceTree = "<group>"; };
+		DA3E01002F12E00000C69C9B /* MediaFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaFlowViews.swift; sourceTree = "<group>"; };
+		DA3E01022F12E00000C69C9B /* ContactsFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowViews.swift; sourceTree = "<group>"; };
+		DA3E01042F12E00000C69C9B /* CompressorFlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressorFlowViews.swift; sourceTree = "<group>"; };
 		DA3EFECE2F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateContactsViewDesign.swift; sourceTree = "<group>"; };
 		DA3EFEE32F0A581E00C69C9B /* IncompleteContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteContactView.swift; sourceTree = "<group>"; };
 		DA3EFEF92F0A591E00C69C9B /* AllContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllContactsView.swift; sourceTree = "<group>"; };
@@ -1192,7 +1192,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = XQ532W4M65;
+				DEVELOPMENT_TEAM = BVX54XCJ2D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CleanerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Space Cleaner";
@@ -1216,7 +1216,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppsss;
+				PRODUCT_BUNDLE_IDENTIFIER = mac.CleanerAppss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

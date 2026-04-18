@@ -11,19 +11,14 @@ import EventKit
 import Photos
 
 // MARK: - Home Tab View (Navigation Container)
-struct HomeTabView: View {
-    @Binding var path: NavigationPath
+struct HomeNavigationView: View {
+    @State var path: NavigationPath = NavigationPath()
     @StateObject private var contactsViewModel = OrganizeContactViewModel(contactStore: CNContactStore())
     @StateObject private var mediaViewModel = MediaViewModel()
     
     var body: some View {
         NavigationStack(path: $path) {
-            HomeScreen(
-                onMediaTapped: { path.append(HomeDestination.media) },
-                onContactsTapped: { path.append(HomeDestination.contacts) },
-                onCalendarTapped: { path.append(HomeDestination.calendar) },
-                onCompressTapped: { path.append(HomeDestination.compress) }
-            )
+            HomeScreen(path: $path)
             .navigationDestination(for: HomeDestination.self) { destination in
                 homeDestinationView(for: destination)
                     .toolbar(.hidden, for: .tabBar)
@@ -35,6 +30,7 @@ struct HomeTabView: View {
             .navigationDestination(for: MediaDestination.self) { destination in
                 mediaDestinationView(for: destination)
                     .toolbar(.hidden, for: .tabBar)
+                
             }
         }
     }
@@ -45,12 +41,13 @@ struct HomeTabView: View {
         case .media:
             MediaFlowView(viewModel: mediaViewModel, path: $path)
         case .contacts:
-            ContactsFlowView(viewModel: contactsViewModel, path: $path)
+            OrganizeContactsView(viewModel: contactsViewModel, path: $path)
         case .calendar:
             CalendarDesignSelector()
         case .compress:
             CompressorDetailView()
         }
+    
     }
     
     @ViewBuilder
@@ -106,14 +103,9 @@ enum HomeDestination: Hashable {
 // MARK: - Home Screen View
 struct HomeScreen: View {
     @StateObject private var viewModel = HomeScreenViewModel()
+    @Binding var path: NavigationPath
     @State private var showPermissionAlert = false
     @State private var permissionAlertMessage = ""
-
-    var onMediaTapped: (() -> Void)?
-    var onContactsTapped: (() -> Void)?
-    var onCalendarTapped: (() -> Void)?
-    var onCompressTapped: (() -> Void)?
-
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
@@ -266,7 +258,7 @@ struct HomeScreen: View {
     // MARK: - Calendar Card
     private var calendarCard: some View {
         Button(action: {
-            onCalendarTapped?()
+            path.append(HomeDestination.calendar)
         }) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
@@ -361,7 +353,7 @@ struct HomeScreen: View {
     private var photosCard: some View {
         Button(action: {
             if viewModel.photosAndVideosSize != nil {
-                onMediaTapped?()
+                path.append(HomeDestination.media)
             } else {
                 permissionAlertMessage = "Allow the app access to Photos. No files will be deleted without your permission."
                 showPermissionAlert = true
@@ -416,7 +408,7 @@ struct HomeScreen: View {
     // MARK: - Compress Card
     private var compressCard: some View {
         Button(action: {
-            onCompressTapped?()
+            path.append(HomeDestination.compress)
         }) {
             HStack {
                 ZStack {
@@ -495,7 +487,7 @@ struct HomeScreen: View {
         store.requestAccess(for: .contacts) { granted, _ in
             DispatchQueue.main.async {
                 if granted {
-                    onContactsTapped?()
+                    path.append(HomeDestination.contacts)
                 } else {
                     permissionAlertMessage = "In order to find duplicate and empty contacts, the app needs access to contacts."
                     showPermissionAlert = true
@@ -637,6 +629,6 @@ class HomeScreenViewModel: ObservableObject {
 // MARK: - Preview
 #Preview {
     NavigationStack {
-        HomeScreen()
+        HomeScreen(path: .constant(NavigationPath()))
     }
 }

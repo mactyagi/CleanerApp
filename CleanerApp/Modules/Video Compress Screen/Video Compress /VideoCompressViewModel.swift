@@ -17,10 +17,11 @@ class VideoCompressViewModel : ObservableObject{
 
 extension VideoCompressViewModel{
     func fetchData(){
+        self.isLoading = true
+        self.totalSize = 0
+        self.totalCompressSize = 0
         DispatchQueue.global().async {
-            self.isLoading = true
-            self.totalSize = 0
-            self.totalCompressSize = 0
+            
             var compressVideoModel: [CompressVideoModel] = []
             let phAssets = PHAsset.fetchAssets(with: .video, options: PHFetchOptions())
             let dispatchGroup = DispatchGroup()
@@ -31,8 +32,10 @@ extension VideoCompressViewModel{
                     if let avAsset{
                         let compressor = LightCompressor(quality: .low, asset: avAsset)
                         if let size = phAsset.getSize(){
-                            self.totalSize += size
-                            self.totalCompressSize += compressor.estimatedOutputSize()
+                            DispatchQueue.main.async {
+                                self.totalSize += size
+                                self.totalCompressSize += compressor.estimatedOutputSize()
+                            }
                             compressVideoModel.append(CompressVideoModel(phAsset: phAsset, avAsset: avAsset, originalSize: size, compressor: compressor))
                         }
                     }
@@ -40,8 +43,11 @@ extension VideoCompressViewModel{
                 }
             }
             dispatchGroup.wait()
-            self.isLoading = false
-            self.compressVideoModel = compressVideoModel
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.compressVideoModel = compressVideoModel
+            }
+            
         }
         
     }
