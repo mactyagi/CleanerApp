@@ -292,6 +292,8 @@ private struct SettingRowView: View {
             FeatureRequestView(viewModel: FeatureRequestViewModel())
         case .contactUS:
             ContactUsView()
+        case .reportAnError:
+            ReportErrorView()
         case .privacyPolicy:
             PrivacyPolicyView()
         default:

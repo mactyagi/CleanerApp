@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		24C0EA372F93C80600D49AAC /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA362F93C80600D49AAC /* ContactUsView.swift */; };
 		24C0EA392F93D23D00D49AAC /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA382F93D23D00D49AAC /* AppearanceView.swift */; };
+		24C0EA3B2F93DFDD00D49AAC /* ReportErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA3A2F93DFDD00D49AAC /* ReportErrorView.swift */; };
+		24C0EA3D2F93E00300D49AAC /* ReportErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA3C2F93E00300D49AAC /* ReportErrorModel.swift */; };
+		24C0EA3F2F93E03300D49AAC /* ReportErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA3E2F93E03300D49AAC /* ReportErrorViewModel.swift */; };
 		24D48CDA2E465A4E0014CDCA /* UIDevice + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D48CD92E465A4E0014CDCA /* UIDevice + Extension.swift */; };
 		3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26F2B38B023003DB928 /* CalendarViewModel.swift */; };
 		3201A2782B394D1D003DB928 /* CustomEKEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2772B394D1D003DB928 /* CustomEKEventModel.swift */; };
@@ -103,6 +106,9 @@
 /* Begin PBXFileReference section */
 		24C0EA362F93C80600D49AAC /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
 		24C0EA382F93D23D00D49AAC /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
+		24C0EA3A2F93DFDD00D49AAC /* ReportErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportErrorView.swift; sourceTree = "<group>"; };
+		24C0EA3C2F93E00300D49AAC /* ReportErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportErrorModel.swift; sourceTree = "<group>"; };
+		24C0EA3E2F93E03300D49AAC /* ReportErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportErrorViewModel.swift; sourceTree = "<group>"; };
 		24D48CD92E465A4E0014CDCA /* UIDevice + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice + Extension.swift"; sourceTree = "<group>"; };
 		3201A26F2B38B023003DB928 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		3201A2772B394D1D003DB928 /* CustomEKEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEKEventModel.swift; sourceTree = "<group>"; };
@@ -227,6 +233,7 @@
 		24D48CCF2E4651FF0014CDCA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				24C0EA3C2F93E00300D49AAC /* ReportErrorModel.swift */,
 				DA6FD9112C98EE43006B1BF4 /* SettingModel.swift */,
 			);
 			path = Model;
@@ -235,6 +242,7 @@
 		24D48CD02E4652090014CDCA /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				24C0EA3E2F93E03300D49AAC /* ReportErrorViewModel.swift */,
 				DA6FD9152C99953E006B1BF4 /* SettingViewModel.swift */,
 			);
 			path = "View Model";
@@ -243,6 +251,7 @@
 		24D48CD12E4652130014CDCA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				24C0EA3A2F93DFDD00D49AAC /* ReportErrorView.swift */,
 				24C0EA382F93D23D00D49AAC /* AppearanceView.swift */,
 				24C0EA362F93C80600D49AAC /* ContactUsView.swift */,
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
@@ -672,6 +681,7 @@
 				DA78270B2C9A7EAB004BCB66 /* FeatureRequestModel.swift in Sources */,
 				DA0001022F0A700000C69C9B /* CalendarView.swift in Sources */,
 				DA0001042F0A800000C69C9B /* CalendarDesignSelector.swift in Sources */,
+				24C0EA3F2F93E03300D49AAC /* ReportErrorViewModel.swift in Sources */,
 				24D48CDA2E465A4E0014CDCA /* UIDevice + Extension.swift in Sources */,
 				324A76BE2AFB28E500EE5AD5 /* CompressVideoModel.swift in Sources */,
 				4970EB762C709AC600B09C9A /* MainTabView.swift in Sources */,
@@ -697,6 +707,7 @@
 				324AA8F72B34069D001DAF2E /* CoreDataManager.swift in Sources */,
 				324A76BA2AFB229A00EE5AD5 /* VideoCompressViewModel.swift in Sources */,
 				321B0ABA2B00BD7100E4300D /* VideoCompressor.swift in Sources */,
+				24C0EA3B2F93DFDD00D49AAC /* ReportErrorView.swift in Sources */,
 				324A76BC2AFB243F00EE5AD5 /* Extension.swift in Sources */,
 				DA6FD9122C98EE43006B1BF4 /* SettingModel.swift in Sources */,
 				DA78270F2C9A987B004BCB66 /* AddFeatureViewModel.swift in Sources */,
@@ -720,6 +731,7 @@
 				323A25EF2B850174006AD2FB /* DuplicateContactsViewModel.swift in Sources */,
 				326709522B374ECC003515D4 /* HomeViewModel.swift in Sources */,
 				32B3C1F92B4974F4000B0727 /* MediaViewModel.swift in Sources */,
+				24C0EA3D2F93E00300D49AAC /* ReportErrorModel.swift in Sources */,
 				DA3E00602F116D0000C69C9B /* CompressQualitySelectionView.swift in Sources */,
 				DA3E00802F117B0000C69C9B /* VideoCompressorView.swift in Sources */,
 				323A25E22B84A62E006AD2FB /* OrganizeContactViewModel.swift in Sources */,

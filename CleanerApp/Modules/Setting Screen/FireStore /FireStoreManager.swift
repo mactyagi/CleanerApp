@@ -14,6 +14,7 @@ class FireStoreManager {
     
     struct CollectionName {
         static let feature = "Feature"
+        static let errorReport = "ErrorReport"
     }
     
     
@@ -63,6 +64,23 @@ class FireStoreManager {
         }
     }
     
+    func addErrorReport(errorReport: ErrorReport, completion: @escaping (_ success: Bool) -> Void) {
+        let collectionRef = db.collection(CollectionName.errorReport)
+        do {
+            try collectionRef.addDocument(from: errorReport) { error in
+                if let error {
+                    print("Error storing error report: \(error)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        } catch {
+            print(error)
+            completion(false)
+        }
+    }
+
     func updateFeature(feature: Feature, comp: @escaping (_ success: Bool) -> Void){
         let docRef = db.collection(CollectionName.feature).document(feature.id ?? "")
         do {
