@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum AppearanceMode: String, CaseIterable {
     case system = "System"
@@ -22,10 +23,10 @@ enum SettingType: String, CaseIterable {
     case reportAnError
     case refferAFriend
     case leaveReview
-    
+
     var model: SettingModel {
         switch self {
-            
+
         case .privacyPolicy:
             return SettingModel(title: "Privacy Policy", subTitle: "")
         case .appearance:
@@ -44,7 +45,33 @@ enum SettingType: String, CaseIterable {
             return SettingModel(title: "Rate the app🤩", subTitle: "Help me grow the app by leaving a good review.")
         }
     }
-    
+
+    var iconName: String {
+        switch self {
+        case .appearance: return "paintbrush.fill"
+        case .featureRequest: return "lightbulb.fill"
+        case .contactUS: return "envelope.fill"
+        case .reportAnError: return "exclamationmark.triangle.fill"
+        case .followMe: return "person.fill"
+        case .leaveReview: return "star.fill"
+        case .refferAFriend: return "square.and.arrow.up.fill"
+        case .privacyPolicy: return "doc.text.fill"
+        }
+    }
+
+    var accentColor: Color {
+        switch self {
+        case .appearance: return .blue
+        case .featureRequest: return .purple
+        case .contactUS: return .green
+        case .reportAnError: return .orange
+        case .followMe: return .cyan
+        case .leaveReview: return .yellow
+        case .refferAFriend: return .pink
+        case .privacyPolicy: return .gray
+        }
+    }
+
 }
 
 
