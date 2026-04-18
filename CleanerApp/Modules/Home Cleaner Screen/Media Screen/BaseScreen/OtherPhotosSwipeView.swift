@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 import Photos
 
 // MARK: - Other Photos Overview Screen

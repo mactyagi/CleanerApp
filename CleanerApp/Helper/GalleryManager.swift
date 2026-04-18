@@ -8,7 +8,6 @@
 import Foundation
 import Photos
 import Vision
-import UIKit
 import CryptoKit
 import CoreData
 

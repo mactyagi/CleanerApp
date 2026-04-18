@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 import Photos
 
 // MARK: - Design 1: Clean Grid with Floating Delete

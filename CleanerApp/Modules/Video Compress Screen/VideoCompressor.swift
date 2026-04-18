@@ -6,7 +6,6 @@
 //
 
 import AVFoundation
-import UIKit
 
 public enum VideoQuality {
     case very_high
