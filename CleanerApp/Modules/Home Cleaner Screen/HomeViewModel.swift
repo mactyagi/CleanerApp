@@ -9,7 +9,6 @@ import Foundation
 import Combine
 import EventKit
 import Photos
-import UIKit
 import CoreData
 import Contacts
 

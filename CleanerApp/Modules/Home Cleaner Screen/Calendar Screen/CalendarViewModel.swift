@@ -9,6 +9,11 @@ import Foundation
 import EventKit
 import Combine
 
+enum SegmentType: String {
+    case Calendar
+    case Reminder
+}
+
 class CalendarViewModel {
     
     var eventStore: EKEventStore

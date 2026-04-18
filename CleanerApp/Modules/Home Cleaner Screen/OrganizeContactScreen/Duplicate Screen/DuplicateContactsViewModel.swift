@@ -10,7 +10,7 @@ import Contacts
 import ContactsUI
 typealias duplicateAndMergedContactTuple = (mergedContact: CNMutableContact?, duplicatesContacts: [CustomCNContact])
 
-class DuplicateContactsViewModel{
+class DuplicateContactsViewModel: ObservableObject{
     
     @Published var dataSource: [duplicateAndMergedContactTuple] = []
     var contactStore: CNContactStore

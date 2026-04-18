@@ -11,23 +11,21 @@ struct SettingView: View {
     @StateObject private var viewModel = SettingViewModel()
     
     var body: some View {
-        NavigationView {
-            List(viewModel.sections, id: \.header) { section in
-                Section {
-                    ForEach(section.items, id: \.self){ item in
-                        RowView(item: item, viewModel: viewModel)
-                            .addNavigationLink(item: item)
-                    }
-                    .listRowBackground(Color(uiColor: .offWhiteAndGray))
-        
-                } header: {
-                    Text(section.header)
+        List(viewModel.sections, id: \.header) { section in
+            Section {
+                ForEach(section.items, id: \.self){ item in
+                    RowView(item: item, viewModel: viewModel)
+                        .addNavigationLink(item: item)
                 }
+                .listRowBackground(Color(uiColor: .offWhiteAndGray))
+    
+            } header: {
+                Text(section.header)
             }
-            .scrollContentBackground(.hidden)
-            .navigationTitle("Settings")
-            .background(Color.lightBlueDarkGrey)
         }
+        .scrollContentBackground(.hidden)
+        .navigationTitle("Settings")
+        .background(Color.lightBlueDarkGrey)
         
     }
 }
@@ -112,6 +110,7 @@ extension RowView {
         default:
             NavigationLink {
                 destinationView(item: item)
+                    .toolbar(.hidden, for: .tabBar)
             } label: {
                 HStack {
                     self
@@ -125,6 +124,8 @@ extension RowView {
         switch item {
         case .featureRequest:
             FeatureRequestView(viewModel: FeatureRequestViewModel())
+        case .privacyPolicy:
+            PrivacyPolicyView()
         default:
             Text("Unknown Destination")
         }

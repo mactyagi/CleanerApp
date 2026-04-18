@@ -9,6 +9,7 @@ import Foundation
 import Photos
 import UIKit
 import EventKit
+import SwiftUI
 //MARK: - PHAsset
 
 extension PHAsset{
@@ -94,6 +95,51 @@ extension PHAsset{
                 logErrorString(errorString: "Can not get image from PHAsset by excaping", VCName: "PHAsset", functionName: #function, line: #line)
             }
         comp(image)
+        }
+    }
+    
+    
+    func loadSwiftUIImage(
+            targetSize: CGSize = CGSize(
+                width: UIScreen.main.bounds.width / 2,
+                height: UIScreen.main.bounds.width / 2
+            )
+        ) async -> Image? {
+
+            await withCheckedContinuation { continuation in
+                let manager = PHImageManager.default()
+                let options = PHImageRequestOptions()
+                options.isSynchronous = false
+                options.deliveryMode = .highQualityFormat
+
+                manager.requestImage(
+                    for: self,
+                    targetSize: targetSize,
+                    contentMode: .aspectFill,
+                    options: options
+                ) { uiImage, _ in
+                    if let uiImage {
+                        continuation.resume(returning: Image(uiImage: uiImage))
+                    } else {
+                        continuation.resume(returning: nil)
+                    }
+                }
+            }
+        }
+    
+    /// Fetches full resolution image for preview
+    func getFullImage(completion: @escaping (UIImage?) -> Void) {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        
+        PHImageManager.default().requestImage(
+            for: self,
+            targetSize: PHImageManagerMaximumSize,
+            contentMode: .aspectFit,
+            options: options
+        ) { image, _ in
+            completion(image)
         }
     }
 }
@@ -243,39 +289,6 @@ extension UIView{
 }
 
 
-extension UIStoryboard{
-    static var main: UIStoryboard{
-        UIStoryboard(name: "Main", bundle: nil)
-    }
-    
-    static var videoCompress: UIStoryboard{
-        UIStoryboard(name: "VideoCompress", bundle: nil)
-    }
-
-    static var setting: UIStoryboard {
-        UIStoryboard(name: "Setting", bundle: nil)
-    }
-
-    static var secretSpace: UIStoryboard{
-        UIStoryboard(name: "SecretSpace", bundle: nil)
-    }
-
-    static var home: UIStoryboard {
-        UIStoryboard(name: "Home", bundle: nil)
-    }
-
-    static var contact: UIStoryboard {
-        UIStoryboard(name: "Contact", bundle: nil)
-    }
-
-    static var calendar: UIStoryboard {
-        UIStoryboard(name: "Calendar", bundle: nil)
-    }
-
-    static var media: UIStoryboard {
-        UIStoryboard(name: "Media", bundle: nil)
-    }
-}
 
 
 extension Date{
@@ -379,28 +392,6 @@ extension Notification.Name{
 }
 
 
-extension UIViewController{
-    func showFullScreenLoader(){
-        DispatchQueue.main.async {
-            let vc = UIStoryboard.main.instantiateViewController(identifier: LoaderViewController.identifier) as! LoaderViewController
-            vc.modalPresentationStyle = .overFullScreen
-            self.present(vc, animated: false)
-        }
-    }
-    
-    func hideFullScreenLoader(){
-        DispatchQueue.main.async {
-            if let viewControllerToDismiss = self.presentedViewController as? LoaderViewController {
-                viewControllerToDismiss.dismiss(animated: false, completion: nil)
-            }
-        }
-    }
-    
-    func setupNavigationAndTabBar(isScreenVisible flag: Bool){
-        navigationController?.navigationBar.isHidden = flag
-        tabBarController?.tabBar.isHidden = !flag
-    }
-}
 
 
 extension UIFont{

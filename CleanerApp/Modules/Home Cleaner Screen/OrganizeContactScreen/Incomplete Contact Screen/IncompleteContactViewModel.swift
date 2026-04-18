@@ -10,7 +10,7 @@ import Contacts
 import Combine
 import ContactsUI
 
-class IncompleteContactViewModel{
+class IncompleteContactViewModel: ObservableObject {
     @Published var inCompleteContacts: [CNContact] = []
     var contactStore: CNContactStore
 

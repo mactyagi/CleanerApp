@@ -8,7 +8,7 @@
 import Foundation
 import Photos
 import Combine
-class VideoCompressViewModel{
+class VideoCompressViewModel : ObservableObject{
     @Published var compressVideoModel = [CompressVideoModel]()
     var totalSize:Int64 = 0
     @Published var isLoading = true
@@ -17,10 +17,11 @@ class VideoCompressViewModel{
 
 extension VideoCompressViewModel{
     func fetchData(){
+        self.isLoading = true
+        self.totalSize = 0
+        self.totalCompressSize = 0
         DispatchQueue.global().async {
-            self.isLoading = true
-            self.totalSize = 0
-            self.totalCompressSize = 0
+            
             var compressVideoModel: [CompressVideoModel] = []
             let phAssets = PHAsset.fetchAssets(with: .video, options: PHFetchOptions())
             let dispatchGroup = DispatchGroup()
@@ -29,10 +30,12 @@ extension VideoCompressViewModel{
                 let phAsset = phAssets[index]
                 phAsset.getAVAsset { avAsset in
                     if let avAsset{
-                        let compressor = LightCompressor(quality: .very_high, asset: avAsset)
+                        let compressor = LightCompressor(quality: .low, asset: avAsset)
                         if let size = phAsset.getSize(){
-                            self.totalSize += size
-                            self.totalCompressSize += compressor.estimatedOutputSize()
+                            DispatchQueue.main.async {
+                                self.totalSize += size
+                                self.totalCompressSize += compressor.estimatedOutputSize()
+                            }
                             compressVideoModel.append(CompressVideoModel(phAsset: phAsset, avAsset: avAsset, originalSize: size, compressor: compressor))
                         }
                     }
@@ -40,8 +43,11 @@ extension VideoCompressViewModel{
                 }
             }
             dispatchGroup.wait()
-            self.isLoading = false
-            self.compressVideoModel = compressVideoModel
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.compressVideoModel = compressVideoModel
+            }
+            
         }
         
     }
