@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 struct SettingView: View {
     @StateObject private var viewModel = SettingViewModel()
@@ -181,20 +182,74 @@ struct SettingView: View {
 private struct SettingRowView: View {
     let item: SettingType
     @ObservedObject var viewModel: SettingViewModel
+    @State private var showShareSheet = false
+    @State private var showRatingPrompt = false
+    @State private var navigateToContact = false
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
-        NavigationLink {
-            destinationView(item: item)
-                .toolbar(.hidden, for: .tabBar)
-        } label: {
-            rowContent
+        rowButton
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(Color(uiColor: .offWhiteAndGray))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+            .padding(.horizontal, 16)
+            .sheet(isPresented: $showShareSheet) {
+                ShareSheet(activityItems: [
+                    "Check out CleanerApp! It helps clean up your photos, contacts, and more. Download it here:",
+                    URL(string: "https://apps.apple.com/app/cleanerapp")!
+                ] as [Any])
+            }
+            .alert("Enjoying CleanerApp?", isPresented: $showRatingPrompt) {
+                Button("Yes, I love it!") {
+                    requestReview()
+                }
+                Button("Not really") {
+                    navigateToContact = true
+                }
+                Button("Maybe later", role: .cancel) {}
+            } message: {
+                Text("Your feedback helps us improve. Would you like to leave a review?")
+            }
+            .background(
+                NavigationLink(destination: ContactUsView().toolbar(.hidden, for: .tabBar), isActive: $navigateToContact) {
+                    EmptyView()
+                }
+                .hidden()
+            )
+    }
+
+    @ViewBuilder
+    private var rowButton: some View {
+        if item == .followMe {
+            Button {
+                if let url = URL(string: "https://www.linkedin.com/in/manukant-tyagi") {
+                    UIApplication.shared.open(url)
+                }
+            } label: {
+                rowContent
+            }
+        } else if item == .refferAFriend {
+            Button {
+                showShareSheet = true
+            } label: {
+                rowContent
+            }
+        } else if item == .leaveReview {
+            Button {
+                showRatingPrompt = true
+            } label: {
+                rowContent
+            }
+        } else {
+            NavigationLink {
+                destinationView(item: item)
+                    .toolbar(.hidden, for: .tabBar)
+            } label: {
+                rowContent
+            }
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
-        .background(Color(uiColor: .offWhiteAndGray))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
-        .padding(.horizontal, 16)
     }
 
     private var rowContent: some View {
