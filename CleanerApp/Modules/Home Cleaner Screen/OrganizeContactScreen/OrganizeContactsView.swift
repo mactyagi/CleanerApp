@@ -82,11 +82,8 @@ struct OrganizeContactsView: View {
             await viewModel.getData()
         }
         .background(
-            LinearGradient(
-                colors: [Color(.systemBackground), Color(.systemGroupedBackground)],
-                startPoint: .top,
-                endPoint: .bottom
-            )
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
         )
         .navigationTitle("Contacts")
         .navigationBarTitleDisplayMode(.inline)
@@ -163,7 +160,7 @@ struct OCStatsRow: View {
             )
         }
         .padding(.vertical, 16)
-        .background(Color(.systemBackground))
+        .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(16)
         .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 4)
         .padding(.horizontal)
@@ -254,7 +251,7 @@ struct OCActionCard: View {
                     endPoint: .bottomTrailing
                 ) :
                 LinearGradient(
-                    colors: [Color(.systemBackground), Color(.systemBackground)],
+                    colors: [Color(.secondarySystemGroupedBackground), Color(.secondarySystemGroupedBackground)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -332,7 +329,7 @@ struct OCTipCard: View {
         }
         .padding()
         .frame(width: 160, height: 120)
-        .background(Color(.systemBackground))
+        .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
     }
