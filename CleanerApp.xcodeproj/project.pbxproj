@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24C0EA372F93C80600D49AAC /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA362F93C80600D49AAC /* ContactUsView.swift */; };
+		24C0EA392F93D23D00D49AAC /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C0EA382F93D23D00D49AAC /* AppearanceView.swift */; };
 		24D48CDA2E465A4E0014CDCA /* UIDevice + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D48CD92E465A4E0014CDCA /* UIDevice + Extension.swift */; };
 		3201A2702B38B023003DB928 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A26F2B38B023003DB928 /* CalendarViewModel.swift */; };
 		3201A2782B394D1D003DB928 /* CustomEKEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3201A2772B394D1D003DB928 /* CustomEKEventModel.swift */; };
@@ -99,6 +101,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24C0EA362F93C80600D49AAC /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
+		24C0EA382F93D23D00D49AAC /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
 		24D48CD92E465A4E0014CDCA /* UIDevice + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice + Extension.swift"; sourceTree = "<group>"; };
 		3201A26F2B38B023003DB928 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		3201A2772B394D1D003DB928 /* CustomEKEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEKEventModel.swift; sourceTree = "<group>"; };
@@ -239,6 +243,8 @@
 		24D48CD12E4652130014CDCA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				24C0EA382F93D23D00D49AAC /* AppearanceView.swift */,
+				24C0EA362F93C80600D49AAC /* ContactUsView.swift */,
 				DA6FD9132C996C0A006B1BF4 /* SettingView.swift */,
 				DA4E00102F1400000000002 /* PrivacyPolicyView.swift */,
 			);
@@ -678,6 +684,7 @@
 				DA4E00112F1400000000002 /* PrivacyPolicyView.swift in Sources */,
 				3201A2782B394D1D003DB928 /* CustomEKEventModel.swift in Sources */,
 				DA3EFED02F0A4A4700C69C9B /* DuplicateContactsViewDesign.swift in Sources */,
+				24C0EA392F93D23D00D49AAC /* AppearanceView.swift in Sources */,
 				326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */,
 				32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */,
 				DA1234567890ABCDEF000004 /* HomeScreen.swift in Sources */,
@@ -699,6 +706,7 @@
 				DA3E00A02F12800000C69C9B /* MediaScreenView.swift in Sources */,
 				DA3E00B02F12900000C69C9B /* BaseViewDesigns.swift in Sources */,
 				DA3E00C02F12A00000C69C9B /* BaseView.swift in Sources */,
+				24C0EA372F93C80600D49AAC /* ContactUsView.swift in Sources */,
 				DA3E00D02F12B00000C69C9B /* BaseViewPreviewOptions.swift in Sources */,
 				DA3E00E02F12C00000C69C9B /* ImagePreviewDesigns.swift in Sources */,
 				DA3E00F02F12D00000C69C9B /* OtherPhotosSwipeView.swift in Sources */,

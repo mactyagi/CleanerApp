@@ -80,17 +80,11 @@ private struct SettingRowView: View {
     @ObservedObject var viewModel: SettingViewModel
 
     var body: some View {
-        Group {
-            if item == .appearance {
-                appearanceRow
-            } else {
-                NavigationLink {
-                    destinationView(item: item)
-                        .toolbar(.hidden, for: .tabBar)
-                } label: {
-                    rowContent
-                }
-            }
+        NavigationLink {
+            destinationView(item: item)
+                .toolbar(.hidden, for: .tabBar)
+        } label: {
+            rowContent
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
@@ -131,60 +125,15 @@ private struct SettingRowView: View {
         }
     }
 
-    private var appearanceRow: some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(item.accentColor.opacity(0.15))
-                    .frame(width: 40, height: 40)
-                Image(systemName: item.iconName)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(item.accentColor)
-            }
-
-            Text(item.model.title)
-                .font(.headline)
-                .foregroundStyle(item.accentColor)
-
-            Spacer()
-
-            Menu {
-                ForEach(AppearanceMode.allCases, id: \.self) { mode in
-                    Button {
-                        viewModel.appearanceMode = mode
-                        applyAppearanceMode(mode)
-                    } label: {
-                        HStack {
-                            Text(mode.rawValue)
-                            if mode == viewModel.appearanceMode {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                }
-            } label: {
-                HStack(spacing: 4) {
-                    Text(viewModel.appearanceMode.rawValue)
-                    Image(systemName: "chevron.up.chevron.down")
-                }
-                .foregroundColor(.gray)
-                .font(.caption)
-            }
-        }
-    }
-
-    private func applyAppearanceMode(_ mode: AppearanceMode) {
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let sceneDelegate = scene.delegate as? SceneDelegate {
-            sceneDelegate.changeAppearance(to: mode)
-        }
-    }
-
     @ViewBuilder
     func destinationView(item: SettingType) -> some View {
         switch item {
+        case .appearance:
+            AppearanceView(viewModel: viewModel)
         case .featureRequest:
             FeatureRequestView(viewModel: FeatureRequestViewModel())
+        case .contactUS:
+            ContactUsView()
         case .privacyPolicy:
             PrivacyPolicyView()
         default:
