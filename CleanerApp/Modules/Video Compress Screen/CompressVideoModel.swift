@@ -16,6 +16,12 @@ struct CompressVideoModel: Hashable {
     var reduceSize: Int64 {
         compressor.estimatedOutputSize()
     }
+
+    var isAlreadyCompressed: Bool {
+        let resources = PHAssetResource.assetResources(for: phAsset)
+        guard let resource = resources.first else { return false }
+        return resource.originalFilename.localizedCaseInsensitiveContains("compressed")
+    }
     
     init(phAsset: PHAsset, avAsset: AVAsset, originalSize: Int64, compressor: LightCompressor) {
         self.phAsset = phAsset

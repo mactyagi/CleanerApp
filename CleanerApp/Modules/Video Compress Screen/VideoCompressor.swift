@@ -11,8 +11,8 @@ public enum VideoQuality {
     case very_high
     case high
     case medium
-    case low
-    case very_low
+//    case low
+//    case very_low
 }
 
 // Compression Result
@@ -76,9 +76,8 @@ public class LightCompressor {
         }
         let bitrate = videoTrack.estimatedDataRate
         let newBitrate = getBitrate(bitrate: bitrate, quality: quality)
-        let durationInSeconds = asset.duration.seconds
-        let previousSize = Int64(bitrate * Float(durationInSeconds)).convertToFileString()
-        let size = (Int64(newBitrate * Int(durationInSeconds)) / 8)
+        let durationInSeconds = max(asset.duration.seconds, 0.1)
+        let size = Int64(Double(newBitrate) * durationInSeconds / 8.0)
         return size
     }
     
@@ -183,17 +182,15 @@ public class LightCompressor {
                       return
                   }
                   
-                  // Update progress based on number of processed frames
-                  frameCount += 1
-                  if let handler = progressHandler {
-                      progress.completedUnitCount = Int64(frameCount)
-                      progressQueue.async { handler(progress) }
-                  }
-                  
                   let sampleBuffer: CMSampleBuffer? = videoReaderOutput.copyNextSampleBuffer()
-                  
+
                   if videoReader?.status == .reading && sampleBuffer != nil {
                       videoWriterInput.append(sampleBuffer!)
+                      frameCount += 1
+                      if let handler = progressHandler {
+                          progress.completedUnitCount = min(Int64(frameCount), totalUnits)
+                          progressQueue.async { handler(progress) }
+                      }
                   } else {
                       videoWriterInput.markAsFinished()
                       if videoReader?.status == .completed {
@@ -245,49 +242,13 @@ public class LightCompressor {
             return Int(bitrate * 0.4)
         case .medium:
             return Int(bitrate * 0.3)
-        case .low:
-            return Int(bitrate * 0.2)
-        case .very_low:
-            return Int(bitrate * 0.1)
+//        case .low:
+//            return Int(bitrate * 0.2)
+//        case .very_low:
+//            return Int(bitrate * 0.1)
         }
     }
     
-//    private func generateWidthAndHeight(
-//        width: CGFloat,
-//        height: CGFloat,
-//        keepOriginalResolution: Bool
-//    ) -> (width: Int, height: Int) {
-//        
-//        if (keepOriginalResolution) {
-//            return (Int(width), Int(height))
-//        }
-//        
-//        var newWidth: Int
-//        var newHeight: Int
-//        
-//        if width >= 1920 || height >= 1920 {
-//            
-//            newWidth = Int(width * 0.5 / 16) * 16
-//            newHeight = Int(height * 0.5 / 16 ) * 16
-//            
-//        } else if width >= 1280 || height >= 1280 {
-//            newWidth = Int(width * 0.75 / 16) * 16
-//            newHeight = Int(height * 0.75 / 16) * 16
-//        } else if width >= 960 || height >= 960 {
-//            if(width > height){
-//                newWidth = Int(MIN_HEIGHT * 0.95 / 16) * 16
-//                newHeight = Int(MIN_WIDTH * 0.95 / 16) * 16
-//            } else {
-//                newWidth = Int(MIN_WIDTH * 0.95 / 16) * 16
-//                newHeight = Int(MIN_HEIGHT * 0.95 / 16) * 16
-//            }
-//        } else {
-//            newWidth = Int(width * 0.9 / 16) * 16
-//            newHeight = Int(height * 0.9 / 16) * 16
-//        }
-//        
-//        return (newWidth, newHeight)
-//    }
     
     private func getVideoWriterSettings(bitrate: Int, size: CGSize) -> [String : AnyObject] {
         

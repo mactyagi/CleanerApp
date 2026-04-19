@@ -161,6 +161,7 @@ struct VideoCompressorView: View {
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(sortedVideos, id: \.phAsset.localIdentifier) { video in
                         VideoCompressorCell(video: video)
+                            .contentShape(Rectangle())
                             .onTapGesture {
                                 onVideoSelected?(video)
                             }
@@ -192,13 +193,6 @@ struct VideoCompressorView: View {
 struct VideoCompressorCell: View {
     let video: CompressVideoModel
     @State private var thumbnail: UIImage?
-    @State private var isCompressed = false
-
-    private var isAlreadyCompressed: Bool {
-        let resources = PHAssetResource.assetResources(for: video.phAsset)
-        guard let resource = resources.first else { return false }
-        return resource.originalFilename.hasPrefix("compressed")
-    }
 
     var body: some View {
         VStack(spacing: 8) {
@@ -223,7 +217,7 @@ struct VideoCompressorCell: View {
                         )
                 }
 
-                if isCompressed {
+                if video.isAlreadyCompressed {
                     Text("Compressed")
                         .font(.system(size: 10, weight: .semibold))
                         .foregroundColor(.white)
@@ -245,7 +239,7 @@ struct VideoCompressorCell: View {
 
                 Text(video.compressor.estimatedOutputSize().convertToFileString())
                     .font(.caption.bold())
-                    .foregroundColor(isCompressed ? .green : .blue)
+                    .foregroundColor(video.isAlreadyCompressed ? .green : .blue)
             }
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
@@ -256,7 +250,6 @@ struct VideoCompressorCell: View {
         )
         .onAppear {
             loadThumbnail()
-            isCompressed = isAlreadyCompressed
         }
     }
 

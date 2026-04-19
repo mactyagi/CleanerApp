@@ -44,7 +44,7 @@ enum QualityOption: Int, CaseIterable {
 struct CompressQualitySelectionView: View {
     @StateObject var viewModelWrapper: ViewModelWrapper
     @State private var state: CompressState = .beforeCompress
-    @State private var selectedQuality: QualityOption = .medium
+    @State private var selectedQuality: QualityOption = .maximum
     @State private var progress: Float = 0
     @State private var compressedSize: Int64 = 0
     @State private var spaceSaved: Int64 = 0
@@ -355,18 +355,20 @@ struct CompressQualitySelectionView: View {
             case .onStart:
                 print("Compression started")
             case .onSuccess(let url):
-                onDataChanged?()
+//                onDataChanged?()
                 DispatchQueue.main.async {
                     self.compressedVideoURL = url
                 }
                 viewModel.saveVideoToPhotosLibrary(videoURL: url) { size, error in
                     DispatchQueue.main.async {
-                        if error == nil {
-                            self.compressedSize = size
-                            self.spaceSaved = viewModel.compressAsset.originalSize - size
-                            withAnimation {
-                                self.state = .completed
-                            }
+                        if let error = error {
+                            print("Save to library failed: \(error)")
+                        }
+                        let fileSize = size > 0 ? size : (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int64) ?? 0
+                        self.compressedSize = fileSize
+                        self.spaceSaved = viewModel.compressAsset.originalSize - fileSize
+                        withAnimation {
+                            self.state = .completed
                         }
                     }
                 }

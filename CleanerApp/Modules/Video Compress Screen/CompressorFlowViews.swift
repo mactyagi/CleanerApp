@@ -65,7 +65,7 @@ struct CompressQualitySelectionViewWrapper: View {
         
         var compressAssetCopy = video
         compressAssetCopy.compressor.destinationURL = destinationPath
-        compressAssetCopy.compressor.quality = .high
+        compressAssetCopy.compressor.quality = .medium
         
         let viewModel = CompressQualitySelectionViewModel(compressAsset: compressAssetCopy)
         _viewModelWrapper = StateObject(wrappedValue: ViewModelWrapper(viewModel: viewModel))

@@ -30,7 +30,7 @@ extension VideoCompressViewModel{
                 let phAsset = phAssets[index]
                 phAsset.getAVAsset { avAsset in
                     if let avAsset{
-                        let compressor = LightCompressor(quality: .low, asset: avAsset)
+                        let compressor = LightCompressor(quality: .medium, asset: avAsset)
                         if let size = phAsset.getSize(){
                             DispatchQueue.main.async {
                                 self.totalSize += size
