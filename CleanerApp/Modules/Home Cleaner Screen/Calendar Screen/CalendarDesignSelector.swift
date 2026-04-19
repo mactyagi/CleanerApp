@@ -72,10 +72,6 @@ struct CalendarDesignSelector: View {
                             .background(Color(uiColor: .darkBlue).opacity(0.1))
                             .cornerRadius(10)
                         }
-
-                        Image(systemName: selectedSegment == .Calendar ? "calendar.circle.fill" : "bell.circle.fill")
-                            .font(.system(size: 44))
-                            .foregroundColor(Color(uiColor: .darkBlue))
                     }
 
                     // Segment Pills
@@ -411,27 +407,36 @@ struct CalendarDeleteButton: View {
     let onDelete: () -> Void
 
     var body: some View {
-        Button(action: onDelete) {
-            HStack(spacing: 10) {
-                Image(systemName: "trash.fill")
-                Text("Delete \(count) Item\(count == 1 ? "" : "s")")
-            }
-            .font(.headline)
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(
-                LinearGradient(colors: [.red, .red.opacity(0.8)], startPoint: .leading, endPoint: .trailing)
+        VStack(spacing: 0) {
+            LinearGradient(
+                colors: [
+                    Color(uiColor: .systemGroupedBackground).opacity(0),
+                    Color(uiColor: .systemGroupedBackground)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
             )
-            .cornerRadius(16)
-            .shadow(color: .red.opacity(0.3), radius: 8, x: 0, y: 4)
+            .frame(height: 20)
+
+            Button(action: onDelete) {
+                HStack(spacing: 10) {
+                    Image(systemName: "trash.fill")
+                    Text("Delete \(count) Item\(count == 1 ? "" : "s")")
+                }
+                .font(.headline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(
+                    LinearGradient(colors: [.red, .red.opacity(0.8)], startPoint: .leading, endPoint: .trailing)
+                )
+                .cornerRadius(16)
+                .shadow(color: .red.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+            .background(Color(uiColor: .systemGroupedBackground))
         }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-        .background(
-            Color(uiColor: .systemGroupedBackground)
-                .shadow(color: .black.opacity(0.05), radius: 8, y: -4)
-        )
     }
 }
 

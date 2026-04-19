@@ -192,25 +192,47 @@ struct VideoCompressorView: View {
 struct VideoCompressorCell: View {
     let video: CompressVideoModel
     @State private var thumbnail: UIImage?
+    @State private var isCompressed = false
+
+    private var isAlreadyCompressed: Bool {
+        let resources = PHAssetResource.assetResources(for: video.phAsset)
+        guard let resource = resources.first else { return false }
+        return resource.originalFilename.hasPrefix("compressed")
+    }
 
     var body: some View {
         VStack(spacing: 8) {
             // Thumbnail
-            if let thumbnail = thumbnail {
-                Image(uiImage: thumbnail)
-                    .resizable()
-                    .aspectRatio(16/9, contentMode: .fill)
-                    .frame(height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            } else {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.gray.opacity(0.3))
-                    .aspectRatio(16/9, contentMode: .fit)
-                    .overlay(
-                        Image(systemName: "play.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(.white.opacity(0.8))
-                    )
+            ZStack(alignment: .topLeading) {
+                if let thumbnail = thumbnail {
+                    Image(uiImage: thumbnail)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 100)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                } else {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.3))
+                        .aspectRatio(16/9, contentMode: .fit)
+                        .overlay(
+                            Image(systemName: "play.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(.white.opacity(0.8))
+                        )
+                }
+
+                if isCompressed {
+                    Text("Compressed")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .background(Color.green)
+                        .cornerRadius(6)
+                        .padding(6)
+                }
             }
 
             // Size Info
@@ -223,7 +245,7 @@ struct VideoCompressorCell: View {
 
                 Text(video.compressor.estimatedOutputSize().convertToFileString())
                     .font(.caption.bold())
-                    .foregroundColor(.blue)
+                    .foregroundColor(isCompressed ? .green : .blue)
             }
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
@@ -234,6 +256,7 @@ struct VideoCompressorCell: View {
         )
         .onAppear {
             loadThumbnail()
+            isCompressed = isAlreadyCompressed
         }
     }
 
