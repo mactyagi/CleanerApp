@@ -12,7 +12,8 @@ struct CompressorDetailView: View {
     @StateObject private var viewModel = VideoCompressViewModel()
     @State private var selectedVideo: CompressVideoModel?
     @State private var showQualitySelection = false
-    
+    @State private var hasLoadedInitialData = false
+
     var body: some View {
         VideoCompressorView(
             viewModel: viewModel,
@@ -32,7 +33,10 @@ struct CompressorDetailView: View {
             }
         }
         .onAppear {
-            viewModel.fetchData()
+            if !hasLoadedInitialData {
+                hasLoadedInitialData = true
+                viewModel.fetchData()
+            }
         }
     }
 }
@@ -74,8 +78,7 @@ struct CompressQualitySelectionViewWrapper: View {
     var body: some View {
         CompressQualitySelectionView(
             viewModel: viewModelWrapper.viewModel,
-            onDismiss: onComplete,
-            onDataChanged: onComplete
+            onDismiss: onComplete
         )
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 import AVKit
 import Combine
+import Photos
 
 // MARK: - Compression State
 enum CompressState {
@@ -51,12 +52,10 @@ struct CompressQualitySelectionView: View {
     @State private var compressedVideoURL: URL?
 
     var onDismiss: (() -> Void)?
-    var onDataChanged: (() -> Void)?
 
-    init(viewModel: CompressQualitySelectionViewModel, onDismiss: (() -> Void)? = nil, onDataChanged: (() -> Void)? = nil) {
+    init(viewModel: CompressQualitySelectionViewModel, onDismiss: (() -> Void)? = nil) {
         _viewModelWrapper = StateObject(wrappedValue: ViewModelWrapper(viewModel: viewModel))
         self.onDismiss = onDismiss
-        self.onDataChanged = onDataChanged
     }
 
     private var viewModel: CompressQualitySelectionViewModel {
@@ -295,6 +294,21 @@ struct CompressQualitySelectionView: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
 
+            HStack(spacing: 10) {
+                Image(systemName: "info.circle.fill")
+                    .foregroundColor(.blue)
+                    .font(.body)
+                Text("Deleted videos move to Recently Deleted and can be recovered for up to 30 days.")
+                    .font(.caption)
+                    .foregroundColor(.primary)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.blue.opacity(0.1))
+            )
+
             actionButtons
         }
     }
@@ -355,7 +369,6 @@ struct CompressQualitySelectionView: View {
             case .onStart:
                 print("Compression started")
             case .onSuccess(let url):
-//                onDataChanged?()
                 DispatchQueue.main.async {
                     self.compressedVideoURL = url
                 }
@@ -450,3 +463,24 @@ struct CompressedVideoPlayerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
 }
 
+
+
+
+
+
+
+// MARK: - Preview
+#Preview("Compress Quality Selection") {
+    
+    let asset = AVAsset(url: URL(fileURLWithPath: ""))
+    let compressor = LightCompressor(quality: .medium, asset: asset)
+    compressor.destinationURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("preview.mp4")
+    let model = CompressVideoModel(phAsset: PHAsset(), avAsset: asset, originalSize: 245_000_000, compressor: compressor)
+    let viewModel = CompressQualitySelectionViewModel(compressAsset: model)
+
+    return NavigationStack {
+        CompressQualitySelectionView(viewModel: viewModel)
+            .navigationTitle("Compress Videos")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
