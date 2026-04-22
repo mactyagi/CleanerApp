@@ -48,7 +48,11 @@ struct HomeNavigationView: View {
         case .compress:
             CompressorDetailView()
         case .deviceHealth(let tab):
-            DeviceHealthView(initialTab: tab, homeViewModel: homeViewModel)
+            DeviceHealthView(initialTab: tab, homeViewModel: homeViewModel, path: $path)
+        case .speedTest:
+            SpeedTestView()
+        case .storageDetail:
+            StorageDetailView(homeViewModel: homeViewModel, path: $path)
         }
 
     }
@@ -125,6 +129,8 @@ enum HomeDestination: Hashable {
     case calendar
     case compress
     case deviceHealth(DeviceHealthTab)
+    case speedTest
+    case storageDetail
 }
 
 // MARK: - Home Screen View
@@ -137,7 +143,12 @@ struct HomeScreen: View {
         ScrollView {
             VStack(spacing: 16) {
                 // Storage Section (Design 4 Style)
-                storageCard
+                Button {
+                    path.append(HomeDestination.storageDetail)
+                } label: {
+                    storageCard
+                }
+                .buttonStyle(.plain)
 
                 // Device Info Row
                 deviceInfoRow
@@ -259,7 +270,7 @@ struct HomeScreen: View {
                 deviceInfoCard(
                     icon: "memorychip",
                     title: "RAM",
-                    value: viewModel.availableRAM.formatBytes(),
+                    value: viewModel.usedRAM.formatBytes(),
                     color: .indigo
                 )
             }

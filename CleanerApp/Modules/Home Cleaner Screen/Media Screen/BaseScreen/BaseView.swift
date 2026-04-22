@@ -44,45 +44,44 @@ struct BaseView: View {
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        // Header
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(viewModel.type.rawValue)
-                                .font(.largeTitle.bold())
-                            Text(viewModel.sizeLabel)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.horizontal)
+                        // Size subtitle
+                        Text(viewModel.sizeLabel)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal)
 
                         // Grouped Sections
                         ForEach(viewModel.assetRows.indices, id: \.self) { section in
                             VStack(alignment: .leading, spacing: 8) {
                                 // Section Header
-                                if viewModel.groupType != .other {
-                                    HStack {
+                                HStack {
+                                    if viewModel.groupType == .other {
+                                        Text("\(viewModel.assetRows[section].count) items")
+                                            .font(.headline)
+                                    } else {
                                         Text("\(viewModel.groupType.rawValue.capitalized): \(viewModel.assetRows[section].count)")
                                             .font(.headline)
-                                        Spacer()
-                                        Button(action: {
-                                            toggleSelectAllInSection(section)
-                                        }) {
-                                            Text(isAllSelectedInSection(section) ? "Deselect All" : "Select All")
-                                                .font(.subheadline.weight(.medium))
-                                                .foregroundColor(isAllSelectedInSection(section) ? .red : .blue)
-                                                .padding(.horizontal, 14)
-                                                .padding(.vertical, 8)
-                                                .background(
-                                                    Capsule()
-                                                        .fill(isAllSelectedInSection(section) ? Color.red.opacity(0.1) : Color.blue.opacity(0.1))
-                                                )
-                                        }
                                     }
-                                    .padding(.horizontal)
+                                    Spacer()
+                                    Button(action: {
+                                        toggleSelectAllInSection(section)
+                                    }) {
+                                        Text(isAllSelectedInSection(section) ? "Deselect All" : "Select All")
+                                            .font(.subheadline.weight(.medium))
+                                            .foregroundColor(isAllSelectedInSection(section) ? .red : .blue)
+                                            .padding(.horizontal, 14)
+                                            .padding(.vertical, 8)
+                                            .background(
+                                                Capsule()
+                                                    .fill(isAllSelectedInSection(section) ? Color.red.opacity(0.1) : Color.blue.opacity(0.1))
+                                            )
+                                    }
                                 }
+                                .padding(.horizontal)
 
                                 // Photos in section
                                 if viewModel.groupType == .other {
-                                    SwipeCardPhotoView(
+                                    VerticalGridSectionView(
                                         assets: viewModel.assetRows[section],
                                         section: section,
                                         selectedIndexPaths: $selectedIndexPaths,
@@ -111,7 +110,6 @@ struct BaseView: View {
                             .padding(.horizontal)
                         }
                     }
-                    .padding(.top)
                     .padding(.bottom, 100)
                 }
 
@@ -268,331 +266,53 @@ struct PhotoSectionView: View {
     }
 }
 
-// MARK: - Swipe Card View (For "Other" Photos - Tinder Style)
-struct SwipeCardPhotoView: View {
+
+// MARK: - Vertical Grid Section View (2 columns, for "other" group)
+struct VerticalGridSectionView: View {
     let assets: [DBAsset]
     let section: Int
     @Binding var selectedIndexPaths: Set<IndexPath>
     var onPreview: (Int) -> Void
 
-    @State private var currentIndex: Int = 0
-    @State private var offset: CGSize = .zero
-    @State private var rotation: Double = 0
+    private let spacing: CGFloat = 8
+    private let horizontalPadding: CGFloat = 16
 
-    private var remainingCount: Int {
-        assets.count - currentIndex
+    private var cellSize: CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        let totalPadding = horizontalPadding * 2 + spacing
+        return floor((screenWidth - totalPadding) / 2)
     }
 
-    private var deletedCount: Int {
-        selectedIndexPaths.filter { $0.section == section }.count
-    }
+    private let columns = [
+        GridItem(.flexible(), spacing: 8),
+        GridItem(.flexible(), spacing: 8)
+    ]
 
     var body: some View {
-        VStack(spacing: 16) {
-            // Progress info
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(currentIndex) / \(assets.count)")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Text("\(deletedCount) marked for deletion")
-                        .font(.system(size: 12))
-                        .foregroundColor(.red)
-                }
+        LazyVGrid(columns: columns, spacing: spacing) {
+            ForEach(assets.indices, id: \.self) { row in
+                let indexPath = IndexPath(row: row, section: section)
+                let isSelected = selectedIndexPaths.contains(indexPath)
 
-                Spacer()
-
-                if currentIndex > 0 {
-                    Button(action: undoLast) {
-                        HStack(spacing: 4) {
-                            Image(systemName: "arrow.uturn.backward")
-                            Text("Undo")
+                BasePhotoCell(
+                    asset: assets[row],
+                    isSelected: isSelected,
+                    isFirst: false,
+                    size: cellSize,
+                    showSizeLabel: true,
+                    onSelect: {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        if selectedIndexPaths.contains(indexPath) {
+                            selectedIndexPaths.remove(indexPath)
+                        } else {
+                            selectedIndexPaths.insert(indexPath)
                         }
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.blue)
-                    }
-                }
-            }
-            .padding(.horizontal)
-
-            if currentIndex < assets.count {
-                // Card stack
-                ZStack {
-                    // Background cards (show next 2)
-                    ForEach(0..<min(3, assets.count - currentIndex), id: \.self) { index in
-                        let cardIndex = currentIndex + (2 - index)
-                        if cardIndex < assets.count && cardIndex > currentIndex {
-                            SwipeCard(
-                                asset: assets[cardIndex],
-                                onPreview: { onPreview(cardIndex) }
-                            )
-                            .scaleEffect(1 - CGFloat(2 - index) * 0.05)
-                            .offset(y: CGFloat(2 - index) * 8)
-                            .allowsHitTesting(false)
-                        }
-                    }
-
-                    // Top card (interactive)
-                    SwipeCard(
-                        asset: assets[currentIndex],
-                        onPreview: { onPreview(currentIndex) }
-                    )
-                    .offset(offset)
-                    .rotationEffect(.degrees(rotation))
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                offset = value.translation
-                                rotation = Double(value.translation.width / 20)
-                            }
-                            .onEnded { value in
-                                handleSwipeEnd(value: value)
-                            }
-                    )
-                    .overlay(swipeOverlay)
-                }
-                .frame(height: 400)
-
-                // Action buttons
-                HStack(spacing: 40) {
-                    // Delete button (swipe left)
-                    Button(action: { swipeLeft() }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.red.opacity(0.1))
-                                .frame(width: 64, height: 64)
-                            Circle()
-                                .stroke(Color.red, lineWidth: 2)
-                                .frame(width: 64, height: 64)
-                            Image(systemName: "trash.fill")
-                                .font(.system(size: 24))
-                                .foregroundColor(.red)
-                        }
-                    }
-
-                    // Preview button
-                    Button(action: { onPreview(currentIndex) }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.blue.opacity(0.1))
-                                .frame(width: 50, height: 50)
-                            Image(systemName: "eye.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(.blue)
-                        }
-                    }
-
-                    // Keep button (swipe right)
-                    Button(action: { swipeRight() }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.green.opacity(0.1))
-                                .frame(width: 64, height: 64)
-                            Circle()
-                                .stroke(Color.green, lineWidth: 2)
-                                .frame(width: 64, height: 64)
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.green)
-                        }
-                    }
-                }
-                .padding(.top, 8)
-
-                // Instructions
-                HStack(spacing: 40) {
-                    Text("Delete")
-                        .font(.system(size: 12))
-                        .foregroundColor(.red)
-                    Spacer()
-                    Text("Keep")
-                        .font(.system(size: 12))
-                        .foregroundColor(.green)
-                }
-                .padding(.horizontal, 50)
-
-            } else {
-                // All done
-                VStack(spacing: 16) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.green)
-                    Text("All Done!")
-                        .font(.title2.bold())
-                    Text("\(deletedCount) photos marked for deletion")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-
-                    Button(action: resetCards) {
-                        Text("Review Again")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 12)
-                            .background(Capsule().stroke(Color.blue, lineWidth: 1))
-                    }
-                    .padding(.top, 8)
-                }
-                .frame(height: 400)
-            }
-        }
-        .padding(.vertical)
-    }
-
-    private var swipeOverlay: some View {
-        ZStack {
-            // Keep overlay (right swipe)
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.green, lineWidth: 4)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.green.opacity(0.2))
+                    },
+                    onPreview: { onPreview(row) }
                 )
-                .overlay(
-                    Text("KEEP")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.green)
-                        .rotationEffect(.degrees(-15))
-                )
-                .opacity(offset.width > 50 ? min(Double(offset.width - 50) / 100, 1) : 0)
-
-            // Delete overlay (left swipe)
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.red, lineWidth: 4)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.red.opacity(0.2))
-                )
-                .overlay(
-                    Text("DELETE")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.red)
-                        .rotationEffect(.degrees(15))
-                )
-                .opacity(offset.width < -50 ? min(Double(-offset.width - 50) / 100, 1) : 0)
-        }
-    }
-
-    private func handleSwipeEnd(value: DragGesture.Value) {
-        let threshold: CGFloat = 100
-
-        if value.translation.width > threshold {
-            swipeRight()
-        } else if value.translation.width < -threshold {
-            swipeLeft()
-        } else {
-            // Reset position
-            withAnimation(.spring()) {
-                offset = .zero
-                rotation = 0
             }
         }
-    }
-
-    private func swipeRight() {
-        // Keep - don't add to selection
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-
-        withAnimation(.easeOut(duration: 0.3)) {
-            offset = CGSize(width: 500, height: 0)
-            rotation = 15
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            currentIndex += 1
-            offset = .zero
-            rotation = 0
-        }
-    }
-
-    private func swipeLeft() {
-        // Delete - add to selection
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-
-        let indexPath = IndexPath(row: currentIndex, section: section)
-        selectedIndexPaths.insert(indexPath)
-
-        withAnimation(.easeOut(duration: 0.3)) {
-            offset = CGSize(width: -500, height: 0)
-            rotation = -15
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            currentIndex += 1
-            offset = .zero
-            rotation = 0
-        }
-    }
-
-    private func undoLast() {
-        guard currentIndex > 0 else { return }
-
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-
-        currentIndex -= 1
-        let indexPath = IndexPath(row: currentIndex, section: section)
-        selectedIndexPaths.remove(indexPath)
-    }
-
-    private func resetCards() {
-        currentIndex = 0
-        // Clear selections for this section
-        selectedIndexPaths = selectedIndexPaths.filter { $0.section != section }
-    }
-}
-
-// MARK: - Swipe Card
-struct SwipeCard: View {
-    let asset: DBAsset
-    var onPreview: () -> Void
-
-    @State private var image: UIImage?
-
-    var body: some View {
-        ZStack {
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 400)
-                    .clipped()
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(height: 400)
-                ProgressView()
-            }
-
-            // Preview button
-            VStack {
-                HStack {
-                    Spacer()
-                    Button(action: onPreview) {
-                        Image(systemName: "arrow.up.left.and.arrow.down.right")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.white)
-                            .frame(width: 40, height: 40)
-                            .background(Circle().fill(Color.black.opacity(0.5)))
-                    }
-                    .padding(12)
-                }
-                Spacer()
-            }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
-        .padding(.horizontal, 20)
-        .onAppear { loadImage() }
-    }
-
-    private func loadImage() {
-        asset.getPHAsset()?.getFullImage { img in
-            DispatchQueue.main.async { self.image = img }
-        }
+        .padding(.horizontal, horizontalPadding)
     }
 }
 
@@ -602,10 +322,12 @@ struct BasePhotoCell: View {
     let isSelected: Bool
     let isFirst: Bool
     var size: CGFloat = 150
+    var showSizeLabel: Bool = false
     var onSelect: () -> Void
     var onPreview: () -> Void
 
     @State private var image: UIImage?
+    @State private var isCompressed: Bool = false
 
     var body: some View {
         ZStack {
@@ -627,7 +349,7 @@ struct BasePhotoCell: View {
             .onTapGesture { onSelect() }
 
             VStack {
-                // Top row: Best badge on left, Preview button on right
+                // Top row: Best/Compressed badge on left, Preview button on right
                 HStack {
                     // Best badge on top left
                     if isFirst {
@@ -655,8 +377,18 @@ struct BasePhotoCell: View {
 
                 Spacer()
 
-                // Bottom row: Selection checkbox on right
+                // Bottom row: Size label on left, checkbox on right
                 HStack {
+                    if showSizeLabel {
+                        Text(asset.size.convertToFileString())
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 3)
+                            .background(Color.black.opacity(0.5))
+                            .cornerRadius(4)
+                    }
+
                     Spacer()
 
                     Button(action: onSelect) {
@@ -691,8 +423,13 @@ struct BasePhotoCell: View {
     }
 
     private func loadImage() {
-        asset.getPHAsset()?.getImage { img in
+        guard let phAsset = asset.getPHAsset() else { return }
+        phAsset.getImage { img in
             DispatchQueue.main.async { self.image = img }
+        }
+        DispatchQueue.global(qos: .utility).async {
+            let compressed = asset.isCompressed
+            DispatchQueue.main.async { self.isCompressed = compressed }
         }
     }
 }

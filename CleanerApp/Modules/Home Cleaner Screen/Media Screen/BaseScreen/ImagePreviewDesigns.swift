@@ -20,6 +20,7 @@ struct ImagePreviewView: View {
 
     @State private var currentIndex: Int
     @State private var dragOffset: CGFloat = 0
+    @State private var isCurrentCompressed = false
 
     init(assets: [DBAsset], initialIndex: Int, selectedIndexPaths: Binding<Set<IndexPath>>, section: Int, groupType: PHAssetGroupType, isPresented: Binding<Bool>) {
         self.assets = assets
@@ -108,12 +109,13 @@ struct ImagePreviewView: View {
 
     // MARK: - Photo Badge
     private var photoBadge: some View {
-        HStack {
+        HStack(alignment: .center) {
             if isBestPhoto {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark.seal.fill")
-                        .font(.system(size: 22))
+                        .font(.system(size: 20))
                         .foregroundColor(.blue)
+                        .frame(width: 24, height: 24)
 
                     Text("Best Result")
                         .font(.system(size: 16, weight: .semibold))
@@ -122,8 +124,9 @@ struct ImagePreviewView: View {
             } else if isSelected(currentIndex) {
                 HStack(spacing: 8) {
                     Image(systemName: "trash.circle.fill")
-                        .font(.system(size: 22))
+                        .font(.system(size: 20))
                         .foregroundColor(.red)
+                        .frame(width: 24, height: 24)
 
                     Text("Marked for Deletion")
                         .font(.system(size: 16, weight: .semibold))
@@ -135,6 +138,7 @@ struct ImagePreviewView: View {
                     Image(systemName: isVideoAsset ? "video" : "photo")
                         .font(.system(size: 18))
                         .foregroundColor(.secondary)
+                        .frame(width: 24, height: 24)
 
                     Text(isVideoAsset ? "Video \(currentIndex + 1)" : "Photo \(currentIndex + 1)")
                         .font(.system(size: 16, weight: .medium))
@@ -143,9 +147,28 @@ struct ImagePreviewView: View {
             }
 
             Spacer()
+
+            // Compressed tag — top right, aligned with badge
+            if isCurrentCompressed {
+                Text("Compressed")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Capsule().fill(Color.green))
+            }
         }
+        .frame(height: 28)
         .padding(.horizontal, 24)
-        .frame(height: 30)
+        .onChange(of: currentIndex) { _ in checkCompressed() }
+        .onAppear { checkCompressed() }
+    }
+
+    private func checkCompressed() {
+        DispatchQueue.global(qos: .utility).async {
+            let compressed = assets[currentIndex].isCompressed
+            DispatchQueue.main.async { isCurrentCompressed = compressed }
+        }
     }
 
     // MARK: - Main Photo
@@ -161,11 +184,20 @@ struct ImagePreviewView: View {
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
 
-    // MARK: - Selection Button
+    // MARK: - Selection Row (size left, ring center-right, compressed right)
     private var selectionButton: some View {
         HStack {
+            // File size — left most
+            Text(assets[currentIndex].size.convertToFileString())
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(.white)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(Capsule().fill(Color.blue))
+
             Spacer()
 
+            // Selection ring
             Button(action: { toggleSelection(currentIndex) }) {
                 ZStack {
                     if isSelected(currentIndex) {

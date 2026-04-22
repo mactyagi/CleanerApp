@@ -272,16 +272,19 @@ class DeviceHealthViewModel: ObservableObject {
             self.dataReceived = totalReceived
         }
     }
+
 }
 
 // MARK: - Device Health View
 struct DeviceHealthView: View {
     @StateObject private var viewModel: DeviceHealthViewModel
     @ObservedObject var homeViewModel: HomeScreenViewModel
+    @Binding var path: NavigationPath
 
-    init(initialTab: DeviceHealthTab, homeViewModel: HomeScreenViewModel) {
+    init(initialTab: DeviceHealthTab, homeViewModel: HomeScreenViewModel, path: Binding<NavigationPath>) {
         _viewModel = StateObject(wrappedValue: DeviceHealthViewModel(initialTab: initialTab))
         self.homeViewModel = homeViewModel
+        self._path = path
     }
 
     var body: some View {
@@ -431,16 +434,10 @@ struct DeviceHealthView: View {
                 infoRow(icon: "cpu", label: "Processor", value: viewModel.processorInfo, iconColor: .purple)
             }
 
-            // Thermal & Battery Card
+            // Thermal & System Card
             infoCard {
                 infoRow(icon: "thermometer.medium", label: "Thermal State",
                         value: thermalStateText, iconColor: thermalStateColor)
-                cardDivider()
-                infoRow(icon: "battery.75percent", label: "Battery",
-                        value: batteryText, iconColor: batteryColor)
-                cardDivider()
-                infoRow(icon: "bolt.fill", label: "Charging",
-                        value: chargingText, iconColor: .orange)
                 cardDivider()
                 infoRow(icon: "leaf.fill", label: "Low Power Mode",
                         value: viewModel.isLowPowerMode ? "On" : "Off",
@@ -610,9 +607,6 @@ struct DeviceHealthView: View {
                 cardDivider()
                 infoRow(icon: "wifi.circle", label: "WiFi SSID",
                         value: viewModel.wifiSSID, iconColor: .teal)
-                cardDivider()
-                infoRow(icon: "antenna.radiowaves.left.and.right", label: "Carrier",
-                        value: viewModel.carrierName, iconColor: .teal)
             }
 
             // Details Card
@@ -636,6 +630,26 @@ struct DeviceHealthView: View {
                 infoRow(icon: "arrow.down.circle.fill", label: "Data Received",
                         value: viewModel.dataReceived.formatBytes(), iconColor: .green)
             }
+
+            // Speed Test Navigation Button
+            Button {
+                path.append(HomeDestination.speedTest)
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "speedometer")
+                    Text("Speed Test")
+                        .fontWeight(.semibold)
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+                .background(
+                    Capsule()
+                        .fill(Color.teal)
+                        .shadow(color: .teal.opacity(0.3), radius: 8, x: 0, y: 4)
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }
@@ -643,6 +657,6 @@ struct DeviceHealthView: View {
 // MARK: - Preview
 #Preview {
     NavigationStack {
-        DeviceHealthView(initialTab: .cpu, homeViewModel: HomeScreenViewModel())
+        DeviceHealthView(initialTab: .cpu, homeViewModel: HomeScreenViewModel(), path: .constant(NavigationPath()))
     }
 }

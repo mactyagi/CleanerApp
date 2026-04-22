@@ -70,7 +70,14 @@ public class DBAsset: NSManagedObject {
 }
 
 extension DBAsset{
-    
+
+    var isCompressed: Bool {
+        guard let phAsset = getPHAsset() else { return false }
+        let resources = PHAssetResource.assetResources(for: phAsset)
+        guard let filename = resources.first?.originalFilename else { return false }
+        return filename.localizedCaseInsensitiveContains("compress")
+    }
+
     func getPHAsset() -> PHAsset? {
         let fetchOptions = PHFetchOptions()
         guard let localIdentifier = self.assetId else { 

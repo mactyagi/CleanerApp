@@ -75,11 +75,11 @@ struct BaseViewSwiftUI: View {
             }
         )
         .navigationTitle(type.rawValue)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             if !viewModelWrapper.viewModel.assetRows.isEmpty {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(viewModelWrapper.viewModel.isAllSelected ? "Deselect All" : "Select All") {
+                    Button(action: {
                         viewModelWrapper.viewModel.isAllSelected.toggle()
                         if viewModelWrapper.viewModel.isAllSelected {
                             viewModelWrapper.viewModel.selectAll()
@@ -87,6 +87,9 @@ struct BaseViewSwiftUI: View {
                             viewModelWrapper.viewModel.deselectAll()
                         }
                         selectedIndexPaths = viewModelWrapper.viewModel.selectedIndexPath
+                    }) {
+                        Text(viewModelWrapper.viewModel.isAllSelected ? "Deselect All" : "Select All")
+                            .font(.system(size: 15, weight: .medium))
                     }
                 }
             }
@@ -154,6 +157,7 @@ struct OtherPhotosSwiftUI: View {
     @State private var selectedIndexPaths: Set<IndexPath> = []
     @State private var isLoading = true
     @State private var showDeleteAlert = false
+    @State private var previewTarget: PreviewTarget?
     @Environment(\.dismiss) private var dismiss
     
     private var selectedCount: Int {
@@ -165,6 +169,10 @@ struct OtherPhotosSwiftUI: View {
             guard indexPath.row < assets.count else { return sum }
             return sum + assets[indexPath.row].size
         }
+    }
+
+    private var totalSize: Int64 {
+        assets.reduce(0) { $0 + $1.size }
     }
     
     var body: some View {
@@ -181,11 +189,41 @@ struct OtherPhotosSwiftUI: View {
                         .foregroundColor(.secondary)
                 }
             } else {
-                OtherPhotosSwipeContentView(
-                    assets: assets,
-                    selectedIndexPaths: $selectedIndexPaths,
-                    section: 0
-                )
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        // Size subtitle
+                        Text("Photos: \(assets.count) • \(totalSize.formatBytes())")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal)
+
+                        // 2-column vertical grid
+                        VerticalGridSectionView(
+                            assets: assets,
+                            section: 0,
+                            selectedIndexPaths: $selectedIndexPaths,
+                            onPreview: { row in
+                                previewTarget = PreviewTarget(section: 0, index: row)
+                            }
+                        )
+                    }
+                    .padding(.bottom, 100)
+                }
+                .fullScreenCover(item: $previewTarget) { target in
+                    if target.index < assets.count {
+                        ImagePreviewView(
+                            assets: assets,
+                            initialIndex: target.index,
+                            selectedIndexPaths: $selectedIndexPaths,
+                            section: 0,
+                            groupType: .other,
+                            isPresented: Binding(
+                                get: { previewTarget != nil },
+                                set: { if !$0 { previewTarget = nil } }
+                            )
+                        )
+                    }
+                }
             }
             
             // Delete button
@@ -210,7 +248,17 @@ struct OtherPhotosSwiftUI: View {
         }
         .animation(.spring(), value: selectedCount)
         .navigationTitle(cellType.rawValue)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if !assets.isEmpty {
+                    Button(action: toggleSelectAll) {
+                        Text(isAllSelected ? "Deselect All" : "Select All")
+                            .font(.system(size: 15, weight: .medium))
+                    }
+                }
+            }
+        }
         .alert("Delete Photos", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 deleteSelectedPhotos()
@@ -224,6 +272,27 @@ struct OtherPhotosSwiftUI: View {
         }
     }
     
+    private var isAllSelected: Bool {
+        guard !assets.isEmpty else { return false }
+        for row in 0..<assets.count {
+            if !selectedIndexPaths.contains(IndexPath(row: row, section: 0)) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private func toggleSelectAll() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        if isAllSelected {
+            selectedIndexPaths.removeAll()
+        } else {
+            for row in 0..<assets.count {
+                selectedIndexPaths.insert(IndexPath(row: row, section: 0))
+            }
+        }
+    }
+
     private func loadAssets() {
         isLoading = true
         DispatchQueue.global(qos: .userInitiated).async {
@@ -258,274 +327,5 @@ struct OtherPhotosSwiftUI: View {
                 }
             }
         }
-    }
-}
-
-// MARK: - Other Photos Swipe Content View
-struct OtherPhotosSwipeContentView: View {
-    let assets: [DBAsset]
-    @Binding var selectedIndexPaths: Set<IndexPath>
-    let section: Int
-    
-    @State private var currentIndex: Int = 0
-    @State private var offset: CGSize = .zero
-    @State private var showPreview = false
-    @State private var previewIndex = 0
-    
-    private var deletedCount: Int {
-        selectedIndexPaths.filter { $0.section == section }.count
-    }
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            // Progress info
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(currentIndex) / \(assets.count)")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Text("\(deletedCount) marked for deletion")
-                        .font(.system(size: 12))
-                        .foregroundColor(.red)
-                }
-                
-                Spacer()
-                
-                if currentIndex > 0 {
-                    Button(action: undoLast) {
-                        HStack(spacing: 4) {
-                            Image(systemName: "arrow.uturn.backward")
-                            Text("Undo")
-                        }
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.blue)
-                    }
-                }
-            }
-            .padding(.horizontal)
-            
-            if currentIndex < assets.count {
-                // Card stack
-                ZStack {
-                    ForEach(0..<min(3, assets.count - currentIndex), id: \.self) { index in
-                        let cardIndex = currentIndex + (2 - index)
-                        if cardIndex < assets.count && cardIndex > currentIndex {
-                            SwipeCard(
-                                asset: assets[cardIndex],
-                                onPreview: {
-                                    previewIndex = cardIndex
-                                    showPreview = true
-                                }
-                            )
-                            .scaleEffect(1 - CGFloat(2 - index) * 0.05)
-                            .offset(y: CGFloat(2 - index) * 8)
-                            .allowsHitTesting(false)
-                        }
-                    }
-                    
-                    SwipeCard(
-                        asset: assets[currentIndex],
-                        onPreview: {
-                            previewIndex = currentIndex
-                            showPreview = true
-                        }
-                    )
-                    .offset(offset)
-                    .rotationEffect(.degrees(Double(offset.width / 20)))
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                offset = value.translation
-                            }
-                            .onEnded { value in
-                                handleSwipeEnd(value: value)
-                            }
-                    )
-                    .overlay(swipeOverlay)
-                }
-                .frame(height: 400)
-                
-                // Action buttons
-                HStack(spacing: 40) {
-                    Button(action: swipeLeft) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.red.opacity(0.1))
-                                .frame(width: 64, height: 64)
-                            Circle()
-                                .stroke(Color.red, lineWidth: 2)
-                                .frame(width: 64, height: 64)
-                            Image(systemName: "trash.fill")
-                                .font(.system(size: 24))
-                                .foregroundColor(.red)
-                        }
-                    }
-                    
-                    Button(action: {
-                        previewIndex = currentIndex
-                        showPreview = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.blue.opacity(0.1))
-                                .frame(width: 50, height: 50)
-                            Image(systemName: "eye.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(.blue)
-                        }
-                    }
-                    
-                    Button(action: swipeRight) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.green.opacity(0.1))
-                                .frame(width: 64, height: 64)
-                            Circle()
-                                .stroke(Color.green, lineWidth: 2)
-                                .frame(width: 64, height: 64)
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.green)
-                        }
-                    }
-                }
-                .padding(.top, 8)
-                
-                HStack(spacing: 40) {
-                    Text("Delete")
-                        .font(.system(size: 12))
-                        .foregroundColor(.red)
-                    Spacer()
-                    Text("Keep")
-                        .font(.system(size: 12))
-                        .foregroundColor(.green)
-                }
-                .padding(.horizontal, 50)
-                
-            } else {
-                VStack(spacing: 16) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.green)
-                    Text("All Done!")
-                        .font(.title2.bold())
-                    Text("\(deletedCount) photos marked for deletion")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
-                    Button(action: resetCards) {
-                        Text("Review Again")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 12)
-                            .background(Capsule().stroke(Color.blue, lineWidth: 1))
-                    }
-                    .padding(.top, 8)
-                }
-                .frame(height: 400)
-            }
-            
-            Spacer()
-        }
-        .padding(.vertical)
-        .fullScreenCover(isPresented: $showPreview) {
-            if previewIndex < assets.count {
-                PhotoPreviewView(asset: assets[previewIndex], isPresented: $showPreview)
-            }
-        }
-    }
-    
-    private var swipeOverlay: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.green, lineWidth: 4)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.green.opacity(0.2))
-                )
-                .overlay(
-                    Text("KEEP")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.green)
-                        .rotationEffect(.degrees(-15))
-                )
-                .opacity(offset.width > 50 ? min(Double(offset.width - 50) / 100, 1) : 0)
-            
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.red, lineWidth: 4)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.red.opacity(0.2))
-                )
-                .overlay(
-                    Text("DELETE")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.red)
-                        .rotationEffect(.degrees(15))
-                )
-                .opacity(offset.width < -50 ? min(Double(-offset.width - 50) / 100, 1) : 0)
-        }
-    }
-    
-    private func handleSwipeEnd(value: DragGesture.Value) {
-        let threshold: CGFloat = 100
-        
-        if value.translation.width > threshold {
-            swipeRight()
-        } else if value.translation.width < -threshold {
-            swipeLeft()
-        } else {
-            withAnimation(.spring()) {
-                offset = .zero
-            }
-        }
-    }
-    
-    private func swipeRight() {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-        
-        withAnimation(.easeOut(duration: 0.3)) {
-            offset = CGSize(width: 500, height: 0)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            currentIndex += 1
-            offset = .zero
-        }
-    }
-    
-    private func swipeLeft() {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-        
-        let indexPath = IndexPath(row: currentIndex, section: section)
-        selectedIndexPaths.insert(indexPath)
-        
-        withAnimation(.easeOut(duration: 0.3)) {
-            offset = CGSize(width: -500, height: 0)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            currentIndex += 1
-            offset = .zero
-        }
-    }
-    
-    private func undoLast() {
-        guard currentIndex > 0 else { return }
-        
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-        
-        currentIndex -= 1
-        let indexPath = IndexPath(row: currentIndex, section: section)
-        selectedIndexPaths.remove(indexPath)
-    }
-    
-    private func resetCards() {
-        currentIndex = 0
-        selectedIndexPaths = selectedIndexPaths.filter { $0.section != section }
     }
 }
