@@ -76,6 +76,7 @@
 		DA0001022F0A700000C69C9B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0001012F0A700000C69C9B /* CalendarView.swift */; };
 		DA0001042F0A800000C69C9B /* CalendarDesignSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */; };
 		DA1234567890ABCDEF000004 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1234567890ABCDEF000003 /* HomeScreen.swift */; };
+		DA5B00022F18A00000C69C9B /* DeviceHealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B00012F18A00000C69C9B /* DeviceHealthView.swift */; };
 		DA3E00602F116D0000C69C9B /* CompressQualitySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00612F116D0000C69C9B /* CompressQualitySelectionView.swift */; };
 		DA3E00802F117B0000C69C9B /* VideoCompressorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00812F117B0000C69C9B /* VideoCompressorView.swift */; };
 		DA3E00A02F12800000C69C9B /* MediaScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E00A12F12800000C69C9B /* MediaScreenView.swift */; };
@@ -147,6 +148,7 @@
 		DA0001012F0A700000C69C9B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		DA0001032F0A800000C69C9B /* CalendarDesignSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDesignSelector.swift; sourceTree = "<group>"; };
 		DA1234567890ABCDEF000003 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		DA5B00012F18A00000C69C9B /* DeviceHealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHealthView.swift; sourceTree = "<group>"; };
 		DA3E00612F116D0000C69C9B /* CompressQualitySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressQualitySelectionView.swift; sourceTree = "<group>"; };
 		DA3E00812F117B0000C69C9B /* VideoCompressorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressorView.swift; sourceTree = "<group>"; };
 		DA3E00A12F12800000C69C9B /* MediaScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaScreenView.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				DA1234567890ABCDEF000003 /* HomeScreen.swift */,
+				DA5B00012F18A00000C69C9B /* DeviceHealthView.swift */,
 				326709512B374ECC003515D4 /* HomeViewModel.swift */,
 				326709532B375D11003515D4 /* DeviceInfoManager.swift */,
 				32BD2A802B493E020039E85E /* Media Screen */,
@@ -698,6 +701,7 @@
 				326709542B375D11003515D4 /* DeviceInfoManager.swift in Sources */,
 				32B6C5AE2B01357600A691AE /* CompressQualitySelectionViewModel.swift in Sources */,
 				DA1234567890ABCDEF000004 /* HomeScreen.swift in Sources */,
+				DA5B00022F18A00000C69C9B /* DeviceHealthView.swift in Sources */,
 				32A2D08B2B3C0FD700C27BA0 /* GalleryManager.swift in Sources */,
 				326BF4BC2B9835B0003D8427 /* IncompleteContactViewModel.swift in Sources */,
 				327474C32B7AB8420034A587 /* EventsHandler.swift in Sources */,

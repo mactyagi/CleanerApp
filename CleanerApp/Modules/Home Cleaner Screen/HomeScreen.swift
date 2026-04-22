@@ -15,10 +15,11 @@ struct HomeNavigationView: View {
     @State var path: NavigationPath = NavigationPath()
     @StateObject private var contactsViewModel = OrganizeContactViewModel(contactStore: CNContactStore())
     @StateObject private var mediaViewModel = MediaViewModel()
-    
+    @StateObject private var homeViewModel = HomeScreenViewModel()
+
     var body: some View {
         NavigationStack(path: $path) {
-            HomeScreen(path: $path)
+            HomeScreen(viewModel: homeViewModel, path: $path)
             .navigationDestination(for: HomeDestination.self) { destination in
                 homeDestinationView(for: destination)
                     .toolbar(.hidden, for: .tabBar)
@@ -46,8 +47,10 @@ struct HomeNavigationView: View {
             CalendarDesignSelector()
         case .compress:
             CompressorDetailView()
+        case .deviceHealth(let tab):
+            DeviceHealthView(initialTab: tab, homeViewModel: homeViewModel)
         }
-    
+
     }
     
     @ViewBuilder
@@ -92,17 +95,41 @@ struct HomeNavigationView: View {
     }
 }
 
+// MARK: - Device Health Tab
+enum DeviceHealthTab: String, CaseIterable, Hashable {
+    case cpu = "CPU"
+    case ram = "RAM"
+    case network = "Network"
+
+    var icon: String {
+        switch self {
+        case .cpu: return "cpu"
+        case .ram: return "memorychip"
+        case .network: return "wifi"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .cpu: return .purple
+        case .ram: return .indigo
+        case .network: return .teal
+        }
+    }
+}
+
 // MARK: - Home Destinations
 enum HomeDestination: Hashable {
     case media
     case contacts
     case calendar
     case compress
+    case deviceHealth(DeviceHealthTab)
 }
 
 // MARK: - Home Screen View
 struct HomeScreen: View {
-    @StateObject private var viewModel = HomeScreenViewModel()
+    @ObservedObject var viewModel: HomeScreenViewModel
     @Binding var path: NavigationPath
     @State private var showPermissionAlert = false
     @State private var permissionAlertMessage = ""
@@ -147,6 +174,10 @@ struct HomeScreen: View {
         }
         .onAppear {
             viewModel.updateData()
+            viewModel.startDeviceInfoTimer()
+        }
+        .onDisappear {
+            viewModel.stopDeviceInfoTimer()
         }
     }
 
@@ -210,26 +241,41 @@ struct HomeScreen: View {
     // MARK: - Device Info Row
     private var deviceInfoRow: some View {
         HStack(spacing: 12) {
-            deviceInfoCard(
-                icon: "cpu",
-                title: "CPU",
-                value: "\(viewModel.cpuUsage)%",
-                color: .purple
-            )
+            Button {
+                path.append(HomeDestination.deviceHealth(.cpu))
+            } label: {
+                deviceInfoCard(
+                    icon: "cpu",
+                    title: "CPU",
+                    value: "\(viewModel.cpuUsage)%",
+                    color: .purple
+                )
+            }
+            .buttonStyle(.plain)
 
-            deviceInfoCard(
-                icon: "memorychip",
-                title: "RAM",
-                value: viewModel.availableRAM.formatBytes(),
-                color: .indigo
-            )
+            Button {
+                path.append(HomeDestination.deviceHealth(.ram))
+            } label: {
+                deviceInfoCard(
+                    icon: "memorychip",
+                    title: "RAM",
+                    value: viewModel.availableRAM.formatBytes(),
+                    color: .indigo
+                )
+            }
+            .buttonStyle(.plain)
 
-            deviceInfoCard(
-                icon: "wifi",
-                title: "Network",
-                value: "Active",
-                color: .teal
-            )
+            Button {
+                path.append(HomeDestination.deviceHealth(.network))
+            } label: {
+                deviceInfoCard(
+                    icon: "wifi",
+                    title: "Network",
+                    value: "Active",
+                    color: .teal
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 
@@ -501,6 +547,16 @@ struct HomeScreen: View {
 class HomeScreenViewModel: ObservableObject {
     @Published var availableRAM: UInt64 = 0
     @Published var cpuUsage: Int = 0
+    @Published var cpuUser: Double = 0
+    @Published var cpuSystem: Double = 0
+    @Published var cpuIdle: Double = 0
+    @Published var totalRAM: UInt64 = 0
+    @Published var usedRAM: UInt64 = 0
+    @Published var wiredMemory: UInt64 = 0
+    @Published var activeMemory: UInt64 = 0
+    @Published var inactiveMemory: UInt64 = 0
+    @Published var freeMemory: UInt64 = 0
+    @Published var appMemoryFootprint: UInt64 = 0
     @Published var eventsCount: Int?
     @Published var reminderCount: Int?
     @Published var contactsCount: Int?
@@ -510,6 +566,7 @@ class HomeScreenViewModel: ObservableObject {
     @Published var usedStorage: Int64 = 0
 
     let contactStore = CNContactStore()
+    private var deviceInfoTimer: Timer?
 
     // Storage breakdown (simulated percentages)
     var appsProgress: CGFloat { 0.35 }
@@ -531,6 +588,20 @@ class HomeScreenViewModel: ObservableObject {
         }
     }
 
+    func startDeviceInfoTimer() {
+        deviceInfoTimer?.invalidate()
+        deviceInfoTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+            DispatchQueue.global(qos: .userInteractive).async {
+                self?.getDeviceInfo()
+            }
+        }
+    }
+
+    func stopDeviceInfoTimer() {
+        deviceInfoTimer?.invalidate()
+        deviceInfoTimer = nil
+    }
+
     private func getStorageInfo() {
         let fileManager = FileManager.default
         guard let documentDirectory = try? fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else { return }
@@ -550,13 +621,28 @@ class HomeScreenViewModel: ObservableObject {
     }
 
     private func getDeviceInfo() {
+        let cpu = getCPUBreakdown()
+        let ram = getRAMBreakdown()
+        let footprint = getAppMemoryFootprint()
+
         DispatchQueue.main.async {
-            self.availableRAM = self.getAvailableRAM()
-            self.cpuUsage = Int.random(in: 15...35)
+            self.cpuUsage = cpu.total
+            self.cpuUser = cpu.user
+            self.cpuSystem = cpu.system
+            self.cpuIdle = cpu.idle
+
+            self.totalRAM = ProcessInfo.processInfo.physicalMemory
+            self.wiredMemory = ram.wired
+            self.activeMemory = ram.active
+            self.inactiveMemory = ram.inactive
+            self.freeMemory = ram.free
+            self.availableRAM = ram.free + ram.inactive
+            self.usedRAM = self.totalRAM - self.availableRAM
+            self.appMemoryFootprint = footprint
         }
     }
 
-    private func getAvailableRAM() -> UInt64 {
+    private func getRAMBreakdown() -> (wired: UInt64, active: UInt64, inactive: UInt64, free: UInt64) {
         var pagesize: vm_size_t = 0
         host_page_size(mach_host_self(), &pagesize)
 
@@ -569,12 +655,56 @@ class HomeScreenViewModel: ObservableObject {
             }
         }
 
-        if result == KERN_SUCCESS {
-            let freeMemory = UInt64(vmStats.free_count) * UInt64(pagesize)
-            let inactiveMemory = UInt64(vmStats.inactive_count) * UInt64(pagesize)
-            return freeMemory + inactiveMemory
+        guard result == KERN_SUCCESS else { return (0, 0, 0, 0) }
+        let ps = UInt64(pagesize)
+        return (
+            wired: UInt64(vmStats.wire_count) * ps,
+            active: UInt64(vmStats.active_count) * ps,
+            inactive: UInt64(vmStats.inactive_count) * ps,
+            free: UInt64(vmStats.free_count) * ps
+        )
+    }
+
+    private func getAppMemoryFootprint() -> UInt64 {
+        var info = task_vm_info_data_t()
+        var count = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<natural_t>.size)
+        let result = withUnsafeMutablePointer(to: &info) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
+                task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &count)
+            }
         }
-        return 0
+        return result == KERN_SUCCESS ? UInt64(info.phys_footprint) : 0
+    }
+
+    private func getCPUBreakdown() -> (total: Int, user: Double, system: Double, idle: Double) {
+        var cpuInfo: processor_info_array_t?
+        var numCPUInfo: mach_msg_type_number_t = 0
+        var numCPUs: natural_t = 0
+
+        let result = host_processor_info(mach_host_self(), PROCESSOR_CPU_LOAD_INFO, &numCPUs, &cpuInfo, &numCPUInfo)
+        guard result == KERN_SUCCESS, let info = cpuInfo else { return (0, 0, 0, 100) }
+
+        var totalUser: Double = 0
+        var totalSystem: Double = 0
+        var totalIdle: Double = 0
+        var totalNice: Double = 0
+
+        for i in 0..<Int(numCPUs) {
+            let offset = Int(CPU_STATE_MAX) * i
+            totalUser += Double(info[offset + Int(CPU_STATE_USER)])
+            totalSystem += Double(info[offset + Int(CPU_STATE_SYSTEM)])
+            totalIdle += Double(info[offset + Int(CPU_STATE_IDLE)])
+            totalNice += Double(info[offset + Int(CPU_STATE_NICE)])
+        }
+
+        let total = totalUser + totalSystem + totalIdle + totalNice
+        vm_deallocate(mach_task_self_, vm_address_t(bitPattern: info), vm_size_t(numCPUInfo) * vm_size_t(MemoryLayout<integer_t>.size))
+
+        guard total > 0 else { return (0, 0, 0, 100) }
+        let userPct = (totalUser / total) * 100
+        let systemPct = (totalSystem / total) * 100
+        let idlePct = (totalIdle / total) * 100
+        return (min(Int(userPct + systemPct), 100), userPct, systemPct, idlePct)
     }
 
     private func fetchPhotoAndVideosCountAndSize() {
@@ -629,6 +759,6 @@ class HomeScreenViewModel: ObservableObject {
 // MARK: - Preview
 #Preview {
     NavigationStack {
-        HomeScreen(path: .constant(NavigationPath()))
+        HomeScreen(viewModel: HomeScreenViewModel(), path: .constant(NavigationPath()))
     }
 }

@@ -9,13 +9,18 @@ import SwiftUI
 import Photos
 import Combine
 
+// MARK: - Preview Target (used by fullScreenCover item binding)
+struct PreviewTarget: Identifiable {
+    let id = UUID()
+    let section: Int
+    let index: Int
+}
+
 // MARK: - Base View (Production)
 struct BaseView: View {
     @ObservedObject var viewModelWrapper: BaseViewModelWrapper
     @Binding var selectedIndexPaths: Set<IndexPath>
-    @State private var showPreview = false
-    @State private var previewSection: Int = 0
-    @State private var previewIndex: Int = 0
+    @State private var previewTarget: PreviewTarget?
     var onDelete: (() -> Void)?
 
     private var viewModel: BaseViewModel { viewModelWrapper.viewModel }
@@ -82,9 +87,7 @@ struct BaseView: View {
                                         section: section,
                                         selectedIndexPaths: $selectedIndexPaths,
                                         onPreview: { row in
-                                            previewSection = section
-                                            previewIndex = row
-                                            showPreview = true
+                                            previewTarget = PreviewTarget(section: section, index: row)
                                         }
                                     )
                                 } else {
@@ -94,14 +97,13 @@ struct BaseView: View {
                                         groupType: viewModel.groupType,
                                         selectedIndexPaths: $selectedIndexPaths,
                                         onPreview: { row in
-                                            previewSection = section
-                                            previewIndex = row
-                                            showPreview = true
+                                            previewTarget = PreviewTarget(section: section, index: row)
                                         }
                                     )
                                 }
                             }
                             .padding(.vertical, 8)
+                            .contentShape(Rectangle())
                             .background(
                                 RoundedRectangle(cornerRadius: 16)
                                     .fill(Color(UIColor.secondarySystemGroupedBackground))
@@ -121,15 +123,18 @@ struct BaseView: View {
             }
         }
         .animation(.spring(), value: selectedCount)
-        .fullScreenCover(isPresented: $showPreview) {
-            if previewSection < viewModel.assetRows.count {
+        .fullScreenCover(item: $previewTarget) { target in
+            if target.section < viewModel.assetRows.count {
                 ImagePreviewView(
-                    assets: viewModel.assetRows[previewSection],
-                    initialIndex: previewIndex,
+                    assets: viewModel.assetRows[target.section],
+                    initialIndex: target.index,
                     selectedIndexPaths: $selectedIndexPaths,
-                    section: previewSection,
+                    section: target.section,
                     groupType: viewModel.groupType,
-                    isPresented: $showPreview
+                    isPresented: Binding(
+                        get: { previewTarget != nil },
+                        set: { if !$0 { previewTarget = nil } }
+                    )
                 )
             }
         }
@@ -604,17 +609,22 @@ struct BasePhotoCell: View {
 
     var body: some View {
         ZStack {
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: size, height: size)
-                    .clipped()
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(width: size, height: size)
+            // Background image — tapping anywhere on it selects/deselects
+            Group {
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: size, height: size)
+                        .clipped()
+                } else {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: size, height: size)
+                }
             }
+            .contentShape(Rectangle())
+            .onTapGesture { onSelect() }
 
             VStack {
                 // Top row: Best badge on left, Preview button on right
@@ -637,7 +647,7 @@ struct BasePhotoCell: View {
                         Image(systemName: "eye.fill")
                             .font(.system(size: 12))
                             .foregroundColor(.white)
-                            .padding(8)
+                            .padding(10)
                             .background(Circle().fill(Color.black.opacity(0.6)))
                     }
                 }
@@ -649,33 +659,34 @@ struct BasePhotoCell: View {
                 HStack {
                     Spacer()
 
-                    // Selection button - red with white checkmark when selected
-                    ZStack {
-                        Circle()
-                            .fill(isSelected ? Color.red : Color.black.opacity(0.4))
-                            .frame(width: 30, height: 30)
-
-                        if isSelected {
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(.white)
-                        } else {
+                    Button(action: onSelect) {
+                        ZStack {
                             Circle()
-                                .stroke(Color.white, lineWidth: 2)
-                                .frame(width: 24, height: 24)
+                                .fill(isSelected ? Color.red : Color.black.opacity(0.4))
+                                .frame(width: 30, height: 30)
+
+                            if isSelected {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.white)
+                            } else {
+                                Circle()
+                                    .stroke(Color.white, lineWidth: 2)
+                                    .frame(width: 24, height: 24)
+                            }
                         }
+                        .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
                     }
-                    .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
                 }
                 .padding(8)
             }
+            .allowsHitTesting(true)
         }
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(isSelected ? Color.red : Color.clear, lineWidth: 3)
         )
-        .onTapGesture { onSelect() }
         .onAppear { loadImage() }
     }
 

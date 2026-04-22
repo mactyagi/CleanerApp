@@ -4,7 +4,18 @@
       "mcp__claude_ai_Excalidraw__create_view",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git reset *)"
+      "Bash(git reset *)",
+      "Bash(xcodebuild -scheme CleanerApp -destination 'platform=iOS Simulator,name=iPhone 16 Pro' build)",
+      "Bash(xcodebuild -scheme CleanerApp -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.5' build)",
+      "Bash(grep:*)",
+      "Bash(ffprobe -v quiet -print_format json -show_format -show_streams '/Users/manukant.tyagi/Downloads/WhatsApp Video 2026-04-22 at 19.17.12.mp4')",
+      "Bash(brew list:*)",
+      "Bash(mdls \"/Users/manukant.tyagi/Downloads/WhatsApp Video 2026-04-22 at 19.17.12.mp4\")",
+      "Bash(ls -la /Users/manukant.tyagi/Desktop/CleanerApp/*.xcworkspace)",
+      "Bash(ls -la /Users/manukant.tyagi/Desktop/CleanerApp/*.xcodeproj)",
+      "WebSearch",
+      "Bash(xcodebuild -project CleanerApp.xcodeproj -scheme CleanerApp -destination 'platform=iOS Simulator,name=iPhone 16 Pro' build)",
+      "Bash(xcodebuild -project CleanerApp.xcodeproj -scheme CleanerApp -destination 'platform=iOS Simulator,id=F9E43A24-F2CD-44A9-B107-ED3867BF7FDA' build)"
     ]
   }
 }
