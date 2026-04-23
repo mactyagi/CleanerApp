@@ -39,7 +39,7 @@ struct ImagePreviewView: View {
     var body: some View {
         ZStack {
             // Background
-            Color(UIColor.systemBackground)
+            Color(UIColor.systemGroupedBackground)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -64,6 +64,7 @@ struct ImagePreviewView: View {
                 // Bottom Thumbnail Strip
                 thumbnailStrip
                     .padding(.bottom, 8)
+                    .frame(height: 88)
             }
         }
         .statusBarHidden(false)
@@ -222,7 +223,7 @@ struct ImagePreviewView: View {
     private var thumbnailStrip: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
+                LazyHStack(spacing: 10) {
                     ForEach(assets.indices, id: \.self) { index in
                         thumbnailItem(index: index)
                             .id(index)
@@ -236,12 +237,12 @@ struct ImagePreviewView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
             }
+//            .padding(.horizontal, 12)
             .background(
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(Color(UIColor.secondarySystemGroupedBackground))
+                RoundedRectangle(cornerRadius: 0)
+                    .fill(Color.offWhiteAndGray)
                     .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: -2)
             )
-            .padding(.horizontal, 12)
             .onChange(of: currentIndex) { newValue in
                 withAnimation(.easeInOut(duration: 0.25)) {
                     proxy.scrollTo(newValue, anchor: .center)
@@ -330,13 +331,13 @@ struct SmallThumbnail: View {
         }
         .frame(width: size, height: size)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .onAppear { loadImage() }
+        .task {
+            await loadImage()
+        }
     }
 
-    private func loadImage() {
-        asset.getPHAsset()?.getImage { img in
-            DispatchQueue.main.async { self.image = img }
-        }
+    private func loadImage() async  {
+        image =  await asset.getPHAsset()?.getImage()
     }
 }
 
@@ -349,9 +350,11 @@ struct FullImageView: View {
 
     var body: some View {
         // Color.clear fills the full page so layout never shifts when content loads
-        Color.clear
+        Color.offWhiteAndGray
             .overlay(contentView)
-            .onAppear { loadContent() }
+            .task {
+                await loadContent()
+            }
     }
 
     @ViewBuilder
@@ -359,12 +362,14 @@ struct FullImageView: View {
         if isVideo {
             if let avAsset = avAsset {
                 PreviewVideoPlayerView(avAsset: avAsset, isActive: isActive)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             } else {
                 ZStack {
                     if let image = image {
                         Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
                     ProgressView()
                         .tint(.secondary)
@@ -375,6 +380,7 @@ struct FullImageView: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             } else {
                 ProgressView()
                     .tint(.secondary)
@@ -382,21 +388,17 @@ struct FullImageView: View {
         }
     }
 
-    private func loadContent() {
+    private func loadContent() async {
         guard let phAsset = asset.getPHAsset() else { return }
 
         if phAsset.mediaType == .video {
             DispatchQueue.main.async { self.isVideo = true }
-            phAsset.getImage { img in
-                DispatchQueue.main.async { self.image = img }
-            }
-            phAsset.getAVAsset { asset in
-                DispatchQueue.main.async { self.avAsset = asset }
-            }
+            image = await phAsset.getImage()
+    
+            avAsset = await phAsset.getAVAsset()
+           
         } else {
-            phAsset.getFullImage { img in
-                DispatchQueue.main.async { self.image = img }
-            }
+            image = await phAsset.getFullImage()
         }
     }
 }
@@ -435,3 +437,17 @@ struct PreviewVideoPlayerView: UIViewControllerRepresentable {
         uiViewController.player = nil
     }
 }
+
+// MARK: - Preview
+#Preview("Image Preview") {
+    ImagePreviewView(
+        assets: [],
+        initialIndex: 0,
+        selectedIndexPaths: .constant([]),
+        section: 0,
+        groupType: .other,
+        isPresented: .constant(true)
+    )
+}
+
+

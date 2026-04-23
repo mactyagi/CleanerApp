@@ -77,6 +77,14 @@ extension DBAsset{
         guard let filename = resources.first?.originalFilename else { return false }
         return filename.localizedCaseInsensitiveContains("compress")
     }
+    
+    
+    func isCompressed(asset: PHAsset) -> Bool {
+        let resources = PHAssetResource.assetResources(for: asset)
+        guard let filename = resources.first?.originalFilename else { return false }
+        return filename.localizedCaseInsensitiveContains("compress")
+    }
+
 
     func getPHAsset() -> PHAsset? {
         let fetchOptions = PHFetchOptions()

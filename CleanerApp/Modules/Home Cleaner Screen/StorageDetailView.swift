@@ -252,7 +252,7 @@ struct StorageDetailView: View {
                                 .fill(Color.green)
                                 .frame(width: max(0, geo.size.width * CGFloat(Double(photosSize) / Double(total))))
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.purple)
+                                .fill(Color.orange)
                                 .frame(width: max(0, geo.size.width * CGFloat(Double(systemSize) / Double(total))))
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color.gray.opacity(0.3))
@@ -264,7 +264,7 @@ struct StorageDetailView: View {
                     HStack(spacing: 12) {
                         legendItem(color: .blue, label: "Apps")
                         legendItem(color: .green, label: "Media")
-                        legendItem(color: .purple, label: "System")
+                        legendItem(color: .orange, label: "Other")
                         legendItem(color: .gray.opacity(0.3), label: "Free")
                         Spacer()
                     }
@@ -277,9 +277,56 @@ struct StorageDetailView: View {
                 cardDivider()
                 storageRow(icon: "photo.fill", label: "Photos & Videos", size: photosSize, total: total, color: .green)
                 cardDivider()
-                storageRow(icon: "gear", label: "System", size: systemSize, total: total, color: .purple)
+                storageRow(icon: "gear", label: "Other", size: systemSize, total: total, color: .orange)
                 cardDivider()
                 storageRow(icon: "externaldrive.fill", label: "Free Space", size: free, total: total, color: .gray)
+            }
+
+            // Tips & Hidden Features
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Tips & Hidden Features")
+                    .font(.headline)
+                    .padding(.top, 4)
+
+                tipCard(icon: "photo.on.rectangle.angled",
+                        title: "Swipe to Clean Photos",
+                        description: "Open Photos cleaner and swipe left on any photo to quickly mark it for deletion — like Tinder for your gallery.",
+                        color: .green)
+
+                tipCard(icon: "video.badge.checkmark",
+                        title: "Compress Without Losing Quality",
+                        description: "Use the Video Compressor with 'Optimal' mode to reduce file size by 40% while keeping visual quality nearly identical.",
+                        color: .blue)
+
+                tipCard(icon: "person.2.badge.gearshape",
+                        title: "Merge Duplicate Contacts",
+                        description: "The Contacts cleaner finds duplicates automatically. Tap 'Merge All' to combine them in one tap.",
+                        color: .indigo)
+
+                tipCard(icon: "calendar.badge.clock",
+                        title: "Clean Old Calendar Events",
+                        description: "Past events from up to 4 years ago can pile up. The Calendar cleaner lets you bulk-delete them by year.",
+                        color: .pink)
+
+                tipCard(icon: "bolt.circle",
+                        title: "Boost RAM Instantly",
+                        description: "Go to Device Health → RAM tab and tap 'Boost Memory' to clear URL and image caches and free up RAM.",
+                        color: .purple)
+
+                tipCard(icon: "speedometer",
+                        title: "Built-in Speed Test",
+                        description: "Check your real download and upload speed from Network tab → Speed Test. It runs until speed stabilizes for accurate results.",
+                        color: .teal)
+
+                tipCard(icon: "trash.circle",
+                        title: "Clear App Caches",
+                        description: "Go to Storage → Cleanup tab and tap 'Clear App Caches' to remove cached data and free some space.",
+                        color: .red)
+
+                tipCard(icon: "iphone.radiowaves.left.and.right",
+                        title: "Check VPN & Network Details",
+                        description: "The Network tab in Device Health shows your IP address, WiFi name, and whether a VPN is active — useful for debugging connections.",
+                        color: .orange)
             }
         }
     }
@@ -305,6 +352,28 @@ struct StorageDetailView: View {
             .frame(height: 6)
         }
         .padding(.vertical, 4)
+    }
+
+    private func tipCard(icon: String, title: String, description: String, color: Color) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10).fill(color.opacity(0.12)).frame(width: 38, height: 38)
+                Image(systemName: icon).font(.system(size: 16)).foregroundColor(color)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline.bold())
+                Text(description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color("offWhiteAndGrayColor"))
+        .cornerRadius(14)
+        .shadow(color: .black.opacity(0.03), radius: 4, x: 0, y: 2)
     }
 
     // MARK: ─── Tab 2: Cleanup ───

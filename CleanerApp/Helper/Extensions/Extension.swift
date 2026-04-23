@@ -11,8 +11,9 @@ import UIKit
 import EventKit
 import SwiftUI
 //MARK: - PHAsset
-
 extension PHAsset{
+    
+    //TODO: - Need action to make it Async/await compatible
     func getAVAsset(comp: @escaping (_ avAsset: AVAsset?) -> ()){
         let manager = PHImageManager.default()
         let option = PHVideoRequestOptions()
@@ -26,6 +27,26 @@ extension PHAsset{
                 comp(nil)
             }
         }
+    }
+    
+    
+    func getAVAsset() async -> AVAsset? {
+        let manager = PHImageManager.default()
+        let option = PHVideoRequestOptions()
+//        option.isNetworkAccessAllowed = true
+        option.deliveryMode = PHVideoRequestOptionsDeliveryMode.highQualityFormat
+        
+        let (avAsset, videoAudio) = await withCheckedContinuation { continuation in
+            manager.requestAVAsset(forVideo: self, options: option) { avAsset, videoAudio, _ in
+                if let avAsset{
+                    continuation.resume(returning: (avAsset, videoAudio))
+                }else{
+                    logErrorString(errorString: "AVAsset not found", VCName: "PHAsset", functionName: #function, line: #line)
+                }
+            }
+        }
+        
+        return avAsset
     }
     
     static func findPHAssetByLocalIdentifier(localIdentifier: String) -> PHAsset? {
@@ -83,67 +104,61 @@ extension PHAsset{
         }
         return img
     }
+
     
-    func getImage(comp: @escaping(_ image: UIImage?) -> ()){
-        let manager = PHImageManager.default()
-        let requestOptions = PHImageRequestOptions()
-        let size = CGSize(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2)
-        requestOptions.isSynchronous = false
-        requestOptions.deliveryMode = .highQualityFormat
-        manager.requestImage(for: self, targetSize: size, contentMode: .aspectFill, options: requestOptions) { image, _ in
-            if image == nil{
-                logErrorString(errorString: "Can not get image from PHAsset by excaping", VCName: "PHAsset", functionName: #function, line: #line)
-            }
-        comp(image)
-        }
+    func getImage() async -> UIImage? {
+        let size = await CGSize(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2)
+         return await getImage(size: size)
     }
     
     
-    func loadSwiftUIImage(
-            targetSize: CGSize = CGSize(
-                width: UIScreen.main.bounds.width / 2,
-                height: UIScreen.main.bounds.width / 2
-            )
-        ) async -> Image? {
-
-            await withCheckedContinuation { continuation in
-                let manager = PHImageManager.default()
-                let options = PHImageRequestOptions()
-                options.isSynchronous = false
-                options.deliveryMode = .highQualityFormat
-
-                manager.requestImage(
-                    for: self,
-                    targetSize: targetSize,
-                    contentMode: .aspectFill,
-                    options: options
-                ) { uiImage, _ in
-                    if let uiImage {
-                        continuation.resume(returning: Image(uiImage: uiImage))
-                    } else {
-                        continuation.resume(returning: nil)
-                    }
+    private func getImage(size: CGSize) async -> UIImage? {
+        let manager = PHImageManager.default()
+        let requestOptions = PHImageRequestOptions()
+        let size = size
+        requestOptions.isSynchronous = false
+        requestOptions.deliveryMode = .highQualityFormat
+        
+        let img = await withCheckedContinuation { continuation in
+            manager.requestImage(for: self, targetSize: size, contentMode: .aspectFill, options: requestOptions) { image, _ in
+                if image == nil{
+                    logErrorString(errorString: "Can not get image from PHAsset by excaping", VCName: "PHAsset", functionName: #function, line: #line)
                 }
+                continuation.resume(returning: image)
             }
         }
+        return img
+    }
     
-    /// Fetches full resolution image for preview
-    func getFullImage(completion: @escaping (UIImage?) -> Void) {
+    
+    func getThumbnail() async -> UIImage? {
+        let size = await CGSize(width: UIScreen.main.bounds.width/4, height: UIScreen.main.bounds.width/4)
+         return await getImage(size: size)
+    }
+ 
+    
+    
+    func getFullImage() async -> UIImage? {
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = true
         
-        PHImageManager.default().requestImage(
-            for: self,
-            targetSize: PHImageManagerMaximumSize,
-            contentMode: .aspectFit,
-            options: options
-        ) { image, _ in
-            completion(image)
+        let image = await withCheckedContinuation { continuation in
+//            
+            PHImageManager.default().requestImageDataAndOrientation(for: self, options: options) { data, s, _, _ in
+                if let data {
+                    let image = UIImage(data: data)
+                    continuation.resume(returning: image)
+                }
+            }
         }
+        
+        return image
     }
 }
 
+
+//MARK: - UInt64
 
 extension UInt64 {
     func convertToFileString() -> String {
@@ -156,7 +171,17 @@ extension UInt64 {
         }
         return String(format: "%4.2f %@", convertedValue, tokens[multiplyFactor])
     }
+    
+    func formatBytes() -> String {
+        let byteCountFormatter = ByteCountFormatter()
+        byteCountFormatter.allowedUnits = [.useAll]
+        byteCountFormatter.countStyle = .file
+
+        return byteCountFormatter.string(fromByteCount: Int64(self))
+    }
 }
+
+//MARK: - Int64
 
 extension Int64 {
     func convertToFileString() -> String {
@@ -202,95 +227,7 @@ extension Int64 {
     }
 }
 
-
-extension UInt64{
-    func formatBytes() -> String {
-        let byteCountFormatter = ByteCountFormatter()
-        byteCountFormatter.allowedUnits = [.useAll]
-        byteCountFormatter.countStyle = .file
-
-        return byteCountFormatter.string(fromByteCount: Int64(self))
-    }
-}
-
-
-
-
-
-
-
-extension UIView{
-    func addBlurEffect(style: UIBlurEffect.Style, alpha: CGFloat){
-        let blurEffect = UIBlurEffect(style: style)
-        let bluredEffectView = UIVisualEffectView(effect: blurEffect)
-        bluredEffectView.frame = self.bounds
-        bluredEffectView.alpha = alpha
-        bluredEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.addSubview(bluredEffectView)
-    }
-    
-    func dropShadow() {
-        layer.masksToBounds = true
-        layer.shadowColor = UIColor.label.cgColor
-        layer.shadowOffset = CGSizeMake(0, 3)
-        layer.shadowOpacity = 1
-        layer.shadowRadius = 1
-    }
-    
-    func makeCornerRadiusCircle(){
-        layer.cornerRadius = bounds.height / 2
-    }
-    
-    func makeCornerRadiusFourthOfHeightOrWidth(){
-        layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 4 : bounds.height / 4
-    }
-    
-    func makeCornerRadiusEightOfHeightOrWidth(){
-        layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 8 : bounds.height / 8
-    }
-    
-    func makeCornerRadiusSixtenthOfHeightOrWidth(){
-//        layer.masksToBounds = true
-        layer.cornerRadius = bounds.width < bounds.height ? bounds.width / 16 : bounds.height / 16
-    }
-    
-    
-    
-    
-    
-    
-    func activityStartAnimating(activityColor: UIColor = .gray, backgroundColor: UIColor = .clear, style: UIActivityIndicatorView.Style = .medium) {
-        if viewWithTag(475647) != nil{ return }
-        let backgroundView = UIView()
-        backgroundView.frame = CGRect.init(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
-        backgroundView.backgroundColor = backgroundColor
-        backgroundView.tag = 475647
-        
-        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-        activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
-        activityIndicator.center = self.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = UIActivityIndicatorView.Style.large
-        activityIndicator.color = activityColor
-        activityIndicator.startAnimating()
-        self.isUserInteractionEnabled = false
-        
-        backgroundView.addSubview(activityIndicator)
-
-        self.addSubview(backgroundView)
-    }
-
-    func activityStopAnimating() {
-        if let background = viewWithTag(475647){
-            background.removeFromSuperview()
-        }
-        self.isUserInteractionEnabled = true
-    }
-}
-
-
-
-
+//MARK: - Date
 extension Date{
     func toString(formatType: DateFormats = .decode) -> String {
         let dateFormatter = DateFormatter()
@@ -321,69 +258,20 @@ extension Date{
     }
 }
 
+//MARK: - EKEvent
+
 extension EKEvent{
     var year: String {
         startDate.toString(formatType: .yyyy)
     }
 }
 
+//MARK: - EKReminder
 extension EKReminder{
     var year: String{
         (creationDate ?? Date()).toString(formatType: .yyyy)
     }
 }
-
-
-extension UICollectionView{
-    func configureCompositionalLayout(){
-        let mainItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/2)))
-        mainItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-        
-        
-        // second style
-        let horizontalPairItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1)))
-        horizontalPairItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 2, bottom: 2, trailing: 2)
-        
-        let horizontalPairGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1)), subitems: [horizontalPairItem, horizontalPairItem])
-//        horizontalPairGroup.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-
-        
-        let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(3/2)), subitems: [horizontalPairGroup, mainItem])
-        nestedGroup.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
-        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        headerItem.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 6, bottom: 0, trailing: 6)
-        
-        
-        let section = NSCollectionLayoutSection(group: nestedGroup)
-        section.boundarySupplementaryItems = [headerItem]
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        self.collectionViewLayout = layout
-    }
-}
-
-private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            // Configure your sections, including the section for the header
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50))
-            let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-            let section = NSCollectionLayoutSection(group: group)
-            section.boundarySupplementaryItems = [headerItem]
-
-            return section
-        }
-
-        return layout
-    }
-
 
 
 extension Notification.Name{
@@ -392,25 +280,9 @@ extension Notification.Name{
 }
 
 
-
+//MARK: - UIFont
 
 extension UIFont{
-//
-//    enum weightType: String {
-//        case ultraLightItalic = "Ultra Light Italic"
-//        case ultraLight = "Ultra Light"
-//        case regular = "Regular"
-//        case mediumItalic = "MediumItalic"
-//        case medium = "Medium"
-//        case italic = "Italic"
-//        case heavyItalic = "Heavy Italic"
-//        case heavy = "Heavy"
-//        case demiBoldItalic = "Demi Bold Italic"
-//        case demiBold = "Demi Bold"
-//        case boldItalic = "Bold Italic"
-//        case bold = "Bold"
-//
-//    }
 
 
     static func avenirNext(ofSize size: CGFloat, weight: UIFont.Weight) -> UIFont? {
@@ -425,20 +297,4 @@ extension UIFont{
             // Return the custom font with the specified size and weight
             return UIFont(descriptor: fontDescriptor, size: size)
         }
-}
-
-extension UserDefaults{
-    var appearanceMode: String{
-        "appearanceMode"
-    }
-}
-
-
-
-
-extension NSObject
-{
-    static var className: String{
-        return String(describing : self)
-    }
 }

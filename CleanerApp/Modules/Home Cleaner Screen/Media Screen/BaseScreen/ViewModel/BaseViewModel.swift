@@ -8,9 +8,10 @@
 import Foundation
 import Combine
 import Photos
-class BaseViewModel{
+@MainActor class BaseViewModel: ObservableObject {
     
-    var assetRows: [[DBAsset]] = []
+    @Published var assetRows: [[DBAsset]] = []
+    @Published var isLoading = true
     @Published var selectedIndexPath: Set<IndexPath> = []
     @Published var sizeLabel: String = ""
     @Published var isAllSelected = true
@@ -27,19 +28,28 @@ class BaseViewModel{
     
     
     func fetchDBAssetFromCoreData(){
-        let context = CoreDataManager.customContext
-        let dbAssets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: self.predicate)
-        setupCountEvents(dbAssets.count)
-        var newData: [[DBAsset]] = []
-        let size = dbAssets.reduce(0) { $0 + $1.size }
-        sizeLabel = "Photos: \(dbAssets.count) • \(size.formatBytes())"
-        let dict = Dictionary(grouping: dbAssets) { $0.subGroupId }
-        for (_,value) in dict{
-            let sortedValue = value.sorted { $0.creationDate ?? Date() > $1.creationDate ?? Date() }
-            newData.append(sortedValue)
+        isLoading = true
+        Task.detached(priority: .userInitiated) {
+            let context = CoreDataManager.customContext
+            let dbAssets = await CoreDataManager.shared.fetchDBAssets(context: context, predicate: self.predicate)
+            async let _ = self.setupCountEvents(dbAssets.count)
+            var newData: [[DBAsset]] = []
+            let size = dbAssets.reduce(0) { $0 + $1.size }
+            let dict = Dictionary(grouping: dbAssets) { $0.subGroupId }
+            for (_,value) in dict{
+                let sortedValue = value.sorted { $0.creationDate ?? Date() > $1.creationDate ?? Date() }
+                newData.append(sortedValue)
+            }
+            
+            await MainActor.run {
+                self.sizeLabel = "Photos: \(dbAssets.count) • \(size.formatBytes())"
+                self.assetRows = newData.sorted { $0.first?.creationDate ?? Date() > $1.first?.creationDate ?? Date() }
+                self.isLoading = false
+            }
+            await self.selectAll()
+            
         }
-        assetRows = newData.sorted { $0.first?.creationDate ?? Date() > $1.first?.creationDate ?? Date() }
-        selectAll()
+        
         
         
     }

@@ -145,7 +145,7 @@ struct VideoCompressorView: View {
         .frame(maxWidth: .infinity)
         .background(
             LinearGradient(
-                colors: [Color.blue.opacity(0.15), Color(UIColor.systemBackground)],
+                colors: [Color.blue.opacity(0.15), Color(UIColor.systemGroupedBackground)],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -248,17 +248,13 @@ struct VideoCompressorCell: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(UIColor.systemBackground))
         )
-        .onAppear {
-            loadThumbnail()
+        .task {
+            await loadThumbnail()
         }
     }
 
-    private func loadThumbnail() {
-        video.phAsset.getImage { image in
-            DispatchQueue.main.async {
-                self.thumbnail = image
-            }
-        }
+    private func loadThumbnail() async{
+        await self.thumbnail = video.phAsset.getImage()
     }
 }
 

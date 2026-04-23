@@ -163,7 +163,7 @@ struct MediaCategoryCard: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(UIColor.secondarySystemGroupedBackground))
+                .fill(Color("offWhiteAndGrayColor"))
         )
     }
 }

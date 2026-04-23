@@ -10,7 +10,7 @@ import Combine
 import CoreData
 import Photos
 
-class MediaViewModel: ObservableObject {
+@MainActor class MediaViewModel: ObservableObject {
     
     var sectionsType: [(title:String, cells: [MediaCellType])] = [
         ("Photos", [.duplicatePhoto, .similarPhoto, .otherPhoto]),
@@ -31,7 +31,7 @@ class MediaViewModel: ObservableObject {
         }
     }
     
-    
+    @MainActor
     init() {
         dataSource = sectionsType.map({ tuple in
             let cells = tuple.cells.map { $0.cell }
@@ -87,20 +87,21 @@ class MediaViewModel: ObservableObject {
     
     
     func fetchAllMediaType(){
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let self else { return }
+        
+        Task(priority: .userInitiated) {
+//            guard let self else { return }
             for type in MediaCellType.allCases{
                 let context = CoreDataManager.customContext
                 let predicate = getPredicate(mediaType: type)
                 let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
                 let assets = CoreDataManager.shared.fetchDBAssets(context: context, predicate: predicate, sortDescriptor: sortDescriptor)
-                updateCell(assets: assets, type: type)
+                 async let _ = updateCell(assets: assets, type: type)
                 if CoreDataPHAssetManager.shared.status == .completed{
                     setupLogEvents(count: assets.count, type: type)
                 }
             }
             if CoreDataPHAssetManager.shared.status == .completed{
-                logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count+size": "\(totalFiles) + \(totalSize.convertToFileString())"])
+                logEvent(Event.MediaScreen.fileToDelete.rawValue, parameter: ["count+size": "\(await totalFiles) + \(await totalSize.convertToFileString())"])
             }
         }
     }
@@ -130,7 +131,7 @@ class MediaViewModel: ObservableObject {
     
     
     
-    private func updateCell(assets: [DBAsset], type: MediaCellType){
+    @MainActor private func updateCell(assets: [DBAsset], type: MediaCellType){
         var cellAssets = [PHAsset]()
         var subId: UUID?
         let size = assets.reduce(Int64(0) ) { $0 + $1.size }
