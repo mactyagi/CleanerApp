@@ -579,10 +579,18 @@ class HomeScreenViewModel: ObservableObject {
     let contactStore = CNContactStore()
     private var deviceInfoTimer: Timer?
 
-    // Storage breakdown (simulated percentages)
-    var appsProgress: CGFloat { 0.35 }
-    var photosProgress: CGFloat { 0.25 }
-    var otherProgress: CGFloat { 0.15 }
+    // Storage breakdown (real values)
+    var photosProgress: CGFloat {
+        guard totalStorage > 0 else { return 0 }
+        return CGFloat(Double(photosAndVideosSize ?? 0) / Double(totalStorage))
+    }
+    var appsProgress: CGFloat {
+        guard totalStorage > 0 else { return 0 }
+        let photosSize = photosAndVideosSize ?? 0
+        let appsSize = max(0, usedStorage - photosSize)
+        return CGFloat(Double(appsSize) / Double(totalStorage))
+    }
+    var otherProgress: CGFloat { 0 }
 
     var storageProgress: Double {
         guard totalStorage > 0 else { return 0 }
