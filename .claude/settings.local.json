@@ -18,7 +18,11 @@
       "Bash(xcodebuild -project CleanerApp.xcodeproj -scheme CleanerApp -destination 'platform=iOS Simulator,id=F9E43A24-F2CD-44A9-B107-ED3867BF7FDA' build)",
       "Bash(xcodebuild -scheme CleanerApp -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.5' clean build)",
       "Bash(find /Users/manukant.tyagi/Desktop/CleanerApp -name *MediaFlow* -o -name *Media*Destination*)",
-      "Bash(find /Users/manukant.tyagi/Desktop/CleanerApp -name *Compressor* -o -name *compress*)"
+      "Bash(find /Users/manukant.tyagi/Desktop/CleanerApp -name *Compressor* -o -name *compress*)",
+      "Bash(find /Users/manukant.tyagi/Desktop/CleanerApp/CleanerApp -type f \\\\\\(-name *.ts -o -name *.tsx -o -name *.js \\\\\\))",
+      "Bash(find /Users/manukant.tyagi/Desktop/CleanerApp -type f \\\\\\(-name package.json -o -name *.tsx -o -name *.ts \\\\\\))",
+      "Bash(find /Users/manukant.tyagi/Desktop/CleanerApp -type f -name *.swift)",
+      "Bash(git commit:*)"
     ]
   }
 }

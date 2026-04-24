@@ -133,7 +133,7 @@ class CoreDataPHAssetManager{
     }
    
     
-    func deleteExtraPHassetsFromCoreData(){ // delete all those element which are not present in photos liberary but present in Core data of Cleaner app
+    private func deleteExtraPHassetsFromCoreData(){ // delete all those element which are not present in photos liberary but present in Core data of Cleaner app
         let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
         let data = CoreDataManager.shared.fetchDBAssets(context: context, predicate: nil)
         var dictToDelete = Dictionary(grouping: data, by: \.assetId)
@@ -166,7 +166,7 @@ class CoreDataPHAssetManager{
         }
     }
     
-     private func startProcess(){
+    private func startProcess(){
          guard status != .started else { return }
          status = .started
          postUpdate()
